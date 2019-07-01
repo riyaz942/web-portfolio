@@ -3,7 +3,7 @@ import styles from './app.scss';
 
 function App() {
   return (
-    <div className={styles.app}>
+    <div className={styles['app-something']}>
       height
     </div>
   );
