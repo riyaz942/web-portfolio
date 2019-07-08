@@ -1,5 +1,7 @@
-.app-something {
-  background: black;
+@import 'commonStyles/colors';
+
+.main-container {
+  background: $intro-background;
   width: 100%;
   height: 100%;
 }

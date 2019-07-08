@@ -1,5 +1,13 @@
-.app {
-  background: black;
-  width: 100%;
+@import '../../commonStyles/colors';
+
+.intro-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 100%;
+  width: 100%;
+
+  .intro-text {
+    color: white;
+  }
 }
