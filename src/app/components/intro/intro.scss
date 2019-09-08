@@ -1,13 +1,17 @@
 @import '../../commonStyles/colors';
 
 .intro-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   height: 100%;
   width: 100%;
+  overflow: hidden;
 
   .intro-text {
     color: white;
+    font-size: 50px;
+  }
+
+  .intro-text-container2 {
+    margin-top: -57px;
+    margin-right: -650px;
   }
 }
