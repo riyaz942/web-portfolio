@@ -81,7 +81,6 @@ module.exports = function(webpackEnv) {
         options: {
           ...cssOptions,
           modules: true,
-          allowMultiple: true,
           localIdentName: "[name]__[local]___[hash:base64:5]"  
         },
       },
