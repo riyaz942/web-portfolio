@@ -4,10 +4,12 @@
   height: 100%;
   width: 100%;
   overflow: hidden;
+  position: relative;
 
   .intro-text {
     color: white;
     font-size: 50px;
+    white-space: nowrap;
   }
 
   .intro-text-container2 {
