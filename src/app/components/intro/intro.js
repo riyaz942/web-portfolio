@@ -25,7 +25,7 @@ export default class Intro extends Component {
       },
       {
         ref: React.createRef(),
-        direction: 'bottom',
+        direction: 'bottom-center',
         isVisible: false,
       },
       {
@@ -59,10 +59,35 @@ export default class Intro extends Component {
 
       setTimeout(()=>{
         this.updatedivPositions(2);
-      },2000);
+
+        setTimeout(()=>{
+          this.updatedivPositions(3);
+
+/*           setTimeout(()=>{
+            this.updatedivPositions(4);
+
+            setTimeout(()=>{
+              this.updatedivPositions(5);
+
+              setTimeout(()=>{
+                this.updatedivPositions(6);
+
+                setTimeout(()=>{
+                  this.updatedivPositions(7);
+                },1000);        
+
+              },1000);  
+    
+            },1000);    
+
+          },1000);   */
+
+        },1000);
+   
+      },1000);
  
       
-    },2000);
+    },1000);
   }
 
   updatedivPositions(referenceObjectIndex) {
@@ -77,22 +102,35 @@ export default class Intro extends Component {
     const componentHeightPadding = 15; 
 
     if (direction == 'right') {
-      refObject[referenceObjectIndex] = {...refObject[referenceObjectIndex], isVisible: true }
+      let finalObjectWidth = objectWidth/2;
+      if (refObject[referenceObjectIndex-1].direction == 'bottom') {
+        const previousRef = refObject[referenceObjectIndex-1].ref;
+        finalObjectWidth += previousRef.current.offsetWidth/2;
+      }
 
+      refObject[referenceObjectIndex] = {...refObject[referenceObjectIndex], isVisible: true }
       this.setState({
-        divPositionX: divPositionX + (objectWidth/2),
+        divPositionX: divPositionX + finalObjectWidth,
         refObject
       })
     } else if (direction == 'bottom') {
-      const resultDivPositionX = Math.abs(divPositionX + (objectWidth/2));
       const resultDivPositionY = Math.abs((divPositionY + componentHeightPadding) + (objectHeight/2));
       refObject[referenceObjectIndex] = {...refObject[referenceObjectIndex], isVisible: true }
 
       this.setState({
-        //divPositionX: resultDivPositionX,
         divPositionY: resultDivPositionY,
         refObject
       })
+    } else if (direction == 'bottom-center') {
+      const resultDivPositionX = Math.abs(divPositionX - (objectWidth/2));
+      const resultDivPositionY = Math.abs((divPositionY + componentHeightPadding) + (objectHeight/2));
+      refObject[referenceObjectIndex] = {...refObject[referenceObjectIndex], isVisible: true }
+
+      this.setState({
+        divPositionX: resultDivPositionX,
+        divPositionY: resultDivPositionY,
+        refObject
+      });
     } else if (direction == 'init') {
       this.setState({
         divPositionX: objectWidth/2,
@@ -139,7 +177,7 @@ export default class Intro extends Component {
             </span>
           </div>
           <span  ref={refObject[3].ref} className={`${styles['intro-text']} ${styles['animate-bottom']} ${refObject[3].isVisible? styles['animate'] : ''}`}>
-            some text is below
+            some
           </span>
           <span  ref={refObject[4].ref} className={`${styles['intro-text']} ${styles['animate-bottom']} ${refObject[4].isVisible? styles['animate'] : ''}`}>
             another text
