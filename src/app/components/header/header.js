@@ -5,6 +5,7 @@ import profilePic from '../../../images/profile-pic.jpeg';
 export default class Header extends Component {
   state = {
     isFullScreen: false,
+    showDescription: false,
   };
 
   constructor(props) {
@@ -12,13 +13,23 @@ export default class Header extends Component {
 
     setTimeout(()=> {
       this.setState({
-        isFullScreen: true 
+        isFullScreen: true
       })
+
+      setTimeout(()=> {
+        this.setState({
+          showDescription: true
+        })
+      }, 500);
+
     }, 2000);
   }
 
   render() {
-    const {isFullScreen} = this.state;
+    const {
+      isFullScreen,
+      showDescription,
+    } = this.state;
 
     return (
        <div className={`${isFullScreen ? styles['header-fullscreen']: styles['header-normal']} ${styles['header-container']}`}>
@@ -26,17 +37,24 @@ export default class Header extends Component {
         <div className={styles['content-container']}>
 
           <img src={profilePic} className={styles['user-pic']} />
-          {/* <div className={styles['user-description']}>
-            So here there will be a description about my self.
-            might be long or something
-          </div>
 
-          <div className={styles['user-button-container']}>
-            <div className={styles['user-button-timeline']}>Timeline</div>
-            <div className={styles['user-button-project']}>Projects and Platform</div>
-          </div> */}
+          {
+            showDescription && (
+              <div className={styles['user-description-container']}>
+                <div className={styles['user-description']}>
+                  So here there will be a description about my self.
+                  might be long or something
+                </div>
 
-          {/* <div>git hub link and any social media link</div> */}
+                <div className={styles['user-button-container']}>
+                  <div className={styles['user-button-timeline']}>Timeline</div>
+                  <div className={styles['user-button-project']}>Projects and Platform</div>
+                </div>
+                {/* <div>git hub link and any social media link</div> */}
+              </div>
+            )
+          }
+
         </div>
        </div>
      )

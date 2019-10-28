@@ -1,46 +1,53 @@
-$transition-time: 800ms;
+$transition-time: 1s;
 $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
 
 .header-container {
   flex: 1;
-  display: flex;
-  justify-content: flex-end;
-  transition: all $transition-time $transition-type;
+  // align-items: center;
+  transition: height 1.5s $transition-type;
+  background: black;
+  position: relative;
 
   .content-container {
+    position: absolute;
+    right: 0;
     display: flex;
     flex-direction: column;
-    transition: all $transition-time $transition-type;
+    transition: height $transition-time $transition-type , width $transition-time $transition-type , margin-right $transition-time $transition-type, margin-top $transition-time $transition-type;
 
     align-items: center;
-    justify-content: center;
+    // justify-content: center;
 
     .user-pic {
-      transition: all $transition-time $transition-type;
+      transition: height $transition-time $transition-type , width $transition-time $transition-type ;
       border-radius: 50%;
     }
 
-    .user-description {
+    .user-description-container {
       margin-top: 36px;
-      text-align: center;
+      animation: expand 800ms ease;
 
-      color: white;
-    }
-
-    .user-button-container {
-      display: flex;
-      margin-top: 26px;
-      color: white;
+      .user-description {
+        text-align: center;
+        color: white;
+      }
+  
+      .user-button-container {
+        display: flex;
+        margin-top: 26px;
+        color: white;
+      }
     }
   }
 }
 
 .header-normal {
-  height: 150px;
+  height: 70px;
 
   .content-container {
-    width: 100px;
-    height: 100px;
+    width: 70px;
+    height: 70px;
+    margin-top: 10px;
   }
 
   .user-pic {
@@ -56,10 +63,18 @@ $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
     width: 500px;
     height: 500px;
     margin-right: calc(50% - 250px);
+    margin-top: calc(50vh - 250px);
   }
 
   .user-pic {
     width: 300px;
     height: 300px;
+  }
+}
+
+@keyframes expand {
+  from {
+    opacity: 0;
+    margin-top: 100px;
   }
 }
