@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styles from './landing.scss';
 import Header from '../header/header';
+import Timeline from '../timeline/timeline';
 
 export default class Landing extends Component {
   constructor(props) {
@@ -11,23 +12,10 @@ export default class Landing extends Component {
     return (
       <div className={styles['landing-container']}>
         <Header />
-        <div style={{
-          flex: 1,
-          marginTop: 100
-        }}>
-          body askdj
-          asdas
-          defaultsda
-          sd
-          asdasas
-          defaultasd
-          asdasda
-          defaultasdas
-          defaultasdsda
-          sdas
-          defaultasdsdaas
+        <div className={styles['body-container']}>
+          <Timeline />
         </div>
       </div>
-    )
+    );
   }
 }
