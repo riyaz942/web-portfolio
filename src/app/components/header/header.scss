@@ -1,31 +1,40 @@
 $transition-time: 1s;
 $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
 
+//-----------------------------------------------------------prefixed header state
 .header-container {
   flex: 1;
   // align-items: center;
-  transition: height 1.5s $transition-type;
+  transition: height 1s $transition-type;
   background: black;
   position: relative;
+  
+  .header-link-container {
+    transition: opacity 500ms ease, top 500ms ease;
+    position: absolute;
+    opacity: 1;
+    right: 130px;
+    top: 26px;
+    color: white;
+  }
 
   .content-container {
     position: absolute;
     right: 0;
     display: flex;
     flex-direction: column;
-    transition: height $transition-time $transition-type , width $transition-time $transition-type , margin-right $transition-time $transition-type, margin-top $transition-time $transition-type;
+    transition: height $transition-time $transition-type 300ms, width $transition-time $transition-type 300ms, margin-right $transition-time $transition-type 300ms, margin-top $transition-time $transition-type 300ms;
 
     align-items: center;
     // justify-content: center;
 
     .user-pic {
-      transition: height $transition-time $transition-type , width $transition-time $transition-type ;
+      transition: height $transition-time $transition-type 300ms, width $transition-time $transition-type 300ms;
       border-radius: 50%;
     }
 
     .user-description-container {
       margin-top: 36px;
-      animation: expand 800ms ease;
 
       .user-description {
         text-align: center;
@@ -41,6 +50,7 @@ $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
   }
 }
 
+//--------------------------------------------------------normal header state
 .header-normal {
   height: 70px;
 
@@ -48,6 +58,7 @@ $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
     width: 70px;
     height: 70px;
     margin-top: 10px;
+    margin-right: 40px;
   }
 
   .user-pic {
@@ -55,9 +66,14 @@ $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
     height: 50px;
   }
 }
-
+//--------------------------------------------------------fullScreen
 .header-fullscreen {
   height: 100%;
+
+  .header-link-container {
+    top: -20px;
+    opacity: 0;
+  }
 
   .content-container {
     width: 500px;
@@ -70,11 +86,29 @@ $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
     width: 300px;
     height: 300px;
   }
+
+  
 }
 
-@keyframes expand {
+.animate-hide {
+  animation: hide 800ms ease;
+}
+
+.animate-show {
+  animation: show 800ms ease;
+}
+//-----------------------------------------------------animation
+
+@keyframes show {
   from {
     opacity: 0;
     margin-top: 100px;
+  }
+}
+
+@keyframes hide {
+  to {
+    opacity: 0;
+    margin-top: -100px;
   }
 }
