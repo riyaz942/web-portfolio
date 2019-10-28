@@ -11,6 +11,22 @@ export default class Landing extends Component {
     return (
       <div className={styles['landing-container']}>
         <Header />
+        <div style={{
+          flex: 1,
+          marginTop: 100
+        }}>
+          body askdj
+          asdas
+          defaultsda
+          sd
+          asdasas
+          defaultasd
+          asdasda
+          defaultasdas
+          defaultasdsda
+          sdas
+          defaultasdsdaas
+        </div>
       </div>
     )
   }

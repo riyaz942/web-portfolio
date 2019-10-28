@@ -3,10 +3,12 @@ $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
 
 //-----------------------------------------------------------prefixed header state
 .header-container {
-  flex: 1;
   // align-items: center;
   background: black;
-  position: relative;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;  
   
   .header-link-container {
     position: absolute;
