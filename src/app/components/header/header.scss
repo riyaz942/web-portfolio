@@ -9,7 +9,6 @@ $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
   position: relative;
   
   .header-link-container {
-    transition: opacity 600ms ease, top 600ms ease;
     position: absolute;
     opacity: 1;
     right: 130px;
@@ -52,6 +51,10 @@ $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
   height: 70px;
   transition: height 1s $transition-type;
 
+  .header-link-container {
+    transition: opacity 600ms ease 600ms, top 600ms ease 600ms;
+  }
+
   .content-container {
     width: 70px;
     height: 70px;
@@ -73,6 +76,7 @@ $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
   transition: height 1s $transition-type;
 
   .header-link-container {
+    transition: opacity 600ms ease, top 600ms ease;
     top: -20px;
     opacity: 0;
   }
