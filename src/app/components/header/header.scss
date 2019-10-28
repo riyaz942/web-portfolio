@@ -5,12 +5,11 @@ $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
 .header-container {
   flex: 1;
   // align-items: center;
-  transition: height 1s $transition-type;
   background: black;
   position: relative;
   
   .header-link-container {
-    transition: opacity 500ms ease, top 500ms ease;
+    transition: opacity 600ms ease, top 600ms ease;
     position: absolute;
     opacity: 1;
     right: 130px;
@@ -23,13 +22,11 @@ $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
     right: 0;
     display: flex;
     flex-direction: column;
-    transition: height $transition-time $transition-type 300ms, width $transition-time $transition-type 300ms, margin-right $transition-time $transition-type 300ms, margin-top $transition-time $transition-type 300ms;
 
     align-items: center;
     // justify-content: center;
 
     .user-pic {
-      transition: height $transition-time $transition-type 300ms, width $transition-time $transition-type 300ms;
       border-radius: 50%;
     }
 
@@ -53,22 +50,27 @@ $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
 //--------------------------------------------------------normal header state
 .header-normal {
   height: 70px;
+  transition: height 1s $transition-type;
 
   .content-container {
     width: 70px;
     height: 70px;
     margin-top: 10px;
     margin-right: 40px;
+    transition: height 600ms ease, width 600ms ease, margin-right 600ms ease, margin-top 600ms ease;
   }
 
   .user-pic {
     width: 50px;
     height: 50px;
+    transition: height 600ms ease, width 600ms ease;
   }
 }
+
 //--------------------------------------------------------fullScreen
 .header-fullscreen {
   height: 100%;
+  transition: height 1s $transition-type;
 
   .header-link-container {
     top: -20px;
@@ -80,22 +82,22 @@ $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
     height: 500px;
     margin-right: calc(50% - 250px);
     margin-top: calc(50vh - 250px);
+    transition: height $transition-time $transition-type 300ms, width $transition-time $transition-type 300ms, margin-right $transition-time $transition-type 300ms, margin-top $transition-time $transition-type 300ms;
   }
 
   .user-pic {
     width: 300px;
     height: 300px;
+    transition: height $transition-time $transition-type 300ms, width $transition-time $transition-type 300ms, margin-right $transition-time $transition-type 300ms, margin-top $transition-time $transition-type 300ms;
   }
-
-  
 }
 
 .animate-hide {
-  animation: hide 800ms ease;
+  animation: hide 600ms ease forwards;
 }
 
 .animate-show {
-  animation: show 800ms ease;
+  animation: show 600ms ease;
 }
 //-----------------------------------------------------animation
 
@@ -109,6 +111,5 @@ $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
 @keyframes hide {
   to {
     opacity: 0;
-    margin-top: -100px;
   }
 }
