@@ -6,7 +6,7 @@ export default class Intro extends Component {
 
   state = {
     divPositionX: 96, // fall back
-    divPositionY: 37, // fall back
+    divPositionY: 41, // fall back
     refObject: [
       {
         ref: React.createRef(),
@@ -99,7 +99,7 @@ export default class Intro extends Component {
 
     //NOTE:- created this because the span has an additional padding above and below the text 
     //So the text doesn't look centered aligned although it is programatically correct
-    const componentHeightPadding = 15; 
+    const componentHeightPadding = 25; 
 
     if (direction == 'right') {
       let finalObjectWidth = objectWidth/2;
@@ -121,7 +121,7 @@ export default class Intro extends Component {
         divPositionY: resultDivPositionY,
         refObject
       });
-      
+
     } else if (direction == 'bottom-center') {
       const previousRef = refObject[referenceObjectIndex - 1 ].ref;
       const secondPreviousRef = refObject[referenceObjectIndex - 2].ref;
