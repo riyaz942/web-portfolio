@@ -3,7 +3,6 @@ import styles from './intro.scss';
 import appStyles from '../../app.scss';
 
 export default class Intro extends Component {
-
   state = {
     divPositionX: 96, // fall back
     divPositionY: 41, // fall back
@@ -158,19 +157,9 @@ export default class Intro extends Component {
       divPositionX,
       refObject,
     } = this.state;
-    const { children } = this.props;
 
     return (
      <div className={introContainerStyle}>
-       {children}
-       <div style={{
-         position: 'absolute',
-         width: '100%',
-         height: '100%',
-         background: 'black',
-         display: 'flex',
-
-       }}>
         <div style={{
           position: 'absolute',
           transition: 'all 0.5s ease',
@@ -211,7 +200,6 @@ export default class Intro extends Component {
           </span>
         </div>
       </div>
-       </div>
      </div>
     )
   }
