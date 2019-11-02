@@ -63,24 +63,24 @@ export default class Intro extends Component {
         setTimeout(()=>{
           this.updatedivPositions(3);
 
-           setTimeout(()=>{
+            setTimeout(()=>{
             this.updatedivPositions(4);
 
             setTimeout(()=>{
               this.updatedivPositions(5);
-    /*
+    
               setTimeout(()=>{
                 this.updatedivPositions(6);
 
-                setTimeout(()=>{
+   /*              setTimeout(()=>{
                   this.updatedivPositions(7);
                 },1000);        
-
+ */
               },1000);  
-    */
-            },1000);    
+    
+             },1000);
         
-          },1000);   
+          },1000);
 
         },1000);
    
@@ -120,9 +120,15 @@ export default class Intro extends Component {
       this.setState({
         divPositionY: resultDivPositionY,
         refObject
-      })
+      });
+      
     } else if (direction == 'bottom-center') {
-      const resultDivPositionX = Math.abs(divPositionX - (objectWidth/2));
+      const previousRef = refObject[referenceObjectIndex - 1 ].ref;
+      const secondPreviousRef = refObject[referenceObjectIndex - 2].ref;
+      const previousObjectWidth = previousRef.current.offsetWidth;
+      const secondPreviousObjectWidth = secondPreviousRef.current.offsetWidth;
+
+      const resultDivPositionX = Math.abs((secondPreviousObjectWidth/2 + previousObjectWidth /2)); // TODO rethink
       const resultDivPositionY = Math.abs((divPositionY + componentHeightPadding) + (objectHeight/2));
       refObject[referenceObjectIndex] = {...refObject[referenceObjectIndex], isVisible: true }
 
