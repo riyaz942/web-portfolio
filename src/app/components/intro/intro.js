@@ -5,8 +5,8 @@ import appStyles from '../../app.scss';
 export default class Intro extends Component {
 
   state = {
-    divPositionX: 0,
-    divPositionY: 0,
+    divPositionX: 96, // fall back
+    divPositionY: 37, // fall back
     refObject: [
       {
         ref: React.createRef(),
@@ -63,12 +63,12 @@ export default class Intro extends Component {
         setTimeout(()=>{
           this.updatedivPositions(3);
 
-/*           setTimeout(()=>{
+           setTimeout(()=>{
             this.updatedivPositions(4);
 
             setTimeout(()=>{
               this.updatedivPositions(5);
-
+    /*
               setTimeout(()=>{
                 this.updatedivPositions(6);
 
@@ -77,17 +77,17 @@ export default class Intro extends Component {
                 },1000);        
 
               },1000);  
-    
+    */
             },1000);    
-
-          },1000);   */
+        
+          },1000);   
 
         },1000);
    
       },1000);
- 
-      
+       
     },1000);
+    
   }
 
   updatedivPositions(referenceObjectIndex) {
@@ -152,51 +152,60 @@ export default class Intro extends Component {
       divPositionX,
       refObject,
     } = this.state;
+    const { children } = this.props;
 
-    return(
+    return (
      <div className={introContainerStyle}>
-
+       {children}
        <div style={{
          position: 'absolute',
-         transition: 'all 0.5s ease',
-         top: `calc(50% - ${divPositionY}px)`,
-         left: `calc(50% - ${divPositionX}px)`
+         width: '100%',
+         height: '100%',
+         background: 'black',
+         display: 'flex',
+
        }}>
+        <div style={{
+          position: 'absolute',
+          transition: 'all 0.5s ease',
+          top: `calc(50% - ${divPositionY}px)`,
+          left: `calc(50% - ${divPositionX}px)`
+        }}>
         <span ref={refObject[0].ref} className={styles['intro-text']}>
-          Hi,
+          Hi There,
         </span>
 
         <div className={`${appStyles['column']} ${appStyles['align-center']}`} >
           
           <div className={`${appStyles['row']} ${appStyles['align-center']}`}>
             <span ref={refObject[1].ref} className={`${styles['intro-text']} ${styles['animate-bottom']} ${refObject[1].isVisible? styles['animate'] : ''}`}>
-              some text &nbsp;
+              GoodEvening, &nbsp;
             </span>
             <span  ref={refObject[2].ref} className={`${styles['intro-text']} ${styles['animate-right']} ${refObject[2].isVisible? styles['animate'] : ''}`}>
-              some text that i don't like
+              Just so you know
             </span>
           </div>
           <span  ref={refObject[3].ref} className={`${styles['intro-text']} ${styles['animate-bottom']} ${refObject[3].isVisible? styles['animate'] : ''}`}>
-            some
+            this website was made
           </span>
           <span  ref={refObject[4].ref} className={`${styles['intro-text']} ${styles['animate-bottom']} ${refObject[4].isVisible? styles['animate'] : ''}`}>
-            another text
+            with React
           </span>
-       </div>
+        </div>
 
-       <div className={`${appStyles['column']} ${appStyles['align-center']} ${styles['intro-text-container2']}`}>
+        <div className={`${appStyles['column']} ${appStyles['align-center']} ${styles['intro-text-container2']}`}>
           <span  ref={refObject[5].ref} className={`${styles['intro-text']} ${styles['animate-right']} ${refObject[5].isVisible? styles['animate'] : ''}`}>
-            somdasdjasld
+            and not some yucky website builder.
           </span>
           <span  ref={refObject[6].ref} className={`${styles['intro-text']} ${styles['animate-bottom']} ${refObject[6].isVisible? styles['animate'] : ''}`}>
-            asdjalksfjslkdjf
+            yuck
           </span>
           <span  ref={refObject[7].ref} className={`${styles['intro-text']} ${styles['animate-bottom']} ${refObject[7].isVisible? styles['animate'] : ''}`}>
             asdjalksfjslkdjf
           </span>
         </div>
       </div>
-
+       </div>
      </div>
     )
   }
