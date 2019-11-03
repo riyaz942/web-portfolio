@@ -5,7 +5,7 @@ import appStyles from '../../app.scss';
 export default class Intro extends Component {
   state = {
     divPositionX: 96, // fall back
-    divPositionY: 41, // fall back
+    divPositionY: 31, // fall back
     refObject: [
       {
         ref: React.createRef(),
@@ -98,7 +98,7 @@ export default class Intro extends Component {
 
     //NOTE:- created this because the span has an additional padding above and below the text 
     //So the text doesn't look centered aligned although it is programatically correct
-    const componentHeightPadding = 25; 
+    const componentHeightPadding = 15; 
 
     if (direction == 'right') {
       let finalObjectWidth = objectWidth/2;

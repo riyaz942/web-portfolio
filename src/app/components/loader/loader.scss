@@ -1,0 +1,56 @@
+$transition-type: cubic-bezier(0.550, 0.055, 0.675, 0.190);
+
+.loader-top-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  
+  .loader-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .percentage-text {
+      color: white;
+      color: white;
+      font-size: 50px;
+      animation: show 600ms ease;
+    }
+
+    .overlay-reveal-container {
+      position: absolute;
+      z-index: 100;
+      height: 70px;
+      width: 200px;
+
+      .reveal-div {
+        position: absolute;
+        left: 0;
+        right: 200px;
+        bottom: 0;
+        top: 0;
+        background: grey;
+        transition: right 0.5s, left  0.5s $transition-type;
+      }
+
+      .start-reveal {
+        right: 0px;
+      }
+
+      .end-reveal {
+        left: 200px;
+      }
+    }
+  }
+}
+
+
+@keyframes show {
+  from {
+    opacity: 0;
+  }
+}
