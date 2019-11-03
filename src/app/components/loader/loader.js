@@ -15,6 +15,7 @@ export default class Loader extends Component {
       itemsLoaded: 0,
       isCompletelyLoaded: false,
       showIntro: false,
+      hideIntroContainer: false,
     }
   }
 
@@ -75,30 +76,38 @@ export default class Loader extends Component {
     }, 600);
   }
 
+  onIntroAnimationEnd = () => {
+    this.setState({
+      hideIntroContainer: true
+    })
+  }
+
   render() {
     const { children } = this.props;
     const { 
       contentLoadedPercentage,
       isCompletelyLoaded,
-      showIntro 
+      showIntro,
+      hideIntroContainer,
     } = this.state;
 
     return (
       <div className={styles['loader-top-container']}>
         {children}
-        <div className={styles['loader-container']}>
+        <div className={`${styles['loader-container']} ${hideIntroContainer ? styles['hide-loader-container'] : ''}`}>
           <div className={styles['overlay-reveal-container']}>
             <div className={`${styles['reveal-div']} ${isCompletelyLoaded ? styles['start-reveal'] : ''} ${showIntro ? styles['end-reveal'] : ''}`} />
           </div>
           {
-            !showIntro && (
+            showIntro ?
+            <Intro onAnimationEnd={()=>this.onIntroAnimationEnd()}/>
+            : (
               <div className={styles['percentage-text']}>
                 {`${contentLoadedPercentage}%`}
               </div>
             )
           }
         </div>
-        { showIntro && <Intro /> }
       </div>
     );
   }

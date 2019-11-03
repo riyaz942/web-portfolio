@@ -51,30 +51,31 @@ export default class Intro extends Component {
   }
 
   componentDidMount() {
+    const { onAnimationEnd } = this.props;
     this.updatedivPositions(0);
 
-    setTimeout(()=>{
+    setTimeout(()=> {
       this.updatedivPositions(1);
 
-      setTimeout(()=>{
+      setTimeout(()=> {
         this.updatedivPositions(2);
 
-        setTimeout(()=>{
+        setTimeout(()=> {
           this.updatedivPositions(3);
 
-            setTimeout(()=>{
+            setTimeout(()=> {
             this.updatedivPositions(4);
 
-            setTimeout(()=>{
+            setTimeout(()=> {
               this.updatedivPositions(5);
     
-              setTimeout(()=>{
+              setTimeout(()=> {
                 this.updatedivPositions(6);
 
-   /*              setTimeout(()=>{
-                  this.updatedivPositions(7);
-                },1000);        
- */
+                setTimeout(()=> {
+                  onAnimationEnd();
+                },2000);        
+
               },1000);  
     
              },1000);

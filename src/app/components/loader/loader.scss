@@ -13,6 +13,9 @@ $transition-type: cubic-bezier(0.550, 0.055, 0.675, 0.190);
     display: flex;
     justify-content: center;
     align-items: center;
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 1s, visibility 1s $transition-type;
 
     .percentage-text {
       color: white;
@@ -45,6 +48,11 @@ $transition-type: cubic-bezier(0.550, 0.055, 0.675, 0.190);
         left: 200px;
       }
     }
+  }
+
+  .hide-loader-container {
+    visibility: hidden;
+    opacity: 0;
   }
 }
 
