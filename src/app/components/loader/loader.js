@@ -70,7 +70,8 @@ export default class Loader extends Component {
         this.setState({
           showIntro: true
         })
-      },700);
+      },800);
+
     }, 600);
   }
 

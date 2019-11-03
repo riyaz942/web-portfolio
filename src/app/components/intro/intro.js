@@ -193,7 +193,7 @@ export default class Intro extends Component {
             and not some yucky website builder.
           </span>
           <span  ref={refObject[6].ref} className={`${styles['intro-text']} ${styles['animate-bottom']} ${refObject[6].isVisible? styles['animate'] : ''}`}>
-            yuck
+            &#128523;
           </span>
           <span  ref={refObject[7].ref} className={`${styles['intro-text']} ${styles['animate-bottom']} ${refObject[7].isVisible? styles['animate'] : ''}`}>
             asdjalksfjslkdjf

@@ -33,8 +33,8 @@ $transition-type: cubic-bezier(0.550, 0.055, 0.675, 0.190);
         right: 200px;
         bottom: 0;
         top: 0;
-        background: grey;
-        transition: right 0.5s, left  0.5s $transition-type;
+        background: red;
+        transition: right 600ms, left  600ms $transition-type;
       }
 
       .start-reveal {
