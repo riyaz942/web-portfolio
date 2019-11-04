@@ -7,8 +7,10 @@ $transition-type: cubic-bezier(0.550, 0.055, 0.675, 0.190);
   
   .loader-container {
     position: absolute;
-    width: 100%;
-    height: 100%;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
     background: black;
     display: flex;
     justify-content: center;

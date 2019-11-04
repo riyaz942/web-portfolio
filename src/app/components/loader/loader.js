@@ -77,9 +77,9 @@ export default class Loader extends Component {
   }
 
   onIntroAnimationEnd = () => {
-    // this.setState({
-    //   hideIntroContainer: true
-    // })
+    this.setState({
+      hideIntroContainer: true
+    })
   }
 
   render() {
