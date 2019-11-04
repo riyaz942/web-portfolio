@@ -167,11 +167,13 @@ export default class Intro extends Component {
           top: `calc(50% - ${divPositionY}px)`,
           left: `calc(50% - ${divPositionX}px)`
         }}>
-        <span ref={refObject[0].ref} className={styles['intro-text']}>
-          Hi There,
-        </span>
+        <div>
+          <span ref={refObject[0].ref} className={styles['intro-text']}>
+            Hi There,
+          </span>
+        </div>
 
-        <div style={{display: 'table', textAlign: 'center'}}>          
+        <div style={{display: 'inline-block', textAlign: 'center'}}>
           <div className={`${appStyles['row']} ${appStyles['align-center']}`}>
             <span ref={refObject[1].ref} className={`${styles['intro-text']} ${styles['animate-bottom']} ${refObject[1].isVisible? styles['animate'] : ''}`}>
               GoodEvening, &nbsp;
