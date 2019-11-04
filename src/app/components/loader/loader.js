@@ -4,6 +4,7 @@ import styles from './loader.scss';
 import { Math } from 'core-js';
 import profilePic from '../../../images/profile-pic.jpeg';
 import { loaderPageStates } from '../../constants/loaderConstants';
+import PageReveal from '../commonComponents/pageReveal';
 
 export default class Loader extends Component {
   constructor(props) {
@@ -135,13 +136,8 @@ export default class Loader extends Component {
             )
           }
         </div>
-
-        <div className={styles['revealer']}>
-          <div className={`${styles['revealer-layer']} ${pageState == loaderPageStates.SHOW_PAGE || pageState == loaderPageStates.ANIMATE_PAGE_REVEAL ? styles['animate-layer']:''}`} />
-          <div className={`${styles['revealer-layer']} ${pageState == loaderPageStates.SHOW_PAGE || pageState == loaderPageStates.ANIMATE_PAGE_REVEAL ? styles['animate-layer']:''}`} />
-        </div>
+        <PageReveal animate={pageState == loaderPageStates.SHOW_PAGE || pageState == loaderPageStates.ANIMATE_PAGE_REVEAL}/>
       </React.Fragment>
-
     );
   }
 }

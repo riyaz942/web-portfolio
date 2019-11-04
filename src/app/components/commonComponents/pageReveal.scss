@@ -1,0 +1,73 @@
+.revealer {
+	width: 100vw;
+	height: 100vh;
+	position: fixed;
+	z-index: 1000;
+	pointer-events: none;
+}
+
+.revealer-layer {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+  left: 0;
+  bottom: 100%;
+	background: #ddd;
+}
+
+
+.revealer-layer:first-child {
+	background: #004d40;
+}
+
+.revealer-layer:nth-child(2) {
+	background: #b71c1c;
+}
+
+.animate-layer {
+	-webkit-animation: anim-effect-2-1 1.5s cubic-bezier(0.7, 0, 0.3, 1) forwards;
+	animation: anim-effect-2-1 1.5s cubic-bezier(0.7, 0, 0.3, 1) forwards;
+}
+
+.animate-layer:nth-child(2) {
+	-webkit-animation-name: anim-effect-2-2;
+	animation-name: anim-effect-2-2;
+}
+
+@keyframes anim-effect-2-1 {
+	0% {
+		-webkit-transform: translate3d(0, 0, 0);
+		transform: translate3d(0, 0, 0);
+	}
+	30%,
+	70% {
+		-webkit-transform: translate3d(0, 100%, 0);
+		transform: translate3d(0, 100%, 0);
+		-webkit-animation-timing-function: cubic-bezier(0.7, 0, 0.3, 1);
+		animation-timing-function: cubic-bezier(0.7, 0, 0.3, 1);
+	}
+	100% {
+		-webkit-transform: translate3d(0, 200%, 0);
+		transform: translate3d(0, 200%, 0);
+	}
+}
+
+@keyframes anim-effect-2-2 {
+	0%,
+	14.5% {
+		-webkit-transform: translate3d(0, 0, 0);
+		transform: translate3d(0, 0, 0);
+	}
+	37.5%,
+	62.5% {
+		-webkit-transform: translate3d(0, 100%, 0);
+		transform: translate3d(0, 100%, 0);
+		-webkit-animation-timing-function: cubic-bezier(0.7, 0, 0.3, 1);
+		animation-timing-function: cubic-bezier(0.7, 0, 0.3, 1);
+	}
+	85.5%,
+	100% {
+		-webkit-transform: translate3d(0, 200%, 0);
+		transform: translate3d(0, 200%, 0);
+	}
+}
