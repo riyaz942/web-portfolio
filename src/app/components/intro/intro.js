@@ -171,8 +171,7 @@ export default class Intro extends Component {
           Hi There,
         </span>
 
-        <div className={`${appStyles['column']} ${appStyles['align-center']}`} >
-          
+        <div style={{display: 'table', textAlign: 'center'}}>          
           <div className={`${appStyles['row']} ${appStyles['align-center']}`}>
             <span ref={refObject[1].ref} className={`${styles['intro-text']} ${styles['animate-bottom']} ${refObject[1].isVisible? styles['animate'] : ''}`}>
               GoodEvening, &nbsp;
@@ -184,12 +183,23 @@ export default class Intro extends Component {
           <span  ref={refObject[3].ref} className={`${styles['intro-text']} ${styles['animate-bottom']} ${refObject[3].isVisible? styles['animate'] : ''}`}>
             this website was made
           </span>
-          <span  ref={refObject[4].ref} className={`${styles['intro-text']} ${styles['animate-bottom']} ${refObject[4].isVisible? styles['animate'] : ''}`}>
-            with React
-          </span>
         </div>
 
-        <div className={`${appStyles['column']} ${appStyles['align-center']} ${styles['intro-text-container2']}`}>
+        <div className={`${appStyles['row']}`}>
+          <span  ref={refObject[4].ref} className={`${styles['intro-text']} ${styles['animate-bottom']} ${refObject[4].isVisible? styles['animate'] : ''}`} style={{marginLeft: 241}}>
+            with React &nbsp;
+          </span>
+          <div className={`${appStyles['column']} ${appStyles['align-center']}`}>
+            <span  ref={refObject[5].ref} className={`${styles['intro-text']} ${styles['animate-right']} ${refObject[5].isVisible? styles['animate'] : ''}`}>
+              and not some yucky website builder.
+            </span>
+            <span  ref={refObject[6].ref} className={`${styles['intro-text']} ${styles['animate-bottom']} ${refObject[6].isVisible? styles['animate'] : ''}`}>
+              &#128523;
+            </span>
+          </div>
+        </div>
+
+        {/* <div className={`${appStyles['column']} ${appStyles['align-center']} ${styles['intro-text-container2']}`} style={{opacity:0}}>
           <span  ref={refObject[5].ref} className={`${styles['intro-text']} ${styles['animate-right']} ${refObject[5].isVisible? styles['animate'] : ''}`}>
             and not some yucky website builder.
           </span>
@@ -199,7 +209,7 @@ export default class Intro extends Component {
           <span  ref={refObject[7].ref} className={`${styles['intro-text']} ${styles['animate-bottom']} ${refObject[7].isVisible? styles['animate'] : ''}`}>
             asdjalksfjslkdjf
           </span>
-        </div>
+        </div> */}
       </div>
      </div>
     )
