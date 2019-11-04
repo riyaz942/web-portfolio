@@ -167,13 +167,14 @@ export default class Intro extends Component {
           top: `calc(50% - ${divPositionY}px)`,
           left: `calc(50% - ${divPositionX}px)`
         }}>
+
         <div>
           <span ref={refObject[0].ref} className={styles['intro-text']}>
             Hi There,
           </span>
         </div>
 
-        <div style={{display: 'inline-block', textAlign: 'center'}}>
+        <div className={appStyles['inline-center']}>
           <div className={`${appStyles['row']} ${appStyles['align-center']}`}>
             <span ref={refObject[1].ref} className={`${styles['intro-text']} ${styles['animate-bottom']} ${refObject[1].isVisible? styles['animate'] : ''}`}>
               GoodEvening, &nbsp;
@@ -187,9 +188,14 @@ export default class Intro extends Component {
           </span>
         </div>
 
-        <div className={`${appStyles['row']}`}>
-          <span  ref={refObject[4].ref} className={`${styles['intro-text']} ${styles['animate-bottom']} ${refObject[4].isVisible? styles['animate'] : ''}`} style={{marginLeft: 241}}>
+        <div className={appStyles['row']}>
+          <span 
+            ref={refObject[4].ref}
+            className={`${styles['intro-text']} ${styles['animate-bottom']} ${refObject[4].isVisible? styles['animate'] : ''}`}
+            style={{marginLeft: 241}}>
+            
             with React &nbsp;
+            {/*Margin left would be variable at somepoint in the future*/}
           </span>
           <div className={`${appStyles['column']} ${appStyles['align-center']}`}>
             <span  ref={refObject[5].ref} className={`${styles['intro-text']} ${styles['animate-right']} ${refObject[5].isVisible? styles['animate'] : ''}`}>
@@ -201,17 +207,6 @@ export default class Intro extends Component {
           </div>
         </div>
 
-        {/* <div className={`${appStyles['column']} ${appStyles['align-center']} ${styles['intro-text-container2']}`} style={{opacity:0}}>
-          <span  ref={refObject[5].ref} className={`${styles['intro-text']} ${styles['animate-right']} ${refObject[5].isVisible? styles['animate'] : ''}`}>
-            and not some yucky website builder.
-          </span>
-          <span  ref={refObject[6].ref} className={`${styles['intro-text']} ${styles['animate-bottom']} ${refObject[6].isVisible? styles['animate'] : ''}`}>
-            &#128523;
-          </span>
-          <span  ref={refObject[7].ref} className={`${styles['intro-text']} ${styles['animate-bottom']} ${refObject[7].isVisible? styles['animate'] : ''}`}>
-            asdjalksfjslkdjf
-          </span>
-        </div> */}
       </div>
      </div>
     )

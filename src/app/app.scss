@@ -6,6 +6,11 @@
   height: 100%;
 }
 
+.inline-center {
+  display: inline-block;
+  text-align: center;
+}
+
 .column {
   display: flex;
   flex-direction: column;
