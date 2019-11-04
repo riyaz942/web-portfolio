@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import Intro from '../intro/intro';
 import styles from './loader.scss';
 import { Math } from 'core-js';
+import profilePic from '../../../images/profile-pic.jpeg';
+import { loaderPageStates } from '../../constants/loaderConstants';
 
 export default class Loader extends Component {
   constructor(props) {
     super(props);
+
     document.addEventListener('DOMContentLoaded', this.getTotalLoadingItems, false);
     window.addEventListener('load', this.completeLoading);
 
@@ -13,16 +16,22 @@ export default class Loader extends Component {
       contentLoadedPercentage: 0,
       totalItems: 0,
       itemsLoaded: 0,
-      isCompletelyLoaded: false,
-      showIntro: false,
-      hideIntroContainer: false,
+      pageState: loaderPageStates.IS_LOADING,
     }
+  }
+
+  preloadImage = (src) => {
+    const image = new Image();
+    image.src = src;
+
+    return image;
   }
 
   getTotalLoadingItems = () => {
     // const scriptTags = Array.from(document.scripts);
     // const styleTags = Array.from(document.styleSheets);
     const images = Array.from(document.images);
+    images.push(this.preloadImage(profilePic));
 
     this.setState({
       totalItems: images.length
@@ -61,24 +70,27 @@ export default class Loader extends Component {
   }
 
   completeLoading = () => {
+    const { contentLoadedPercentage } = this.state;
+
+    if (contentLoadedPercentage != 100)
+      this.setState({ contentLoadedPercentage: 100 });
+
     setTimeout(()=>{
       this.setState({
-        contentLoadedPercentage: 100,
-        isCompletelyLoaded: true,
+        pageState: loaderPageStates.COMPLETED_LOADING,
       });
   
       setTimeout(()=>{
         this.setState({
-          showIntro: true
+          pageState: loaderPageStates.SHOW_INTRO
         })
       },800);
-
     }, 600);
   }
 
   onIntroAnimationEnd = () => {
     this.setState({
-      hideIntroContainer: true
+      pageState: loaderPageStates.SHOW_PAGE
     })
   }
 
@@ -86,20 +98,24 @@ export default class Loader extends Component {
     const { children } = this.props;
     const { 
       contentLoadedPercentage,
-      isCompletelyLoaded,
-      showIntro,
-      hideIntroContainer,
+      pageState,
     } = this.state;
 
     return (
       <div className={styles['loader-top-container']}>
-        {children}
-        <div className={`${styles['loader-container']} ${hideIntroContainer ? styles['hide-loader-container'] : ''}`}>
+        {pageState == loaderPageStates.SHOW_PAGE && children}
+
+        <div className={`${styles['loader-container']} ${pageState == loaderPageStates.SHOW_PAGE ? styles['hide-loader-container'] : ''}`}>
           <div className={styles['overlay-reveal-container']}>
-            <div className={`${styles['reveal-div']} ${isCompletelyLoaded ? styles['start-reveal'] : ''} ${showIntro ? styles['end-reveal'] : ''}`} />
+            <div className={
+              `${styles['reveal-div']}
+               ${pageState == loaderPageStates.COMPLETED_LOADING || pageState == loaderPageStates.SHOW_INTRO ? styles['start-reveal'] : ''}
+               ${pageState == loaderPageStates.SHOW_INTRO ? styles['end-reveal'] : ''}`
+              }
+            />
           </div>
           {
-            showIntro ?
+            pageState == loaderPageStates.SHOW_INTRO || pageState == loaderPageStates.SHOW_PAGE ?
             <Intro onAnimationEnd={()=>this.onIntroAnimationEnd()}/>
             : (
               <div className={styles['percentage-text']}>

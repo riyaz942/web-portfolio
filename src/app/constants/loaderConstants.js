@@ -1,0 +1,6 @@
+export const loaderPageStates = {
+  IS_LOADING: 'IS_LOADING',
+  COMPLETED_LOADING: 'COMPLETED_LOADING',
+  SHOW_INTRO: 'SHOW_INTRO',
+  SHOW_PAGE: 'SHOW_PAGE',
+}

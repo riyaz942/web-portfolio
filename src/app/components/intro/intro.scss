@@ -20,26 +20,22 @@
   .animate-left {
     transition: all 0.5s ease;
     margin-right: -150px;
-    visibility: hidden;
     opacity: 0;
   }
 
   .animate-right {
     transition: all 0.5s ease;
     margin-left: -150px;
-    visibility: hidden;
     opacity: 0;
   }
 
   .animate-bottom {
     transition: all 0.5s ease;
     margin-top: -100px;
-    visibility: hidden;
     opacity: 0;
   }
 
   .animate {
-    visibility: visible;
     opacity: 1;
     margin: 0px;
   }
