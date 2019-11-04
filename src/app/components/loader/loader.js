@@ -90,8 +90,14 @@ export default class Loader extends Component {
 
   onIntroAnimationEnd = () => {
     this.setState({
-      pageState: loaderPageStates.SHOW_PAGE
-    })
+      pageState: loaderPageStates.ANIMATE_PAGE_REVEAL
+    });
+
+    setTimeout(()=>{
+      this.setState({
+        pageState: loaderPageStates.SHOW_PAGE
+      });
+    }, 1000);
   }
 
   render() {
@@ -104,31 +110,35 @@ export default class Loader extends Component {
     return (
       <React.Fragment>
        <div className={styles['loader-top-container']}>
-          {pageState == loaderPageStates.SHOW_PAGE && children}
-
-          <div className={`${styles['loader-container']} ${pageState == loaderPageStates.SHOW_PAGE ? styles['hide-loader-container'] : ''}`}>
-            <div className={styles['overlay-reveal-container']}>
-              <div className={
-                `${styles['reveal-div']}
-                ${pageState == loaderPageStates.COMPLETED_LOADING || pageState == loaderPageStates.SHOW_INTRO ? styles['start-reveal'] : ''}
-                ${pageState == loaderPageStates.SHOW_INTRO ? styles['end-reveal'] : ''}`
-                }
-              />
-            </div>
-            {
-              pageState == loaderPageStates.SHOW_INTRO || pageState == loaderPageStates.SHOW_PAGE ?
-              <Intro onAnimationEnd={()=>this.onIntroAnimationEnd()}/>
-              : (
-                <div className={styles['percentage-text']}>
-                  {`${contentLoadedPercentage}%`}
+          { pageState == loaderPageStates.SHOW_PAGE 
+            ? children
+            : (
+              <div className={styles['loader-container']}>
+                <div className={styles['overlay-reveal-container']}>
+                  <div className={
+                    `${styles['reveal-div']}
+                    ${pageState == loaderPageStates.COMPLETED_LOADING || pageState == loaderPageStates.SHOW_INTRO ? styles['start-reveal'] : ''}
+                    ${pageState == loaderPageStates.SHOW_INTRO ? styles['end-reveal'] : ''}`
+                    }
+                  />
                 </div>
-              )
-            }
-          </div>
+                {
+                  pageState == loaderPageStates.SHOW_INTRO || pageState == loaderPageStates.ANIMATE_PAGE_REVEAL ?
+                  <Intro onAnimationEnd={()=>this.onIntroAnimationEnd()}/>
+                  : (
+                    <div className={styles['percentage-text']}>
+                      {`${contentLoadedPercentage}%`}
+                    </div>
+                  )
+                }
+              </div>
+            )
+          }
         </div>
+
         <div className={styles['revealer']}>
-          <div className={`${styles['revealer-layer']} ${styles['animate-layer']}`}></div>
-          <div className={`${styles['revealer-layer']} ${styles['animate-layer']}`}></div>
+          <div className={`${styles['revealer-layer']} ${pageState == loaderPageStates.SHOW_PAGE || pageState == loaderPageStates.ANIMATE_PAGE_REVEAL ? styles['animate-layer']:''}`} />
+          <div className={`${styles['revealer-layer']} ${pageState == loaderPageStates.SHOW_PAGE || pageState == loaderPageStates.ANIMATE_PAGE_REVEAL ? styles['animate-layer']:''}`} />
         </div>
       </React.Fragment>
 

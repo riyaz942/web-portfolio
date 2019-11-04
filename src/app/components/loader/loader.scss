@@ -38,7 +38,7 @@ $transition-type: cubic-bezier(0.550, 0.055, 0.675, 0.190);
         right: 100%;
         bottom: 0;
         top: 0;
-        background: red;
+        background: #b71c1c;
         transition: right 600ms, left  600ms $transition-type;
       }
 
@@ -78,11 +78,11 @@ $transition-type: cubic-bezier(0.550, 0.055, 0.675, 0.190);
 
 
 .revealer-layer:first-child {
-	background: #9cdab1;
+	background: #004d40;
 }
 
 .revealer-layer:nth-child(2) {
-	background: #F9C969;
+	background: #b71c1c;
 }
 
 .animate-layer {
