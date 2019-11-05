@@ -74,9 +74,9 @@ export default class Intro extends Component {
 
                 setTimeout(()=> {
                   onAnimationEnd();
-                },2000);        
+                },1000);        
 
-              },1000);  
+              },1100);  
     
              },1000);
         

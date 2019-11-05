@@ -18,7 +18,7 @@ export default class Loader extends Component {
       totalItems: 0,
       itemsLoaded: 0,
       pageState: loaderPageStates.IS_LOADING,
-      disableIntro: true,
+      disableIntro: false,
     }
 
 
@@ -94,7 +94,7 @@ export default class Loader extends Component {
     if (contentLoadedPercentage != 100)
       this.setState({ contentLoadedPercentage: 100 });
 
-    /* setTimeout(()=>{
+    setTimeout(()=>{
       this.setState({
         pageState: loaderPageStates.COMPLETED_LOADING,
       });
@@ -105,8 +105,6 @@ export default class Loader extends Component {
         })
       },800);
     }, 600);
-    */
-    this.onIntroAnimationEnd();
   }
 
   onIntroAnimationEnd = () => {
