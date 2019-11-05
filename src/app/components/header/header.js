@@ -35,7 +35,7 @@ export default class Header extends Component {
         isFullScreen: false,
         animateDiscriptionHide: false
       });
-    }, 600);
+    }, 500);
   }
 
   onClickProfilePic = () => {
