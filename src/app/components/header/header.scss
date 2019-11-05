@@ -16,7 +16,16 @@ $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
     opacity: 1;
     right: 130px;
     top: 26px;
-    color: white;
+    display: flex;
+
+    .header-link-button {
+      cursor: pointer;
+      color: #b71c1c;
+    }
+
+    .header-link-button:nth-child(2) {
+      margin-left: 16px;
+    }
   }
 
   .content-container {
@@ -42,8 +51,18 @@ $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
   
       .user-button-container {
         display: flex;
+        justify-content: center;
         margin-top: 26px;
         color: white;
+
+        .user-button {
+          cursor: pointer;
+          color: #b71c1c;
+        }
+
+        .user-button:nth-child(2) {
+          margin-left: 16px;
+        }
       }
     }
   }

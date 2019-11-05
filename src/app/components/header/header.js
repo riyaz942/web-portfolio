@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styles from './header.scss';
 import profilePic from '../../../images/profile-pic.jpeg';
+import { landingPageBody } from '../../constants/landingConstants';
 
 export default class Header extends Component {
   state = {
@@ -47,6 +48,26 @@ export default class Header extends Component {
       this.showFullScreen();
   }
 
+  onClickProject = () => {
+    const { isFullScreen } = this.state;
+    const { updateBodyType } = this.props;
+
+    updateBodyType(landingPageBody.PROJECT);
+  
+    if(isFullScreen)
+      this.hideFullScreen();
+  }
+
+  onClickTimeline = () => {
+    const { isFullScreen } = this.state;
+    const { updateBodyType } = this.props;
+
+    updateBodyType(landingPageBody.TIMELINE);
+  
+    if(isFullScreen)
+      this.hideFullScreen();    
+  }
+
   render() {
     const {
       isFullScreen,
@@ -58,7 +79,8 @@ export default class Header extends Component {
        <div className={`${isFullScreen ? styles['header-fullscreen']: styles['header-normal']} ${styles['header-container']}`}>
 
          <div className={`${styles['header-link-container']}`}>
-           Header link container
+              <div className={styles['header-link-button']} onClick={this.onClickTimeline}>Timeline</div>
+              <div className={styles['header-link-button']} onClick={this.onClickProject}>Projects</div>
          </div>
 
         <div className={styles['content-container']}>
@@ -73,8 +95,8 @@ export default class Header extends Component {
                   </div>
 
                   <div className={styles['user-button-container']}>
-                    <div className={styles['user-button-timeline']}>Timeline</div>
-                    <div className={styles['user-button-project']}>Projects and Platform</div>
+                    <div className={styles['user-button']} onClick={this.onClickTimeline}>Timeline</div>
+                    <div className={styles['user-button']} onClick={this.onClickProject}>Projects</div>
                   </div>
                   {/* <div>git hub link and any social media link</div> */}
                 </div>

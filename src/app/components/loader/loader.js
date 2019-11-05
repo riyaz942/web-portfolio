@@ -18,6 +18,7 @@ export default class Loader extends Component {
       totalItems: 0,
       itemsLoaded: 0,
       pageState: loaderPageStates.IS_LOADING,
+      disableIntro: true,
     }
 
 
@@ -93,7 +94,7 @@ export default class Loader extends Component {
     if (contentLoadedPercentage != 100)
       this.setState({ contentLoadedPercentage: 100 });
 
-    setTimeout(()=>{
+    /* setTimeout(()=>{
       this.setState({
         pageState: loaderPageStates.COMPLETED_LOADING,
       });
@@ -104,6 +105,8 @@ export default class Loader extends Component {
         })
       },800);
     }, 600);
+    */
+    this.onIntroAnimationEnd();
   }
 
   onIntroAnimationEnd = () => {
@@ -123,6 +126,7 @@ export default class Loader extends Component {
     const { 
       contentLoadedPercentage,
       pageState,
+      disableIntro,
     } = this.state;
 
     return (
@@ -141,7 +145,7 @@ export default class Loader extends Component {
                   />
                 </div>
                 {
-                  pageState == loaderPageStates.SHOW_INTRO || pageState == loaderPageStates.ANIMATE_PAGE_REVEAL ?
+                  (pageState == loaderPageStates.SHOW_INTRO || pageState == loaderPageStates.ANIMATE_PAGE_REVEAL && !disableIntro) ?
                   <Intro onAnimationEnd={()=>this.onIntroAnimationEnd()}/>
                   : (
                     <div className={styles['percentage-text']}>
