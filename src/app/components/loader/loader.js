@@ -11,7 +11,7 @@ export default class Loader extends Component {
     super(props);
 
     document.addEventListener('DOMContentLoaded', this.getTotalLoadingItems, false);
-    window.addEventListener('load', this.completeLoading);
+    // window.addEventListener('load', this.completeLoading);
 
     this.state = {
       contentLoadedPercentage: 0,
@@ -19,6 +19,24 @@ export default class Loader extends Component {
       itemsLoaded: 0,
       pageState: loaderPageStates.IS_LOADING,
     }
+
+
+    //TODO remove Fake loading
+    const interval = setInterval(()=> {
+      const { itemsLoaded, totalItems } = this.state;
+
+      if (itemsLoaded != totalItems) {
+        this.documentLoaded();
+        if(itemsLoaded == totalItems) {
+          this.completeLoading();
+          clearInterval(interval);
+        }
+      } else {
+        this.completeLoading();
+        clearInterval(interval);
+      }
+
+    },500)
   }
 
   preloadImage = (src) => {
@@ -34,9 +52,8 @@ export default class Loader extends Component {
     const images = Array.from(document.images);
     images.push(this.preloadImage(profilePic));
 
-    this.setState({
-      totalItems: images.length
-    });
+    // TODO remove Fake loading
+    this.setState({ totalItems: images.length + 5 });
 
 /*     if(scriptTags)
       scriptTags.forEach(element => {      
@@ -65,7 +82,7 @@ export default class Loader extends Component {
     } = this.state;
 
     this.setState({
-      contentLoadedPercentage: Math.round((itemsLoaded+1/totalItems) * 100),
+      contentLoadedPercentage: Math.trunc(((itemsLoaded+1)/totalItems) * 100),
       itemsLoaded: itemsLoaded+1,
     });
   }
@@ -128,7 +145,7 @@ export default class Loader extends Component {
                   <Intro onAnimationEnd={()=>this.onIntroAnimationEnd()}/>
                   : (
                     <div className={styles['percentage-text']}>
-                      {`${contentLoadedPercentage}%`}
+                      {`${contentLoadedPercentage}`}
                     </div>
                   )
                 }
