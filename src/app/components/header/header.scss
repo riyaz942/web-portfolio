@@ -5,6 +5,7 @@ $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
 //-----------------------------------------------------------prefixed header state
 .header-container {
   // align-items: center;
+  z-index: 10;
   background: black;
   position: absolute;
   left: 0;

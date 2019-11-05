@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
+import styles from './timeline.scss';
 
 export default class Timeline extends Component {
-  constructor(props) {
-        super(props);
-  }
+
   render() {
      return(
-       <div>
-         Timeline
+       <div className={styles['timeline-container']}>
+         <div className={styles['text']}>
+           Timeline
+         </div>
        </div>
      )
   }
