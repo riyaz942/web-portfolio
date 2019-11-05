@@ -115,7 +115,7 @@ export default class Loader extends Component {
       this.setState({
         pageState: loaderPageStates.SHOW_PAGE
       });
-    }, 1000);
+    }, 1100);
   }
 
   render() {

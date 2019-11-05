@@ -28,6 +28,10 @@ $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
     align-items: center;
     // justify-content: center;
 
+    .user-pic {
+      animation: show-animation 600ms ease;
+    }
+
     .user-description-container {
       margin-top: 36px;
 
@@ -98,22 +102,22 @@ $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
 }
 
 .animate-hide {
-  animation: hide 600ms ease forwards;
+  animation: hide-animation 600ms ease forwards;
 }
 
 .animate-show {
-  animation: show 600ms ease;
+  animation: show-animation 500ms ease;
 }
 //-----------------------------------------------------animation
 
-@keyframes show {
+@keyframes show-animation {
   from {
     opacity: 0;
     margin-top: 100px;
   }
 }
 
-@keyframes hide {
+@keyframes hide-animation {
   to {
     opacity: 0;
   }
