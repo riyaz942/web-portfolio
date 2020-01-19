@@ -4,7 +4,7 @@ import styles from './loader.scss';
 import { Math } from 'core-js';
 import profilePic from '../../../images/profile-pic.jpeg';
 import { loaderPageStates } from '../../constants/loaderConstants';
-import PageReveal from '../commonComponents/pageReveal';
+import PageReveal from '../../common/components/pageReveal';
 
 export default class Loader extends Component {
   constructor(props) {

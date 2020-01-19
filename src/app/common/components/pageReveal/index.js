@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styles from './pageReveal.scss';
+import styles from './page_reveal.scss';
 
 const PageReveal = ({animate}) => {
 
