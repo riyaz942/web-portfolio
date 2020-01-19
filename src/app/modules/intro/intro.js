@@ -3,6 +3,11 @@ import styles from './intro.scss';
 import appStyles from '../../app.scss';
 
 export default class Intro extends Component {
+  // Hi There,
+  // Welcome ...... to my portfolio website
+  // This message has no point to it
+  // Just showing of this animation :p
+
   state = {
     divPositionX: 96, // fall back
     divPositionY: 31, // fall back

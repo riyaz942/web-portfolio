@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Intro from '../intro/intro';
 import styles from './loader.scss';
 import { Math } from 'core-js';
-import profilePic from '../../../images/profile-pic.jpeg';
+import profilePic from 'Images/profile-pic.jpeg';
 import { loaderPageStates } from '../../constants/loaderConstants';
 import PageReveal from '../../common/components/pageReveal';
 

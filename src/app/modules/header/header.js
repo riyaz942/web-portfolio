@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styles from './header.scss';
-import profilePic from '../../../images/profile-pic.jpeg';
+import profilePic from 'Images/profile-pic.jpeg';
 import { landingPageBody } from '../../constants/landingConstants';
 
 export default class Header extends Component {
