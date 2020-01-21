@@ -1,0 +1,22 @@
+.div_column {
+  display: flex;
+  flex-direction: column;
+}
+
+.div_row {
+  display: flex;
+  flex-direction: row;
+}
+
+.align_center {
+  align-items: center;
+}
+
+.justify_center {
+  justify-content: center;
+}
+
+.fill_parent {
+  flex: 1;
+  align-self: stretch;
+}
