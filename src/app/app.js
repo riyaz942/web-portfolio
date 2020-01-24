@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './app.scss';
 import Intro from './modules/intro/intro';
 import Landing from './modules/landing/landing';
-import Div from 'Common/components/Div';
+import Div from 'Common/components/div';
 
 function App() {
   return (

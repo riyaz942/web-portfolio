@@ -5,6 +5,7 @@ import { Math } from 'core-js';
 import profilePic from 'Images/profile-pic.jpeg';
 import { loaderPageStates } from '../../constants/loaderConstants';
 import PageReveal from '../../common/components/pageReveal';
+import Div from 'Common/components/div';
 
 export default class Loader extends Component {
   constructor(props) {
@@ -129,16 +130,16 @@ export default class Loader extends Component {
 
     return (
       <React.Fragment>
-       <div className={styles['loader-top-container']}>
+       <Div className={styles.loader_top_container}>
           { pageState == loaderPageStates.SHOW_PAGE 
             ? children
             : (
-              <div className={styles['loader-container']}>
-                <div className={styles['overlay-reveal-container']}>
+              <Div justifyCenter alignCenter className={styles.loader_container}>
+                <div className={styles.overlay_reveal_container}>
                   <div className={
-                    `${styles['reveal-div']}
-                    ${pageState == loaderPageStates.COMPLETED_LOADING || pageState == loaderPageStates.SHOW_INTRO ? styles['start-reveal'] : ''}
-                    ${pageState == loaderPageStates.SHOW_INTRO ? styles['end-reveal'] : ''}`
+                    `${styles.reveal_div}
+                    ${pageState == loaderPageStates.COMPLETED_LOADING || pageState == loaderPageStates.SHOW_INTRO ? styles.start_reveal : ''}
+                    ${pageState == loaderPageStates.SHOW_INTRO ? styles.end_reveal : ''}`
                     }
                   />
                 </div>
@@ -146,15 +147,15 @@ export default class Loader extends Component {
                   (pageState == loaderPageStates.SHOW_INTRO || pageState == loaderPageStates.ANIMATE_PAGE_REVEAL && !disableIntro) ?
                   <Intro onAnimationEnd={()=>this.onIntroAnimationEnd()}/>
                   : (
-                    <div className={styles['percentage-text']}>
+                    <div className={styles.percentage_text}>
                       {`${contentLoadedPercentage}`}
                     </div>
                   )
                 }
-              </div>
+              </Div>
             )
           }
-        </div>
+        </Div>
         <PageReveal animate={pageState == loaderPageStates.SHOW_PAGE || pageState == loaderPageStates.ANIMATE_PAGE_REVEAL}/>
       </React.Fragment>
     );

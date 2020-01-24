@@ -1,40 +1,35 @@
 $transition-type: cubic-bezier(0.550, 0.055, 0.675, 0.190);
 
-.loader-top-container {
+.loader_top_container {
   width: 100%;
   height: 100%;
   position: relative;
-  display: flex;
-  flex-direction: column;
   
-  .loader-container {
+  .loader_container {
     position: absolute;
     left: 0;
     right: 0;
     top: 0;
     bottom: 0;
     background: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     visibility: visible;
     opacity: 1;
     transition: opacity 1s, visibility 1s $transition-type;
 
-    .percentage-text {
+    .percentage_text {
       color: white;
       color: white;
       font-size: 50px;
       animation: show 600ms ease;
     }
 
-    .overlay-reveal-container {
+    .overlay_reveal_container {
       position: absolute;
       z-index: 100;
       height: 70px;
       width: 200px;
 
-      .reveal-div {
+      .reveal_div {
         position: absolute;
         left: 0;
         right: 100%;
@@ -44,17 +39,17 @@ $transition-type: cubic-bezier(0.550, 0.055, 0.675, 0.190);
         transition: right 600ms, left  600ms $transition-type;
       }
 
-      .start-reveal {
+      .start_reveal {
         right: 0px;
       }
 
-      .end-reveal {
+      .end_reveal {
         left: 200px;
       }
     }
   }
 
-  .hide-loader-container {
+  .hide_loader_container {
     visibility: hidden;
     opacity: 0;
   }
