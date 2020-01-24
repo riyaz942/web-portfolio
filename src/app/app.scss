@@ -5,34 +5,3 @@
   width: 100%;
   height: 100%;
 }
-
-.inline-center {
-  display: inline-block;
-  text-align: center;
-}
-
-.column {
-  display: flex;
-  flex-direction: column;
-}
-
-.row {
-  display: flex;
-  flex-direction: row;
-}
-
-.justify-center {
-  justify-content: center;
-}
-
-.align-center {
-  align-items: center;
-}
-
-.align-start {
-  align-items: flex-start;
-}
-
-.align-end {
-  align-items: flex-end;
-}

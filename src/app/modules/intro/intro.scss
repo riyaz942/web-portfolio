@@ -1,35 +1,35 @@
 @import '../../common/styles/colors';
 
-.intro-container {
+.intro_container {
   height: 100%;
   width: 100%;
   overflow: hidden;
   position: relative;
 
-  .intro-text {
+  .intro_text {
     color: white;
     font-size: 50px;
     white-space: nowrap;
   }
 
-  .intro-text-container2 {
+  .intro_text_container2 {
     margin-top: -67px;
     margin-right: -1086px;
   }
 
-  .animate-left {
+  .animate_left {
     transition: all 0.5s ease;
     margin-right: -150px;
     opacity: 0;
   }
 
-  .animate-right {
+  .animate_right {
     transition: all 0.5s ease;
     margin-left: -150px;
     opacity: 0;
   }
 
-  .animate-bottom {
+  .animate_bottom {
     transition: all 0.5s ease;
     margin-top: -100px;
     opacity: 0;
@@ -39,4 +39,10 @@
     opacity: 1;
     margin: 0px;
   }
+
+  .inline_container {
+    display: inline-block;
+    text-align: center;
+  }
 }
+

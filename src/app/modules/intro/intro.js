@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styles from './intro.scss';
-import appStyles from '../../app.scss';
+import Div from 'Common/components/div';
 
 export default class Intro extends Component {
   // Hi There,
@@ -151,13 +151,6 @@ export default class Intro extends Component {
   }
 
   render() {
-    const introContainerStyle =  [
-      appStyles['column'],
-      appStyles['justify-center'],
-      appStyles['align-center'],
-      styles['intro-container'],
-    ].join(' '); 
-
     const {
       divPositionY,
       divPositionX,
@@ -165,7 +158,7 @@ export default class Intro extends Component {
     } = this.state;
 
     return (
-     <div className={introContainerStyle}>
+     <Div justifyCenter alignCenter className={styles.intro_container}>
         <div style={{
           position: 'absolute',
           transition: 'all 0.5s ease',
@@ -174,46 +167,46 @@ export default class Intro extends Component {
         }}>
 
         <div>
-          <span ref={refObject[0].ref} className={styles['intro-text']}>
+          <span ref={refObject[0].ref} className={styles.intro_text}>
             Hi There,
           </span>
         </div>
 
-        <div className={appStyles['inline-center']}>
-          <div className={`${appStyles['row']} ${appStyles['align-center']}`}>
-            <span ref={refObject[1].ref} className={`${styles['intro-text']} ${styles['animate-bottom']} ${refObject[1].isVisible? styles['animate'] : ''}`}>
+        <div className={styles.inline_container}>
+          <Div row alignCenter>
+            <span ref={refObject[1].ref} className={`${styles.intro_text} ${styles.animate_bottom} ${refObject[1].isVisible? styles.animate : ''}`}>
               Welcome &nbsp;
             </span>
-            <span  ref={refObject[2].ref} className={`${styles['intro-text']} ${styles['animate-right']} ${refObject[2].isVisible? styles['animate'] : ''}`}>
+            <span  ref={refObject[2].ref} className={`${styles.intro_text} ${styles.animate_right} ${refObject[2].isVisible? styles.animate : ''}`}>
               Just so you know
             </span>
-          </div>
-          <span  ref={refObject[3].ref} className={`${styles['intro-text']} ${styles['animate-bottom']} ${refObject[3].isVisible? styles['animate'] : ''}`}>
+          </Div>
+          <span  ref={refObject[3].ref} className={`${styles.intro_text} ${styles.animate_bottom} ${refObject[3].isVisible? styles.animate : ''}`}>
             this website was made
           </span>
         </div>
 
-        <div className={appStyles['row']}>
+        <Div row>
           <span 
             ref={refObject[4].ref}
-            className={`${styles['intro-text']} ${styles['animate-bottom']} ${refObject[4].isVisible? styles['animate'] : ''}`}
+            className={`${styles.intro_text} ${styles.animate_bottom} ${refObject[4].isVisible? styles.animate : ''}`}
             style={{marginLeft: 241}}>
             
             with React &nbsp;
             {/*Margin left would be variable at somepoint in the future*/}
           </span>
-          <div className={`${appStyles['column']} ${appStyles['align-center']}`}>
-            <span  ref={refObject[5].ref} className={`${styles['intro-text']} ${styles['animate-right']} ${refObject[5].isVisible? styles['animate'] : ''}`}>
+          <Div alignCenter>
+            <span  ref={refObject[5].ref} className={`${styles.intro_text} ${styles.animate_right} ${refObject[5].isVisible? styles.animate : ''}`}>
               and not some yucky website builder.
             </span>
-            <span  ref={refObject[6].ref} className={`${styles['intro-text']} ${styles['animate-bottom']} ${refObject[6].isVisible? styles['animate'] : ''}`}>
+            <span  ref={refObject[6].ref} className={`${styles.intro_text} ${styles.animate_bottom} ${refObject[6].isVisible? styles.animate : ''}`}>
               &#128523;
             </span>
-          </div>
-        </div>
+          </Div>
+        </Div>
 
       </div>
-     </div>
+     </Div>
     )
   }
 }
