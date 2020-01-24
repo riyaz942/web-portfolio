@@ -3,7 +3,7 @@ $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
 // cubic-bezier(0.550, 0.055, 0.675, 0.190) // need to try
 
 //-----------------------------------------------------------prefixed header state
-.header-container {
+.header_container {
   // align-items: center;
   z-index: 10;
   background: black;
@@ -12,56 +12,48 @@ $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
   right: 0;
   top: 0;  
   
-  .header-link-container {
+  .header_link_container {
     position: absolute;
     opacity: 1;
     right: 130px;
     top: 26px;
-    display: flex;
 
-    .header-link-button {
+    .header_link_button {
       cursor: pointer;
       color: #b71c1c;
     }
 
-    .header-link-button:nth-child(2) {
+    .header_link_button:nth-child(2) {
       margin-left: 16px;
     }
   }
 
-  .content-container {
+  .content_container {
     position: absolute;
     right: 0;
-    display: flex;
-    flex-direction: column;
 
-    align-items: center;
-    // justify-content: center;
-
-    .user-pic {
+    .user_pic {
       animation: show-animation 600ms ease;
     }
 
-    .user-description-container {
+    .user_description_container {
       margin-top: 36px;
 
-      .user-description {
+      .user_description {
         text-align: center;
         color: white;
       }
   
-      .user-button-container {
-        display: flex;
-        justify-content: center;
+      .user_button_container {
         margin-top: 26px;
         color: white;
 
-        .user-button {
+        .user_button {
           cursor: pointer;
           color: #b71c1c;
         }
 
-        .user-button:nth-child(2) {
+        .user_button:nth-child(2) {
           margin-left: 16px;
         }
       }
@@ -70,15 +62,15 @@ $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
 }
 
 //--------------------------------------------------------normal header state
-.header-normal {
+.header_normal {
   height: 70px;
   transition: height 1s $transition-type;
 
-  .header-link-container {
+  .header_link_container {
     transition: opacity 600ms ease 600ms, top 600ms ease 600ms;
   }
 
-  .content-container {
+  .content_container {
     width: 70px;
     height: 70px;
     margin-top: 10px;
@@ -86,7 +78,7 @@ $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
     transition: height 600ms ease, width 600ms ease, margin-right 600ms ease, margin-top 600ms ease;
   }
 
-  .user-pic {
+  .user_pic {
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -95,17 +87,17 @@ $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
 }
 
 //--------------------------------------------------------fullScreen
-.header-fullscreen {
+.header_fullscreen {
   height: 100%;
   transition: height 1s $transition-type;
 
-  .header-link-container {
+  .header_link_container {
     transition: opacity 600ms ease, top 600ms ease;
     top: -20px;
     opacity: 0;
   }
 
-  .content-container {
+  .content_container {
     width: 500px;
     height: 500px;
     margin-right: calc(50% - 250px);
@@ -113,7 +105,7 @@ $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
     transition: height $transition-time $transition-type 300ms, width $transition-time $transition-type 300ms, margin-right $transition-time $transition-type 300ms, margin-top $transition-time $transition-type 300ms;
   }
 
-  .user-pic {
+  .user_pic {
     width: 300px;
     height: 300px;
     border-radius: 10%;
@@ -121,11 +113,11 @@ $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
   }
 }
 
-.animate-hide {
+.animate_hide {
   animation: hide-animation 600ms ease forwards;
 }
 
-.animate-show {
+.animate_show {
   animation: show-animation 500ms ease;
 }
 //-----------------------------------------------------animation

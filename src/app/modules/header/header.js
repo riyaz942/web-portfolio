@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styles from './header.scss';
 import profilePic from 'Images/profile-pic.jpeg';
 import { landingPageBody } from '../../constants/landingConstants';
+import Div from 'Common/components/div';
 
 export default class Header extends Component {
   state = {
@@ -20,7 +21,7 @@ export default class Header extends Component {
       isFullScreen: true
     })
 
-    setTimeout(()=> {
+    setTimeout(() => {
       this.setState({
         showDescription: true
       })
@@ -28,11 +29,11 @@ export default class Header extends Component {
   }
 
   hideFullScreen = () => {
-    this.setState({animateDiscriptionHide: true});
+    this.setState({ animateDiscriptionHide: true });
 
     setTimeout(() => {
-      this.setState({ 
-        showDescription: false, 
+      this.setState({
+        showDescription: false,
         isFullScreen: false,
         animateDiscriptionHide: false
       });
@@ -42,9 +43,9 @@ export default class Header extends Component {
   onClickProfilePic = () => {
     const { isFullScreen } = this.state;
 
-    if(isFullScreen)
+    if (isFullScreen)
       this.hideFullScreen();
-    else 
+    else
       this.showFullScreen();
   }
 
@@ -52,15 +53,15 @@ export default class Header extends Component {
     const { isFullScreen } = this.state;
     const { updateBodyType } = this.props;
 
-    if(isFullScreen) {
-      setTimeout(()=> {
+    if (isFullScreen) {
+      setTimeout(() => {
         updateBodyType(landingPageBody.PROJECT);
-      },600);
+      }, 600);
     }
-    else 
+    else
       updateBodyType(landingPageBody.PROJECT);
-  
-    if(isFullScreen)
+
+    if (isFullScreen)
       this.hideFullScreen();
   }
 
@@ -68,16 +69,16 @@ export default class Header extends Component {
     const { isFullScreen } = this.state;
     const { updateBodyType } = this.props;
 
-    if(isFullScreen) {
-      setTimeout(()=> {
+    if (isFullScreen) {
+      setTimeout(() => {
         updateBodyType(landingPageBody.TIMELINE);
-      },600);
+      }, 600);
     }
     else
       updateBodyType(landingPageBody.TIMELINE);
-  
-    if(isFullScreen)
-      this.hideFullScreen();    
+
+    if (isFullScreen)
+      this.hideFullScreen();
   }
 
   render() {
@@ -88,35 +89,35 @@ export default class Header extends Component {
     } = this.state;
 
     return (
-       <div className={`${isFullScreen ? styles['header-fullscreen']: styles['header-normal']} ${styles['header-container']}`}>
+      <div className={`${isFullScreen ? styles.header_fullscreen : styles.header_normal} ${styles.header_container}`}>
 
-         <div className={`${styles['header-link-container']}`}>
-              <div className={styles['header-link-button']} onClick={this.onClickTimeline}>Timeline</div>
-              <div className={styles['header-link-button']} onClick={this.onClickProject}>Projects</div>
-         </div>
+        <Div row className={`${styles.header_link_container}`}>
+          <div className={styles.header_link_button} onClick={this.onClickTimeline}>Timeline</div>
+          <div className={styles.header_link_button} onClick={this.onClickProject}>Projects</div>
+        </Div>
 
-        <div className={styles['content-container']}>
-          <img src={profilePic} className={styles['user-pic']} onClick={this.onClickProfilePic}/>
+        <Div alignCenter className={styles.content_container}>
+          <img src={profilePic} className={styles.user_pic} onClick={this.onClickProfilePic} />
 
-            {
-              showDescription && (
-                <div className={`${styles['user-description-container']} ${animateDiscriptionHide ? styles['animate-hide'] : styles['animate-show']}`}>
-                  <div className={styles['user-description']}>
-                    So here there will be a description about my self.
-                    might be long or something
+          {
+            showDescription && (
+              <div className={`${styles.user_description_container} ${animateDiscriptionHide ? styles.animate_hide : styles.animate_show}`}>
+                <div className={styles.user_description}>
+                  So here there will be a description about my self.
+                  might be long or something
                   </div>
 
-                  <div className={styles['user-button-container']}>
-                    <div className={styles['user-button']} onClick={this.onClickTimeline}>Timeline</div>
-                    <div className={styles['user-button']} onClick={this.onClickProject}>Projects</div>
-                  </div>
-                  {/* <div>git hub link and any social media link</div> */}
-                </div>
-              )
-            }
-           
-        </div>
-       </div>
-     )
+                <Div row justifyCenter className={styles.user_button_container}>
+                  <div className={styles.user_button} onClick={this.onClickTimeline}>Timeline</div>
+                  <div className={styles.user_button} onClick={this.onClickProject}>Projects</div>
+                </Div>
+                {/* <div>git hub link and any social media link</div> */}
+              </div>
+            )
+          }
+
+        </Div>
+      </div>
+    )
   }
 }
