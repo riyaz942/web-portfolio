@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styles from './header.scss';
+import styles from './header.module.scss';
 import profilePic from 'Images/profile-pic.jpeg';
 import { landingPageBody } from '../../constants/landingConstants';
 import Div from 'Common/components/div';
@@ -90,7 +90,7 @@ export default class Header extends Component {
 
     return (
       <div className={`${isFullScreen ? styles.header_fullscreen : styles.header_normal} ${styles.header_container}`}>
-
+        <div className={styles.background_gradient}></div>
         <Div row className={`${styles.header_link_container}`}>
           <div className={styles.header_link_button} onClick={this.onClickTimeline}>Timeline</div>
           <div className={styles.header_link_button} onClick={this.onClickProject}>Projects</div>
