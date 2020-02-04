@@ -5,11 +5,14 @@ export default class Timeline extends Component {
   render() {
     return (
       <Div
-       fillParent
-       className={styles.timeline_container}
-       {...this.props}
+        row
+        fillParent
+        align="stretch"
+        className={styles.timeline_container}
+        {...this.props}
       >
-        <div className={styles.text}>Timeline</div>
+        <Div className={styles.left_container}>asdasd</Div>
+        <Div flex className={styles.right_container}>asdfasdf</Div>
       </Div>
     );
   }

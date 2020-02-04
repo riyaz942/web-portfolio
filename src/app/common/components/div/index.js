@@ -1,41 +1,62 @@
-import React, { Component } from 'react';
-import styles from './div.module.scss';
-import {animated} from 'react-spring';
+import React, { Component } from "react";
+import styles from "./div.module.scss";
+import { animated } from "react-spring";
 
-export default class Div extends Component {
+class Div extends Component {
   render() {
     const {
       row,
-      alignCenter,
-      justifyCenter,
+      align,
+      justify,
       fillParent,
       className,
       children,
       animate,
+      flex,
+      style,
       ...rest
     } = this.props;
 
-    const classNameValue = `${row ? styles.div_row : styles.div_column}
-    ${alignCenter ? styles.align_center : '' }
-    ${justifyCenter ? styles.justify_center : ''}
-    ${fillParent ? styles.fill_parent: ''}
-    ${className}`
+    const classNameArray = [
+      row ? styles.div_row : styles.div_column,
+      align
+        ? typeof align == "string"
+          ? styles[`align_${align}`]
+          : styles.align_center
+        : "",
+      justify
+        ? typeof justify == "string"
+          ? styles[`justify_${justify}`]
+          : styles.justify_center
+        : "",
+      fillParent ? styles.fill_parent : "",
+      className
+    ];
+
+    let styleValue = style ? style : {};
+
+    if (flex) {
+      styleValue = { ...styleValue, flex: typeof flex == "number" ? flex : 1 };
+    }
 
     if (animate) {
       return (
         <animated.div
-          className={classNameValue}
+          className={classNameArray.join(" ")}
+          style={styleValue}
           {...rest}
         >
           {children}
         </animated.div>
-      )
+      );
     }
 
     return (
-      <div className={classNameValue} {...rest}>
+      <div className={classNameArray.join(" ")} style={styleValue} {...rest}>
         {children}
       </div>
-    )
+    );
   }
 }
+
+export default Div;

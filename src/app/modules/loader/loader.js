@@ -134,7 +134,7 @@ export default class Loader extends Component {
           { pageState == loaderPageStates.SHOW_PAGE 
             ? children
             : (
-              <Div justifyCenter alignCenter className={styles.loader_container}>
+              <Div justify align className={styles.loader_container}>
                 <div className={styles.overlay_reveal_container}>
                   <div className={
                     `${styles.reveal_div}

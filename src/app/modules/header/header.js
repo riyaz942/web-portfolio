@@ -96,7 +96,7 @@ export default class Header extends Component {
           <div className={styles.header_link_button} onClick={this.onClickProject}>Projects</div>
         </Div>
 
-        <Div alignCenter className={styles.content_container}>
+        <Div align className={styles.content_container}>
           <img src={profilePic} className={styles.user_pic} onClick={this.onClickProfilePic} />
 
           {
@@ -107,7 +107,7 @@ export default class Header extends Component {
                   might be long or something
                   </div>
 
-                <Div row justifyCenter className={styles.user_button_container}>
+                <Div row justify className={styles.user_button_container}>
                   <div className={styles.user_button} onClick={this.onClickTimeline}>Timeline</div>
                   <div className={styles.user_button} onClick={this.onClickProject}>Projects</div>
                 </Div>

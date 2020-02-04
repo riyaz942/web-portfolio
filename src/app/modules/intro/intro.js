@@ -159,7 +159,7 @@ export default class Intro extends Component {
     } = this.state;
 
     return (
-     <Div justifyCenter alignCenter className={styles.intro_container}>
+     <Div justify align className={styles.intro_container}>
         <div style={{
           position: 'absolute',
           transition: 'all 0.5s ease',
@@ -174,7 +174,7 @@ export default class Intro extends Component {
         </div>
 
         <div className={styles.inline_container}>
-          <Div row alignCenter>
+          <Div row align>
             <span ref={refObject[1].ref} className={`${styles.intro_text} ${styles.animate_bottom} ${refObject[1].isVisible? styles.animate : ''}`}>
               Welcome &nbsp;
             </span>
@@ -196,7 +196,7 @@ export default class Intro extends Component {
             with React &nbsp;
             {/*Margin left would be variable at somepoint in the future*/}
           </span>
-          <Div alignCenter>
+          <Div align>
             <span  ref={refObject[5].ref} className={`${styles.intro_text} ${styles.animate_right} ${refObject[5].isVisible? styles.animate : ''}`}>
               and not some yucky website builder.
             </span>
