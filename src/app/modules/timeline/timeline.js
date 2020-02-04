@@ -5,11 +5,11 @@ export default class Timeline extends Component {
 
   render() {
      return(
-       <div className={styles['timeline-container']}>
-         <div className={styles['text']}>
+       <div className={styles.timeline_container}>
+         <div className={styles.text}>
            Timeline
          </div>
        </div>
-     )
+     );
   }
 }
