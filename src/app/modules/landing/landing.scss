@@ -3,10 +3,15 @@
     height: 100%;
 
     .body_container {
-      flex: 1;
-      align-self: stretch;
-
-      display: flex;
       padding-top: 70px;
+      position: relative;
+
+      .body_content_container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+      }
     }
 }

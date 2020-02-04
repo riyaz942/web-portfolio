@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
 import styles from './projects.scss';
+import Div from 'Common/components/div';
 
 export default class Projects extends Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
-     return(
-      <div className={styles['project-container']}>
-        <div className={styles['text']}>
+     return (
+      <Div fillParent {...this.props} className={styles.project_container}>
+        <div className={styles.text}>
           Projects
         </div>
-      </div>
+      </Div>
      )
   }
 }

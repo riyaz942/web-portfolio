@@ -1,21 +1,9 @@
-.project-container {
-  flex: 1;
-  align-self: stretch;
-  display: flex;
+.project_container {  
   justify-content: center;
   align-items: center;
-  animation: show-animation 500ms ease;
 
   .text {
     color: white;
     font-size: 50px;
-  }
-}
-
-
-@keyframes show-animation {
-  from {
-    opacity: 0;
-    margin-top: 100px;
   }
 }
