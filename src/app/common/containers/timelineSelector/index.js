@@ -36,18 +36,27 @@ class TimelineSelector extends Component {
           <Spring
             key={timeline.id}
             to={{
-              width: timeline.isSelected ? 90 : 38
+              width: timeline.isSelected ? timeline.containerWidth : 38,
+              opacity: timeline.isSelected ? 1 : 0,
             }}
           >
             {props => (
               <Div
                 row
-                style={props}
+                align
+                justify
+                style={{width: props.width}}
                 className={styles.company_logo_container}
                 onClick={()=>this.onClickTimelineItem(timeline)}
               >
-                <img className={styles.first_logo} />
-                <img className={styles.rest_logo} />
+                <Div
+                  row
+                  align
+                  justify
+                  className={styles.first_logo_container}>
+                  <img className={styles.logo} src={timeline.firstLogo} />
+                </Div>
+                <img style={{ opacity: props.opacity, marginLeft: timeline.restMargin }} className={styles.logo} src={timeline.restLogo} />
               </Div>
             )}
           </Spring>

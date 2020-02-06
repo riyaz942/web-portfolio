@@ -1,8 +1,8 @@
 import nykaaLogoFirst from 'Images/nykaa-logo-first.png';
 import nykaaLogoRest from 'Images/nykaa-logo-rest.png';
 
-import tailoredTechLogoFirst from 'Images/nykaa-logo-first.png';
-import tailoredTechLogoRest from 'Images/nykaa-logo-rest.png';
+import tailoredTechLogoFirst from 'Images/tailoredtech-logo-first.png';
+import tailoredTechLogoRest from 'Images/tailoredtech-logo-rest.png';
 
 import mitLogoFirst from 'Images/mit-logo-first.jpg';
 import mitLogoRest from 'Images/mit-logo-first.jpg';
@@ -20,6 +20,8 @@ export const timelineListValue = [
     companyDetail: '',
     firstLogo: nykaaLogoFirst,
     restLogo: nykaaLogoRest,
+    restMargin: 13,
+    containerWidth: 90,
   },
   {
     id: 'tailoredtech',
@@ -32,6 +34,8 @@ export const timelineListValue = [
     companyDetail: '',
     firstLogo: tailoredTechLogoFirst,
     restLogo: tailoredTechLogoRest,
+    restMargin: 20,
+    containerWidth: 107,
   },
   {
     id: 'mit',
@@ -44,5 +48,7 @@ export const timelineListValue = [
     companyDetail: '',
     firstLogo: mitLogoFirst,
     restLogo: mitLogoRest,
+    restMargin: 12,
+    containerWidth: 90,
   }
 ];

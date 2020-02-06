@@ -4,4 +4,17 @@
   border-radius: 20px;
   height: 38px;
   background: $color-black;
+  position: relative;
+}
+
+.logo {
+  height: 22px;
+}
+
+.first_logo_container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 38px;
+  width: 38px;
 }
