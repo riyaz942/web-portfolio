@@ -42,9 +42,7 @@ class TimelineSelector extends Component {
           >
             {props => (
               <Fragment>
-                {
-                  index != 0 && (<div className={styles.vertical_divider}></div>)
-                }
+                {index != 0 && <div className={styles.vertical_divider}></div>}
                 <Div
                   row
                   align
