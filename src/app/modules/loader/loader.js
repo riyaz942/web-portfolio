@@ -24,21 +24,22 @@ export default class Loader extends Component {
 
 
     //TODO remove Fake loading
-    const interval = setInterval(()=> {
-      const { itemsLoaded, totalItems } = this.state;
+    // const interval = setInterval(()=> {
+    //   const { itemsLoaded, totalItems } = this.state;
 
-      if (itemsLoaded != totalItems) {
-        this.documentLoaded();
-        if(itemsLoaded == totalItems) {
-          this.completeLoading();
-          clearInterval(interval);
-        }
-      } else {
-        this.completeLoading();
-        clearInterval(interval);
-      }
+    //   if (itemsLoaded != totalItems) {
+    //     this.documentLoaded();
+    //     if(itemsLoaded == totalItems) {
+    //       this.completeLoading();
+    //       clearInterval(interval);
+    //     }
+    //   } else {
+    //     this.completeLoading();
+    //     clearInterval(interval);
+    //   }
 
-    },500)
+    // },500)
+    this.completeLoading();
   }
 
   preloadImage = (src) => {
