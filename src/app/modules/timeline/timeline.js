@@ -16,27 +16,17 @@ export default class Timeline extends Component {
     this.setState({ selectedTimelineId: id });
   };
 
-  getBackgroundImage = selectedTimelineId => {
+  render() {
+    const { selectedTimelineId } = this.state;
     const timeline = find(timelineListValue, timelineItem => {
       return timelineItem.id == selectedTimelineId;
     });
 
-    return props => (
-      <animated.img
-        src={timeline.backgroundImage}
-        style={props}
-        className={styles.background_image}
-      ></animated.img>
-    );
-  };
-
-  render() {
-    const { selectedTimelineId } = this.state;
-
     return (
       <Div row fillParent align="stretch" className={styles.timeline_container}>
         <Transition
-          items={selectedTimelineId}
+          items={timeline}
+          keys={timeline => timeline.id}
           from={{
             opacity: 0,
             marginTop: "200px"
@@ -51,7 +41,14 @@ export default class Timeline extends Component {
           }}
         >
           {/* {timeline => props => <animated.div style={{ backgroundImage: `url(${timeline.backgroundImage})`, ...props}} className={styles.background_image}></animated.div>} */}
-          {selectedTimelineId => this.getBackgroundImage(selectedTimelineId)}
+          
+          {timeline => props => (
+            <animated.img
+              src={timeline.backgroundImage}
+              style={props}
+              className={styles.background_image}
+            ></animated.img>
+          )}
         </Transition>
         <div className={styles.background_overlay}></div>
         <div className={styles.left_background_gradient}></div>
