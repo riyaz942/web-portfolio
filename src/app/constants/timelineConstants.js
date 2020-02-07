@@ -7,6 +7,8 @@ import tailoredTechLogoRest from 'Images/tailoredtech-logo-rest.png';
 import mitLogoFirst from 'Images/mit-logo-first.jpg';
 import mitLogoRest from 'Images/mit-logo-first.jpg';
 
+import nykaaBackgroundImage from 'Images/background-image-nykaa.jpg';
+import tailoredTechBackgroundImage from 'Images/background-image-tailoredtech.jpg';
 
 export const timelineListValue = [
   {
@@ -20,8 +22,9 @@ export const timelineListValue = [
     companyDetail: '',
     firstLogo: nykaaLogoFirst,
     restLogo: nykaaLogoRest,
-    restMargin: 13,
-    containerWidth: 90,
+    restMargin: 13, // the secound image margin because logo length is different
+    containerWidth: 90, // the capsule container width .. when opened size
+    backgroundImage: nykaaBackgroundImage,
   },
   {
     id: 'tailoredtech',
@@ -36,6 +39,7 @@ export const timelineListValue = [
     restLogo: tailoredTechLogoRest,
     restMargin: 20,
     containerWidth: 107,
+    backgroundImage: tailoredTechBackgroundImage,
   },
   {
     id: 'mit',
@@ -46,9 +50,10 @@ export const timelineListValue = [
     location: 'Pune',
     roleDetail: '',
     companyDetail: '',
-    firstLogo: mitLogoFirst,
-    restLogo: mitLogoRest,
+    firstLogo: tailoredTechLogoFirst,
+    restLogo: tailoredTechLogoRest,
     restMargin: 12,
     containerWidth: 90,
+    backgroundImage: tailoredTechBackgroundImage,
   }
 ];

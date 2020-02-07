@@ -11,6 +11,8 @@ class TimelineSelector extends Component {
   };
 
   onClickTimelineItem = selectedTimeline => {
+    const { onTimelineSelected } = this.props;
+
     const { timelineList } = this.state;
     const updatedTimelineList = map(timelineList, timeline => {
       if (selectedTimeline.id == timeline.id)
@@ -23,7 +25,8 @@ class TimelineSelector extends Component {
         isSelected: false
       };
     });
-    console.log(updatedTimelineList);
+    
+    onTimelineSelected(selectedTimeline.id);
     this.setState({ timelineList: updatedTimelineList });
   };
 

@@ -11,17 +11,17 @@ $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
   right: 0;
   top: 0;  
   
-  .background_gradient {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;  
-    height: 70px; 
-    // Helps with the frame rate otherwise it will animate the height and opacity
+  // .background_gradient {
+  //   position: absolute;
+  //   left: 0;
+  //   right: 0;
+  //   top: 0;  
+  //   height: 70px; 
+  //   // Helps with the frame rate otherwise it will animate the height and opacity
 
-    transition: opacity 1s $transition-type;
-    background-image: linear-gradient(rgba(0,0,0,0.3), transparent);
-  }
+  //   transition: opacity 1s $transition-type;
+  //   background-image: linear-gradient(rgba(0,0,0,0.3), transparent);
+  // }
 
   .header_link_container {
     position: absolute;
@@ -78,9 +78,9 @@ $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
   background-color: transparent;
   transition: height 1s ,background-color 1s $transition-type;
 
-  .background_gradient {
-    opacity: 1;
-  }
+  // .background_gradient {
+  //   opacity: 1;
+  // }
 
   .header_link_container {
     transition: opacity 600ms ease 600ms, top 600ms ease 600ms;
@@ -108,9 +108,9 @@ $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
   background-color: black;
   transition: height 1s ,background-color 1s $transition-type;
 
-  .background_gradient {
-    opacity: 0;
-  }
+  // .background_gradient {
+  //   opacity: 0;
+  // }
 
   .header_link_container {
     transition: opacity 600ms ease, top 600ms ease;
