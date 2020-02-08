@@ -37,27 +37,21 @@ export default class Timeline extends Component {
           items={timeline}
           keys={timeline => timeline.id}
           from={this.isFirstAnimation ? {
-            opacity: 0,
-            marginTop: "0px"
+            marginTop: "0vh"            
           }: {
-            opacity: 0,
-            marginTop: "200px"
+            marginTop: "100vh"
           }}
 
           enter={this.isFirstAnimation ? {
-            opacity: 1,
-            marginTop: "0px"
+            marginTop: "0vh"            
           } : {
-            opacity: 1,
-            marginTop: "0px"
+            marginTop: "0vh"
           }}
           
           leave={this.isFirstAnimation ? {
-            opacity: 0,
-            marginTop: "0px"
+            marginTop: "0vh"            
           }: {
-            opacity: 0,
-            marginTop: "-200px"
+            marginTop: "-100vh"
           }}
         >
           {/* {timeline => props => <animated.div style={{ backgroundImage: `url(${timeline.backgroundImage})`, ...props}} className={styles.background_image}></animated.div>} */}

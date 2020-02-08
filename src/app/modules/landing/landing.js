@@ -71,7 +71,7 @@ export default class Landing extends Component {
     else if (bodyType == landingPageBody.TIMELINE) {
       fromAnimation = {
         opacity: 0,
-        marginLeft: '-100px',
+        marginLeft: '-200px',
       };
       enterAnimation = {
         opacity: 1,
@@ -79,12 +79,12 @@ export default class Landing extends Component {
       };
       leaveAnimation = {
         opacity: 0,
-        marginLeft: '100px',
+        marginLeft: '200px',
       };
     } else if (bodyType == landingPageBody.PROJECT) {
       fromAnimation = {
         opacity: 0,
-        marginLeft: '100px',
+        marginLeft: '200px',
       };
       enterAnimation = {
         opacity: 1,
@@ -92,7 +92,7 @@ export default class Landing extends Component {
       };
       leaveAnimation = {
         opacity: 0,
-        marginLeft: '-100px',
+        marginLeft: '-200px',
       };
     }
 
