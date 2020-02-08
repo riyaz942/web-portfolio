@@ -4,6 +4,7 @@ import profilePic from "Images/profile-pic.jpeg";
 import { landingPageBody } from "../../constants/landingConstants";
 import Div from "Common/components/div";
 import { Spring, Transition } from "react-spring/renderprops";
+import HeaderDescription from './headerDescription';
 
 export default class Header extends Component {
   state = {
@@ -41,8 +42,8 @@ export default class Header extends Component {
   onClickProfilePic = () => {
     const { isFullScreen } = this.state;
 
-    if (isFullScreen) this.hideFullScreen();
-    else this.showFullScreen();
+    if (!isFullScreen)
+      this.showFullScreen();
   };
 
   onClickProject = () => {
@@ -72,10 +73,7 @@ export default class Header extends Component {
   };
 
   render() {
-    const {
-      isFullScreen,
-      showDescription
-    } = this.state;
+    const { isFullScreen, showDescription } = this.state;
 
     return (
       <Fragment
@@ -104,60 +102,42 @@ export default class Header extends Component {
             </div>
           </Div>
 
-          <Div align className={styles.content_container}>
-            <img
-              src={profilePic}
-              className={styles.user_pic}
-              onClick={this.onClickProfilePic}
-            />
-
-            <Transition
-              items={showDescription}
-              from={{
-                opacity: 0,
-                marginTop: "100px"
-              }}
-              enter={{
-                opacity: 1,
-                marginTop: "36px"
-              }}
-              leave={{
-                opacity: 0
-              }}
-            >
-              {showDescription =>
-                showDescription &&
-                (props => (
-                  <Div
-                    animate
+          <Fragment>
+            <Div align className={styles.content_container}>
+              {/* <Spring
+                from={{
+                  height: '300px',
+                  width: '300px'
+                }}
+                to={{
+                  height: isFullScreen ? '300px' : '50px',
+                  width: isFullScreen ? '300px' : '50px'
+                }}
+              >
+                {props => (
+                  <img
+                    src={profilePic}
                     style={props}
-                    className={styles.user_description_container}
-                  >
-                    <div className={styles.user_description}>
-                      So here there will be a description about my self. might
-                      be long or something
-                    </div>
+                    className={styles.user_pic}
+                    onClick={this.onClickProfilePic}
+                  />
+                )}
+              </Spring> */}
+              <img
+                src={profilePic}
+                className={styles.user_pic}
+                onClick={this.onClickProfilePic}
+              />
+              {/* Description */}
 
-                    <Div row justify className={styles.user_button_container}>
-                      <div
-                        className={styles.user_button}
-                        onClick={this.onClickTimeline}
-                      >
-                        Timeline
-                      </div>
-                      <div
-                        className={styles.user_button}
-                        onClick={this.onClickProject}
-                      >
-                        Projects
-                      </div>
-                    </Div>
-                    {/* <div>git hub link and any social media link</div> */}
-                  </Div>
-                ))
-              }
-            </Transition>
-          </Div>
+
+                <HeaderDescription 
+                  showDescription={showDescription}
+                  onClickProject={this.onClickProject}
+                  onClickTimeline={this.onClickTimeline}
+                />
+            </Div>
+          </Fragment>
         </div>
       </Fragment>
     );
