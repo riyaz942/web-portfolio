@@ -1,22 +1,58 @@
+@import '~Styles/colors.module';
+
 .user_description_container {
-  margin-top: 36px;
+  padding: 118px 111px 41px;
+  border-radius: 35px;
+  box-shadow: 0px 5px 12px 3px rgba(0, 0, 0, 0.35);
+  background-color: rgba(#ffffff, 0.87);
+
+  color: $color-black;
+  font-size: 12px;
 
   .user_description {
     text-align: center;
-    color: white;
+
+    .name {
+      color: $color-blue;
+      font-size: 14px;
+    }
   }
 
   .user_button_container {
-    margin-top: 26px;
-    color: white;
+    margin-top: 30px;
 
     .user_button {
+      font-size: 14px;
+      font-weight: bold;
+      margin: 0px 3px;
       cursor: pointer;
-      color: #b71c1c;
+      color: $color-green;
+      
+      .underline {
+        height: 2px;
+        width: 0px;
+        background: $color-green;
+        transition: width 500ms ease;
+      }
     }
 
-    .user_button:nth-child(2) {
-      margin-left: 16px;
+    .user_button:hover {
+      .underline {
+        width: 100%;
+      }
+    }
+  }
+
+  .social_container {
+    margin-top: 38px;
+
+    .icon {
+      margin-left: 29px;
+      width: 16px;
+    }
+
+    .icon:first-child {
+      margin-left: 0px;
     }
   }
 }

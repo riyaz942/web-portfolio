@@ -92,9 +92,9 @@ class Header extends Component {
             >
               <Transition
                 items={showDescription}
-                from={{ opacity: 0 }}
-                enter={{ opacity: 1 }}
-                leave={{ opacity: 0 }}
+                from={{ opacity: 0}}
+                enter={{ opacity: 1}}
+                leave={{ opacity: 0}}
               >
                 {
                   value => value && (props => (

@@ -280,6 +280,7 @@ module.exports = function(webpackEnv) {
         Common: path.resolve(__dirname, '../src/app/common'),
         Styles: path.resolve(__dirname, '../src/app/common/styles'),
         Images: path.resolve(__dirname, '../src/assets/images'),
+        Icons: path.resolve(__dirname, '../src/assets/icons'),
         // Icons: path.resolve(__dirname, '../src/assets/icons'),
         // Hoc: path.resolve(__dirname, '../src/modules/hoc'),
         Constants: path.resolve(__dirname, '../src/app/constants'),

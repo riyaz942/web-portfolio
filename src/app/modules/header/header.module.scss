@@ -19,7 +19,7 @@ $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
     right: 0;
     top: 0;  
     bottom: 0;
-    
+
     background-size: cover;
     background-position: left top;
     background-repeat: no-repeat;
@@ -59,6 +59,7 @@ $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
 
     .user_pic {
       border-radius: 50%;
+      z-index: 1;
       animation: show-animation 600ms ease;
     }
     
@@ -90,7 +91,8 @@ $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
   .user_pic {
     width: 50px;
     height: 50px;
-    transition: height 600ms ease, width 600ms ease, border-radius 600ms ease;
+    box-shadow: 0px 5px 12px 3px rgba(0, 0, 0, 0);
+    transition: height 600ms ease, width 600ms ease, box-shadow 600ms ease,border-radius 600ms ease;
   }
 }
 
@@ -119,9 +121,10 @@ $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
   }
 
   .user_pic {
-    width: 300px;
-    height: 300px;
-    transition: height $transition-time $transition-type 300ms, width $transition-time $transition-type 300ms, margin-right $transition-time $transition-type 300ms, margin-top $transition-time $transition-type 300ms, border-radius $transition-time $transition-type 300ms;
+    width: 200px;
+    height: 200px;
+    box-shadow: 0px 5px 12px 3px rgba(0, 0, 0, 0.35);
+    transition: height $transition-time $transition-type 300ms, width $transition-time $transition-type 300ms, margin-right $transition-time $transition-type 300ms, margin-top $transition-time $transition-type 300ms, box-shadow $transition-time $transition-type 300ms, border-radius $transition-time $transition-type 300ms;
   }
 }
 
