@@ -6,15 +6,11 @@ import Div from "Common/components/div";
 import { Spring, Transition } from "react-spring/renderprops";
 import HeaderDescription from './headerDescription';
 
-export default class Header extends Component {
+class Header extends Component {
   state = {
     isFullScreen: true,
     showDescription: true
   };
-
-  constructor(props) {
-    super(props);
-  }
 
   showFullScreen = () => {
     // from header to full screen
@@ -76,70 +72,57 @@ export default class Header extends Component {
     const { isFullScreen, showDescription } = this.state;
 
     return (
-      <Fragment
+      <Spring
         to={{
-          opacity: 0 //timeline.isSelected ? 1 : 0
+          backgroundColor: isFullScreen ? '#333333ff' : '#33333300',
+          height: isFullScreen ?'calc(100vh + 0px)' : 'calc(0vh + 70px)', //Because have to keep a same format even the operator and type of units
         }}
       >
-        <div
-          className={`${
-            isFullScreen ? styles.header_fullscreen : styles.header_normal
-          } ${styles.header_container}`}
-        >
-          {/* <div className={styles.background_gradient}></div> */}
-          <Div row className={`${styles.header_link_container}`}>
+        {
+          props => (
             <div
-              className={styles.header_link_button}
-              onClick={this.onClickTimeline}
+              style={props}
+              className={`${
+                isFullScreen ? styles.header_fullscreen : styles.header_normal
+                } ${styles.header_container}`}
             >
-              Timeline
-            </div>
-            <div
-              className={styles.header_link_button}
-              onClick={this.onClickProject}
-            >
-              Projects
-            </div>
-          </Div>
-
-          <Fragment>
-            <Div align className={styles.content_container}>
-              {/* <Spring
-                from={{
-                  height: '300px',
-                  width: '300px'
-                }}
-                to={{
-                  height: isFullScreen ? '300px' : '50px',
-                  width: isFullScreen ? '300px' : '50px'
-                }}
-              >
-                {props => (
-                  <img
-                    src={profilePic}
-                    style={props}
-                    className={styles.user_pic}
-                    onClick={this.onClickProfilePic}
-                  />
-                )}
-              </Spring> */}
-              <img
-                src={profilePic}
-                className={styles.user_pic}
-                onClick={this.onClickProfilePic}
-              />
-              {/* Description */}
+              {/* <div className={styles.background_gradient}></div> */}
+              <Div row className={`${styles.header_link_container}`}>
+                <div
+                  className={styles.header_link_button}
+                  onClick={this.onClickTimeline}
+                >
+                  Timeline
+              </div>
+                <div
+                  className={styles.header_link_button}
+                  onClick={this.onClickProject}
+                >
+                  Projects
+              </div>
+              </Div>
 
 
-                <HeaderDescription 
+              <Div align className={styles.content_container}>
+
+                <img
+                  src={profilePic}
+                  className={styles.user_pic}
+                  onClick={this.onClickProfilePic}
+                />
+
+                <HeaderDescription
                   showDescription={showDescription}
                   onClickProject={this.onClickProject}
                   onClickTimeline={this.onClickTimeline}
                 />
-            </Div>
-          </Fragment>
-        </div>
-      </Fragment>
+              </Div>
+            </div>
+          )
+        }
+      </Spring>
     );
   }
 }
+
+export default Header;

@@ -1,3 +1,5 @@
+@import '~Styles/colors.module';
+
 $transition-time: 1s;
 $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
 // cubic-bezier(0.550, 0.055, 0.675, 0.190) // need to try
@@ -53,9 +55,9 @@ $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
 
 //--------------------------------------------------------normal header state
 .header_normal {
-  height: 70px;
-  background-color: transparent;
-  transition: height 1s ,background-color 1s $transition-type;
+  // height: 70px;
+  // background-color: transparent;
+  // transition: height 1s ,background-color 1s $transition-type;
 
   // .background_gradient {
   //   opacity: 1;
@@ -82,9 +84,9 @@ $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
 
 //--------------------------------------------------------fullScreen
 .header_fullscreen {
-  height: 100%;
-  background-color: black;
-  transition: height 1s ,background-color 1s $transition-type;
+  // height: 100%;
+  // background-color: $color-black;
+  // transition: height 1s ,background-color 1s $transition-type;
 
   // .background_gradient {
   //   opacity: 0;
