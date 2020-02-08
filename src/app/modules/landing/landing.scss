@@ -1,6 +1,9 @@
+@import '~Styles/colors.module';
+
 .landing_container {
     width: 100%;
     height: 100%;
+    background: $color-black;
 
     .body_container {
       padding-top: 70px;

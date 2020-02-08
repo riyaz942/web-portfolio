@@ -10,10 +10,16 @@ import { Transition } from "react-spring/renderprops";
 
 export default class Landing extends Component {
   state = {
-    bodyType: landingPageBody.NONE
+    bodyType: landingPageBody.NONE,
   };
 
+  constructor(props) {
+    super(props);
+    this.previousBodyType = landingPageBody.NONE;
+  }
+  
   updateBodyType = bodyType => {
+    this.previousBodyType = this.state.bodyType;
     this.setState({ bodyType });
   };
 
@@ -43,6 +49,52 @@ export default class Landing extends Component {
   render() {
     const { bodyType } = this.state;
     const bodyContent = this.getBodyContent();
+    let fromAnimation, enterAnimation, leaveAnimation;
+    
+    if (this.previousBodyType == landingPageBody.NONE) {
+      fromAnimation = {
+        opacity: 0,
+        marginTop: '100px',
+        marginLeft: '0px'
+      };
+      enterAnimation = {
+        opacity: 1,
+        marginTop: '0px',
+        marginLeft: '0px'
+      }
+      leaveAnimation = {
+        opacity: 0,
+        marginTop: '-100px',
+        marginLeft: '0px'
+      }
+    }
+    else if (bodyType == landingPageBody.TIMELINE) {
+      fromAnimation = {
+        opacity: 0,
+        marginLeft: '-100px',
+      };
+      enterAnimation = {
+        opacity: 1,
+        marginLeft: '0px',
+      };
+      leaveAnimation = {
+        opacity: 0,
+        marginLeft: '100px',
+      };
+    } else if (bodyType == landingPageBody.PROJECT) {
+      fromAnimation = {
+        opacity: 0,
+        marginLeft: '100px',
+      };
+      enterAnimation = {
+        opacity: 1,
+        marginLeft: '0px',
+      };
+      leaveAnimation = {
+        opacity: 0,
+        marginLeft: '-100px',
+      };
+    }
 
     return (
       <Div className={styles.landing_container}>
@@ -53,18 +105,9 @@ export default class Landing extends Component {
             <Div fillParent className={styles.body_container}>
               <Transition
                 items={bodyType}
-                from={{
-                  opacity: 0,
-                  marginTop: "100px"
-                }}
-                enter={{
-                  opacity: 1,
-                  marginTop: "0px"
-                }}
-                leave={{
-                  opacity: 0,
-                  marginTop: "-100px"
-                }}
+                from={fromAnimation}
+                enter={enterAnimation}
+                leave={leaveAnimation}
               >
                 {bodyType => bodyContent[bodyType]}
               </Transition>

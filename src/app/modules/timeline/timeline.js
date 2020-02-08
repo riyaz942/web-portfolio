@@ -12,6 +12,15 @@ export default class Timeline extends Component {
     selectedTimelineId: "nykaa"
   };
 
+  constructor(props) {
+    super(props);
+    this.isFirstAnimation = true;
+  }
+
+  componentDidMount() {
+    this.isFirstAnimation = false;
+  }
+
   onTimelineSelected = id => {
     this.setState({ selectedTimelineId: id });
   };
@@ -27,15 +36,26 @@ export default class Timeline extends Component {
         <Transition
           items={timeline}
           keys={timeline => timeline.id}
-          from={{
+          from={this.isFirstAnimation ? {
+            opacity: 0,
+            marginTop: "0px"
+          }: {
             opacity: 0,
             marginTop: "200px"
           }}
-          enter={{
+
+          enter={this.isFirstAnimation ? {
+            opacity: 1,
+            marginTop: "0px"
+          } : {
             opacity: 1,
             marginTop: "0px"
           }}
-          leave={{
+          
+          leave={this.isFirstAnimation ? {
+            opacity: 0,
+            marginTop: "0px"
+          }: {
             opacity: 0,
             marginTop: "-200px"
           }}
