@@ -5,7 +5,6 @@ import TimelineSelector from "Common/containers/timelineSelector";
 import { timelineListValue } from "Constants/timelineConstants";
 import find from "lodash/find";
 import { Transition } from "react-spring/renderprops";
-import { animated } from "react-spring";
 
 export default class Timeline extends Component {
   state = {
@@ -57,11 +56,11 @@ export default class Timeline extends Component {
           {/* {timeline => props => <animated.div style={{ backgroundImage: `url(${timeline.backgroundImage})`, ...props}} className={styles.background_image}></animated.div>} */}
           
           {timeline => props => (
-            <animated.img
+            <img
               src={timeline.backgroundImage}
               style={props}
               className={styles.background_image}
-            ></animated.img>
+            ></img>
           )}
         </Transition>
         <div className={styles.background_overlay}></div>
