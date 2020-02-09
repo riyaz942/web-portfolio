@@ -57,71 +57,71 @@ export default class Intro extends Component {
 
   componentDidMount() {
     const { onAnimationEnd } = this.props;
-    onAnimationEnd();
-    // this.updatedivPositions(0);
+    // onAnimationEnd();
+    this.updatedivPositions(0);
 
-    // setTimeout(()=> {
-    //   this.updatedivPositions(1);
+    setTimeout(() => {
+      this.updatedivPositions(1);
 
-    //   setTimeout(()=> {
-    //     this.updatedivPositions(2);
+      setTimeout(() => {
+        this.updatedivPositions(2);
 
-    //     setTimeout(()=> {
-    //       this.updatedivPositions(3);
+        setTimeout(() => {
+          this.updatedivPositions(3);
 
-    //         setTimeout(()=> {
-    //         this.updatedivPositions(4);
+          setTimeout(() => {
+            this.updatedivPositions(4);
 
-    //         setTimeout(()=> {
-    //           this.updatedivPositions(5);
-    
-    //           setTimeout(()=> {
-    //             this.updatedivPositions(6);
+            setTimeout(() => {
+              this.updatedivPositions(5);
 
-    //             setTimeout(()=> {
-    //               onAnimationEnd();
-    //             },1000);        
+              setTimeout(() => {
+                this.updatedivPositions(6);
 
-    //           },1100);  
-    
-    //          },1000);
-        
-    //       },1000);
+                setTimeout(() => {
+                  onAnimationEnd();
+                }, 1000);
 
-    //     },1000);
-   
-    //   },1000);
-       
-    // },1000);
-    
+              }, 1100);
+
+            }, 1000);
+
+          }, 1000);
+
+        }, 1000);
+
+      }, 1000);
+
+    }, 1000);
+
   }
 
   updatedivPositions(referenceObjectIndex) {
     const { divPositionX, divPositionY, refObject } = this.state;
-    const { ref : { current }, direction } = refObject[referenceObjectIndex];
-//console.log(this.myInput.current.offsetWidth)
+    const { ref: { current }, direction } = refObject[referenceObjectIndex];
+    //console.log(this.myInput.current.offsetWidth)
     const objectWidth = current.offsetWidth;
     const objectHeight = current.offsetHeight;
 
     //NOTE:- created this because the span has an additional padding above and below the text 
     //So the text doesn't look centered aligned although it is programatically correct
-    const componentHeightPadding = 15; 
+    const componentHeightPadding = 15;
 
     if (direction == 'right') {
-      let finalObjectWidth = objectWidth/2;
-      if (refObject[referenceObjectIndex-1].direction == 'bottom') {
-        const previousRef = refObject[referenceObjectIndex-1].ref;
-        finalObjectWidth += previousRef.current.offsetWidth/2;
+      let finalObjectWidth = objectWidth / 2;
+      if (refObject[referenceObjectIndex - 1].direction == 'bottom') {
+        const previousRef = refObject[referenceObjectIndex - 1].ref;
+        finalObjectWidth += previousRef.current.offsetWidth / 2;
       }
 
-      refObject[referenceObjectIndex] = {...refObject[referenceObjectIndex], isVisible: true }
+      refObject[referenceObjectIndex] = { ...refObject[referenceObjectIndex], isVisible: true }
       this.setState({
         divPositionX: divPositionX + finalObjectWidth,
         refObject
       })
     } else if (direction == 'bottom') {
-      const resultDivPositionY = Math.abs((divPositionY + componentHeightPadding) + (objectHeight/2));
-      refObject[referenceObjectIndex] = {...refObject[referenceObjectIndex], isVisible: true }
+      const resultDivPositionY = Math.abs((divPositionY + componentHeightPadding) + (objectHeight / 2));
+      refObject[referenceObjectIndex] = { ...refObject[referenceObjectIndex], isVisible: true }
 
       this.setState({
         divPositionY: resultDivPositionY,
@@ -129,14 +129,14 @@ export default class Intro extends Component {
       });
 
     } else if (direction == 'bottom-center') {
-      const previousRef = refObject[referenceObjectIndex - 1 ].ref;
+      const previousRef = refObject[referenceObjectIndex - 1].ref;
       const secondPreviousRef = refObject[referenceObjectIndex - 2].ref;
       const previousObjectWidth = previousRef.current.offsetWidth;
       const secondPreviousObjectWidth = secondPreviousRef.current.offsetWidth;
 
-      const resultDivPositionX = Math.abs((secondPreviousObjectWidth/2 + previousObjectWidth /2)); // TODO rethink
-      const resultDivPositionY = Math.abs((divPositionY + componentHeightPadding) + (objectHeight/2));
-      refObject[referenceObjectIndex] = {...refObject[referenceObjectIndex], isVisible: true }
+      const resultDivPositionX = Math.abs((secondPreviousObjectWidth / 2 + previousObjectWidth / 2)); // TODO rethink
+      const resultDivPositionY = Math.abs((divPositionY + componentHeightPadding) + (objectHeight / 2));
+      refObject[referenceObjectIndex] = { ...refObject[referenceObjectIndex], isVisible: true }
 
       this.setState({
         divPositionX: resultDivPositionX,
@@ -145,8 +145,8 @@ export default class Intro extends Component {
       });
     } else if (direction == 'init') {
       this.setState({
-        divPositionX: objectWidth/2,
-        divPositionY: (objectHeight + componentHeightPadding)/2
+        divPositionX: objectWidth / 2,
+        divPositionY: (objectHeight + componentHeightPadding) / 2
       })
     }
   }
@@ -157,9 +157,10 @@ export default class Intro extends Component {
       divPositionX,
       refObject,
     } = this.state;
+    const { style } = this.props;
 
     return (
-     <Div justify align className={styles.intro_container}>
+      <Div justify align style={style} className={styles.intro_container}>
         <div style={{
           position: 'absolute',
           transition: 'all 0.5s ease',
@@ -167,47 +168,47 @@ export default class Intro extends Component {
           left: `calc(50% - ${divPositionX}px)`
         }}>
 
-        <div>
-          <span ref={refObject[0].ref} className={styles.intro_text}>
-            Hi There,
+          <div>
+            <span ref={refObject[0].ref} className={styles.intro_text}>
+              Hi There,
           </span>
-        </div>
+          </div>
 
-        <div className={styles.inline_container}>
-          <Div row align>
-            <span ref={refObject[1].ref} className={`${styles.intro_text} ${styles.animate_bottom} ${refObject[1].isVisible? styles.animate : ''}`}>
-              Welcome &nbsp;
+          <div className={styles.inline_container}>
+            <Div row align>
+              <span ref={refObject[1].ref} className={`${styles.intro_text} ${styles.animate_bottom} ${refObject[1].isVisible ? styles.animate : ''}`}>
+                Welcome &nbsp;
             </span>
-            <span  ref={refObject[2].ref} className={`${styles.intro_text} ${styles.animate_right} ${refObject[2].isVisible? styles.animate : ''}`}>
-              Just so you know
+              <span ref={refObject[2].ref} className={`${styles.intro_text} ${styles.animate_right} ${refObject[2].isVisible ? styles.animate : ''}`}>
+                Just so you know
             </span>
-          </Div>
-          <span  ref={refObject[3].ref} className={`${styles.intro_text} ${styles.animate_bottom} ${refObject[3].isVisible? styles.animate : ''}`}>
-            this website was made
+            </Div>
+            <span ref={refObject[3].ref} className={`${styles.intro_text} ${styles.animate_bottom} ${refObject[3].isVisible ? styles.animate : ''}`}>
+              this website was made
           </span>
-        </div>
+          </div>
 
-        <Div row>
-          <span 
-            ref={refObject[4].ref}
-            className={`${styles.intro_text} ${styles.animate_bottom} ${refObject[4].isVisible? styles.animate : ''}`}
-            style={{marginLeft: 241}}>
-            
-            with React &nbsp;
+          <Div row>
+            <span
+              ref={refObject[4].ref}
+              className={`${styles.intro_text} ${styles.animate_bottom} ${refObject[4].isVisible ? styles.animate : ''}`}
+              style={{ marginLeft: 241 }}>
+
+              with React &nbsp;
             {/*Margin left would be variable at somepoint in the future*/}
-          </span>
-          <Div align>
-            <span  ref={refObject[5].ref} className={`${styles.intro_text} ${styles.animate_right} ${refObject[5].isVisible? styles.animate : ''}`}>
-              and not some yucky website builder.
             </span>
-            <span  ref={refObject[6].ref} className={`${styles.intro_text} ${styles.animate_bottom} ${refObject[6].isVisible? styles.animate : ''}`}>
-              &#128523;
+            <Div align>
+              <span ref={refObject[5].ref} className={`${styles.intro_text} ${styles.animate_right} ${refObject[5].isVisible ? styles.animate : ''}`}>
+                and not some yucky website builder.
             </span>
+              <span ref={refObject[6].ref} className={`${styles.intro_text} ${styles.animate_bottom} ${refObject[6].isVisible ? styles.animate : ''}`}>
+                &#128523;
+            </span>
+            </Div>
           </Div>
-        </Div>
 
-      </div>
-     </Div>
+        </div>
+      </Div>
     )
   }
 }

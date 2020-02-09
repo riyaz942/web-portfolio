@@ -61,7 +61,7 @@ export default class Loader extends Component {
     images.push(this.preloadImage(backgroundImageTailoredTech));
 
     // TODO remove Fake loading
-    this.setState({ totalItems: images.length + 4});
+    this.setState({ totalItems: images.length + 4 });
 
     /*     if(scriptTags)
           scriptTags.forEach(element => {      
@@ -121,7 +121,6 @@ export default class Loader extends Component {
           pageState: loaderPageStates.SHOW_PAGE
         });
       }
-
     }, 500);
   }
 
@@ -136,13 +135,11 @@ export default class Loader extends Component {
     const {
       contentLoadedPercentage,
       pageState,
-      disableIntro,
     } = this.state;
 
     return (
       <Div className={styles.loader_top_container}>
         {pageState == loaderPageStates.SHOW_PAGE && children}
-
         {/* LOADER */}
         <Transition
           items={pageState}
@@ -152,20 +149,20 @@ export default class Loader extends Component {
         >
           {pageState => pageState == loaderPageStates.IS_LOADING && (
             props => (
-                <Div row fillParent style={props} className={styles.loader_container}>
-                  <div className={styles.loading_text}>Loading ...</div>
+              <Div row fillParent style={props} className={styles.loader_container}>
+                <div className={styles.loading_text}>Loading ...</div>
 
-                  <Spring
-                    from={{ width: `${this.previousContentLoadedPercentage}vw`, x: this.previousContentLoadedPercentage }}
-                    to={{ width: `${contentLoadedPercentage}vw`, x: contentLoadedPercentage }}
-                  >
-                    {props => (
-                      <Div animate row className={styles.loader_width_percentage} style={props}>
-                        <div className={styles.percentage_text}>{Math.floor(props.x)}</div>
-                      </Div>
-                    )}
-                  </Spring>
-                </Div>
+                <Spring
+                  from={{ width: `${this.previousContentLoadedPercentage}vw`, x: this.previousContentLoadedPercentage }}
+                  to={{ width: `${contentLoadedPercentage}vw`, x: contentLoadedPercentage }}
+                >
+                  {props => (
+                    <Div animate row className={styles.loader_width_percentage} style={props}>
+                      <div className={styles.percentage_text}>{Math.floor(props.x)}</div>
+                    </Div>
+                  )}
+                </Spring>
+              </Div>
 
             )
           )}
@@ -173,13 +170,16 @@ export default class Loader extends Component {
 
 
         {/* Intro Animation */}
-        {/* <Transition
+        <Transition
           items={pageState}
+          from={{ opacity: 0 }}
+          enter={{ opacity: 1 }}
+          leave={{ opacity: 0 }}
         >
-          {pageState => pageState == loaderPageStates.SHOW_INTRO && (
-            <Intro onAnimationEnd={() => this.onIntroAnimationEnd()} />
+          {pageState => pageState == loaderPageStates.SHOW_INTRO && (props =>
+            <Intro style={props} onAnimationEnd={() => this.onIntroAnimationEnd()} />
           )}
-        </Transition> */}
+        </Transition>
 
       </Div>
     );
