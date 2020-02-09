@@ -3,7 +3,7 @@ import styles from "./header.module.scss";
 import profilePic from "Images/profile-pic.jpeg";
 import { landingPageBody } from "../../constants/landingConstants";
 import Div from "Common/components/div";
-import { Spring, Transition } from "react-spring/renderprops";
+import { Spring, Transition, config } from "react-spring/renderprops";
 import HeaderDescription from './headerDescription';
 import backgroundDarkDoodle from 'Images/background-dark-doodle.jpg';
 

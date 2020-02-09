@@ -41,7 +41,7 @@ class HeaderDescription extends Component {
                   <div className={styles.underline}></div>
                 </Div> 
                 and
-                <Div align className={styles.user_button} onClick={onClickTimeline}>
+                <Div align className={styles.user_button} onClick={onClickProject}>
                   Projects
                   <div className={styles.underline}></div>
                 </Div>.
