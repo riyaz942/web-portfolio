@@ -68,6 +68,16 @@ export default class Timeline extends Component {
 
         <Div className={styles.left_container}>
           <TimelineSelector onTimelineSelected={this.onTimelineSelected} />
+          <Div className={styles.content_container}>
+          <div className={styles.title}>{timeline.companyName}</div>
+
+            <Div align='start' className={styles.description_container}>
+              <div className={styles.description}>{timeline.duration}</div>
+              <div className={styles.description}>{timeline.position}</div>
+              <div className={styles.description}>{timeline.location}</div>
+              <div className={styles.button}>View More</div>
+            </Div>
+          </Div>
         </Div>
         <Div flex className={styles.right_container}></Div>
       </Div>

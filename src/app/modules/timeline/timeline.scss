@@ -41,9 +41,40 @@
 
   .left_container {
     width: 30vw;
-    padding-top: 96px;
+    padding-top: 40px;
     //    background-image: linear-gradient(rgba(0,0,0,0.3), transparent);
     z-index: 3;
+
+    .content_container {
+      color: white;
+      margin-top: auto;
+      margin-bottom: 70px;
+
+      .title {
+        font-size: 60px;
+      }
+
+      .description_container {
+        margin-top: 40px;
+        margin-left: 22px;
+
+        .description {
+          font-size: 16.5px;
+          margin-bottom: 17px;
+        }
+
+        .description:last-child {
+          margin-bottom: 22;
+        }
+        
+        .button {
+          font-size: 16.5px;
+          border-radius: 7.8px;
+          border: solid 1px white;
+          padding: 6px 14px;
+        }
+      }
+    }
   }
 
   .right_container {
