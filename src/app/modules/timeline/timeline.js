@@ -36,25 +36,25 @@ export default class Timeline extends Component {
           items={timeline}
           keys={timeline => timeline.id}
           from={this.isFirstAnimation ? {
-            marginTop: "0vh"            
-          }: {
-            marginTop: "100vh"
-          }}
+            marginTop: "0vh"
+          } : {
+              marginTop: "100vh"
+            }}
 
           enter={this.isFirstAnimation ? {
-            marginTop: "0vh"            
-          } : {
             marginTop: "0vh"
-          }}
-          
+          } : {
+              marginTop: "0vh"
+            }}
+
           leave={this.isFirstAnimation ? {
-            marginTop: "0vh"            
-          }: {
-            marginTop: "-100vh"
-          }}
+            marginTop: "0vh"
+          } : {
+              marginTop: "-100vh"
+            }}
         >
           {/* {timeline => props => <animated.div style={{ backgroundImage: `url(${timeline.backgroundImage})`, ...props}} className={styles.background_image}></animated.div>} */}
-          
+
           {timeline => props => (
             <img
               src={timeline.backgroundImage}
@@ -68,16 +68,27 @@ export default class Timeline extends Component {
 
         <Div className={styles.left_container}>
           <TimelineSelector onTimelineSelected={this.onTimelineSelected} />
-          <Div className={styles.content_container}>
-          <div className={styles.title}>{timeline.companyName}</div>
 
-            <Div align='start' className={styles.description_container}>
-              <div className={styles.description}>{timeline.duration}</div>
-              <div className={styles.description}>{timeline.position}</div>
-              <div className={styles.description}>{timeline.location}</div>
-              <div className={styles.button}>View More</div>
-            </Div>
-          </Div>
+          <Transition
+            items={timeline}
+            keys={timeline => timeline.id}
+            from={{ opacity: 0 }}
+            enter={{ opacity: 1 }}
+            leave={{ opacity: 0 }}
+          >
+            {timeline => props => (
+              <Div style={props} className={styles.content_container}>
+                <div className={styles.title}>{timeline.companyName}</div>
+
+                <Div align='start' className={styles.description_container}>
+                  <div className={styles.description}>{timeline.duration}</div>
+                  <div className={styles.description}>{timeline.position}</div>
+                  <div className={styles.description}>{timeline.location}</div>
+                  <div className={styles.button}>view more</div>
+                </Div>
+              </Div>
+            )}
+          </Transition>
         </Div>
         <Div flex className={styles.right_container}></Div>
       </Div>
