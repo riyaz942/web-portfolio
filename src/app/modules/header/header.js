@@ -71,6 +71,7 @@ class Header extends Component {
 
   render() {
     const { isFullScreen, showDescription } = this.state;
+    const { bodyType } = this.props;
 
     return (
       <Spring
@@ -92,9 +93,9 @@ class Header extends Component {
             >
               <Transition
                 items={showDescription}
-                from={{ opacity: 0}}
-                enter={{ opacity: 1}}
-                leave={{ opacity: 0}}
+                from={{ opacity: 0 }}
+                enter={{ opacity: 1 }}
+                leave={{ opacity: 0 }}
               >
                 {
                   value => value && (props => (
@@ -107,19 +108,28 @@ class Header extends Component {
                 }
               </Transition>
 
-              <Div row className={`${styles.header_link_container}`}>
-                <div
-                  className={styles.header_link_button}
-                  onClick={this.onClickTimeline}
+              <Div className={`${styles.header_link_container}`}>
+                <Div row className={styles.bodytype_container}>
+                  <div
+                    className={styles.header_link_button}
+                    onClick={this.onClickTimeline}
+                  >
+                    Timeline
+                  </div>
+                  <div
+                    className={styles.header_link_button}
+                    onClick={this.onClickProject}
+                  >
+                    Projects
+                  </div>
+                </Div>
+                <Spring
+                  to={{
+                    marginLeft: bodyType == landingPageBody.TIMELINE ? 6 : 82
+                  }}
                 >
-                  Timeline
-              </div>
-                <div
-                  className={styles.header_link_button}
-                  onClick={this.onClickProject}
-                >
-                  Projects
-              </div>
+                  {props => <div style={props} className={styles.underline}></div>}
+                </Spring>
               </Div>
 
 

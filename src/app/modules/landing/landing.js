@@ -71,7 +71,7 @@ export default class Landing extends Component {
     else if (bodyType == landingPageBody.TIMELINE) {
       fromAnimation = {
         opacity: 0,
-        marginLeft: '-200px',
+        marginLeft: '-300px',
       };
       enterAnimation = {
         opacity: 1,
@@ -79,12 +79,12 @@ export default class Landing extends Component {
       };
       leaveAnimation = {
         opacity: 0,
-        marginLeft: '200px',
+        marginLeft: '300px',
       };
     } else if (bodyType == landingPageBody.PROJECT) {
       fromAnimation = {
         opacity: 0,
-        marginLeft: '200px',
+        marginLeft: '300px',
       };
       enterAnimation = {
         opacity: 1,
@@ -92,7 +92,7 @@ export default class Landing extends Component {
       };
       leaveAnimation = {
         opacity: 0,
-        marginLeft: '-200px',
+        marginLeft: '-300px',
       };
     }
 
@@ -100,7 +100,7 @@ export default class Landing extends Component {
       <Div className={styles.landing_container}>
         <Loader>
           <React.Fragment>
-            <Header updateBodyType={this.updateBodyType} />
+            <Header bodyType={bodyType} updateBodyType={this.updateBodyType} />
 
             <Div fillParent className={styles.body_container}>
               <Transition

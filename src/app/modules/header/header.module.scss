@@ -43,14 +43,24 @@ $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
     right: 130px;
     top: 26px;
 
-    .header_link_button {
-      cursor: pointer;
-      color: white;
+
+    .bodytype_container {
+      padding: 0px 6px;
+      .header_link_button {
+        cursor: pointer;
+        color: white;
+      }
+  
+      .header_link_button:nth-child(2) {
+        margin-left: 16px;
+      }
     }
 
-    .header_link_button:nth-child(2) {
-      margin-left: 16px;
-    }
+      .underline {
+        height: 1px;
+        width: 62px;
+        background: white;
+      }
   }
 
   .content_container {
