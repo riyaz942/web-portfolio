@@ -1,10 +1,15 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import Intro from '../intro/intro';
 import styles from './loader.scss';
 import { Math } from 'core-js';
 import profilePic from 'Images/profile-pic.jpeg';
+import backgroundDarkDoodle from 'Images/background-dark-doodle.jpg';
+import backgroundImageNykaa from 'Images/background-image-nykaa.jpg';
+import backgroundImageTailoredTech from 'Images/background-image-tailoredtech.jpg';
+
 import { loaderPageStates } from '../../constants/loaderConstants';
 import PageReveal from '../../common/components/pageReveal';
+import { Transition, Spring } from 'react-spring/renderprops';
 import Div from 'Common/components/div';
 
 export default class Loader extends Component {
@@ -19,27 +24,24 @@ export default class Loader extends Component {
       totalItems: 0,
       itemsLoaded: 0,
       pageState: loaderPageStates.IS_LOADING,
-      disableIntro: false,
+      disableIntro: true,
     }
+    this.previousContentLoadedPercentage = 0;
 
+    const interval = setInterval(() => {
+      const { itemsLoaded, totalItems } = this.state;
 
-    //TODO remove Fake loading
-    // const interval = setInterval(()=> {
-    //   const { itemsLoaded, totalItems } = this.state;
-
-    //   if (itemsLoaded != totalItems) {
-    //     this.documentLoaded();
-    //     if(itemsLoaded == totalItems) {
-    //       this.completeLoading();
-    //       clearInterval(interval);
-    //     }
-    //   } else {
-    //     this.completeLoading();
-    //     clearInterval(interval);
-    //   }
-
-    // },500)
-    this.completeLoading();
+      if (itemsLoaded != totalItems) {
+        this.documentLoaded();
+        if (itemsLoaded == totalItems) {
+          this.completeLoading();
+          clearInterval(interval);
+        }
+      } else {
+        this.completeLoading();
+        clearInterval(interval);
+      }
+    }, 500);
   }
 
   preloadImage = (src) => {
@@ -54,111 +56,132 @@ export default class Loader extends Component {
     // const styleTags = Array.from(document.styleSheets);
     const images = Array.from(document.images);
     images.push(this.preloadImage(profilePic));
+    images.push(this.preloadImage(backgroundDarkDoodle));
+    images.push(this.preloadImage(backgroundImageNykaa));
+    images.push(this.preloadImage(backgroundImageTailoredTech));
 
     // TODO remove Fake loading
-    this.setState({ totalItems: images.length + 5 });
+    this.setState({ totalItems: images.length + 4});
 
-/*     if(scriptTags)
-      scriptTags.forEach(element => {      
-        element.onload = this.documentLoaded;
-        element.onerror = this.documentLoaded;
-      }); */
+    /*     if(scriptTags)
+          scriptTags.forEach(element => {      
+            element.onload = this.documentLoaded;
+            element.onerror = this.documentLoaded;
+          }); */
 
-    if(images)
+    if (images)
       images.forEach(element => {
         element.onload = this.documentLoaded;
         element.onerror = this.documentLoaded;
       });
 
-/*     if(styleTags)
-      styleTags.forEach(element => {
-        debugger;
-        element.onload = this.documentLoaded;
-        element.onerror = this.documentLoaded; 
-      }); */
+    /*  if(styleTags)
+          styleTags.forEach(element => {
+            debugger;
+            element.onload = this.documentLoaded;
+            element.onerror = this.documentLoaded; 
+          }); */
   }
 
   documentLoaded = () => {
     const {
       totalItems,
-      itemsLoaded
+      itemsLoaded,
+      contentLoadedPercentage,
     } = this.state;
 
+    this.previousContentLoadedPercentage = contentLoadedPercentage;
     this.setState({
-      contentLoadedPercentage: Math.trunc(((itemsLoaded+1)/totalItems) * 100),
-      itemsLoaded: itemsLoaded+1,
+      contentLoadedPercentage: Math.trunc(((itemsLoaded + 1) / totalItems) * 100),
+      itemsLoaded: itemsLoaded + 1,
     });
+
+    // if (itemsLoaded+1 == totalItems) {
+    //   this.completeLoading();
+    // }
   }
 
   completeLoading = () => {
-    const { contentLoadedPercentage } = this.state;
+    const { contentLoadedPercentage, disableIntro } = this.state;
 
     if (contentLoadedPercentage != 100)
       this.setState({ contentLoadedPercentage: 100 });
 
-    setTimeout(()=>{
-      this.setState({
-        pageState: loaderPageStates.COMPLETED_LOADING,
-      });
-  
-      setTimeout(()=>{
+    this.setState({
+      pageState: loaderPageStates.COMPLETED_LOADING,
+    });
+
+    setTimeout(() => {
+      if (!disableIntro) {
         this.setState({
           pageState: loaderPageStates.SHOW_INTRO
-        })
-      },800);
-    }, 600);
+        });
+      } else {
+        this.setState({
+          pageState: loaderPageStates.SHOW_PAGE
+        });
+      }
+
+    }, 500);
   }
 
   onIntroAnimationEnd = () => {
     this.setState({
-      pageState: loaderPageStates.ANIMATE_PAGE_REVEAL
+      pageState: loaderPageStates.SHOW_PAGE
     });
-
-    setTimeout(()=>{
-      this.setState({
-        pageState: loaderPageStates.SHOW_PAGE
-      });
-    }, 1100);
   }
 
   render() {
     const { children } = this.props;
-    const { 
+    const {
       contentLoadedPercentage,
       pageState,
       disableIntro,
     } = this.state;
 
     return (
-      <React.Fragment>
-       <Div className={styles.loader_top_container}>
-          { pageState == loaderPageStates.SHOW_PAGE 
-            ? children
-            : (
-              <Div justify align className={styles.loader_container}>
-                <div className={styles.overlay_reveal_container}>
-                  <div className={
-                    `${styles.reveal_div}
-                    ${pageState == loaderPageStates.COMPLETED_LOADING || pageState == loaderPageStates.SHOW_INTRO ? styles.start_reveal : ''}
-                    ${pageState == loaderPageStates.SHOW_INTRO ? styles.end_reveal : ''}`
-                    }
-                  />
-                </div>
-                {
-                  (pageState == loaderPageStates.SHOW_INTRO || pageState == loaderPageStates.ANIMATE_PAGE_REVEAL && !disableIntro) ?
-                  <Intro onAnimationEnd={()=>this.onIntroAnimationEnd()}/>
-                  : (
-                    <div className={styles.percentage_text}>
-                      {`${contentLoadedPercentage}`}
-                    </div>
-                  )
-                }
-              </Div>
+      <Div className={styles.loader_top_container}>
+        {pageState == loaderPageStates.SHOW_PAGE && children}
+
+        {/* LOADER */}
+        <Transition
+          items={pageState}
+          from={{ opacity: 0 }}
+          enter={{ opacity: 1 }}
+          leave={{ opacity: 0 }}
+        >
+          {pageState => pageState == loaderPageStates.IS_LOADING && (
+            props => (
+                <Div row fillParent style={props} className={styles.loader_container}>
+                  <div className={styles.loading_text}>Loading ...</div>
+
+                  <Spring
+                    from={{ width: `${this.previousContentLoadedPercentage}vw`, x: this.previousContentLoadedPercentage }}
+                    to={{ width: `${contentLoadedPercentage}vw`, x: contentLoadedPercentage }}
+                  >
+                    {props => (
+                      <Div animate row className={styles.loader_width_percentage} style={props}>
+                        <div className={styles.percentage_text}>{Math.floor(props.x)}</div>
+                      </Div>
+                    )}
+                  </Spring>
+                </Div>
+
             )
-          }
-        </Div>
-        <PageReveal animate={pageState == loaderPageStates.SHOW_PAGE || pageState == loaderPageStates.ANIMATE_PAGE_REVEAL}/>
-      </React.Fragment>
+          )}
+        </Transition>
+
+
+        {/* Intro Animation */}
+        {/* <Transition
+          items={pageState}
+        >
+          {pageState => pageState == loaderPageStates.SHOW_INTRO && (
+            <Intro onAnimationEnd={() => this.onIntroAnimationEnd()} />
+          )}
+        </Transition> */}
+
+      </Div>
     );
   }
 }

@@ -1,3 +1,4 @@
+@import '~Styles/colors.module';
 $transition-type: cubic-bezier(0.550, 0.055, 0.675, 0.190);
 
 .loader_top_container {
@@ -12,46 +13,31 @@ $transition-type: cubic-bezier(0.550, 0.055, 0.675, 0.190);
     top: 0;
     bottom: 0;
     background: black;
-    visibility: visible;
-    opacity: 1;
-    transition: opacity 1s, visibility 1s $transition-type;
 
-    .percentage_text {
+    .loading_text {
+      margin-left: auto;
+      align-self: center;
       color: white;
-      color: white;
-      font-size: 50px;
-      animation: show 600ms ease;
+      font-size: 40px;
+      margin-right: 36px;
     }
 
-    .overlay_reveal_container {
+    .loader_width_percentage {
       position: absolute;
-      z-index: 100;
-      height: 70px;
-      width: 200px;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      background: $color-black;
 
-      .reveal_div {
-        position: absolute;
-        left: 0;
-        right: 100%;
-        bottom: 0;
-        top: 0;
-        background: #b71c1c;
-        transition: right 600ms, left  600ms $transition-type;
-      }
-
-      .start_reveal {
-        right: 0px;
-      }
-
-      .end_reveal {
-        left: 200px;
+      .percentage_text {
+        color: white;
+        font-size: 50px;
+        animation: show 600ms ease;
+        align-self: center;
+        margin-left: auto;
+        margin-right: 30px;
       }
     }
-  }
-
-  .hide_loader_container {
-    visibility: hidden;
-    opacity: 0;
   }
 }
 
