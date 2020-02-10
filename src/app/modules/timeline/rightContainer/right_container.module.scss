@@ -1,0 +1,19 @@
+.right_container {
+    overflow: hidden;
+    z-index: 3;
+
+    .slide_container {
+      align-self: stretch;
+      overflow-x: hidden;
+      padding: 50px 0px 40px 50px;
+
+      .slide_items {
+        width: 200px;
+        min-width: 200px;
+        height: 370px;
+        background: green;
+        margin-right: 10px;
+        box-shadow: 0px 5px 12px 3px rgba(0, 0, 0, 0.35);
+      }
+    }
+}

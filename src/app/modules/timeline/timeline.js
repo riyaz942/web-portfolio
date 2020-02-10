@@ -5,6 +5,7 @@ import TimelineSelector from "Common/containers/timelineSelector";
 import { timelineListValue } from "Constants/timelineConstants";
 import find from "lodash/find";
 import { Transition } from "react-spring/renderprops";
+import RightContainer from './rightContainer';
 
 export default class Timeline extends Component {
   state = {
@@ -90,7 +91,7 @@ export default class Timeline extends Component {
             )}
           </Transition>
         </Div>
-        <Div flex className={styles.right_container}></Div>
+        <RightContainer />
       </Div>
     );
   }

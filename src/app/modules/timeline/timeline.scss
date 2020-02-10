@@ -3,6 +3,7 @@
 .timeline_container {
   padding: 60px 60px 0px;
   position: relative;
+  overflow: hidden;
 
   .background_image {
     position: absolute;
@@ -84,9 +85,5 @@
         }
       }
     }
-  }
-
-  .right_container {
-    
   }
 }
