@@ -132,7 +132,6 @@ class Header extends Component {
                 </Spring>
               </Div>
 
-
               <Div align className={styles.content_container}>
 
                 <img

@@ -1,37 +1,146 @@
-import React, { Component } from 'react';
-import styles from './right_container.module.scss';
-import Div from 'Common/components/div';
-import map from 'lodash/map';
+import React, { Component } from "react";
+import styles from "./right_container.module.scss";
+import Div from "Common/components/div";
+import map from "lodash/map";
+import { Spring } from "react-spring/renderprops";
 
-export default class RightContainer extends Component {
-  render() {
-    const slideValue =[
-      { name: '1', isCentered: true},
-      { name: '2', isCentered: false},
-      { name: '3', isCentered: false},
-      { name: '4', isCentered: false},
-      { name: '5', isCentered: false},
-      { name: '6', isCentered: false},
-      { name: '7', isCentered: false},
-      { name: '8', isCentered: false},
-      { name: '9', isCentered: false},
-      { name: '10', isCentered: false},
+class RightContainer extends Component {
+  state = {
+    slideValue: [
+      { name: "1", state: "CENTERED" },
+      { name: "2", state: "LIST" },
+      { name: "3", state: "LIST" },
+      { name: "4", state: "LIST" },
+      { name: "5", state: "LIST" },
+      { name: "6", state: "LIST" }
     ]
+  }
+
+  getStates = () => {
+    return {
+      CENTERED: "CENTERED",
+      BEHIND: "BEHIND",
+      GONE: "GONE",
+      LIST: "LIST"
+    };
+  };
+
+  getPropertyBasedOnState = state => {
+    const states = this.getStates();
+
+    switch (state) {
+      case states.CENTERED:
+        return {
+          height: 400,
+          marginLeft: -210,
+          marginBottom: -10
+        };
+      case states.BEHIND:
+        return {
+          opacity: 1,
+          marginBottom: -20
+        };
+      case states.GONE:
+        return {
+          marginBottom: -30,
+          opacity: 0
+        };
+      default:
+        return {
+          marginLeft: 0,
+          height: 370,
+          marginBottom: 0
+        };
+    }
+  };
+
+  next = () => {
+    const { slideValue } = this.state;
+    const selectedIndex = slideValue.findIndex(slide => slide.state == 'CENTERED') + 1; // move to next slide
+
+    const updatedSlide = map(slideValue, (slide, index) => {
+        if (index < selectedIndex-1 ) {
+          return {
+            ...slide,
+            state: 'GONE'
+          }
+        } else if (index == selectedIndex - 1) {
+          return {
+            ...slide,
+            state: 'BEHIND'
+          }          
+        } else if (index == selectedIndex){
+          return {
+            ...slide,
+            state: 'CENTERED'
+          }
+        } else {
+          return {
+            ...slide,
+            state: 'LIST'
+          }
+        }
+    });
+
+    this.setState({ slideValue: updatedSlide })
+  }
+
+  previous = () => {
+    const { slideValue } = this.state;
+    const selectedIndex = slideValue.findIndex(slide => slide.state == 'CENTERED') - 1; // move to next slide
+
+    const updatedSlide = map(slideValue, (slide, index) => {
+        if (index < selectedIndex-1 ) {
+          return {
+            ...slide,
+            state: 'GONE'
+          }
+        } else if (index == selectedIndex - 1) {
+          return {
+            ...slide,
+            state: 'BEHIND'
+          }          
+        } else if (index == selectedIndex){
+          return {
+            ...slide,
+            state: 'CENTERED'
+          }
+        } else {
+          return {
+            ...slide,
+            state: 'LIST'
+          }
+        }
+    });
+
+    this.setState({ slideValue: updatedSlide })
+  }
+
+  render() {
+    const { slideValue } = this.state;
+
     return (
       <Div flex className={styles.right_container}>
-
-        <Div row className={styles.slide_container}>
-          {
-            map(slideValue, slide => (
-              <div className={`${styles.slide_items}`}>{`Slide ${slide.name}`}</div>
-            ))
-          }
+        <Div row align='end' className={styles.slide_container}>
+          {map(slideValue, (slide, index) => (
+            <Spring to={this.getPropertyBasedOnState(slide.state)}>
+              {props => (
+                <div
+                  style={{...props, zIndex: index}}
+                  className={`${styles.slide_items}`}
+                >{`Slide ${slide.name}`}</div>
+              )}
+            </Spring>
+          ))}
         </Div>
-          <Div row style={{flex: 1}}>
-          <div>Previous</div>
-          <div>Next</div>
-          </Div>
+        <Div row>
+          <div onClick={this.previous}>Previous</div>
+          <div onClick={this.next}>Next</div>
+        </Div>
       </Div>
-    )
+    );
   }
 }
+
+
+export default RightContainer;
