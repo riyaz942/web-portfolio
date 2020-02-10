@@ -135,7 +135,7 @@ class RightContainer extends Component {
               {props => (
                 <div
                   style={{ ...props, zIndex: index }}
-                  className={`${styles.slide_items}`}
+                  className={`${styles.slide_items} ${slide.state == 'CENTERED' ? styles.is_selected : ''}`}
                 >{`Slide ${slide.name}`}</div>
               )}
             </Spring>
