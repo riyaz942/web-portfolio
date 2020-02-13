@@ -3,7 +3,10 @@ import Intro from '../intro/intro';
 import styles from './loader.scss';
 import { Math } from 'core-js';
 import profilePic from 'Images/profile-pic.jpeg';
-import backgroundDarkDoodle from 'Images/background-dark-doodle.jpg';
+import backgroundDarkDoodleFixed from 'Images/background-dark-doodle-first-layer.png';
+import backgroundDarkDoodleFirst from 'Images/background-dark-doodle-fixed-layer.png';
+import backgroundDarkDoodleSecond from 'Images/background-dark-doodle-second-layer.png';
+
 import backgroundImageNykaa from 'Images/background-image-nykaa.jpg';
 import backgroundImageTailoredTech from 'Images/background-image-tailoredtech.jpg';
 
@@ -56,12 +59,14 @@ export default class Loader extends Component {
     // const styleTags = Array.from(document.styleSheets);
     const images = Array.from(document.images);
     images.push(this.preloadImage(profilePic));
-    images.push(this.preloadImage(backgroundDarkDoodle));
+    images.push(this.preloadImage(backgroundDarkDoodleFixed));
+    images.push(this.preloadImage(backgroundDarkDoodleFirst));
+    images.push(this.preloadImage(backgroundDarkDoodleSecond));
     images.push(this.preloadImage(backgroundImageNykaa));
     images.push(this.preloadImage(backgroundImageTailoredTech));
 
     // TODO remove Fake loading
-    this.setState({ totalItems: images.length + 4 });
+    this.setState({ totalItems: images.length + 3 });
 
     /*     if(scriptTags)
           scriptTags.forEach(element => {      

@@ -5,12 +5,14 @@ import { landingPageBody } from "../../constants/landingConstants";
 import Div from "Common/components/div";
 import { Spring, Transition, config } from "react-spring/renderprops";
 import HeaderDescription from './headerDescription';
-import backgroundDarkDoodle from 'Images/background-dark-doodle2.png';
+import HeaderBackground from './headerBackground';
 
 class Header extends Component {
   state = {
     isFullScreen: true,
-    showDescription: true
+    showDescription: true,
+    clientX: 0,
+    clientY: 0,
   };
 
   showFullScreen = () => {
@@ -70,7 +72,7 @@ class Header extends Component {
   };
 
   render() {
-    const { isFullScreen, showDescription } = this.state;
+    const { isFullScreen, showDescription, clientX, clientY } = this.state;
     const { bodyType } = this.props;
 
     return (
@@ -90,8 +92,9 @@ class Header extends Component {
               className={`${
                 isFullScreen ? styles.header_fullscreen : styles.header_normal
                 } ${styles.header_container}`}
+                onMouseMove={({ clientX: x, clientY: y }) => this.setState({ clientX: x, clientY: y })}
             >
-              <Transition
+              {/* <Transition
                 items={showDescription}
                 from={{ opacity: 0 }}
                 enter={{ opacity: 1 }}
@@ -106,7 +109,14 @@ class Header extends Component {
                     ></div>
                   ))
                 }
-              </Transition>
+              </Transition> */}
+
+              <HeaderBackground
+                clientX={clientX}
+                clientY={clientY}
+                showBackground={showDescription}
+              />
+
 
               <Div className={`${styles.header_link_container}`}>
                 <Div row className={styles.bodytype_container}>
@@ -132,7 +142,8 @@ class Header extends Component {
                 </Spring>
               </Div>
 
-              <Div align className={styles.content_container}>
+              <Div align className={styles.content_container}
+              >
 
                 <img
                   src={profilePic}

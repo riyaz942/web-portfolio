@@ -29,7 +29,10 @@ class HeaderDescription extends Component {
         {showDescription =>
           showDescription &&
           (props => (
-            <Div style={props} className={styles.user_description_container}>
+            <Div
+              style={props}
+              className={styles.user_description_container}
+            >
               <div className={styles.user_description}>
                 Hi, <br />I am <b className={styles.name}>Riyaz Ahmed</b>, and here is a bit about my self just typing out random description to make it a bit longer.
               </div>
