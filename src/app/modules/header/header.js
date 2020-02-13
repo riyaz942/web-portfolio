@@ -5,7 +5,7 @@ import { landingPageBody } from "../../constants/landingConstants";
 import Div from "Common/components/div";
 import { Spring, Transition, config } from "react-spring/renderprops";
 import HeaderDescription from './headerDescription';
-import backgroundDarkDoodle from 'Images/background-dark-doodle.jpg';
+import backgroundDarkDoodle from 'Images/background-dark-doodle2.png';
 
 class Header extends Component {
   state = {
