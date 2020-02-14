@@ -25,7 +25,7 @@ const HeaderBackground = ({ showBackground, clientX, clientY, isFirstTime }) => 
     item && (
       <animated.div
         style={{ ...props, overflow: 'hidden' }}
-        className={styles.background_gradient}
+        className={styles.background_top_container}
       >
         <animated.div className={styles.background_gradient} style={{ transform: animationProps.xy.interpolate(trans1), backgroundImage: `url(${backgroundDarkDoodleFixed})` }}>
         </animated.div>

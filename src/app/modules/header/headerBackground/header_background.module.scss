@@ -1,24 +1,21 @@
+.background_top_container {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  overflow: hidden;
+  transform: scale(1.1);
+}
+
 .background_gradient {
   position: absolute;
   left: 0;
   right: 0;
   top: 0;
   bottom: 0;
-  transform: scale(1.1);
   
   background-size: cover;
   background-position: left top;
   background-repeat: no-repeat;
-}
-
-.background_fixed_layer {
-
-}
-
-.background_fixed_layer {
-
-}
-
-.background_second_layer {
-
 }
