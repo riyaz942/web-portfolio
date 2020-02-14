@@ -13,7 +13,18 @@ class Header extends Component {
     showDescription: true,
     clientX: 0,
     clientY: 0,
+    isFirstTime: true,
   };
+
+  componentDidMount() {
+    const { isFirstTime } = this.state;
+
+    if (isFirstTime) {
+      setTimeout(() => {
+        this.setState({ isFirstTime: false });
+      }, 1000);
+    }
+  }
 
   showFullScreen = () => {
     // from header to full screen
@@ -72,7 +83,7 @@ class Header extends Component {
   };
 
   render() {
-    const { isFullScreen, showDescription, clientX, clientY } = this.state;
+    const { isFullScreen, showDescription, clientX, clientY, isFirstTime } = this.state;
     const { bodyType } = this.props;
 
     return (
@@ -92,29 +103,14 @@ class Header extends Component {
               className={`${
                 isFullScreen ? styles.header_fullscreen : styles.header_normal
                 } ${styles.header_container}`}
-                onMouseMove={({ clientX: x, clientY: y }) => this.setState({ clientX: x, clientY: y })}
+              onMouseMove={({ clientX: x, clientY: y }) => this.setState({ clientX: x, clientY: y })}
             >
-              {/* <Transition
-                items={showDescription}
-                from={{ opacity: 0 }}
-                enter={{ opacity: 1 }}
-                leave={{ opacity: 0 }}
-              >
-                {
-                  value => value && (props => (
-                    <div style={{
-                      backgroundImage: `url(${backgroundDarkDoodle})`,
-                      ...props,
-                    }} className={styles.background_gradient}
-                    ></div>
-                  ))
-                }
-              </Transition> */}
 
               <HeaderBackground
                 clientX={clientX}
                 clientY={clientY}
                 showBackground={showDescription}
+                isFirstTime={isFirstTime}
               />
 
 
@@ -145,16 +141,29 @@ class Header extends Component {
               <Div align className={styles.content_container}
               >
 
-                <img
-                  src={profilePic}
-                  className={styles.user_pic}
-                  onClick={this.onClickProfilePic}
-                />
+                <Transition
+                  items={true}
+                  key={1}
+                  from={{ opacity: 0, marginTop: "100px" }}
+                  enter={{ opacity: 1, marginTop: "0px" }}
+                  leave={{ opacity: 0 }}
+                  config={{ delay: 600 }}
+                >
+                  {value => value && (props => (
+                    <img
+                      style={props}
+                      src={profilePic}
+                      className={styles.user_pic}
+                      onClick={this.onClickProfilePic}
+                    />
+                  ))}
+                </Transition>
 
                 <HeaderDescription
                   showDescription={showDescription}
                   onClickProject={this.onClickProject}
                   onClickTimeline={this.onClickTimeline}
+                  isFirstTime={isFirstTime}
                 />
               </Div>
             </div>

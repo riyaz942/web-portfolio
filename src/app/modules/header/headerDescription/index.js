@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Transition } from "react-spring/renderprops";
+import { Transition, config } from "react-spring/renderprops";
 import Div from 'Common/components/div';
 import styles from './header_description.module.scss';
 import iconEmail from 'Icons/icon-email.png';
@@ -9,7 +9,7 @@ import iconGithub from 'Icons/icon-github.png';
 
 class HeaderDescription extends Component {
   render() {
-    const { showDescription, onClickProject, onClickTimeline } = this.props;
+    const { showDescription, onClickProject, onClickTimeline, isFirstTime } = this.props;
 
     return (
       <Transition
@@ -25,6 +25,7 @@ class HeaderDescription extends Component {
         leave={{
           opacity: 0
         }}
+        config={isFirstTime ? {delay: 600}: config.default}
       >
         {showDescription =>
           showDescription &&
