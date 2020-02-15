@@ -3,6 +3,7 @@ import styles from "./right_container.module.scss";
 import Div from "Common/components/div";
 import map from "lodash/map";
 import { Spring } from "react-spring/renderprops";
+import leftArrowIcon from 'Icons/icon-left-arrow.png';
 
 class RightContainer extends Component {
   state = {
@@ -141,9 +142,13 @@ class RightContainer extends Component {
             </Spring>
           ))}
         </Div>
-        <Div row>
-          <div onClick={this.previous}>Previous</div>
-          <div onClick={this.next}>Next</div>
+        <Div row className={styles.action_container}>
+          <Div align justify className={`${styles.button_container} ${styles.left_button_container}`} onClick={this.previous}>
+            <img className={styles.arrow} src={leftArrowIcon} />
+          </Div>
+          <Div align justify className={styles.button_container} onClick={this.next}>
+            <img className={`${styles.arrow} ${styles.right_arrow}`} src={leftArrowIcon} />
+          </Div>
         </Div>
       </Div>
     );

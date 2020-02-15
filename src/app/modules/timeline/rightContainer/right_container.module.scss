@@ -1,3 +1,5 @@
+@import '~Styles/mixins.module';
+
 .right_container {
   overflow: hidden;
   z-index: 3;
@@ -7,7 +9,7 @@
     align-self: stretch;
     overflow-x: hidden;
     height: 450px;
-    padding: 50px 0px 40px 260px;
+    padding: 50px 0px 50px 260px;
 
     .slide_items {
       width: 183px;
@@ -23,6 +25,28 @@
 
     .is_selected {
       background-color: rgba(white, 1);
+    }
+  }
+
+  .left_button_container {
+    margin: 0px 10px;
+  }
+
+  .button_container {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background-color: rgba(white, 0.3);
+
+    @include on_click_button;
+
+    .arrow {
+      width: 13px;
+      height: 13px;
+    }
+
+    .right_arrow {
+      transform: scale(-1);
     }
   }
 }
