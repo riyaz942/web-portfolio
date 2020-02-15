@@ -142,7 +142,7 @@ class RightContainer extends Component {
             </Spring>
           ))}
         </Div>
-        <Div row className={styles.action_container}>
+        <Div row>
           <Div align justify className={`${styles.button_container} ${styles.left_button_container}`} onClick={this.previous}>
             <img className={styles.arrow} src={leftArrowIcon} />
           </Div>
