@@ -7,6 +7,7 @@ class Div extends Component {
     const {
       row,
       align,
+      alignSelf,
       justify,
       fillParent,
       className,
@@ -28,6 +29,11 @@ class Div extends Component {
         ? typeof justify == "string"
           ? styles[`justify_${justify}`]
           : styles.justify_center
+        : "",
+      alignSelf
+        ? typeof alignSelf == "string"
+          ? styles[`align_self_${alignSelf}`]
+          : styles.align_self_center
         : "",
       fillParent ? styles.fill_parent : "",
       className

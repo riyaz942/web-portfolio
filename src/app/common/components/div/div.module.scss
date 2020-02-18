@@ -36,3 +36,19 @@
 .justify_stretch {
   justify-content: stretch;
 }
+
+.justify_end {
+  justify-content: flex-end;
+}
+
+.align_self_stretch {
+  align-self: stretch;
+}
+
+.align_self_center {
+  align-self: center;
+}
+
+.align_self_end {
+  align-self: flex-end;
+}

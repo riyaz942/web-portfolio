@@ -15,5 +15,34 @@
 
   .right_container {
     flex: 1;
+    margin: 30px 40px 0px 40px;
+    // overflow: auto;
+    position: relative;
+
+    .project_image {
+      position: absolute;
+    }
+
+    .project_name {
+      position: absolute;
+      color: $color-black;
+      line-height: 1;
+    }
+
+    .project_sub_details_container {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+
+    .content_container {
+      overflow: auto;
+      margin-top: 31px;
+
+      .content {
+        background-color: blue;
+        margin-top: 300px;
+      }
+    }
   }
 }
