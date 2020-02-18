@@ -1,0 +1,19 @@
+@import '~Styles/colors.module';
+
+.project_details_container {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  z-index: 20;
+
+  .left_container {
+    width: 35%;
+    background-color: $color-black;
+  }
+
+  .right_container {
+    flex: 1;
+  }
+}
