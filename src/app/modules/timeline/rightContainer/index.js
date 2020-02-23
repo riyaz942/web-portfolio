@@ -4,16 +4,16 @@ import Div from "Common/components/div";
 import map from "lodash/map";
 import { Spring } from "react-spring/renderprops";
 import leftArrowIcon from 'Icons/icon-left-arrow.png';
-
+import { withRouter } from "react-router";
 class RightContainer extends Component {
   state = {
     slideValue: [
-      { name: "1", state: "CENTERED" },
-      { name: "2", state: "LIST" },
-      { name: "3", state: "LIST" },
-      { name: "4", state: "LIST" },
-      { name: "5", state: "LIST" },
-      { name: "6", state: "LIST" }
+      { name: "1", state: "CENTERED", ref: React.createRef() },
+      { name: "2", state: "LIST", ref: React.createRef() },
+      { name: "3", state: "LIST", ref: React.createRef() },
+      { name: "4", state: "LIST", ref: React.createRef() },
+      { name: "5", state: "LIST", ref: React.createRef() },
+      { name: "6", state: "LIST", ref: React.createRef() }
     ]
   };
 
@@ -121,9 +121,17 @@ class RightContainer extends Component {
         };
       }
     });
-
     this.setState({ slideValue: updatedSlide });
   };
+
+  onClickProject = (project) => {
+    const { push } = this.props.history;
+
+    console.log(project.ref.current.offsetTop);
+    console.log(project.ref.current.offsetLeft);
+
+    push('/project/something')
+  }
 
   render() {
     const { slideValue } = this.state;
@@ -135,6 +143,9 @@ class RightContainer extends Component {
             <Spring to={this.getPropertyBasedOnState(slide.state)}>
               {props => (
                 <div
+                  key={index}
+                  onClick={()=>this.onClickProject(slide)}
+                  ref={slide.ref}
                   style={{ ...props, zIndex: index }}
                   className={`${styles.slide_items} ${slide.state == 'CENTERED' ? styles.is_selected : ''}`}
                 >{`Slide ${slide.name}`}</div>
@@ -155,4 +166,4 @@ class RightContainer extends Component {
   }
 }
 
-export default RightContainer;
+export default  withRouter(RightContainer);

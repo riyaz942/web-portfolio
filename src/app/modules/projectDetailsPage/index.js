@@ -82,6 +82,12 @@ const ProjectDetailsPage = () => {
           </Div>
         </Div>
       </Div>
+      <div style={{
+        position: 'absolute',
+        width: 183,
+        height: 311,
+        background: 'black'
+      }}></div>
     </Div>
   );
 }
