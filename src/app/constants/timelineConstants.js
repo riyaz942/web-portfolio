@@ -44,7 +44,7 @@ export const timelineListValue = [
   {
     id: 'mit',
     isSelected: false,
-    companyName: 'Own Projects',
+    companyName: 'College',
     position: 'Android & Web',
     duration: '2014 - 2016 (2 years)',
     location: 'Pune',
