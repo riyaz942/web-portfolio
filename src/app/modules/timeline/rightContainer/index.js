@@ -148,7 +148,9 @@ class RightContainer extends Component {
                   ref={slide.ref}
                   style={{ ...props, zIndex: index }}
                   className={`${styles.slide_items} ${slide.state == 'CENTERED' ? styles.is_selected : ''}`}
-                >{`Slide ${slide.name}`}</div>
+                >
+                  
+                </div>
               )}
             </Spring>
           ))}

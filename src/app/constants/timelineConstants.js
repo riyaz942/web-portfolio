@@ -26,6 +26,7 @@ export const timelineListValue = [
     restMargin: 13, // the secound image margin because logo length is different
     containerWidth: 90, // the capsule container width .. when opened size
     backgroundImage: nykaaBackgroundImage,
+    projects: ['nykaa']
   },
   {
     id: 'tailoredtech',
@@ -42,6 +43,7 @@ export const timelineListValue = [
     restMargin: 20,
     containerWidth: 107,
     backgroundImage: tailoredTechBackgroundImage,
+    projects: ['snapteam', 'pulse', 'wakency', 'measure', 'benefactory', 'lighthouse']
   },
   {
     id: 'mit',
@@ -57,5 +59,6 @@ export const timelineListValue = [
     restMargin: 12,
     containerWidth: 90,
     backgroundImage: tailoredTechBackgroundImage,
+    projects: ['vc_music_player']
   }
 ];
