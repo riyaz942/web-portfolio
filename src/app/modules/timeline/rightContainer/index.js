@@ -260,6 +260,7 @@ class RightContainer extends Component {
                           <div className={styles.title}>{slide.name}</div>
                           <div className={styles.description}>{slide.tech.join(' | ')}</div>
                         </Div>
+                        <div className={styles.bottom_background_gradient}></div>
                       </Div>
                     )}
                   </Spring>

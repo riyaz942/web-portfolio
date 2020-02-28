@@ -43,7 +43,7 @@ export const timelineListValue = [
     restMargin: 20,
     containerWidth: 107,
     backgroundImage: tailoredTechBackgroundImage,
-    projects: ['snapteam', 'pulse', 'wakency', 'measure', 'benefactory', 'lighthouse']
+    projects: ['snapteam', 'pulse', 'measure', 'wakency', 'benefactory', 'lighthouse']
   },
   {
     id: 'mit',

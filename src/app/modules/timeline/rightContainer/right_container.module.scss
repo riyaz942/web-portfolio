@@ -29,9 +29,10 @@
       background: green;
       margin-right: 39px;
       box-shadow: 0px 5px 12px 3px rgba(0, 0, 0, 0.2);      
-      border-radius: 6px;
+      border-radius: 12px;
       background-color: rgba(white, 0.8);
       transition: background-color 600ms ease;
+      position: relative;
 
       .image {
         width: 120px;
@@ -42,6 +43,7 @@
         padding: 0px 18px 18px 18px;
         color: $color-black;
         text-align: right;
+        position: relative;
 
         .title {
           font-size: 25px;
@@ -81,4 +83,16 @@
       transform: scale(-1);
     }
   }
+}
+
+
+.bottom_background_gradient {
+  position: absolute;
+  height: 150px;
+  left:0;
+  bottom: 0;
+  right: 0;
+
+  background-image: linear-gradient(to top, rgba($color-black, 0.5), rgba(0, 0, 0, 0));
+  border-radius: 12px;
 }
