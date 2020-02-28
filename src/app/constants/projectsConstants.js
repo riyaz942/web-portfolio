@@ -1,7 +1,17 @@
+import bijliIcon from 'Icons/project-icon-bijli.png';
+import wakencyIcon from 'Icons/project-icon-wakency.png';
+import nykaaIcon from 'Icons/project-icon-nykaa.png';
+import pulseIcon from 'Icons/project-icon-pulse.png';
+import lighthouseIcon from 'Icons/project-icon-lighthouse.png';
+import benefactoryIcon from 'Icons/project-icon-benefactory.png';
+import measureIcon from 'Icons/project-icon-measure.png';
+import vcMusicPlayerIcon from 'Icons/project-icon-vc-music-player.png';
+
 export const projects = {
   snapteam: {
     name: 'Snapteam/Bijli',
     tech: ['react', 'electron', 'laravel'],
+    icon: bijliIcon,
     description: [
       {
         type: 'text',
@@ -47,6 +57,7 @@ export const projects = {
   wakency: {
     name: 'Wakency',
     tech: ['react'],
+    icon: wakencyIcon,
     link: {
       type: 'visit',
       value: 'https://www.wakency.com/'
@@ -78,6 +89,7 @@ export const projects = {
   nykaa: {
     name: 'Nykaa',
     tech: ['react'],
+    icon: nykaaIcon,
     link: {
       type: 'visit',
       link: 'https://www.nykaa.com/'
@@ -101,6 +113,7 @@ export const projects = {
   pulse: {
     name: 'Pulse/Sprout',
     tech: ['react-native'],
+    icon: pulseIcon,
     link: {
       type: 'visit',
       value:  'https://www.youtube.com/watch?v=wOsy7b2Q-J4'
@@ -123,6 +136,7 @@ export const projects = {
   lighthouse: {
     name: 'LightHouse Project',
     tech: ['react-native'],
+    icon: lighthouseIcon,
     link: {
       type: 'visit',
       value: 'https://play.google.com/store/apps/details?id=com.tailoredtech.lighthouse'
@@ -141,6 +155,7 @@ export const projects = {
   benefactory: {
     name: 'Benefactory',
     tech: ['laravel', 'vanila-js', 'scss'],
+    icon: benefactoryIcon,
     link: {
       type: 'visit',
       value: 'http://benefactory.live/'
@@ -159,6 +174,7 @@ export const projects = {
   measure: {
     name: 'Measure (Informed Tech)',
     tech: ['android'],
+    icon: measureIcon,
     link: {
       type: 'visit',
       value: 'https://play.google.com/store/apps/details?id=com.informedtech.measure.app'
@@ -185,6 +201,7 @@ export const projects = {
   vc_music_player: {
     name: 'VC Music Player',
     tech: ['android'],
+    icon: vcMusicPlayerIcon,
     description: [
       {
         type: 'text',

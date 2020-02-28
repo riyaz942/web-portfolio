@@ -91,7 +91,11 @@ export default class Timeline extends Component {
             )}
           </Transition>
         </Div>
-        <RightContainer />
+
+        <RightContainer
+          timeline={timeline}
+        />
+
       </Div>
     );
   }
