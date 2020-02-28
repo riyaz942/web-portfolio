@@ -217,6 +217,10 @@ class RightContainer extends Component {
   render() {
     const { timelineProjects } = this.state;
     const { timeline } = this.props;
+    const selectedIndex = timelineProjects[timeline.id] ? timelineProjects[timeline.id].findIndex(slide => slide.state == "CENTERED") : 0;
+
+    const isPrevButtonClickable = selectedIndex > 0;
+    const isNextButtonClickable = timelineProjects[timeline.id] ? selectedIndex < timelineProjects[timeline.id].length - 1: false;
 
     return (
       <Div flex className={styles.right_container}>
@@ -258,9 +262,13 @@ class RightContainer extends Component {
                           className={styles.title_container}
                         >
                           <div className={styles.title}>{slide.name}</div>
-                          <div className={styles.description}>{slide.tech.join(' | ')}</div>
+                          <div className={styles.description}>
+                            {slide.tech.join(" | ")}
+                          </div>
                         </Div>
-                        <div className={styles.bottom_background_gradient}></div>
+                        <div
+                          className={styles.bottom_background_gradient}
+                        ></div>
                       </Div>
                     )}
                   </Spring>
@@ -274,7 +282,7 @@ class RightContainer extends Component {
           <Div
             align
             justify
-            className={`${styles.button_container} ${styles.left_button_container}`}
+            className={`${styles.button_container} ${styles.left_button_container} ${!isPrevButtonClickable ? styles.disabled : ''}`}
             onClick={this.previous}
           >
             <img className={styles.arrow} src={leftArrowIcon} />
@@ -282,7 +290,7 @@ class RightContainer extends Component {
           <Div
             align
             justify
-            className={styles.button_container}
+            className={`${styles.button_container} ${!isNextButtonClickable ? styles.disabled : ''}`}
             onClick={this.next}
           >
             <img

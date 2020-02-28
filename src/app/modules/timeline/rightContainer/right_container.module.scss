@@ -83,8 +83,18 @@
       transform: scale(-1);
     }
   }
-}
 
+  .disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+
+    &:hover {
+      transform: unset;
+      opacity: 0.3;
+    }
+  }
+}
+    
 
 .bottom_background_gradient {
   position: absolute;
