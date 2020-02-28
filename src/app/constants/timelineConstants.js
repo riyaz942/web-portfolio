@@ -4,11 +4,12 @@ import nykaaLogoRest from 'Images/nykaa-logo-rest.png';
 import tailoredTechLogoFirst from 'Images/tailoredtech-logo-first.png';
 import tailoredTechLogoRest from 'Images/tailoredtech-logo-rest.png';
 
-import mitLogoFirst from 'Images/mit-logo-first.jpg';
-import mitLogoRest from 'Images/mit-logo-first.jpg';
+import mitLogoFirst from 'Images/mit-logo-first.png';
+import mitLogoRest from 'Images/mit-logo-rest.png';
 
 import nykaaBackgroundImage from 'Images/background-image-nykaa.jpg';
 import tailoredTechBackgroundImage from 'Images/background-image-tailoredtech.jpg';
+import collegeBackgroundImage from 'Images/background-image-college.jpg';
 
 export const timelineListValue = [
   {
@@ -54,11 +55,11 @@ export const timelineListValue = [
     location: 'Pune',
     roleDetail: '',
     companyDetail: '',
-    firstLogo: tailoredTechLogoFirst,
-    restLogo: tailoredTechLogoRest,
-    restMargin: 12,
-    containerWidth: 90,
-    backgroundImage: tailoredTechBackgroundImage,
+    firstLogo: mitLogoFirst,
+    restLogo: mitLogoRest,
+    restMargin: 21,
+    containerWidth: 110,
+    backgroundImage: collegeBackgroundImage,
     projects: ['vc_music_player']
   }
 ];
