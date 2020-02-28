@@ -6,7 +6,7 @@ import { Spring } from "react-spring/renderprops";
 import leftArrowIcon from "Icons/icon-left-arrow.png";
 import { withRouter } from "react-router";
 import { timelineListValue } from "Constants/timelineConstants";
-import { projects } from "Constants/projectsConstants";
+import { projectsListValue } from "Constants/projectsConstants";
 import isEmpty from "lodash/isEmpty";
 import { Transition } from "react-spring/renderprops";
 
@@ -50,7 +50,7 @@ class RightContainer extends Component {
       const state = index == 0 ? "CENTERED" : "LIST";
 
       return {
-        ...projects[project],
+        ...projectsListValue[project],
         state,
         ref: React.createRef()
       };
@@ -82,12 +82,24 @@ class RightContainer extends Component {
       case states.BEHIND:
         return {
           opacity: 1,
-          marginBottom: -20
+          marginBottom: -20,
+
+          height: 355,
+          width: 209,
+          minWidth: 209,
+          marginLeft: -246,
+          marginRight: 37
         };
       case states.GONE:
         return {
           marginBottom: -30,
-          opacity: 0
+          opacity: 0,
+
+          height: 355,
+          width: 209,
+          minWidth: 209,
+          marginLeft: -246,
+          marginRight: 37
         };
       default:
         return {
@@ -208,7 +220,6 @@ class RightContainer extends Component {
 
     return (
       <Div flex className={styles.right_container}>
-
         <Div className={styles.slide_container}>
           <Transition
             items={timeline}
@@ -227,7 +238,7 @@ class RightContainer extends Component {
                 {map(timelineProjects[timeline.id], (slide, index) => (
                   <Spring to={this.getPropertyBasedOnState(slide.state)}>
                     {props => (
-                      <div
+                      <Div
                         key={index}
                         onClick={() => this.onClickProject(slide)}
                         ref={slide.ref}
@@ -236,13 +247,20 @@ class RightContainer extends Component {
                           slide.state == "CENTERED" ? styles.is_selected : ""
                         }`}
                       >
-                        <div></div>
+                        <Div fillParent align justify>
+                          <img src={slide.icon} className={styles.image} />
+                        </Div>
 
-                        <div>
-                          <div>Title</div>
-                          <div>Sub title</div>
-                        </div>
-                      </div>
+                        <Div
+                          alignSelf="stretch"
+                          justify="start"
+                          align="end"
+                          className={styles.title_container}
+                        >
+                          <div className={styles.title}>{slide.name}</div>
+                          <div className={styles.description}>{slide.tech.join(' | ')}</div>
+                        </Div>
+                      </Div>
                     )}
                   </Spring>
                 ))}

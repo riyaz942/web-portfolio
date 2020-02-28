@@ -7,7 +7,7 @@ import benefactoryIcon from 'Icons/project-icon-benefactory.png';
 import measureIcon from 'Icons/project-icon-measure.png';
 import vcMusicPlayerIcon from 'Icons/project-icon-vc-music-player.png';
 
-export const projects = {
+export const projectsListValue = {
   snapteam: {
     name: 'Snapteam/Bijli',
     tech: ['react', 'electron', 'laravel'],
@@ -172,7 +172,7 @@ export const projects = {
     ]
   },
   measure: {
-    name: 'Measure (Informed Tech)',
+    name: 'Measure',
     tech: ['android'],
     icon: measureIcon,
     link: {
