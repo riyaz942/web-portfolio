@@ -7,7 +7,8 @@ import leftArrowIcon from "Icons/icon-left-arrow.png";
 import { withRouter } from "react-router";
 import { timelineListValue } from "Constants/timelineConstants";
 import { projects } from "Constants/projectsConstants";
-import isEmpty from 'lodash/isEmpty';
+import isEmpty from "lodash/isEmpty";
+import { Transition } from "react-spring/renderprops";
 
 class RightContainer extends Component {
   state = {
@@ -17,8 +18,8 @@ class RightContainer extends Component {
   componentDidMount() {
     const { timeline } = this.props;
     const { timelineProjects } = this.state;
-    
-    if(isEmpty(timelineProjects[timeline.id])) {
+
+    if (isEmpty(timelineProjects[timeline.id])) {
       this.setState({
         timelineProjects: {
           ...timelineProjects,
@@ -33,7 +34,7 @@ class RightContainer extends Component {
       const { timeline } = nextProps;
       const { timelineProjects } = this.state;
 
-      if(isEmpty(timelineProjects[timeline.id])) {
+      if (isEmpty(timelineProjects[timeline.id])) {
         this.setState({
           timelineProjects: {
             ...timelineProjects,
@@ -104,33 +105,39 @@ class RightContainer extends Component {
     const { timelineProjects } = this.state;
     const { timeline } = this.props;
 
-    const selectedIndex = timelineProjects[timeline.id].findIndex(slide => slide.state == "CENTERED") + 1; // move to next slide
+    const selectedIndex =
+      timelineProjects[timeline.id].findIndex(
+        slide => slide.state == "CENTERED"
+      ) + 1; // move to next slide
 
-    if ( selectedIndex < timelineProjects[timeline.id].length) {
-      const updatedSlide = map(timelineProjects[timeline.id], (slide, index) => {
-        if (index < selectedIndex - 1) {
-          return {
-            ...slide,
-            state: "GONE"
-          };
-        } else if (index == selectedIndex - 1) {
-          return {
-            ...slide,
-            state: "BEHIND"
-          };
-        } else if (index == selectedIndex) {
-          return {
-            ...slide,
-            state: "CENTERED"
-          };
-        } else {
-          return {
-            ...slide,
-            state: "LIST"
-          };
+    if (selectedIndex < timelineProjects[timeline.id].length) {
+      const updatedSlide = map(
+        timelineProjects[timeline.id],
+        (slide, index) => {
+          if (index < selectedIndex - 1) {
+            return {
+              ...slide,
+              state: "GONE"
+            };
+          } else if (index == selectedIndex - 1) {
+            return {
+              ...slide,
+              state: "BEHIND"
+            };
+          } else if (index == selectedIndex) {
+            return {
+              ...slide,
+              state: "CENTERED"
+            };
+          } else {
+            return {
+              ...slide,
+              state: "LIST"
+            };
+          }
         }
-      });
-  
+      );
+
       this.setState({
         timelineProjects: {
           ...timelineProjects,
@@ -144,33 +151,39 @@ class RightContainer extends Component {
     const { timelineProjects } = this.state;
     const { timeline } = this.props;
 
-    const selectedIndex = timelineProjects[timeline.id].findIndex(slide => slide.state == "CENTERED") - 1; // move to next slide
+    const selectedIndex =
+      timelineProjects[timeline.id].findIndex(
+        slide => slide.state == "CENTERED"
+      ) - 1; // move to next slide
 
     if (selectedIndex >= 0) {
-      const updatedSlide = map(timelineProjects[timeline.id], (slide, index) => {
-        if (index < selectedIndex - 1) {
-          return {
-            ...slide,
-            state: "GONE"
-          };
-        } else if (index == selectedIndex - 1) {
-          return {
-            ...slide,
-            state: "BEHIND"
-          };
-        } else if (index == selectedIndex) {
-          return {
-            ...slide,
-            state: "CENTERED"
-          };
-        } else {
-          return {
-            ...slide,
-            state: "LIST"
-          };
+      const updatedSlide = map(
+        timelineProjects[timeline.id],
+        (slide, index) => {
+          if (index < selectedIndex - 1) {
+            return {
+              ...slide,
+              state: "GONE"
+            };
+          } else if (index == selectedIndex - 1) {
+            return {
+              ...slide,
+              state: "BEHIND"
+            };
+          } else if (index == selectedIndex) {
+            return {
+              ...slide,
+              state: "CENTERED"
+            };
+          } else {
+            return {
+              ...slide,
+              state: "LIST"
+            };
+          }
         }
-      });
-      
+      );
+
       this.setState({
         timelineProjects: {
           ...timelineProjects,
@@ -191,27 +204,53 @@ class RightContainer extends Component {
 
   render() {
     const { timelineProjects } = this.state;
-    const { timeline } = this.props;    
+    const { timeline } = this.props;
 
     return (
       <Div flex className={styles.right_container}>
-        <Div row align="end" className={styles.slide_container}>
-          {map(timelineProjects[timeline.id], (slide, index) => (
-            <Spring to={this.getPropertyBasedOnState(slide.state)}>
-              {props => (
-                <div
-                  key={index}
-                  onClick={() => this.onClickProject(slide)}
-                  ref={slide.ref}
-                  style={{ ...props, zIndex: index }}
-                  className={`${styles.slide_items} ${
-                    slide.state == "CENTERED" ? styles.is_selected : ""
-                  }`}
-                ></div>
-              )}
-            </Spring>
-          ))}
+
+        <Div className={styles.slide_container}>
+          <Transition
+            items={timeline}
+            keys={timeline => timeline.id}
+            from={{ opacity: 0 }}
+            enter={{ opacity: 1 }}
+            leave={{ opacity: 0 }}
+          >
+            {timeline => props => (
+              <Div
+                style={props}
+                row
+                align="end"
+                className={styles.slide_inner_container}
+              >
+                {map(timelineProjects[timeline.id], (slide, index) => (
+                  <Spring to={this.getPropertyBasedOnState(slide.state)}>
+                    {props => (
+                      <div
+                        key={index}
+                        onClick={() => this.onClickProject(slide)}
+                        ref={slide.ref}
+                        style={{ ...props, zIndex: index }}
+                        className={`${styles.slide_items} ${
+                          slide.state == "CENTERED" ? styles.is_selected : ""
+                        }`}
+                      >
+                        <div></div>
+
+                        <div>
+                          <div>Title</div>
+                          <div>Sub title</div>
+                        </div>
+                      </div>
+                    )}
+                  </Spring>
+                ))}
+              </Div>
+            )}
+          </Transition>
         </Div>
+
         <Div row>
           <Div
             align

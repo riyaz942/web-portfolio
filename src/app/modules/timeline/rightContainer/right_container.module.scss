@@ -6,10 +6,20 @@
   padding-left: 250px;
 
   .slide_container {
+    position: relative;
+    align-self: stretch;
+    height: 450px;
+    padding: 50px 0px 50px 260px;
+  }
+
+  .slide_inner_container {
     align-self: stretch;
     overflow-x: hidden;
     height: 450px;
     padding: 50px 0px 50px 260px;
+    position: absolute;
+    top: 0;
+    left: 0;
 
     .slide_items {
       width: 183px;
@@ -21,6 +31,16 @@
       border-radius: 6px;
       background-color: rgba(white, 0.8);
       transition: background-color 600ms ease;
+
+      .image_container{
+        .image {
+
+        }        
+      }
+
+      .content_container {
+
+      }
     }
 
     .is_selected {
