@@ -106,36 +106,38 @@ class RightContainer extends Component {
 
     const selectedIndex = timelineProjects[timeline.id].findIndex(slide => slide.state == "CENTERED") + 1; // move to next slide
 
-    const updatedSlide = map(timelineProjects[timeline.id], (slide, index) => {
-      if (index < selectedIndex - 1) {
-        return {
-          ...slide,
-          state: "GONE"
-        };
-      } else if (index == selectedIndex - 1) {
-        return {
-          ...slide,
-          state: "BEHIND"
-        };
-      } else if (index == selectedIndex) {
-        return {
-          ...slide,
-          state: "CENTERED"
-        };
-      } else {
-        return {
-          ...slide,
-          state: "LIST"
-        };
-      }
-    });
-
-    this.setState({
-      timelineProjects: {
-        ...timelineProjects,
-        [timeline.id]: updatedSlide
-      }
-    });
+    if ( selectedIndex < timelineProjects[timeline.id].length) {
+      const updatedSlide = map(timelineProjects[timeline.id], (slide, index) => {
+        if (index < selectedIndex - 1) {
+          return {
+            ...slide,
+            state: "GONE"
+          };
+        } else if (index == selectedIndex - 1) {
+          return {
+            ...slide,
+            state: "BEHIND"
+          };
+        } else if (index == selectedIndex) {
+          return {
+            ...slide,
+            state: "CENTERED"
+          };
+        } else {
+          return {
+            ...slide,
+            state: "LIST"
+          };
+        }
+      });
+  
+      this.setState({
+        timelineProjects: {
+          ...timelineProjects,
+          [timeline.id]: updatedSlide
+        }
+      });
+    }
   };
 
   previous = () => {
@@ -144,36 +146,38 @@ class RightContainer extends Component {
 
     const selectedIndex = timelineProjects[timeline.id].findIndex(slide => slide.state == "CENTERED") - 1; // move to next slide
 
-    const updatedSlide = map(timelineProjects[timeline.id], (slide, index) => {
-      if (index < selectedIndex - 1) {
-        return {
-          ...slide,
-          state: "GONE"
-        };
-      } else if (index == selectedIndex - 1) {
-        return {
-          ...slide,
-          state: "BEHIND"
-        };
-      } else if (index == selectedIndex) {
-        return {
-          ...slide,
-          state: "CENTERED"
-        };
-      } else {
-        return {
-          ...slide,
-          state: "LIST"
-        };
-      }
-    });
-    
-    this.setState({
-      timelineProjects: {
-        ...timelineProjects,
-        [timeline.id]: updatedSlide
-      }
-    });
+    if (selectedIndex >= 0) {
+      const updatedSlide = map(timelineProjects[timeline.id], (slide, index) => {
+        if (index < selectedIndex - 1) {
+          return {
+            ...slide,
+            state: "GONE"
+          };
+        } else if (index == selectedIndex - 1) {
+          return {
+            ...slide,
+            state: "BEHIND"
+          };
+        } else if (index == selectedIndex) {
+          return {
+            ...slide,
+            state: "CENTERED"
+          };
+        } else {
+          return {
+            ...slide,
+            state: "LIST"
+          };
+        }
+      });
+      
+      this.setState({
+        timelineProjects: {
+          ...timelineProjects,
+          [timeline.id]: updatedSlide
+        }
+      });
+    }
   };
 
   onClickProject = project => {

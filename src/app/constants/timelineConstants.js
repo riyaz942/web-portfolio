@@ -50,7 +50,7 @@ export const timelineListValue = [
     isSelected: false,
     companyName: 'College',
     position: 'Android & Web',
-    duration: '2014 - 2016 (2 years)',
+    duration: '2015 - 2016 (1 years)',
     location: 'Pune',
     roleDetail: '',
     companyDetail: '',
