@@ -12,8 +12,11 @@ class TimelineSelector extends Component {
 
   onClickTimelineItem = selectedTimeline => {
     const { onTimelineSelected } = this.props;
-
     const { timelineList } = this.state;
+    
+    const currentIndex = timelineList.findIndex(timeline => timeline.isSelected );
+    const selectedIndex = timelineList.findIndex(timeline => timeline.id == selectedTimeline.id);
+
     const updatedTimelineList = map(timelineList, timeline => {
       if (selectedTimeline.id == timeline.id)
         return {
@@ -26,7 +29,10 @@ class TimelineSelector extends Component {
       };
     });
     
-    onTimelineSelected(selectedTimeline.id);
+    onTimelineSelected({
+      selectedId: selectedTimeline.id,
+      selectionNext: selectedIndex > currentIndex
+    });
     this.setState({ timelineList: updatedTimelineList });
   };
 
@@ -51,7 +57,7 @@ class TimelineSelector extends Component {
                   align
                   justify
                   style={{ width: props.width }}
-                  className={styles.company_logo_container}
+                  className={`${styles.company_logo_container} ${!timeline.isSelected ? styles.onclick_selector : ''}`}
                   onClick={() => this.onClickTimelineItem(timeline)}
                 >
                   <Div

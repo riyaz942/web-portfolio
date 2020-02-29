@@ -269,6 +269,7 @@ class RightContainer extends Component {
                         <div
                           className={styles.bottom_background_gradient}
                         ></div>
+                        
                       </Div>
                     )}
                   </Spring>

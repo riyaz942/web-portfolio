@@ -1,10 +1,15 @@
 @import '~Styles/colors.module';
+@import '~Styles/mixins.module';
 
 .company_logo_container {
   border-radius: 20px;
   height: 38px;
   background: $color-black;
   position: relative;
+}
+
+.onclick_selector {
+  @include on_click_button;
 }
 
 .logo {

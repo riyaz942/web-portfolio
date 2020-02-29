@@ -19,7 +19,7 @@ const ProjectDetailsPage = () => {
 
   const [{ st }, set] = useSpring(() => ({ st: 0 }));
   const imgTopAnim = st.interpolate(o => 70 - o/2 > 0 ? 70 - o/2 : 0);
-  const imgWidthAnim = st.interpolate(o => 200 - o/1.5 > 68 ? 200 - o/1.5  : 68);
+  const imgWidthAnim = st.interpolate(o => 150 - o/1.5 > 50 ? 150 - o/1.5  : 50);
 
   const imgLeftAnim = st.interpolate(o => `calc(${50 - o / 1.5 / 3 > 0 ? 50 - o / 1.5 / 3 : 0}% - ${200 / 2 - o / 1.5 > 0 ? 200 / 2 - o / 1.5 : 0}px)`);
 
