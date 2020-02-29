@@ -19,7 +19,7 @@ const ProjectDetailsPage = () => {
 
   const [{ st }, set] = useSpring(() => ({ st: 0 }));
   const imgTopAnim = st.interpolate(o => 70 - o/2 > 0 ? 70 - o/2 : 0);
-  const imgWidthAnim = st.interpolate(o => 150 - o/1.5 > 50 ? 150 - o/1.5  : 50);
+  const imgWidthAnim = st.interpolate(o => 150 - o/1.5 > 48 ? 150 - o/1.5  : 48);
 
   const imgLeftAnim = st.interpolate(o => `calc(${50 - o / 1.5 / 3 > 0 ? 50 - o / 1.5 / 3 : 0}% - ${200 / 2 - o / 1.5 > 0 ? 200 / 2 - o / 1.5 : 0}px)`);
 
@@ -82,12 +82,12 @@ const ProjectDetailsPage = () => {
           </Div>
         </Div>
       </Div>
-      <div style={{
+      {/* <div style={{
         position: 'absolute',
         width: 183,
         height: 311,
         background: 'black'
-      }}></div>
+      }}></div> */}
     </Div>
   );
 }
