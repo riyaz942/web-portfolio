@@ -26,7 +26,7 @@
     left:0;
     bottom: 0;
     right: 0;
-    background: rgba($color-black, 0.7);
+    background: rgba($color-dark, 0.7);
     z-index: 1;
   }
 
@@ -38,7 +38,7 @@
     width: 30vw;
     z-index: 2;
 
-    background-image: linear-gradient(to right, rgba($color-black, 0.7), rgba(0, 0, 0, 0));
+    background-image: linear-gradient(to right, rgba($color-dark, 0.7), rgba(0, 0, 0, 0));
   }
 
   .left_container {

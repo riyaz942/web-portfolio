@@ -17,7 +17,7 @@ export default class Landing extends Component {
     super(props);
     this.previousBodyType = landingPageBody.NONE;
   }
-  
+
   updateBodyType = bodyType => {
     this.previousBodyType = this.state.bodyType;
     this.setState({ bodyType });
@@ -50,7 +50,7 @@ export default class Landing extends Component {
     const { bodyType } = this.state;
     const bodyContent = this.getBodyContent();
     let fromAnimation, enterAnimation, leaveAnimation;
-    
+
     if (this.previousBodyType == landingPageBody.NONE) {
       fromAnimation = {
         opacity: 0,
@@ -98,22 +98,20 @@ export default class Landing extends Component {
 
     return (
       <Div className={styles.landing_container}>
-        <Loader>
-          <React.Fragment>
-            <Header bodyType={bodyType} updateBodyType={this.updateBodyType} />
+        <React.Fragment>
+          <Header bodyType={bodyType} updateBodyType={this.updateBodyType} />
 
-            <Div fillParent className={styles.body_container}>
-              <Transition
-                items={bodyType}
-                from={fromAnimation}
-                enter={enterAnimation}
-                leave={leaveAnimation}
-              >
-                {bodyType => bodyContent[bodyType]}
-              </Transition>
-            </Div>
-          </React.Fragment>
-        </Loader>
+          <Div fillParent className={styles.body_container}>
+            <Transition
+              items={bodyType}
+              from={fromAnimation}
+              enter={enterAnimation}
+              leave={leaveAnimation}
+            >
+              {bodyType => bodyContent[bodyType]}
+            </Transition>
+          </Div>
+        </React.Fragment>
       </Div>
     );
   }

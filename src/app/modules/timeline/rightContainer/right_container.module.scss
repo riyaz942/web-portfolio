@@ -41,7 +41,7 @@
       .title_container {
         height: 100px;
         padding: 0px 18px 18px 18px;
-        color: $color-black;
+        color: $color-dark;
         text-align: right;
         position: relative;
 
@@ -103,6 +103,6 @@
   bottom: 0;
   right: 0;
 
-  background-image: linear-gradient(to top, rgba($color-black, 0.5), rgba(0, 0, 0, 0));
+  background-image: linear-gradient(to top, rgba($color-dark, 0.5), rgba(0, 0, 0, 0));
   border-radius: 12px;
 }
