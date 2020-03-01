@@ -4,17 +4,17 @@ import styles from './project_details_page.module.scss';
 import map from 'lodash/map';
 import { useSpring, animated } from 'react-spring';
 import lighthouseProjectIcon from 'Icons/project-icon-lighthouse.png';
+import { projectsListValue } from 'Constants/projectsConstants';
 
-
-const ProjectDetailsPage = () => {
-
+const ProjectDetailsPage = ({ match: { params } }) => {
+  const project = projectsListValue[params.projectSlug];
   //Full
   // image width: 150px;
   // description font-size: 34px;
 
   //Small
-  //image width: 68px;
-  //description font-size: 18px;
+  // image width: 68px;
+  // description font-size: 18px;
 
 
   const [{ st }, set] = useSpring(() => ({ st: 0 }));
@@ -57,7 +57,7 @@ const ProjectDetailsPage = () => {
             top: titleTopAnim
           }}
         >
-          The Lighthouse Project
+          {project.name}
         </animated.div>
 
         <Div
@@ -69,7 +69,7 @@ const ProjectDetailsPage = () => {
           }}
           className={styles.project_sub_details_container}>
           <div>Platform</div>
-          <div>React-Native</div>
+          <div>{project.tech.join(' | ')}</div>
           <div>Project Involment</div>
           <div>Major</div>
         </Div>
@@ -77,7 +77,16 @@ const ProjectDetailsPage = () => {
         <Div className={styles.content_container} onScroll={onScroll}>
           <Div align="stretch" className={styles.content} >
             {
-              map(Array(100), item => (<div>Platform</div>))
+              map(project.description, description => {
+
+                if (description.type != 'text1') {
+                  return (
+                    <div>{description.value}</div>
+                  )
+                }
+
+                return null;
+              })
             }
           </Div>
         </Div>

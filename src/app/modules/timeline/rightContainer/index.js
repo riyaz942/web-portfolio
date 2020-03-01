@@ -51,6 +51,7 @@ class RightContainer extends Component {
 
       return {
         ...projectsListValue[project],
+        slug: project,
         state,
         ref: React.createRef()
       };
@@ -207,11 +208,10 @@ class RightContainer extends Component {
 
   onClickProject = project => {
     const { push } = this.props.history;
-
     console.log(project.ref.current.offsetTop);
     console.log(project.ref.current.offsetLeft);
 
-    push("/project/something");
+    push(`/project/${project.slug}`);
   };
 
   render() {
