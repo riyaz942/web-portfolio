@@ -37,8 +37,12 @@ const ProjectDetailsPage = ({ match: { params } }) => {
       <div className={styles.left_container}>Left Container</div>
       <Div className={styles.right_container}>
 
-        <Div row justify="end">
-          <div>Visit</div>
+        <Div row justify="end" align className={styles.link_container}>
+          {
+            project.link ? (
+              <a href={project.link.value} className={styles.project_link} target="_blank">{project.link.type}</a>
+            ) : null
+          }
         </Div>
 
 

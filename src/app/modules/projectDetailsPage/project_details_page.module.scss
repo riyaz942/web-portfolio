@@ -1,4 +1,5 @@
 @import '~Styles/colors.module';
+@import '~Styles/mixins.module';
 
 .project_details_container {
   position: fixed;
@@ -19,6 +20,25 @@
     margin: 30px 40px 0px 40px;
     // overflow: auto;
     position: relative;
+
+
+    .link_container {
+      min-height: 48px;
+
+      .project_link {
+        z-index: 1;
+        font-size: 14px;
+        font-weight: 500;
+        border-radius: 5px;
+        border: solid 1px $color-dark;
+        padding: 2px 18px;
+        text-decoration: none; 
+        color: $color_dark;
+
+        @include on_click_button;
+      }  
+
+    }
 
     .project_image {
       position: absolute;
@@ -55,11 +75,11 @@
 
     .content_container {
       overflow: auto;
-      margin-top: 40px;
+      margin-top: 10px;
       z-index: 1;
 
       .content {
-        margin-top: 300px;
+        margin-top: 290px;
         margin-bottom: 350px;
       }
     }

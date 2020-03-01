@@ -79,7 +79,7 @@ export const projectsListValue = {
         value: 'I worked on the front-end web and developed the landing pages and few features within the app. '
       },
       {
-        value: 'points',
+        type: 'points',
         value: [
           'Worked with css-modules',
           'Firebase Notification',
