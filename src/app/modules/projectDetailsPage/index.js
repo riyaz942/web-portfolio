@@ -19,16 +19,16 @@ const ProjectDetailsPage = ({ match: { params } }) => {
 
 
   const [{ st }, set] = useSpring(() => ({ st: 0 }));
-  const imgTopAnim = st.interpolate(o => 70 - o/2 > 0 ? 70 - o/2 : 0);
-  const imgWidthAnim = st.interpolate(o => 150 - o/1.5 > 48 ? 150 - o/1.5  : 48);
+  const imgTopAnim = st.interpolate(o => 70 - o / 2 > 0 ? 70 - o / 2 : 0);
+  const imgWidthAnim = st.interpolate(o => 150 - o / 1.5 > 48 ? 150 - o / 1.5 : 48);
 
   const imgLeftAnim = st.interpolate(o => `calc(${50 - o / 1.5 / 3 > 0 ? 50 - o / 1.5 / 3 : 0}% - ${200 / 2 - o / 1.5 > 0 ? 200 / 2 - o / 1.5 : 0}px)`);
 
-  const titleTopAnim = st.interpolate(o => (220 - o/1.1 > 0 ? 220 - o/1.1 : 0)+12);
+  const titleTopAnim = st.interpolate(o => (220 - o / 1.1 > 0 ? 220 - o / 1.1 : 0) + 12);
   const titleLeftAnim = st.interpolate(o => 0 + o / 2.5 < 76 ? 0 + o / 2.5 : 76);
   const titleSizeAnim = st.interpolate(o => 36 - o / 10 > 18 ? 36 - o / 10 : 18);
 
-  const subDetailsTop = st.interpolate(o => 220 - o/1.1 > 0 ? 220 - o/1.1 : 0);
+  const subDetailsTop = st.interpolate(o => 220 - o / 1.1 > 0 ? 220 - o / 1.1 : 0);
   const subDetailsAlpha = st.interpolate(o => 1 - o / 150 > 0 ? 1 - o / 150 : 0);
   const onScroll = useCallback(e => set({ st: e.target.scrollTop }), [])
 
@@ -76,11 +76,9 @@ const ProjectDetailsPage = ({ match: { params } }) => {
         </Div>
 
         <Div className={styles.content_container} onScroll={onScroll}>
-          <Div align="stretch" className={styles.content} >
-            <ProjectDescription description={project.description} />
-          </Div>
+          <ProjectDescription className={styles.content} description={project.description} />
         </Div>
-        
+
       </Div>
       {/* <div style={{
         position: 'absolute',

@@ -39,9 +39,11 @@
     .content_container {
       overflow: auto;
       margin-top: 31px;
+      z-index: 1;
 
       .content {
         margin-top: 300px;
+        margin-bottom: 350px;
       }
     }
   }

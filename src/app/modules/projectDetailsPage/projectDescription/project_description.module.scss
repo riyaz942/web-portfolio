@@ -1,0 +1,26 @@
+@import '~Styles/colors.module';
+
+.description_container {
+  font-size: 15px;
+  color: $color-dark;
+
+  .text {
+    padding: 12px 0px;
+  }
+
+  .header {
+    margin-top: 24px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .points_container {
+    .title {
+    }
+
+    .points_ul {
+      margin: 6px 0px;
+    }
+  }
+
+}

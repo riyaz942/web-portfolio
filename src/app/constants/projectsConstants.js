@@ -19,7 +19,8 @@ export const projectsListValue = {
       },
       {
         type: 'points',
-        title: 'The intention for bijli was to have a cross-platform product working on Web, Desktop, Android, iOS, Slack platforms having these core features :-',
+        highlight: 'green',
+        title: 'The intention for bijli was to have a cross-platform product working on Web, Desktop, Android, iOS, Slack platforms having these core features :',
         value: [
           'Check-in Mechanism',
           'To-Do management',
@@ -31,15 +32,16 @@ export const projectsListValue = {
       },
       {
         type: 'header',
-        value: 'My Part in project :-',        
+        value: 'My Contribution :',        
       },
       {
         type: 'text',
-        value: 'In Bijli I mostly worked on React and Electron, and worked on one feature with laravel.<br /> Took the lead for the web and electron sprints, for a period ',
+        value: 'In Bijli I mostly worked on React and Electron, and worked with Laravel for one feature.<br/> Took the lead for the web and electron sprints, for a period ',
       },
       {
         type: 'points',
-        title: 'These are some feature complexity faced and technology used :-',
+        title: 'These are some feature complexity faced and technology used :',
+        highlight: 'blue',
         value: [
           'Electron and Web build process with webpack',
           "A custom made compose flow (Similar to gmail's compose)",
@@ -66,6 +68,10 @@ export const projectsListValue = {
       {
         type: 'text',
         value: 'Wakency has been built to address the changing work culture of our times, to be India’s first on-demand flexible work platform that uses proprietary technology to automate making the perfect match between temporary workers and employers.'
+      },
+      {
+        type: 'header',
+        value: 'My Contribution :',        
       },
       {
         type: 'text',
@@ -97,15 +103,19 @@ export const projectsListValue = {
     description: [
       {
         type: 'text',
-        value: "Nykaa is an e-commerce website offering beauty and wellness products from more than 500 leading brands.<br /> Nykaa’s website was initially built with magento but it was hard to scale with it, so they started moving the frontend to react and backend on python."
+        value: "Nykaa is an e-commerce website offering beauty and wellness products from more than 500 leading brands.<br/> Nykaa’s website was initially built with magento but it was hard to scale with it, so they started moving the frontend to react and backend on python."
+      },
+      {
+        type: 'header',
+        value: 'My Contribution :',        
       },
       {
         type: 'points',
-        title: 'These are the features i worked on there :-',
         value: [
-          'Nykaa Pro',
+          'New mobile signup/signin flow',
           'Trending Search and Search history',
-          'New mobile signup/signin flow'
+          'Nykaa Pro',
+          'Worked on AR Makeup with modiface'
         ]
       }
     ]
@@ -125,7 +135,7 @@ export const projectsListValue = {
       },
       {
         type: 'text',
-        value: 'The purpose of the Sprout app users is to quickly and conveniently book meals from Sprout.<br /> It was not published due to some business operation issue on the clients end.'
+        value: 'The purpose of the Sprout app users is to quickly and conveniently book meals from Sprout.<br/> It was not published due to some business operation issue on the clients end.'
       },
       {
         type: 'text',
@@ -213,7 +223,7 @@ export const projectsListValue = {
       },
       {
         type: 'points',
-        title: 'Features :-',
+        title: 'Features :',
         value: [
           'Offline voice recognition and continuous voice recognition implementation with pocket sphinx.',
           '13 voice commands to control player',
