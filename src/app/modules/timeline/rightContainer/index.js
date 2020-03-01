@@ -9,6 +9,7 @@ import { timelineListValue } from "Constants/timelineConstants";
 import { projectsListValue } from "Constants/projectsConstants";
 import isEmpty from "lodash/isEmpty";
 import { Transition } from "react-spring/renderprops";
+import PaginationButton from 'Common/components/paginationButton';
 
 class RightContainer extends Component {
   state = {
@@ -280,25 +281,16 @@ class RightContainer extends Component {
         </Div>
 
         <Div row>
-          <Div
-            align
-            justify
-            className={`${styles.button_container} ${styles.left_button_container} ${!isPrevButtonClickable ? styles.disabled : ''}`}
+          <PaginationButton
+            isEnabled={isPrevButtonClickable}
             onClick={this.previous}
-          >
-            <img className={styles.arrow} src={leftArrowIcon} />
-          </Div>
-          <Div
-            align
-            justify
-            className={`${styles.button_container} ${!isNextButtonClickable ? styles.disabled : ''}`}
+            className={styles.left_button_container}
+          />
+          <PaginationButton
+            isEnabled={isNextButtonClickable}
             onClick={this.next}
-          >
-            <img
-              className={`${styles.arrow} ${styles.right_arrow}`}
-              src={leftArrowIcon}
-            />
-          </Div>
+            isRight
+          />
         </Div>
       </Div>
     );

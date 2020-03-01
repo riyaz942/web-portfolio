@@ -65,34 +65,6 @@
   .left_button_container {
     margin: 0px 10px;
   }
-
-  .button_container {
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    background-color: rgba(white, 0.3);
-
-    @include on_click_button;
-
-    .arrow {
-      width: 13px;
-      height: 13px;
-    }
-
-    .right_arrow {
-      transform: scale(-1);
-    }
-  }
-
-  .disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-
-    &:hover {
-      transform: unset;
-      opacity: 0.3;
-    }
-  }
 }
     
 
