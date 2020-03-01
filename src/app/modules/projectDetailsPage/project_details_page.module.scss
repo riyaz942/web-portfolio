@@ -22,6 +22,7 @@
 
     .project_image {
       position: absolute;
+      object-fit: contain;
     }
 
     .project_name {
@@ -38,7 +39,7 @@
 
     .content_container {
       overflow: auto;
-      margin-top: 31px;
+      margin-top: 40px;
       z-index: 1;
 
       .content {

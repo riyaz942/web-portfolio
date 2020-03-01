@@ -3,7 +3,7 @@ import Div from 'Common/components/div';
 import styles from './project_details_page.module.scss';
 import map from 'lodash/map';
 import { useSpring, animated } from 'react-spring';
-import lighthouseProjectIcon from 'Icons/project-icon-lighthouse.png';
+// import lighthouseProjectIcon from 'Icons/project-icon-lighthouse.png';
 import { projectsListValue } from 'Constants/projectsConstants';
 import ProjectDescription from './projectDescription';
 
@@ -17,15 +17,15 @@ const ProjectDetailsPage = ({ match: { params } }) => {
   // image width: 68px;
   // description font-size: 18px;
 
-
+  const imageWidth = 150;
   const [{ st }, set] = useSpring(() => ({ st: 0 }));
   const imgTopAnim = st.interpolate(o => 70 - o / 2 > 0 ? 70 - o / 2 : 0);
-  const imgWidthAnim = st.interpolate(o => 150 - o / 1.5 > 48 ? 150 - o / 1.5 : 48);
+  const imgWidthAnim = st.interpolate(o => imageWidth - o / 1.5 > 48 ? imageWidth - o / 1.5 : 48);
 
-  const imgLeftAnim = st.interpolate(o => `calc(${50 - o / 1.5 / 3 > 0 ? 50 - o / 1.5 / 3 : 0}% - ${200 / 2 - o / 1.5 > 0 ? 200 / 2 - o / 1.5 : 0}px)`);
+  const imgLeftAnim = st.interpolate(o => `calc(${50 - o / 1.5 / 3 > 0 ? 50 - o / 1.5 / 3 : 0}% - ${imageWidth / 2 - o / 1.5 > 0 ? imageWidth / 2 - o / 1.5 : 0}px)`);
 
-  const titleTopAnim = st.interpolate(o => (220 - o / 1.1 > 0 ? 220 - o / 1.1 : 0) + 12);
-  const titleLeftAnim = st.interpolate(o => 0 + o / 2.5 < 76 ? 0 + o / 2.5 : 76);
+  const titleTopAnim = st.interpolate(o => (220 - o / 1.1 > 0 ? 220 - o / 1.1 : 0) + 14);
+  const titleLeftAnim = st.interpolate(o => 0 + o / 2.5 < 60 ? 0 + o / 2.5 : 60);
   const titleSizeAnim = st.interpolate(o => 36 - o / 10 > 18 ? 36 - o / 10 : 18);
 
   const subDetailsTop = st.interpolate(o => 220 - o / 1.1 > 0 ? 220 - o / 1.1 : 0);
@@ -44,9 +44,10 @@ const ProjectDetailsPage = ({ match: { params } }) => {
 
         <animated.img
           className={styles.project_image}
-          src={lighthouseProjectIcon}
+          src={project.icon}
           style={{
             width: imgWidthAnim,
+            height: imgWidthAnim,
             left: imgLeftAnim,
             top: imgTopAnim
           }} />
