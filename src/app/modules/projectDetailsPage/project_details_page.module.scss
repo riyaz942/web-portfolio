@@ -13,6 +13,10 @@
   .left_container {
     width: 55%;
     background-color: $color-dark;
+
+    .pagination_container {
+      padding: 0px 31px;
+    }
   }
 
   .right_container {

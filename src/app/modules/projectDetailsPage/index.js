@@ -6,6 +6,7 @@ import { useSpring, animated } from 'react-spring';
 // import lighthouseProjectIcon from 'Icons/project-icon-lighthouse.png';
 import { projectsListValue } from 'Constants/projectsConstants';
 import ProjectDescription from './projectDescription';
+import PaginationButton from 'Common/components/paginationButton';
 
 const ProjectDetailsPage = ({ match: { params } }) => {
   const project = projectsListValue[params.projectSlug];
@@ -34,7 +35,12 @@ const ProjectDetailsPage = ({ match: { params } }) => {
 
   return (
     <Div row className={styles.project_details_container}>
-      <div className={styles.left_container}>Left Container</div>
+      <Div justify className={styles.left_container}>
+        <Div row justify="space_between" className={styles.pagination_container}>
+          <PaginationButton />
+          <PaginationButton isRight/>
+        </Div>
+      </Div>
       <Div className={styles.right_container}>
 
         <Div row justify="end" align className={styles.link_container}>
