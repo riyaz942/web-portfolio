@@ -5,6 +5,7 @@ import map from 'lodash/map';
 import { useSpring, animated } from 'react-spring';
 import lighthouseProjectIcon from 'Icons/project-icon-lighthouse.png';
 import { projectsListValue } from 'Constants/projectsConstants';
+import ProjectDescription from './projectDescription';
 
 const ProjectDetailsPage = ({ match: { params } }) => {
   const project = projectsListValue[params.projectSlug];
@@ -76,20 +77,10 @@ const ProjectDetailsPage = ({ match: { params } }) => {
 
         <Div className={styles.content_container} onScroll={onScroll}>
           <Div align="stretch" className={styles.content} >
-            {
-              map(project.description, description => {
-
-                if (description.type != 'text1') {
-                  return (
-                    <div>{description.value}</div>
-                  )
-                }
-
-                return null;
-              })
-            }
+            <ProjectDescription description={project.description} />
           </Div>
         </Div>
+        
       </Div>
       {/* <div style={{
         position: 'absolute',
