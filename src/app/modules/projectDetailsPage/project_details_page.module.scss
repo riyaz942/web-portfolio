@@ -34,7 +34,23 @@
     .project_sub_details_container {
       position: absolute;
       right: 0;
-      top: 0;
+      font-size: 15px;
+      font-weight: 500;
+      color: $color-dark;
+      line-height: 1;      
+
+      .title {
+        color: $color-brown-grey;
+        margin-bottom: 2px;
+      }
+
+      .value {
+        text-transform: capitalize;
+      }
+
+      .project_involvement {
+        margin-top: 15px;
+      }
     }
 
     .content_container {

@@ -5,16 +5,19 @@
   color: $color-dark;
 
   .text {
-    padding: 12px 0px;
+    padding: 12px;
   }
 
   .header {
     margin-top: 24px;
+    padding-left: 12px;
     font-size: 18px;
     font-weight: bold;
   }
 
   .points_container {
+    padding: 0px 12px;
+
     .title {
     }
 
@@ -23,4 +26,13 @@
     }
   }
 
+}
+
+
+.highlight_green {
+  background-color: rgba($color-green, 0.1);
+}
+  
+.highlight_blue {
+  background-color: rgba($color-blue, 0.1);
 }

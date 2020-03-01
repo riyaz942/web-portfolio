@@ -15,6 +15,7 @@ export const projectsListValue = {
     description: [
       {
         type: 'text',
+        highlight: 'green',
         value: 'Bijli is a Project management and communication App which helps reduce communication noise within teams, and provide useful metric to make real time decisions.'
       },
       {
@@ -41,7 +42,6 @@ export const projectsListValue = {
       {
         type: 'points',
         title: 'These are some feature complexity faced and technology used :',
-        highlight: 'blue',
         value: [
           'Electron and Web build process with webpack',
           "A custom made compose flow (Similar to gmail's compose)",
@@ -67,6 +67,7 @@ export const projectsListValue = {
     description: [
       {
         type: 'text',
+        highlight: 'green',
         value: 'Wakency has been built to address the changing work culture of our times, to be India’s first on-demand flexible work platform that uses proprietary technology to automate making the perfect match between temporary workers and employers.'
       },
       {
@@ -103,6 +104,7 @@ export const projectsListValue = {
     description: [
       {
         type: 'text',
+        highlight: 'green',
         value: "Nykaa is an e-commerce website offering beauty and wellness products from more than 500 leading brands.<br/> Nykaa’s website was initially built with magento but it was hard to scale with it, so they started moving the frontend to react and backend on python."
       },
       {
@@ -131,10 +133,12 @@ export const projectsListValue = {
     description: [
       {
         type: 'text',
+        highlight: 'green',
         value: 'Sprout is a delivery kitchen that aims to serve delicious meals, while cutting the long wait associated with them. It is a subscription based service with a clear detail of ingredients that is customizable and changes daily.'
       },
       {
         type: 'text',
+        highlight: 'green',
         value: 'The purpose of the Sprout app users is to quickly and conveniently book meals from Sprout.<br/> It was not published due to some business operation issue on the clients end.'
       },
       {
@@ -154,6 +158,7 @@ export const projectsListValue = {
     description: [
       {
         type: 'text',
+        highlight: 'green',
         value: 'The Lighthouse Project is a not-for-profit organisation in Mumbai that connects working professionals and college students with children from under resourced communities, through one-on-one mentoring in a safe environment.'
       },
       {
@@ -173,6 +178,7 @@ export const projectsListValue = {
     description: [
       {
         type: 'text',
+        highlight: 'green',
         value: 'Benefactory envisions a future where everyday people have the power to seamlessly act on urgent issues while they’re on the go. Benefactory partner with your frequently visited websites - from shopping to booking a ride - to place our micro-donation ACT widget, that responds to crises dominating the headlines, so you can add a donation to your cart at checkout.'
       },
       {
@@ -192,7 +198,8 @@ export const projectsListValue = {
     description: [
       {
         type: 'text',
-        value: 'Measure is an fitness app which helps track habit and weight to provide detailed information about your health so that the user can make informed decisions about their health while being integrated with their weighing scale device.'
+        highlight: 'green',
+        value: 'Measure is an fitness app which helps track habit and weight to provide detailed information about your health so that the user can make informed decisions about their health.<br/>The app is integrated with their weighing scale device so the weight data is directly taken from the device.'
       },
       {
         type: 'text',
@@ -215,6 +222,7 @@ export const projectsListValue = {
     description: [
       {
         type: 'text',
+        highlight: 'green',
         value: 'Vc music player is an app with bloated features 😆, the intention for this app was to reduce navigation and make the music search and selection seamless and simple while also having a feature to play video with only music within a playlist and switch between music and video mode.'
       },
       {

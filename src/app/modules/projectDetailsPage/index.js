@@ -70,10 +70,11 @@ const ProjectDetailsPage = ({ match: { params } }) => {
             opacity: subDetailsAlpha,
           }}
           className={styles.project_sub_details_container}>
-          <div>Platform</div>
-          <div>{project.tech.join(' | ')}</div>
-          <div>Project Involment</div>
-          <div>Major</div>
+          <div className={styles.title}>Platform</div>
+          <div className={styles.value}>{project.tech.join(' | ')}</div>
+
+          <div className={`${styles.title} ${styles.project_involvement}`}>Project Involment</div>
+          <div className={styles.value}>Major</div>
         </Div>
 
         <Div className={styles.content_container} onScroll={onScroll}>
