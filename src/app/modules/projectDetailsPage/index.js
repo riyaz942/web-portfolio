@@ -1,47 +1,87 @@
-import React, { Component, useCallback } from 'react';
+import React, { useCallback, useEffect, useState, Fragment } from 'react';
 import Div from 'Common/components/div';
 import styles from './project_details_page.module.scss';
 import map from 'lodash/map';
+import { withRouter } from "react-router";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import { useSpring, animated } from 'react-spring';
+import { clearTimelinePosition } from 'Redux/actions/timelineActions';
 // import lighthouseProjectIcon from 'Icons/project-icon-lighthouse.png';
 import { projectsListValue } from 'Constants/projectsConstants';
 import ProjectDescription from './projectDescription';
 import PaginationButton from 'Common/components/paginationButton';
 
-const ProjectDetailsPage = ({ match: { params } }) => {
+const imageRef = React.createRef();
+
+const ProjectDetailsPage = ({ match: { params }, timelineReducer }) => {
   const project = projectsListValue[params.projectSlug];
-  //Full
-  // image width: 150px;
-  // description font-size: 34px;
+  const { position } = timelineReducer;
 
-  //Small
-  // image width: 68px;
-  // description font-size: 18px;
-
+  //-------------------------------------------ScrollAnimation
   const imageWidth = 150;
   const [{ st }, set] = useSpring(() => ({ st: 0 }));
   const imgTopAnim = st.interpolate(o => 70 - o / 2 > 0 ? 70 - o / 2 : 0);
   const imgWidthAnim = st.interpolate(o => imageWidth - o / 1.5 > 48 ? imageWidth - o / 1.5 : 48);
-
   const imgLeftAnim = st.interpolate(o => `calc(${50 - o / 1.5 / 3 > 0 ? 50 - o / 1.5 / 3 : 0}% - ${imageWidth / 2 - o / 1.5 > 0 ? imageWidth / 2 - o / 1.5 : 0}px)`);
 
   const titleTopAnim = st.interpolate(o => (220 - o / 1.1 > 0 ? 220 - o / 1.1 : 0) + 14);
-  const titleLeftAnim = st.interpolate(o => 0 + o / 2.5 < 60 ? 0 + o / 2.5 : 60);
+  const titleLeftAnim = st.interpolate(o => o / 2.5 < 60 ? o / 2.5 : 60);
   const titleSizeAnim = st.interpolate(o => 36 - o / 10 > 18 ? 36 - o / 10 : 18);
 
   const subDetailsTop = st.interpolate(o => 220 - o / 1.1 > 0 ? 220 - o / 1.1 : 0);
   const subDetailsAlpha = st.interpolate(o => 1 - o / 150 > 0 ? 1 - o / 150 : 0);
-  const onScroll = useCallback(e => set({ st: e.target.scrollTop }), [])
+  const onScroll = useCallback(e => set({ st: e.target.scrollTop }), []);
+  //-------------------------------------------End
+
+  const [componentReady, setComponentReady] = useState(false);
+  const [animateTo, setAnimateTo] = useState({ height: 0, width: 0, transform: 'translate(0px, 0px)' });
+
+  const containerOpacityAnimation = useSpring({ opacity: 0 });
+  const imageTransitionAnimation = useSpring({
+    to: animateTo,
+    from: {
+      height: position.height,
+      width: position.width,
+      transform: `translate(${position.left}px, ${position.top}px)`
+    }
+  });
+  const backgroundTransitionAnimation = useSpring({
+    to: {
+      height: 'calc(100vh + 0px)',
+      width: 'calc(100vw + 0px)',
+      transform: 'translate(0px, 0px)',
+      borderRadius: 0
+    },
+    from: {
+      height: `calc(0vh + ${position.height}px)`,
+      width: `calc(0vw + ${position.width}px)`,
+      transform: `translate(${position.left}px, ${position.top}px)`,
+      borderRadius: 50
+    }
+  });
+
+
+  useEffect(() => {
+    const currentRect = imageRef.current.getBoundingClientRect();
+
+    setAnimateTo({
+      height: currentRect.height,
+      width: currentRect.width,
+      transform: `translate(${currentRect.left}px, ${currentRect.top}px)`
+    })
+    setComponentReady(true);
+  })
 
   return (
     <Div row className={styles.project_details_container}>
-      <Div justify className={styles.left_container}>
+      <Div animate justify className={styles.left_container} style={containerOpacityAnimation}>
         <Div row justify="space_between" className={styles.pagination_container}>
           <PaginationButton />
-          <PaginationButton isRight/>
+          <PaginationButton isRight />
         </Div>
       </Div>
-      <Div className={styles.right_container}>
+      <Div animate className={styles.right_container} style={containerOpacityAnimation}>
 
         <Div row justify="end" align className={styles.link_container}>
           {
@@ -51,8 +91,8 @@ const ProjectDetailsPage = ({ match: { params } }) => {
           }
         </Div>
 
-
         <animated.img
+          ref={imageRef}
           className={styles.project_image}
           src={project.icon}
           style={{
@@ -92,15 +132,50 @@ const ProjectDetailsPage = ({ match: { params } }) => {
         </Div>
 
       </Div>
-      {/* <div style={{
-        position: 'absolute',
-        width: 183,
-        height: 311,
-        background: 'black'
-      }}></div> */}
+
+
+
+      {
+        componentReady && (
+          <Fragment>
+            <animated.div style={{
+              ...backgroundTransitionAnimation,
+              position: 'absolute',
+              background: 'white',
+              zIndex: 0,
+            }} />
+
+            <animated.img
+              src={project.icon}
+              style={{
+                ...imageTransitionAnimation,
+                objectFit: 'contain',
+                position: 'absolute',
+                zIndex: 2,
+              }}
+            />
+          </Fragment>
+
+        )
+      }
+
     </Div>
   );
 }
 
+const mapStateToProps = state => {
+  return {
+    timelineReducer: state.timelineReducer,
+  }
+}
 
-export default ProjectDetailsPage;
+const mapDispathToProps = dispatch => {
+  return {
+    clearTimelinePosition: bindActionCreators(clearTimelinePosition, dispatch)
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispathToProps
+)(withRouter(ProjectDetailsPage));

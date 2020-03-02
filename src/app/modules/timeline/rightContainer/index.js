@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import styles from "./right_container.module.scss";
 import Div from "Common/components/div";
 import map from "lodash/map";
@@ -10,6 +12,7 @@ import { projectsListValue } from "Constants/projectsConstants";
 import isEmpty from "lodash/isEmpty";
 import { Transition } from "react-spring/renderprops";
 import PaginationButton from 'Common/components/paginationButton';
+import { setTimelinePosition } from 'Redux/actions/timelineActions';
 
 class RightContainer extends Component {
   state = {
@@ -208,10 +211,14 @@ class RightContainer extends Component {
   };
 
   onClickProject = project => {
-    const { push } = this.props.history;
-    console.log(project.ref.current.offsetTop);
-    console.log(project.ref.current.offsetLeft);
+    const { setTimelinePosition, history: { push } } = this.props;
+    const rect = project.ref.current.getBoundingClientRect();
+    setTimelinePosition(rect);
+    
+    // console.log(project.ref.current.offsetTop);
+    // console.log(project.ref.current.offsetLeft);
 
+    
     push(`/project/${project.slug}`);
   };
 
@@ -245,15 +252,14 @@ class RightContainer extends Component {
                     {props => (
                       <Div
                         key={index}
-                        onClick={() => this.onClickProject(slide)}
-                        ref={slide.ref}
+                        onClick={() => this.onClickProject(slide)}                        
                         style={{ ...props, zIndex: index }}
                         className={`${styles.slide_items} ${
                           slide.state == "CENTERED" ? styles.is_selected : ""
                         }`}
                       >
                         <Div fillParent align justify>
-                          <img src={slide.icon} className={styles.image} />
+                          <img ref={slide.ref} src={slide.icon} className={styles.image} />
                         </Div>
 
                         <Div
@@ -297,4 +303,13 @@ class RightContainer extends Component {
   }
 }
 
-export default withRouter(RightContainer);
+const mapDispathToProps = dispatch => {
+  return {
+    setTimelinePosition: bindActionCreators(setTimelinePosition, dispatch)
+  };
+};
+
+export default connect(
+  null,
+  mapDispathToProps
+)(withRouter(RightContainer));
