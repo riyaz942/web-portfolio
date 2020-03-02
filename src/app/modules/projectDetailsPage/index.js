@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState, Fragment } from 'react';
+import React, { useCallback, useEffect, useState, Fragment, useRef } from 'react';
 import Div from 'Common/components/div';
 import styles from './project_details_page.module.scss';
 import map from 'lodash/map';
@@ -12,14 +12,13 @@ import { projectsListValue } from 'Constants/projectsConstants';
 import ProjectDescription from './projectDescription';
 import PaginationButton from 'Common/components/paginationButton';
 
-const imageRef = React.createRef();
-
-const ProjectDetailsPage = ({ match: { params }, timelineReducer }) => {
-  const project = projectsListValue[params.projectSlug];
+const ProjectDetailsPage = ({ match, timelineReducer, style }) => {
+  const project =  projectsListValue[match.params.projectSlug];
   const { position } = timelineReducer;
 
   //-------------------------------------------ScrollAnimation
   const imageWidth = 150;
+  const imageRef = useRef(null);
   const [{ st }, set] = useSpring(() => ({ st: 0 }));
   const imgTopAnim = st.interpolate(o => 70 - o / 2 > 0 ? 70 - o / 2 : 0);
   const imgWidthAnim = st.interpolate(o => imageWidth - o / 1.5 > 48 ? imageWidth - o / 1.5 : 48);
@@ -34,10 +33,14 @@ const ProjectDetailsPage = ({ match: { params }, timelineReducer }) => {
   const onScroll = useCallback(e => set({ st: e.target.scrollTop }), []);
   //-------------------------------------------End
 
+  const [hideTransitionElement, setHideTransitionElement] = useState(false);
   const [componentReady, setComponentReady] = useState(false);
   const [animateTo, setAnimateTo] = useState({ height: 0, width: 0, transform: 'translate(0px, 0px)' });
 
-  const containerOpacityAnimation = useSpring({ opacity: 0 });
+  const containerOpacityAnimation = useSpring({
+    from: { opacity: 0 }, opacity: 1, delay: 450,
+  });
+  
   const imageTransitionAnimation = useSpring({
     to: animateTo,
     from: {
@@ -46,6 +49,7 @@ const ProjectDetailsPage = ({ match: { params }, timelineReducer }) => {
       transform: `translate(${position.left}px, ${position.top}px)`
     }
   });
+
   const backgroundTransitionAnimation = useSpring({
     to: {
       height: 'calc(100vh + 0px)',
@@ -71,10 +75,11 @@ const ProjectDetailsPage = ({ match: { params }, timelineReducer }) => {
       transform: `translate(${currentRect.left}px, ${currentRect.top}px)`
     })
     setComponentReady(true);
-  })
+    // setTimeout(()=> setHideTransitionElement(true), 400)
+  }, [])
 
   return (
-    <Div row className={styles.project_details_container}>
+    <Div row className={styles.project_details_container} style={style}>
       <Div animate justify className={styles.left_container} style={containerOpacityAnimation}>
         <Div row justify="space_between" className={styles.pagination_container}>
           <PaginationButton />
@@ -142,18 +147,22 @@ const ProjectDetailsPage = ({ match: { params }, timelineReducer }) => {
               ...backgroundTransitionAnimation,
               position: 'absolute',
               background: 'white',
-              zIndex: 0,
+              zIndex: -3,
             }} />
 
-            <animated.img
-              src={project.icon}
-              style={{
-                ...imageTransitionAnimation,
-                objectFit: 'contain',
-                position: 'absolute',
-                zIndex: 2,
-              }}
-            />
+            {
+              !hideTransitionElement && (
+                <animated.img
+                  src={project.icon}
+                  style={{
+                    ...imageTransitionAnimation,
+                    objectFit: 'contain',
+                    position: 'absolute',
+                    zIndex: 2,
+                  }}
+                />
+              )
+            }
           </Fragment>
 
         )

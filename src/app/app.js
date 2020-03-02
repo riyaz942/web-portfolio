@@ -7,12 +7,14 @@ import Landing from "./modules/landing/landing";
 import ProjectDetailsPage from "./modules/projectDetailsPage";
 import Div from "Common/components/div";
 import Loader from "./modules/loader/loader";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, useRouteMatch } from "react-router-dom";
 import { configureStore, history } from "./redux/store/store.dev";
+import { Transition } from 'react-spring/renderprops'
 
 const store = configureStore();
 
-function App() {
+const App = () => {
+
   return (
     <Provider store={store}>
       <ConnectedRouter history={history}>
@@ -22,7 +24,20 @@ function App() {
               <Switch>
                 <Route path="/">
                   <Landing />
-                  <Route exact path="/project/:projectSlug?" component={ProjectDetailsPage} />
+                  <Route exact path="/project/:projectSlug?"
+                    children={({ match, ...rest }) => {
+
+                      return (
+                        <Transition
+                          items={(match && match.params && match.params.projectSlug)}
+                          from={{ opacity: 0 }}
+                          enter={{ opacity: 1 }}
+                          leave={{ opacity: 0 }}>
+                          {item => item && ((props) => <ProjectDetailsPage style={props} match={match} {...rest} />)}
+                        </Transition>
+                      )
+                    }}
+                  />
                 </Route>
               </Switch>
             </Router>
