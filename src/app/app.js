@@ -30,7 +30,7 @@ const App = () => {
                       return (
                         <Transition
                           items={(match && match.params && match.params.projectSlug)}
-                          from={{ opacity: 0 }}
+                          from={{ opacity: 1 }}
                           enter={{ opacity: 1 }}
                           leave={{ opacity: 0 }}>
                           {item => item && ((props) => <ProjectDetailsPage style={props} match={match} {...rest} />)}

@@ -75,7 +75,7 @@ const ProjectDetailsPage = ({ match, timelineReducer, style }) => {
       transform: `translate(${currentRect.left}px, ${currentRect.top}px)`
     })
     setComponentReady(true);
-    // setTimeout(()=> setHideTransitionElement(true), 400)
+    setTimeout(()=> setHideTransitionElement(true), 700)
   }, [])
 
   return (
