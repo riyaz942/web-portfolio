@@ -45,50 +45,13 @@ const getBackgroundAnimation = position => {
   };
 };
 
-const getProjectImageAnimation = ({previousPosition, currentPosition}) => {
-  let returnValue = {};
-
-  returnValue = previousPosition
-    ? {
-        from: {
-          height: previousPosition.height,
-          width: previousPosition.width,
-          transform: `translate(${previousPosition.left}px, ${previousPosition.top}px)`
-        }
-      }
-    : {
-        from: {
-          display: "none"
-        }
-      };
-
-  returnValue = {
-    ...returnValue,
-    to: currentPosition
-      ? {
-          height: currentPosition.height,
-          width: currentPosition.width,
-          transform: `translate(${currentPosition.left}px, ${currentPosition.top}px)`
-        }
-      : {
-          height: 0,
-          width: 0,
-          transform: "translate(0px, 0px)"
-        }
-  };
-
-  return returnValue;
-};
-
 const ProjectDetailsPage = ({
   match,
   timelineReducer,
   style,
   clearTimelinePosition
 }) => {
-  const [project] = useState(
-    match && match.params ? projectsListValue[match.params.projectSlug] : {}
-  );
+  const [project] = useState(match && match.params ? projectsListValue[match.params.projectSlug] : {});
   const [position] = useState(timelineReducer.position);
 
   //-------------------------------------------ScrollAnimation
@@ -141,19 +104,17 @@ const ProjectDetailsPage = ({
         setShowContent(true);
         setHideTransitionElement(true);
       }
-    },
-    onRest: () => showContent && clearTimelinePosition()
+    }
   });
 
   const imageTransitionAnimation = useSpring({
     to: animateTo,
     from: position
       ? {
-          height: position.height,
-          width: position.width,
-          transform: `translate(${position.left}px, ${position.top}px)`
-        }
-      : animateTo
+        height: position.height,
+        width: position.width,
+        transform: `translate(${position.left}px, ${position.top}px)`
+      }: {}
   });
 
   const backgroundTransitionAnimation = useSpring({
@@ -169,6 +130,8 @@ const ProjectDetailsPage = ({
       transform: `translate(${currentRect.left}px, ${currentRect.top}px)`
     });
     setComponentReady(true);
+
+    return () => clearTimelinePosition();
   }, []);
 
   return (
@@ -281,7 +244,7 @@ const ProjectDetailsPage = ({
             }}
           />
 
-          {!hideTransitionElement && (
+          { (!hideTransitionElement) && (
             <animated.img
               src={project.icon}
               style={{

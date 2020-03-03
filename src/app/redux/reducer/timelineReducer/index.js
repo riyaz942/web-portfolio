@@ -8,7 +8,6 @@ export default function timelineReducer(state = initialState, { type, payload })
   switch (type) {
     case SET_POSITION:
       return {
-        ...state,
         position: payload
       }
     case CLEAR_POSITION:
