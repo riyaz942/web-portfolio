@@ -1,2 +1,2 @@
 export const SET_POSITION = 'SET_POSITION';
-export const CLEAR_POSITION = 'SET_POSITION';
+export const CLEAR_POSITION = 'CLEAR_POSITION';

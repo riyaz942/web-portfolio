@@ -98,7 +98,7 @@ const ProjectDetailsPage = ({
   const containerOpacityAnimation = useSpring({
     from: { opacity: 0 },
     opacity: 1,
-    delay: 500,
+    delay: !isEmpty(position)? 500: 0,
     onStart: () => {
       if (componentReady) {
         setShowContent(true);
@@ -182,7 +182,7 @@ const ProjectDetailsPage = ({
                 height: imgWidthAnim,
                 left: imgLeftAnim,
                 top: imgTopAnim,
-                opacity: showContent ? 1 : 0
+                opacity: isEmpty(position) ? containerOpacityAnimation.opacity : showContent ? 1 : 0
               }}
             />
 
@@ -244,7 +244,7 @@ const ProjectDetailsPage = ({
             }}
           />
 
-          { (!hideTransitionElement) && (
+          { (!hideTransitionElement && !isEmpty(position) ) && (
             <animated.img
               src={project.icon}
               style={{
