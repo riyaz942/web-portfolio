@@ -16,8 +16,8 @@ import { clearTimelinePosition } from "Redux/actions/timelineActions";
 // import lighthouseProjectIcon from 'Icons/project-icon-lighthouse.png';
 import { projectsListValue } from "Constants/projectsConstants";
 import ProjectDescription from "./projectDescription";
-import PaginationButton from "Common/components/paginationButton";
 import isEmpty from "lodash/isEmpty";
+import ProjectViewPager from "./projectViewPager";
 
 const getBackgroundAnimation = position => {
   const to = {
@@ -144,14 +144,7 @@ const ProjectDetailsPage = ({
             className={styles.left_container}
             style={containerOpacityAnimation}
           >
-            <Div
-              row
-              justify="space_between"
-              className={styles.pagination_container}
-            >
-              <PaginationButton />
-              <PaginationButton isRight />
-            </Div>
+           <ProjectViewPager />
           </Div>
           <Div animate className={styles.right_container}>
             <Div
