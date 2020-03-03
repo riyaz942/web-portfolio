@@ -17,10 +17,12 @@ import { clearTimelinePosition } from "Redux/actions/timelineActions";
 import { projectsListValue } from "Constants/projectsConstants";
 import ProjectDescription from "./projectDescription";
 import PaginationButton from "Common/components/paginationButton";
-import isEmpty from 'lodash/isEmpty';
+import isEmpty from "lodash/isEmpty";
 
 const ProjectDetailsPage = ({ match, timelineReducer, style }) => {
-  const [project] = useState((match && match.params)? projectsListValue[match.params.projectSlug] : {});
+  const [project] = useState(
+    match && match.params ? projectsListValue[match.params.projectSlug] : {}
+  );
   const { position } = timelineReducer;
 
   //-------------------------------------------ScrollAnimation
@@ -57,6 +59,7 @@ const ProjectDetailsPage = ({ match, timelineReducer, style }) => {
 
   const [hideTransitionElement, setHideTransitionElement] = useState(false);
   const [componentReady, setComponentReady] = useState(false);
+  const [showContent, setShowContent] = useState(false);
   const [animateTo, setAnimateTo] = useState({
     height: 0,
     width: 0,
@@ -66,16 +69,24 @@ const ProjectDetailsPage = ({ match, timelineReducer, style }) => {
   const containerOpacityAnimation = useSpring({
     from: { opacity: 0 },
     opacity: 1,
-    delay: 450
+    delay: 500,
+    onStart: () => {
+      if (componentReady) {
+        setShowContent(true);
+        setHideTransitionElement(true);
+      }
+    }
   });
 
   const imageTransitionAnimation = useSpring({
     to: animateTo,
-    from: {
-      height: position.height,
-      width: position.width,
-      transform: `translate(${position.left}px, ${position.top}px)`
-    }
+    from: position
+      ? {
+          height: position.height,
+          width: position.width,
+          transform: `translate(${position.left}px, ${position.top}px)`
+        }
+      : animateTo
   });
 
   const backgroundTransitionAnimation = useSpring({
@@ -101,7 +112,7 @@ const ProjectDetailsPage = ({ match, timelineReducer, style }) => {
       transform: `translate(${currentRect.left}px, ${currentRect.top}px)`
     });
     setComponentReady(true);
-    setTimeout(() => setHideTransitionElement(true), 700);
+    // setTimeout(() => setHideTransitionElement(true), 700);
   }, []);
 
   return (
@@ -123,12 +134,15 @@ const ProjectDetailsPage = ({ match, timelineReducer, style }) => {
               <PaginationButton isRight />
             </Div>
           </Div>
-          <Div
-            animate
-            className={styles.right_container}
-            style={containerOpacityAnimation}
-          >
-            <Div row justify="end" align className={styles.link_container}>
+          <Div animate className={styles.right_container}>
+            <Div
+              animate
+              row
+              justify="end"
+              align
+              className={styles.link_container}
+              style={containerOpacityAnimation}
+            >
               {project.link ? (
                 <a
                   href={project.link.value}
@@ -148,15 +162,18 @@ const ProjectDetailsPage = ({ match, timelineReducer, style }) => {
                 width: imgWidthAnim,
                 height: imgWidthAnim,
                 left: imgLeftAnim,
-                top: imgTopAnim
+                top: imgTopAnim,
+                opacity: showContent ? 1 : 0
               }}
             />
+
             <animated.div
               className={styles.project_name}
               style={{
                 fontSize: titleSizeAnim,
                 left: titleLeftAnim,
-                top: titleTopAnim
+                top: titleTopAnim,
+                opacity: containerOpacityAnimation.opacity
               }}
             >
               {project.name}
@@ -167,7 +184,9 @@ const ProjectDetailsPage = ({ match, timelineReducer, style }) => {
               align="end"
               style={{
                 top: subDetailsTop,
-                opacity: subDetailsAlpha
+                opacity: showContent
+                  ? subDetailsAlpha
+                  : containerOpacityAnimation.opacity
               }}
               className={styles.project_sub_details_container}
             >
@@ -180,7 +199,12 @@ const ProjectDetailsPage = ({ match, timelineReducer, style }) => {
               <div className={styles.value}>Major</div>
             </Div>
 
-            <Div className={styles.content_container} onScroll={onScroll}>
+            <Div
+              animate
+              className={styles.content_container}
+              onScroll={onScroll}
+              style={containerOpacityAnimation}
+            >
               <ProjectDescription
                 className={styles.content}
                 description={project.description}
@@ -190,7 +214,7 @@ const ProjectDetailsPage = ({ match, timelineReducer, style }) => {
         </Fragment>
       ) : null}
 
-      {(componentReady && !isEmpty(project)) && (
+      {componentReady && !isEmpty(project) && (
         <Fragment>
           <animated.div
             style={{
