@@ -19,11 +19,77 @@ import ProjectDescription from "./projectDescription";
 import PaginationButton from "Common/components/paginationButton";
 import isEmpty from "lodash/isEmpty";
 
-const ProjectDetailsPage = ({ match, timelineReducer, style }) => {
+const getBackgroundAnimation = position => {
+  const to = {
+    height: "calc(100vh + 0px)",
+    width: "calc(100vw + 0px)",
+    transform: "translate(0px, 0px)",
+    borderRadius: 0
+  };
+
+  if (position) {
+    return {
+      to,
+      from: {
+        height: `calc(0vh + ${position.height}px)`,
+        width: `calc(0vw + ${position.width}px)`,
+        transform: `translate(${position.left}px, ${position.top}px)`,
+        borderRadius: 100
+      }
+    };
+  }
+
+  return {
+    to,
+    from: to
+  };
+};
+
+const getProjectImageAnimation = ({previousPosition, currentPosition}) => {
+  let returnValue = {};
+
+  returnValue = previousPosition
+    ? {
+        from: {
+          height: previousPosition.height,
+          width: previousPosition.width,
+          transform: `translate(${previousPosition.left}px, ${previousPosition.top}px)`
+        }
+      }
+    : {
+        from: {
+          display: "none"
+        }
+      };
+
+  returnValue = {
+    ...returnValue,
+    to: currentPosition
+      ? {
+          height: currentPosition.height,
+          width: currentPosition.width,
+          transform: `translate(${currentPosition.left}px, ${currentPosition.top}px)`
+        }
+      : {
+          height: 0,
+          width: 0,
+          transform: "translate(0px, 0px)"
+        }
+  };
+
+  return returnValue;
+};
+
+const ProjectDetailsPage = ({
+  match,
+  timelineReducer,
+  style,
+  clearTimelinePosition
+}) => {
   const [project] = useState(
     match && match.params ? projectsListValue[match.params.projectSlug] : {}
   );
-  const { position } = timelineReducer;
+  const [position] = useState(timelineReducer.position);
 
   //-------------------------------------------ScrollAnimation
   const imageWidth = 150;
@@ -75,7 +141,8 @@ const ProjectDetailsPage = ({ match, timelineReducer, style }) => {
         setShowContent(true);
         setHideTransitionElement(true);
       }
-    }
+    },
+    onRest: () => showContent && clearTimelinePosition()
   });
 
   const imageTransitionAnimation = useSpring({
@@ -90,18 +157,8 @@ const ProjectDetailsPage = ({ match, timelineReducer, style }) => {
   });
 
   const backgroundTransitionAnimation = useSpring({
-    to: {
-      height: "calc(100vh + 0px)",
-      width: "calc(100vw + 0px)",
-      transform: "translate(0px, 0px)",
-      borderRadius: 0
-    },
-    from: {
-      height: `calc(0vh + ${position.height}px)`,
-      width: `calc(0vw + ${position.width}px)`,
-      transform: `translate(${position.left}px, ${position.top}px)`,
-      borderRadius: 50
-    }
+    to: getBackgroundAnimation(position).to,
+    from: getBackgroundAnimation(position).from
   });
 
   useEffect(() => {
@@ -112,7 +169,6 @@ const ProjectDetailsPage = ({ match, timelineReducer, style }) => {
       transform: `translate(${currentRect.left}px, ${currentRect.top}px)`
     });
     setComponentReady(true);
-    // setTimeout(() => setHideTransitionElement(true), 700);
   }, []);
 
   return (
