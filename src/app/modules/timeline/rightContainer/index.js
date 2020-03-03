@@ -11,8 +11,8 @@ import { timelineListValue } from "Constants/timelineConstants";
 import { projectsListValue } from "Constants/projectsConstants";
 import isEmpty from "lodash/isEmpty";
 import { Transition } from "react-spring/renderprops";
-import PaginationButton from 'Common/components/paginationButton';
-import { setTimelinePosition } from 'Redux/actions/timelineActions';
+import PaginationButton from "Common/components/paginationButton";
+import { setTimelinePosition } from "Redux/actions/timelineActions";
 
 class RightContainer extends Component {
   state = {
@@ -211,24 +211,28 @@ class RightContainer extends Component {
   };
 
   onClickProject = project => {
-    const { setTimelinePosition, history: { push } } = this.props;
+    const {
+      setTimelinePosition,
+      history: { push }
+    } = this.props;
     const rect = project.ref.current.getBoundingClientRect();
     setTimelinePosition(rect);
-    
-    // console.log(project.ref.current.offsetTop);
-    // console.log(project.ref.current.offsetLeft);
-
-    
     push(`/project/${project.slug}`);
   };
 
   render() {
     const { timelineProjects } = this.state;
     const { timeline } = this.props;
-    const selectedIndex = timelineProjects[timeline.id] ? timelineProjects[timeline.id].findIndex(slide => slide.state == "CENTERED") : 0;
+    const selectedIndex = timelineProjects[timeline.id]
+      ? timelineProjects[timeline.id].findIndex(
+          slide => slide.state == "CENTERED"
+        )
+      : 0;
 
     const isPrevButtonClickable = selectedIndex > 0;
-    const isNextButtonClickable = timelineProjects[timeline.id] ? selectedIndex < timelineProjects[timeline.id].length - 1: false;
+    const isNextButtonClickable = timelineProjects[timeline.id]
+      ? selectedIndex < timelineProjects[timeline.id].length - 1
+      : false;
 
     return (
       <Div flex className={styles.right_container}>
@@ -252,14 +256,18 @@ class RightContainer extends Component {
                     {props => (
                       <Div
                         key={index}
-                        onClick={() => this.onClickProject(slide)}                        
+                        onClick={() => this.onClickProject(slide)}
                         style={{ ...props, zIndex: index }}
                         className={`${styles.slide_items} ${
                           slide.state == "CENTERED" ? styles.is_selected : ""
                         }`}
                       >
                         <Div fillParent align justify>
-                          <img ref={slide.ref} src={slide.icon} className={styles.image} />
+                          <img
+                            ref={slide.ref}
+                            src={slide.icon}
+                            className={styles.image}
+                          />
                         </Div>
 
                         <Div
@@ -276,7 +284,9 @@ class RightContainer extends Component {
                         <div
                           className={styles.bottom_background_gradient}
                         ></div>
-                        
+                        <Div justify align className={styles.view_overlay}>
+                          View Project
+                        </Div>
                       </Div>
                     )}
                   </Spring>
