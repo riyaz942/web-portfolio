@@ -103,7 +103,7 @@ class Header extends Component {
               className={`${
                 isFullScreen ? styles.header_fullscreen : styles.header_normal
                 } ${styles.header_container}`}
-              onMouseMove={({ clientX: x, clientY: y }) => this.setState({ clientX: x, clientY: y })}
+              onMouseMove={showDescription ? ({ clientX: x, clientY: y }) => this.setState({ clientX: x, clientY: y }): null}
             >
 
               <HeaderBackground
@@ -131,7 +131,8 @@ class Header extends Component {
                 </Div>
                 <Spring
                   to={{
-                    marginLeft: bodyType == landingPageBody.TIMELINE ? 6 : 82
+                    marginLeft: bodyType == landingPageBody.TIMELINE ? 6 : 82,
+                    width: bodyType == landingPageBody.TIMELINE ? 62 : 37,
                   }}
                 >
                   {props => <div style={props} className={styles.underline}></div>}

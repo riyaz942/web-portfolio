@@ -25,7 +25,7 @@ class HeaderDescription extends Component {
         leave={{
           opacity: 0
         }}
-        config={isFirstTime ? {delay: 600}: config.default}
+        config={isFirstTime ? { delay: 600 } : config.default}
       >
         {showDescription =>
           showDescription &&
@@ -43,7 +43,7 @@ class HeaderDescription extends Component {
                 <Div align className={styles.user_button} onClick={onClickTimeline}>
                   Timeline
                   <div className={styles.underline}></div>
-                </Div> 
+                </Div>
                 and
                 <Div align className={styles.user_button} onClick={onClickProject}>
                   Technologies
@@ -54,8 +54,8 @@ class HeaderDescription extends Component {
 
               <Div row justify align className={styles.social_container}>
                 <img src={iconGithub} className={styles.icon} />
-                <img src={iconLinkedIn} className={styles.icon}/>
-                <img src={iconEmail} className={styles.icon}/>
+                <img src={iconLinkedIn} className={styles.icon} />
+                <img src={iconEmail} className={styles.icon} />
               </Div>
             </Div>
           ))

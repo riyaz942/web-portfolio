@@ -37,9 +37,13 @@ $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
       padding: 0px 6px;
 
       .header_link_button {
-        cursor: pointer;
         color: white;
         font-size: 16px;
+        transition: opacity 0.6s ease;
+        &:hover {
+          cursor: pointer;
+          opacity: 0.4;
+        }
       }
   
       .header_link_button:nth-child(2) {
