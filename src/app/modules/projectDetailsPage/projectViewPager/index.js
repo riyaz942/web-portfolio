@@ -3,10 +3,12 @@ import styles from "./project_view_pager.module.scss";
 import PaginationButton from "Common/components/paginationButton";
 import Div from "Common/components/div";
 import Swiper from 'react-id-swiper';
-// import "swiper/css/swiper.css";
+import map from 'lodash/map';
+import {projectImages} from 'Constants/projectImageConstants';
 
 class ProjectViewPager extends Component {
   render() {
+    const { match } = this.props;
     const params = {
       containerClass: "custom_container",
       autoplay: {
@@ -19,21 +21,22 @@ class ProjectViewPager extends Component {
         dynamicBullets: true
       }
     };
+
     return (
       <Div fillParent className={styles.swiper_container}>
         <Swiper
           {...params}>
-          <div className={styles.swiper_item}>Slide 1</div>
-          <div className={styles.swiper_item}>Slide 2</div>
-          <div className={styles.swiper_item}>Slide 3</div>
-          <div className={styles.swiper_item}>Slide 4</div>
-          <div className={styles.swiper_item}>Slide 5</div>
+          {
+            (match && match.params) && map(projectImages[match.params.projectSlug], projectImage => (
+              <img className={styles.swiper_item} src={projectImage} />
+            ))
+          }
         </Swiper>
 
-        {/* <Div row justify="space_between" className={styles.pagination_container}>
-        <PaginationButton />
-        <PaginationButton isRight />
-      </Div> */}
+        <Div align row justify="space_between" className={styles.pagination_container}>
+          <PaginationButton />
+          <PaginationButton isRight />
+        </Div>
       </Div>
     );
   }

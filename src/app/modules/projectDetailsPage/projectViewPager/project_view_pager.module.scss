@@ -1,12 +1,21 @@
-.pagination_container {
-  padding: 0px 31px;
-}
-
 .swiper_container {
   overflow: hidden;
   height: 100%;
   width: 100%;
   position: relative;
+}
+
+.pagination_container {
+  padding: 0px 31px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.swiper_item {
+  object-fit: contain;
 }
 
 :global {
