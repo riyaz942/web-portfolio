@@ -1,7 +1,7 @@
 @import '~Styles/colors.module';
 
 .user_description_container {
-  padding: 118px 111px 41px;
+  padding: 118px 100px 41px;
   border-radius: 35px;
   box-shadow: 0px 5px 12px 3px rgba(0, 0, 0, 0.35);
   background-color: rgba(#ffffff, 0.87);
@@ -20,6 +20,7 @@
 
   .user_button_container {
     margin-top: 30px;
+    flex-wrap: wrap;
 
     .user_button {
       font-size: 14px;

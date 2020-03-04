@@ -46,9 +46,10 @@ class HeaderDescription extends Component {
                 </Div> 
                 and
                 <Div align className={styles.user_button} onClick={onClickProject}>
-                  Projects
+                  Technologies
                   <div className={styles.underline}></div>
-                </Div>.
+                </Div>
+                that i worked on.
               </Div>
 
               <Div row justify align className={styles.social_container}>

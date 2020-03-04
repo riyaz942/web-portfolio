@@ -126,7 +126,7 @@ class Header extends Component {
                     className={styles.header_link_button}
                     onClick={this.onClickProject}
                   >
-                    Projects
+                    Tech
                   </div>
                 </Div>
                 <Spring
