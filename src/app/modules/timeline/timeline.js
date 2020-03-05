@@ -5,7 +5,7 @@ import TimelineSelector from "Common/containers/timelineSelector";
 import { timelineListValue } from "Constants/timelineConstants";
 import find from "lodash/find";
 import { Transition } from "react-spring/renderprops";
-import RightContainer from "./rightContainer";
+import RightContainer from "Common/containers/rightContainer";
 
 export default class Timeline extends Component {
   state = {

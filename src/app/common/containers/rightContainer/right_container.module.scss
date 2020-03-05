@@ -1,0 +1,103 @@
+@import '~Styles/mixins.module';
+@import '~Styles/colors.module';
+
+.right_container {
+  overflow: hidden;
+  z-index: 3;
+  padding-left: 250px;
+
+  .slide_container {
+    position: relative;
+    align-self: stretch;
+    height: 450px;
+    padding: 50px 0px 50px 260px;
+  }
+
+  .slide_inner_container {
+    align-self: stretch;
+    overflow-x: hidden;
+    height: 450px;
+    padding: 50px 0px 50px 260px;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    .slide_items {
+      width: 183px;
+      min-width: 183px;
+      height: 311px;
+      background: green;
+      margin-right: 39px;
+      box-shadow: 0px 5px 12px 3px rgba(0, 0, 0, 0.2);      
+      border-radius: 12px;
+      background-color: rgba(white, 0.8);
+      transition: background-color 600ms ease;
+      position: relative;
+
+      .image {
+        width: 120px;
+      }
+
+      .title_container {
+        height: 100px;
+        padding: 0px 18px 18px 18px;
+        color: $color-dark;
+        text-align: right;
+        position: relative;
+
+        .title {
+          font-size: 25px;
+        }
+
+        .description {
+          margin-top: 6px;
+          font-size: 12px;
+          text-transform: capitalize;
+        }
+      }
+
+      &:hover {
+        cursor: pointer;
+
+        .view_overlay {
+          opacity: 1;
+        }
+      }
+
+      .view_overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: 12px;
+        background: rgba(white, 0.9);
+        opacity: 0;
+        transition: opacity 0.6s ease;
+        font-size: 16px;
+        font-weight: bold;
+        text-transform: capitalize;
+      }
+    }
+
+    .is_selected {
+      background-color: rgba(white, 1);
+    }
+  }
+
+  .left_button_container {
+    margin: 0px 10px;
+  }
+}
+    
+
+.bottom_background_gradient {
+  position: absolute;
+  height: 150px;
+  left:0;
+  bottom: 0;
+  right: 0;
+
+  background-image: linear-gradient(to top, rgba($color-dark, 0.5), rgba(0, 0, 0, 0));
+  border-radius: 12px;
+}

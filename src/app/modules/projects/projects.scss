@@ -1,9 +1,85 @@
-.project_container {  
-  justify-content: center;
-  align-items: center;
+@import '~Styles/colors.module';
+@import '~Styles/mixins.module';
 
-  .text {
-    color: white;
-    font-size: 50px;
+.timeline_container {
+  padding: 60px 0px 0px 60px;
+  position: relative;
+  overflow: hidden;
+
+  .background_image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    // bottom: 0;
+    // right: 0;
+    width: 100vw;
+    height: 100vh;
+
+    object-position: left top;
+    object-fit: cover;
+    z-index: 0;
+  }
+
+  .background_overlay {
+    position: absolute;
+    top: 0;
+    left:0;
+    bottom: 0;
+    right: 0;
+    background: rgba($color-dark, 0.7);
+    z-index: 1;
+  }
+
+  .left_background_gradient {
+    position: absolute;
+    top: 0;
+    left:0;
+    bottom: 0;
+    width: 30vw;
+    z-index: 2;
+
+    background-image: linear-gradient(to right, rgba($color-dark, 0.7), rgba(0, 0, 0, 0));
+  }
+
+  .left_container {
+    width: 30vw;
+    padding-top: 40px;
+    //    background-image: linear-gradient(rgba(0,0,0,0.3), transparent);
+    z-index: 3;
+    position: relative;
+
+    .content_container {
+      color: white;
+      bottom: 0;
+      margin-bottom: 70px;
+      position: absolute;
+
+      .title {
+        font-size: 60px;
+      }
+
+      .description_container {
+        margin-top: 36px;
+        margin-left: 22px;
+
+        .description {
+          font-size: 14px;
+          margin-top: 14px;
+        }
+
+        .description:first-child {
+          margin-top: 0;
+        }
+        
+        .button {
+          font-size: 14px;
+          border-radius: 7.8px;
+          margin-top: 22px;
+          border: solid 1px white;
+          padding: 3px 14px;
+          @include on_click_button;
+        }
+      }
+    }
   }
 }
