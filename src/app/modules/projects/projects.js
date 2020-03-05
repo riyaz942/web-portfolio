@@ -94,9 +94,7 @@ export default class Projects extends Component {
                 <Div align="start" className={styles.description_container}>
                   <div className={styles.description}>{timeline.duration}</div>
                   <div className={styles.description}>{timeline.position}</div>
-                  <div className={styles.description}>{timeline.location}</div>
-                  <div className={styles.button}>view more</div>
-                </Div>
+\                </Div>
               </Div>
             )}
           </Transition>
