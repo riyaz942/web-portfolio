@@ -31,7 +31,7 @@ export const techList = [
     name: 'Laravel',
     firstLogo: laravelIcon,
     description: '',
-    projects: ['benefactory', 'bijli']
+    projects: ['benefactory', 'snapteam']
   },
   {
     id: 'electron',

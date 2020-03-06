@@ -77,6 +77,8 @@ export default class Projects extends Component {
 
         <Div className={styles.left_container}>
           <TimelineSelector
+            listValue={techList}
+            tech
             onItemSelected={this.onTechSelected}
           />
 
@@ -94,13 +96,13 @@ export default class Projects extends Component {
                 <Div align="start" className={styles.description_container}>
                   <div className={styles.description}>{tech.duration}</div>
                   <div className={styles.description}>{tech.position}</div>
-\                </Div>
+                </Div>
               </Div>
             )}
           </Transition>
         </Div>
 
-        <RightContainer items={tech} />
+        <RightContainer item={tech} />
       </Div>
     );
   }

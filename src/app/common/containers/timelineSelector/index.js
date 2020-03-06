@@ -4,21 +4,26 @@ import styles from "./timeline_selector.module.scss";
 import map from "lodash/map";
 import { Spring } from "react-spring/renderprops";
 
-class itemSelector extends Component {
+class TimelineSelector extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      listValue: map(props.listValue, (item, index) => ({...item, isSelected: index == 0? true: false}))
-    }
+      listValue: map(props.listValue, (item, index) => ({
+        ...item,
+        isSelected: index == 0 ? true : false
+      }))
+    };
   }
 
   onClickitemItem = selecteditem => {
     const { onItemSelected } = this.props;
     const { listValue } = this.state;
-    
-    const currentIndex = listValue.findIndex(item => item.isSelected );
-    const selectedIndex = listValue.findIndex(item => item.id == selecteditem.id);
+
+    const currentIndex = listValue.findIndex(item => item.isSelected);
+    const selectedIndex = listValue.findIndex(
+      item => item.id == selecteditem.id
+    );
 
     const updatedlistValue = map(listValue, item => {
       if (selecteditem.id == item.id)
@@ -31,7 +36,7 @@ class itemSelector extends Component {
         isSelected: false
       };
     });
-    
+
     onItemSelected({
       selectedId: selecteditem.id,
       selectionNext: selectedIndex > currentIndex
@@ -39,28 +44,29 @@ class itemSelector extends Component {
     this.setState({ listValue: updatedlistValue });
   };
 
-  getItemWidth = (tech, item) => {
-    let itemWidth = 'unset';
-
-    if (!tech) {
-      itemWidth = item.isSelected ? item.containerWidth : 38;
-    }
-
-    return itemWidth;
-  }
-
   render() {
     const { listValue } = this.state;
     const { tech } = this.props;
-    
+
+    // margin-left: 39px;
+    // padding-right: 10px;
+    // /* display: none; */
+    // /* width: 0px; */
+    // max-width: 100px;
+
+    // 27
+    // 34
+    // 37
     return (
-      <Div>
+      <Div align="start">
         {map(listValue, (item, index) => (
           <Spring
             key={item.id}
             to={{
-              width: this.getItemWidth(tech, item),
-              opacity: item.isSelected ? 1 : 0
+              maxWidth: item.isSelected ? 95 : 0,
+              opacity: item.isSelected ? 1 : 0,
+              paddingRight: item.isSelected ? 10 : 0,
+              marginLeft: tech ? 38 : item.isSelected ? item.restMargin : 38
             }}
           >
             {props => (
@@ -70,8 +76,9 @@ class itemSelector extends Component {
                   row
                   align
                   justify
-                  style={{ width: props.width }}
-                  className={`${styles.company_logo_container} ${!item.isSelected ? styles.onclick_selector : ''}`}
+                  className={`${styles.company_logo_container} ${
+                    !item.isSelected ? styles.onclick_selector : ""
+                  }`}
                   onClick={() => this.onClickitemItem(item)}
                 >
                   <Div
@@ -82,20 +89,30 @@ class itemSelector extends Component {
                   >
                     <img className={styles.logo} src={item.firstLogo} />
                   </Div>
-                  {
-                    tech ? (
-                      <div>{item.name}</div>
-                    ) : (
-                      <img
-                    style={{
-                      opacity: props.opacity,
-                      marginLeft: item.restMargin
-                    }}
-                    className={styles.logo}
-                    src={item.restLogo}
-                  />
-                    )
-                  }
+                  {tech ? (
+                    <div
+                      style={{
+                        opacity: props.opacity,
+                        marginLeft: props.marginLeft,
+                        maxWidth: props.maxWidth,
+                        paddingRight: props.paddingRight,                       
+                      }}
+                      className={styles.title}
+                    >
+                      {item.name}
+                    </div>
+                  ) : (
+                    <img
+                      style={{
+                        opacity: props.opacity,
+                        marginLeft: props.marginLeft,
+                        maxWidth: props.maxWidth,
+                        paddingRight: props.paddingRight
+                      }}
+                      className={styles.logo}
+                      src={item.restLogo}
+                    />
+                  )}
                 </Div>
               </Fragment>
             )}
@@ -106,4 +123,4 @@ class itemSelector extends Component {
   }
 }
 
-export default itemSelector;
+export default TimelineSelector;

@@ -23,8 +23,7 @@ export const timelineListValue = [
     companyDetail: 'Nykaa is an e-commerce website offering beauty and wellness products from more than 500 leading brands. Nykaa follows an inventory-based model with warehouses in Mumbai, New Delhi, and Chennai as its offline presence is in 60 stores and expanding. It claims to have over 1000+ curated brands and 85,000 products.',
     firstLogo: nykaaLogoFirst,
     restLogo: nykaaLogoRest,
-    restMargin: 13, // the secound image margin because logo length is different
-    containerWidth: 90, // the capsule container width .. when opened size
+    restMargin: 26, // the secound image margin because logo length is different
     backgroundImage: nykaaBackgroundImage,
     projects: ['nykaa']
   },
@@ -39,8 +38,7 @@ export const timelineListValue = [
     companyDetail: 'Tailored Tech was a service based startup specialised in web and mobile development, and had clients like Nykaa, Ezone, Sportobuddy, healthcode, hippily, wok express, etc.<br /> TailoredTech later got acqui-hired by Nykaa.',
     firstLogo: tailoredTechLogoFirst,
     restLogo: tailoredTechLogoRest,
-    restMargin: 20,
-    containerWidth: 107,
+    restMargin: 34,
     backgroundImage: tailoredTechBackgroundImage,
     projects: ['snapteam', 'pulse', 'measure', 'wakency', 'benefactory', 'lighthouse']
   },
@@ -54,8 +52,7 @@ export const timelineListValue = [
     companyDetail: '',
     firstLogo: mitLogoFirst,
     restLogo: mitLogoRest,
-    restMargin: 21,
-    containerWidth: 110,
+    restMargin: 37,
     backgroundImage: collegeBackgroundImage,
     projects: ['vc_music_player']
   }
