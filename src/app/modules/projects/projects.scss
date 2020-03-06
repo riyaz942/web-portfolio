@@ -5,9 +5,20 @@
   padding: 60px 0px 0px 60px;
   position: relative;
   overflow: hidden;
-  background: blue;
 
-  .background_image {
+  .background_static_image {
+    position: absolute;
+    object-position: left top;
+    object-fit: cover;
+    opacity: 0.04;
+
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .background_image_container {
     position: absolute;
     top: 0;
     left: 0;
@@ -16,19 +27,12 @@
     width: 100vw;
     height: 100vh;
 
-    object-position: left top;
-    object-fit: cover;
+    // object-position: left top;
     z-index: 0;
-  }
 
-  .background_overlay {
-    position: absolute;
-    top: 0;
-    left:0;
-    bottom: 0;
-    right: 0;
-    background: rgba($color-dark, 0.7);
-    z-index: 1;
+    .background_image {
+      object-fit: cover;      
+    }
   }
 
   .left_background_gradient {
@@ -39,7 +43,7 @@
     width: 30vw;
     z-index: 2;
 
-    background-image: linear-gradient(to right, rgba($color-dark, 0.7), rgba(0, 0, 0, 0));
+    background-image: linear-gradient(to right, rgba(white, 0.1), rgba(0, 0, 0, 0));
   }
 
   .left_container {

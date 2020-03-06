@@ -6,6 +6,7 @@ import { techList } from "Constants/techConstants";
 import find from "lodash/find";
 import { Transition } from "react-spring/renderprops";
 import RightContainer from "Common/containers/rightContainer";
+import techDoodleImage from 'Images/tech-doodle-background-image.png';
 
 export default class Projects extends Component {
   state = {
@@ -33,8 +34,7 @@ export default class Projects extends Component {
         enter: { marginTop: "0vh" },
         leave: { marginTop: "0vh" }
       };
-    } 
-    else if (selectionNext) {
+    } else if (selectionNext) {
       return {
         from: { marginTop: "100vh" },
         enter: { marginTop: "0vh" },
@@ -57,6 +57,11 @@ export default class Projects extends Component {
 
     return (
       <Div row fillParent align="stretch" className={styles.timeline_container}>
+        <img 
+          src={techDoodleImage}
+          className={styles.background_static_image}
+        />
+
         <Transition
           items={tech}
           keys={tech => tech.id}
@@ -65,14 +70,14 @@ export default class Projects extends Component {
           leave={this.getImageBackgroundAnimation(selectionNext).leave}
         >
           {tech => props => (
-            <img
-              src={tech.backgroundImage}
-              style={props}
-              className={styles.background_image}
-            ></img>
+            <Div align justify style={props} className={styles.background_image_container}>
+              <img
+                src={tech.firstLogo}
+                className={styles.background_image}
+              ></img>
+            </Div>
           )}
         </Transition>
-        <div className={styles.background_overlay}></div>
         <div className={styles.left_background_gradient}></div>
 
         <Div className={styles.left_container}>
