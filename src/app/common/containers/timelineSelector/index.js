@@ -1,14 +1,17 @@
 import React, { Component, Fragment } from "react";
 import Div from "Common/components/div";
-import { timelineListValue } from "Constants/timelineConstants";
 import styles from "./timeline_selector.module.scss";
 import map from "lodash/map";
 import { Spring } from "react-spring/renderprops";
 
 class TimelineSelector extends Component {
-  state = {
-    timelineList: timelineListValue
-  };
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      timelineList: props.listValue,
+    }
+  }
 
   onClickTimelineItem = selectedTimeline => {
     const { onTimelineSelected } = this.props;

@@ -78,7 +78,10 @@ export default class Timeline extends Component {
         <div className={styles.left_background_gradient}></div>
 
         <Div className={styles.left_container}>
-          <TimelineSelector onTimelineSelected={this.onTimelineSelected} />
+          <TimelineSelector
+            onTimelineSelected={this.onTimelineSelected}
+            listValue={timelineListValue}  
+          />
 
           <Transition
             items={timeline}
