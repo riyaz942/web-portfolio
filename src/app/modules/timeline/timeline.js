@@ -79,8 +79,8 @@ export default class Timeline extends Component {
 
         <Div className={styles.left_container}>
           <TimelineSelector
-            onTimelineSelected={this.onTimelineSelected}
-            listValue={timelineListValue}  
+            onItemSelected={this.onTimelineSelected}
+            listValue={timelineListValue}
           />
 
           <Transition

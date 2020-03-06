@@ -14,7 +14,6 @@ import collegeBackgroundImage from 'Images/background-image-college.jpg';
 export const timelineListValue = [
   {
     id: 'nykaa',
-    isSelected: true,
     companyName: 'Nykaa',
     link: 'https://www.nykaa.com/',
     position: 'Frontend Developer',
@@ -31,7 +30,6 @@ export const timelineListValue = [
   },
   {
     id: 'tailoredtech',
-    isSelected: false,
     companyName: 'Tailored Tech',
     link: 'https://www.tailoredtech.in/',
     position: 'Fullstack Developer',
@@ -48,7 +46,6 @@ export const timelineListValue = [
   },
   {
     id: 'mit',
-    isSelected: false,
     companyName: 'College',
     position: 'Android & Web',
     duration: '2015 - 2016 (1 years)',

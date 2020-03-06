@@ -4,52 +4,63 @@ import styles from "./timeline_selector.module.scss";
 import map from "lodash/map";
 import { Spring } from "react-spring/renderprops";
 
-class TimelineSelector extends Component {
+class itemSelector extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      timelineList: props.listValue,
+      listValue: map(props.listValue, (item, index) => ({...item, isSelected: index == 0? true: false}))
     }
   }
 
-  onClickTimelineItem = selectedTimeline => {
-    const { onTimelineSelected } = this.props;
-    const { timelineList } = this.state;
+  onClickitemItem = selecteditem => {
+    const { onItemSelected } = this.props;
+    const { listValue } = this.state;
     
-    const currentIndex = timelineList.findIndex(timeline => timeline.isSelected );
-    const selectedIndex = timelineList.findIndex(timeline => timeline.id == selectedTimeline.id);
+    const currentIndex = listValue.findIndex(item => item.isSelected );
+    const selectedIndex = listValue.findIndex(item => item.id == selecteditem.id);
 
-    const updatedTimelineList = map(timelineList, timeline => {
-      if (selectedTimeline.id == timeline.id)
+    const updatedlistValue = map(listValue, item => {
+      if (selecteditem.id == item.id)
         return {
-          ...timeline,
+          ...item,
           isSelected: true
         };
       return {
-        ...timeline,
+        ...item,
         isSelected: false
       };
     });
     
-    onTimelineSelected({
-      selectedId: selectedTimeline.id,
+    onItemSelected({
+      selectedId: selecteditem.id,
       selectionNext: selectedIndex > currentIndex
     });
-    this.setState({ timelineList: updatedTimelineList });
+    this.setState({ listValue: updatedlistValue });
   };
 
-  render() {
-    const { timelineList } = this.state;
+  getItemWidth = (tech, item) => {
+    let itemWidth = 'unset';
 
+    if (!tech) {
+      itemWidth = item.isSelected ? item.containerWidth : 38;
+    }
+
+    return itemWidth;
+  }
+
+  render() {
+    const { listValue } = this.state;
+    const { tech } = this.props;
+    
     return (
       <Div>
-        {map(timelineList, (timeline, index) => (
+        {map(listValue, (item, index) => (
           <Spring
-            key={timeline.id}
+            key={item.id}
             to={{
-              width: timeline.isSelected ? timeline.containerWidth : 38,
-              opacity: timeline.isSelected ? 1 : 0
+              width: this.getItemWidth(tech, item),
+              opacity: item.isSelected ? 1 : 0
             }}
           >
             {props => (
@@ -60,8 +71,8 @@ class TimelineSelector extends Component {
                   align
                   justify
                   style={{ width: props.width }}
-                  className={`${styles.company_logo_container} ${!timeline.isSelected ? styles.onclick_selector : ''}`}
-                  onClick={() => this.onClickTimelineItem(timeline)}
+                  className={`${styles.company_logo_container} ${!item.isSelected ? styles.onclick_selector : ''}`}
+                  onClick={() => this.onClickitemItem(item)}
                 >
                   <Div
                     row
@@ -69,16 +80,22 @@ class TimelineSelector extends Component {
                     justify
                     className={styles.first_logo_container}
                   >
-                    <img className={styles.logo} src={timeline.firstLogo} />
+                    <img className={styles.logo} src={item.firstLogo} />
                   </Div>
-                  <img
+                  {
+                    tech ? (
+                      <div>{item.name}</div>
+                    ) : (
+                      <img
                     style={{
                       opacity: props.opacity,
-                      marginLeft: timeline.restMargin
+                      marginLeft: item.restMargin
                     }}
                     className={styles.logo}
-                    src={timeline.restLogo}
+                    src={item.restLogo}
                   />
+                    )
+                  }
                 </Div>
               </Fragment>
             )}
@@ -89,4 +106,4 @@ class TimelineSelector extends Component {
   }
 }
 
-export default TimelineSelector;
+export default itemSelector;
