@@ -1,11 +1,11 @@
 import { combineReducers } from "redux";
 import { connectRouter } from "connected-react-router";
-import timelineReducer from './timelineReducer';
+import projectReducer from './projectReducer';
 
 const appReducer = history =>
   combineReducers({
     router: connectRouter(history),
-    timelineReducer,
+    projectReducer,
   });
 
 export default appReducer;

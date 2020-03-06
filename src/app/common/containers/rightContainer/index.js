@@ -7,42 +7,41 @@ import map from "lodash/map";
 import { Spring } from "react-spring/renderprops";
 import leftArrowIcon from "Icons/icon-left-arrow.png";
 import { withRouter } from "react-router";
-import { timelineListValue } from "Constants/timelineConstants";
 import { projectsListValue } from "Constants/projectsConstants";
 import isEmpty from "lodash/isEmpty";
 import { Transition } from "react-spring/renderprops";
 import PaginationButton from "Common/components/paginationButton";
-import { setTimelinePosition } from "Redux/actions/timelineActions";
+import { setProjectPosition } from "Redux/actions/projectActions";
 
 class RightContainer extends Component {
   state = {
-    timelineProjects: {}
+    projects: {}
   };
 
   componentDidMount() {
-    const { timeline } = this.props;
-    const { timelineProjects } = this.state;
+    const { item } = this.props;
+    const { projects } = this.state;
 
-    if (isEmpty(timelineProjects[timeline.id])) {
+    if (isEmpty(projects[item.id])) {
       this.setState({
-        timelineProjects: {
-          ...timelineProjects,
-          [timeline.id]: this.getSlideObject(timeline.projects)
+        projects: {
+          ...projects,
+          [item.id]: this.getSlideObject(item.projects)
         }
       });
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.timeline.id != this.props.timeline.id) {
-      const { timeline } = nextProps;
-      const { timelineProjects } = this.state;
+    if (nextProps.item.id != this.props.item.id) {
+      const { item } = nextProps;
+      const { projects } = this.state;
 
-      if (isEmpty(timelineProjects[timeline.id])) {
+      if (isEmpty(projects[item.id])) {
         this.setState({
-          timelineProjects: {
-            ...timelineProjects,
-            [timeline.id]: this.getSlideObject(timeline.projects)
+          projects: {
+            ...projects,
+            [item.id]: this.getSlideObject(item.projects)
           }
         });
       }
@@ -119,17 +118,17 @@ class RightContainer extends Component {
   };
 
   next = () => {
-    const { timelineProjects } = this.state;
-    const { timeline } = this.props;
+    const { projects } = this.state;
+    const { item } = this.props;
 
     const selectedIndex =
-      timelineProjects[timeline.id].findIndex(
+      projects[item.id].findIndex(
         slide => slide.state == "CENTERED"
       ) + 1; // move to next slide
 
-    if (selectedIndex < timelineProjects[timeline.id].length) {
+    if (selectedIndex < projects[item.id].length) {
       const updatedSlide = map(
-        timelineProjects[timeline.id],
+        projects[item.id],
         (slide, index) => {
           if (index < selectedIndex - 1) {
             return {
@@ -156,26 +155,26 @@ class RightContainer extends Component {
       );
 
       this.setState({
-        timelineProjects: {
-          ...timelineProjects,
-          [timeline.id]: updatedSlide
+        projects: {
+          ...projects,
+          [item.id]: updatedSlide
         }
       });
     }
   };
 
   previous = () => {
-    const { timelineProjects } = this.state;
-    const { timeline } = this.props;
+    const { projects } = this.state;
+    const { item } = this.props;
 
     const selectedIndex =
-      timelineProjects[timeline.id].findIndex(
+      projects[item.id].findIndex(
         slide => slide.state == "CENTERED"
       ) - 1; // move to next slide
 
     if (selectedIndex >= 0) {
       const updatedSlide = map(
-        timelineProjects[timeline.id],
+        projects[item.id],
         (slide, index) => {
           if (index < selectedIndex - 1) {
             return {
@@ -202,9 +201,9 @@ class RightContainer extends Component {
       );
 
       this.setState({
-        timelineProjects: {
-          ...timelineProjects,
-          [timeline.id]: updatedSlide
+        projects: {
+          ...projects,
+          [item.id]: updatedSlide
         }
       });
     }
@@ -212,46 +211,46 @@ class RightContainer extends Component {
 
   onClickProject = project => {
     const {
-      setTimelinePosition,
+      setProjectPosition,
       history: { push }
     } = this.props;
     const rect = project.ref.current.getBoundingClientRect();
-    setTimelinePosition(rect);
+    setProjectPosition(rect);
     push(`/project/${project.slug}`);
   };
 
   render() {
-    const { timelineProjects } = this.state;
-    const { timeline } = this.props;
-    const selectedIndex = timelineProjects[timeline.id]
-      ? timelineProjects[timeline.id].findIndex(
+    const { projects } = this.state;
+    const { item } = this.props;
+    const selectedIndex = projects[item.id]
+      ? projects[item.id].findIndex(
           slide => slide.state == "CENTERED"
         )
       : 0;
 
     const isPrevButtonClickable = selectedIndex > 0;
-    const isNextButtonClickable = timelineProjects[timeline.id]
-      ? selectedIndex < timelineProjects[timeline.id].length - 1
+    const isNextButtonClickable = projects[item.id]
+      ? selectedIndex < projects[item.id].length - 1
       : false;
 
     return (
       <Div flex className={styles.right_container}>
         <Div className={styles.slide_container}>
           <Transition
-            items={timeline}
-            keys={timeline => timeline.id}
+            items={item}
+            keys={item => item.id}
             from={{ opacity: 0 }}
             enter={{ opacity: 1 }}
             leave={{ opacity: 0 }}
           >
-            {timeline => props => (
+            {item => props => (
               <Div
                 style={props}
                 row
                 align="end"
                 className={styles.slide_inner_container}
               >
-                {map(timelineProjects[timeline.id], (slide, index) => (
+                {map(projects[item.id], (slide, index) => (
                   <Spring to={this.getPropertyBasedOnState(slide.state)}>
                     {props => (
                       <Div
@@ -315,7 +314,7 @@ class RightContainer extends Component {
 
 const mapDispathToProps = dispatch => {
   return {
-    setTimelinePosition: bindActionCreators(setTimelinePosition, dispatch)
+    setProjectPosition: bindActionCreators(setProjectPosition, dispatch)
   };
 };
 

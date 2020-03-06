@@ -1,6 +1,6 @@
-import { SET_POSITION, CLEAR_POSITION } from 'Redux/constants/timelineConstant';
+import { SET_POSITION, CLEAR_POSITION } from 'Redux/constants/projectConstants';
 
-export function setTimelinePosition(position) {
+export function setProjectPosition(position) {
   return dispatch => {
     dispatch({
       type: SET_POSITION,
@@ -9,7 +9,7 @@ export function setTimelinePosition(position) {
   }
 }
 
-export function clearTimelinePosition() {
+export function clearProjectPosition() {
   return dispatch => {
     dispatch({type: CLEAR_POSITION});
   }

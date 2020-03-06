@@ -29,23 +29,23 @@ export default class Timeline extends Component {
   getImageBackgroundAnimation = selectionNext => {
     if (this.isFirstAnimation) {
       return {
-        from: { marginTop: "0vh" },
-        enter: { marginTop: "0vh" },
-        leave: { marginTop: "0vh" }
+        from: { transform: 'translateY(0vh)' },
+        enter: { transform: 'translateY(0vh)' },
+        leave: { transform: 'translateY(0vh)' }
       };
     } 
     else if (selectionNext) {
       return {
-        from: { marginTop: "100vh" },
-        enter: { marginTop: "0vh" },
-        leave: { marginTop: "-100vh" }
+        from: { transform: 'translateY(100vh)' },
+        enter: {  transform: 'translateY(0vh)'  },
+        leave: { transform: 'translateY(-100vh)' }
       };
     }
 
     return {
-      from: { marginTop: "-100vh" },
-      enter: { marginTop: "0vh" },
-      leave: { marginTop: "100vh" }
+      from: { transform: 'translateY(-100vh)' },
+      enter: { transform: 'translateY(0vh)' },
+      leave: { transform: 'translateY(100vh)' }
     };
   };
 
@@ -105,7 +105,7 @@ export default class Timeline extends Component {
           </Transition>
         </Div>
 
-        <RightContainer timeline={timeline} />
+        <RightContainer item={timeline} />
       </Div>
     );
   }

@@ -2,14 +2,14 @@ import React, { Component } from "react";
 import styles from "./projects.scss";
 import Div from "Common/components/div";
 import TimelineSelector from "Common/containers/timelineSelector";
-import { timelineListValue } from "Constants/timelineConstants";
+import { techList } from "Constants/techConstants";
 import find from "lodash/find";
 import { Transition } from "react-spring/renderprops";
 import RightContainer from "Common/containers/rightContainer";
 
 export default class Projects extends Component {
   state = {
-    selectedTimelineId: "nykaa",
+    selectedTechId: "react",
     selectionNext: true
   };
 
@@ -22,8 +22,8 @@ export default class Projects extends Component {
     this.isFirstAnimation = false;
   }
 
-  onTimelineSelected = ({ selectedId, selectionNext }) => {
-    this.setState({ selectedTimelineId: selectedId, selectionNext });
+  onTechSelected = ({ selectedId, selectionNext }) => {
+    this.setState({ selectedTechId: selectedId, selectionNext });
   };
 
   getImageBackgroundAnimation = selectionNext => {
@@ -50,25 +50,23 @@ export default class Projects extends Component {
   };
 
   render() {
-    const { selectedTimelineId, selectionNext } = this.state;
-    const timeline = find(timelineListValue, timelineItem => {
-      return timelineItem.id == selectedTimelineId;
+    const { selectedTechId, selectionNext } = this.state;
+    const tech = find(techList, techItem => {
+      return techItem.id == selectedTechId;
     });
 
     return (
       <Div row fillParent align="stretch" className={styles.timeline_container}>
         <Transition
-          items={timeline}
-          keys={timeline => timeline.id}
+          items={tech}
+          keys={tech => tech.id}
           from={this.getImageBackgroundAnimation(selectionNext).from}
           enter={this.getImageBackgroundAnimation(selectionNext).enter}
           leave={this.getImageBackgroundAnimation(selectionNext).leave}
         >
-          {/* {timeline => props => <animated.div style={{ backgroundImage: `url(${timeline.backgroundImage})`, ...props}} className={styles.background_image}></animated.div>} */}
-
-          {timeline => props => (
+          {tech => props => (
             <img
-              src={timeline.backgroundImage}
+              src={tech.backgroundImage}
               style={props}
               className={styles.background_image}
             ></img>
@@ -78,29 +76,31 @@ export default class Projects extends Component {
         <div className={styles.left_background_gradient}></div>
 
         <Div className={styles.left_container}>
-          <TimelineSelector onTimelineSelected={this.onTimelineSelected} />
+          <TimelineSelector
+            onItemSelected={this.onTechSelected}
+          />
 
           <Transition
-            items={timeline}
-            keys={timeline => timeline.id}
+            items={tech}
+            keys={tech => tech.id}
             from={{ opacity: 0 }}
             enter={{ opacity: 1 }}
             leave={{ opacity: 0 }}
           >
-            {timeline => props => (
+            {tech => props => (
               <Div style={props} className={styles.content_container}>
-                <div className={styles.title}>{timeline.companyName}</div>
+                <div className={styles.title}>{tech.name}</div>
 
                 <Div align="start" className={styles.description_container}>
-                  <div className={styles.description}>{timeline.duration}</div>
-                  <div className={styles.description}>{timeline.position}</div>
+                  <div className={styles.description}>{tech.duration}</div>
+                  <div className={styles.description}>{tech.position}</div>
 \                </Div>
               </Div>
             )}
           </Transition>
         </Div>
 
-        <RightContainer timeline={timeline} />
+        <RightContainer items={tech} />
       </Div>
     );
   }

@@ -6,7 +6,7 @@ import { Spring } from "react-spring/renderprops";
 
 class itemSelector extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       listValue: map(props.listValue, (item, index) => ({...item, isSelected: index == 0? true: false}))

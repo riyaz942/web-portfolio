@@ -12,7 +12,7 @@ import { withRouter } from "react-router";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { useSpring, animated } from "react-spring";
-import { clearTimelinePosition } from "Redux/actions/timelineActions";
+import { clearProjectPosition } from "Redux/actions/projectActions";
 // import lighthouseProjectIcon from 'Icons/project-icon-lighthouse.png';
 import { projectsListValue } from "Constants/projectsConstants";
 import ProjectDescription from "./projectDescription";
@@ -47,12 +47,12 @@ const getBackgroundAnimation = position => {
 
 const ProjectDetailsPage = ({
   match,
-  timelineReducer,
+  projectReducer,
   style,
-  clearTimelinePosition
+  clearProjectPosition
 }) => {
   const [project] = useState(match && match.params ? projectsListValue[match.params.projectSlug] : {});
-  const [position] = useState(timelineReducer.position);
+  const [position] = useState(projectReducer.position);
 
   //-------------------------------------------ScrollAnimation
   const imageWidth = 150;
@@ -131,7 +131,7 @@ const ProjectDetailsPage = ({
     });
     setComponentReady(true);
 
-    return () => clearTimelinePosition();
+    return () => clearProjectPosition();
   }, []);
 
   return (
@@ -256,13 +256,13 @@ const ProjectDetailsPage = ({
 
 const mapStateToProps = state => {
   return {
-    timelineReducer: state.timelineReducer
+    projectReducer: state.projectReducer
   };
 };
 
 const mapDispathToProps = dispatch => {
   return {
-    clearTimelinePosition: bindActionCreators(clearTimelinePosition, dispatch)
+    clearProjectPosition: bindActionCreators(clearProjectPosition, dispatch)
   };
 };
 
