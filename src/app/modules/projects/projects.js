@@ -14,7 +14,7 @@ export default class Projects extends Component {
     super(props);
     this.isFirstAnimation = true;
     const selectedTechId = 'react';
-    const imageAlignment = random(0, 4);
+    const imageAlignment = random(0, 3);
 
     const imagePosition = this.getImagePosition(selectedTechId, imageAlignment);
     const backgroundTransition = this.getBackgroundTransition(
@@ -38,9 +38,9 @@ export default class Projects extends Component {
   }
 
   onTechSelected = ({ selectedId }) => {
-    const { techTransitionAnimation, selectedTechId } = this.state;
+    const { techTransitionAnimation } = this.state;
 
-    const imageAlignment = random(0, 4);
+    const imageAlignment = random(0, 3);
     const imagePosition = this.getImagePosition(selectedId, imageAlignment);
     const backgroundTransition = this.getBackgroundTransition(
       selectedId,
@@ -59,8 +59,11 @@ export default class Projects extends Component {
   };
 
   getImagePosition = (techType, imageAlignment) => {
-    const imageLeft = random(30, 70);
-    const imageTop = random(30, 70);
+    const lowerRange = 10;
+    const higherRange = techType == 'android' ? 70 : 30;
+
+    const imageLeft = random(lowerRange, higherRange);
+    const imageTop = random(lowerRange, higherRange);
 
     if (techType == "android") {
       switch (imageAlignment) {
@@ -177,21 +180,20 @@ export default class Projects extends Component {
         <Transition
           items={tech}
           keys={tech => tech.id}
-          from={{opacity: 0}}
-          enter={{opacity: 1}}
-          leave={{opacity: 0}}
+          from={{ opacity: 0 }}
+          enter={{ opacity: 1 }}
+          leave={{ opacity: 0 }}
         >
           {tech => tech.id && (
             value => {
               const { imagePosition, from, enter, leave } = techTransitionAnimation[tech.id];
-              
               const fromAnimation = tech.id == selectedTechId ? from : enter;
               const toAnimation = tech.id == selectedTechId ? enter : leave;
               const isReactRelated =
-              tech.id == "react" ||
-              tech.id == "react-native" ||
-              tech.id == "electron";
-        
+                tech.id == "react" ||
+                tech.id == "react-native" ||
+                tech.id == "electron";
+
               return (
                 <Spring
                   from={{
@@ -215,11 +217,11 @@ export default class Projects extends Component {
                         <img
                           src={tech.firstLogo}
                           style={{
-                            left: imagePosition.left ? imagePosition.left : "unset",
-                            right: imagePosition.right ? imagePosition.right : "unset",
-                            top: imagePosition.top ? imagePosition.top : "unset",
-                            bottom: imagePosition.bottom ? imagePosition.bottom : "unset",
-                            transform: tech.id == 'android' ? imagePosition.transform :props.transform
+                            left: imagePosition.left,
+                            right: imagePosition.right,
+                            top: imagePosition.top,
+                            bottom: imagePosition.bottom,
+                            transform: tech.id == 'android' ? imagePosition.transform : props.transform
                           }}
                           className={styles.background_image}
                         ></img>
