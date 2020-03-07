@@ -4,25 +4,33 @@ import Div from "Common/components/div";
 import TimelineSelector from "Common/containers/timelineSelector";
 import { techList } from "Constants/techConstants";
 import find from "lodash/find";
-import { Transition } from "react-spring/renderprops";
+import { Transition, Spring } from "react-spring/renderprops";
 import RightContainer from "Common/containers/rightContainer";
 import techDoodleImage from "Images/tech-doodle-background-image.png";
 import { random } from "Common/utils";
 
 export default class Projects extends Component {
-  state = {
-    selectedTechId: "react",
-    techTransitionAnimation: {
-      from: { transform: "scale(0) rotate(0deg) transition(0vw, 0vh)" },
-      enter: { transform: "scale(0) rotate(0deg) transition(0vw, 0vh)" },
-      leave: { transform: "scale(0) rotate(0deg) transition(0vw, 0vh)" },
-      imagePosition: {}
-    }
-  };
-
   constructor(props) {
     super(props);
     this.isFirstAnimation = true;
+    const selectedTechId = 'react';
+    const imageAlignment = random(0, 4);
+
+    const imagePosition = this.getImagePosition(selectedTechId, imageAlignment);
+    const backgroundTransition = this.getBackgroundTransition(
+      selectedTechId,
+      imageAlignment
+    );
+
+    this.state = {
+      selectedTechId,
+      techTransitionAnimation: {
+        react: {
+          ...backgroundTransition,
+          imagePosition
+        }
+      }
+    }
   }
 
   componentDidMount() {
@@ -30,25 +38,29 @@ export default class Projects extends Component {
   }
 
   onTechSelected = ({ selectedId }) => {
-    const imageAlignment = random(0, 4);
+    const { techTransitionAnimation, selectedTechId } = this.state;
 
+    const imageAlignment = random(0, 4);
     const imagePosition = this.getImagePosition(selectedId, imageAlignment);
     const backgroundTransition = this.getBackgroundTransition(
       selectedId,
       imageAlignment
     );
 
-    const techTransitionAnimation = {
-      ...backgroundTransition,
-      imagePosition
-    };
-
-    this.setState({ selectedTechId: selectedId, techTransitionAnimation });
+    this.setState({
+      selectedTechId: selectedId, techTransitionAnimation: {
+        ...techTransitionAnimation,
+        [selectedId]: {
+          ...backgroundTransition,
+          imagePosition
+        }
+      }
+    });
   };
 
   getImagePosition = (techType, imageAlignment) => {
-    const imageLeft = random(20, 80);
-    const imageTop = random(20, 80);
+    const imageLeft = random(30, 70);
+    const imageTop = random(30, 70);
 
     if (techType == "android") {
       switch (imageAlignment) {
@@ -98,15 +110,15 @@ export default class Projects extends Component {
       return {
         from: {
           opacity: 0,
-          transform: "scale(0) rotate(360deg) transition(0vw, 0vh)"
+          transform: "scale(0) rotate(360deg)"
         },
         enter: {
           opacity: 1,
-          transform: "scale(1) rotate(0deg) transition(0vw, 0vh)"
+          transform: "scale(1) rotate(0deg)"
         },
         leave: {
           opacity: 0,
-          transform: "scale(0) rotate(360deg) transition(0vw, 0vh)"
+          transform: "scale(0) rotate(360deg)"
         }
       };
     } else if (techType == "android") {
@@ -114,55 +126,49 @@ export default class Projects extends Component {
         case 0:
           return {
             from: {
-              transform: "scale(0) rotate(0deg) transition(0vw, -100vh)"
+              transform: "translate(0vw, -100vh)"
             },
-            enter: { transform: "scale(0) rotate(0deg) transition(0vw, 0vh)" },
-            leave: { transform: "scale(0) rotate(0deg) transition(0vw,-100vh)" }
+            enter: { transform: "translate(0vw, 0vh)" },
+            leave: { transform: "translate(0vw,-100vh)" }
           };
         case 1:
           return {
-            from: { transform: "scale(0) rotate(0deg) transition(100vw, 0vh)" },
-            enter: { transform: "scale(0) rotate(0deg) transition(0vw, 0vh)" },
-            leave: { transform: "scale(0) rotate(0deg) transition(100vw, 0vh)" }
+            from: { transform: "translate(100vw, 0vh)" },
+            enter: { transform: "translate(0vw, 0vh)" },
+            leave: { transform: "translate(100vw, 0vh)" }
           };
         case 2:
           return {
-            from: { transform: "scale(0) rotate(0deg) transition(0vw, 100vh)" },
-            enter: { transform: "scale(0) rotate(0deg) transition(0vw, 0vh)" },
-            leave: { transform: "scale(0) rotate(0deg) transition(0vw, 100vh)" }
+            from: { transform: "translate(0vw, 100vh)" },
+            enter: { transform: "translate(0vw, 0vh)" },
+            leave: { transform: "translate(0vw, 100vh)" }
           };
         case 3:
           return {
             from: {
-              transform: "scale(0) rotate(0deg) transition(-100vw, 0vh)"
+              transform: "translate(-100vw, 0vh)"
             },
-            enter: { transform: "scale(0) rotate(0deg) transition(0vw, 0vh)" },
+            enter: { transform: "translate(0vw, 0vh)" },
             leave: {
-              transform: "scale(0) rotate(0deg) transition(-100vw, 0vh)"
+              transform: "translate(-100vw, 0vh)"
             }
           };
       }
     }
 
     return {
-      from: { transform: "scale(0) rotate(0deg) transition(0vw, -100vh)" },
-      enter: { transform: "scale(0) rotate(0deg) transition(0vw, 0vh)" },
-      leave: { transform: "scale(0) rotate(0deg) transition(0vw, -100vh)" }
+      from: { transform: "translate(0vw, -100vh)" },
+      enter: { transform: "translate(0vw, 0vh)" },
+      leave: { transform: "translate(0vw, -100vh)" }
     };
   };
 
   render() {
     const { selectedTechId, techTransitionAnimation } = this.state;
-    const { imagePosition } = techTransitionAnimation;
 
     const tech = find(techList, techItem => {
       return techItem.id == selectedTechId;
     });
-
-    const isReactRelated =
-      selectedTechId == "react" ||
-      selectedTechId == "react-native" ||
-      selectedTechId == "electron";
 
     return (
       <Div row fillParent align="stretch" className={styles.timeline_container}>
@@ -171,30 +177,62 @@ export default class Projects extends Component {
         <Transition
           items={tech}
           keys={tech => tech.id}
-          from={techTransitionAnimation.from}
-          enter={techTransitionAnimation.enter}
-          leave={techTransitionAnimation.leave}
+          from={{opacity: 0}}
+          enter={{opacity: 1}}
+          leave={{opacity: 0}}
         >
-          {tech => props => (
-            <Div
-              style={{
-                opacity: isReactRelated ? props.opacity : 1,
-                transform: !isReactRelated ? props.transform : "unset"
-              }}
-              className={styles.background_image_container}
-            >
-              <img
-                src={tech.firstLogo}
-                style={{
-                  left: imagePosition.left ? imagePosition.left : "unset",
-                  right: imagePosition.right ? imagePosition.right : "unset",
-                  top: imagePosition.top ? imagePosition.top : "unset",
-                  bottom: imagePosition.bottom ? imagePosition.bottom : "unset",
-                  transform: isReactRelated ? props.transform : "unset"
-                }}
-                className={styles.background_image}
-              ></img>
-            </Div>
+          {tech => tech.id && (
+            value => {
+              const { imagePosition, from, enter, leave } = techTransitionAnimation[tech.id];
+              
+              const fromAnimation = tech.id == selectedTechId ? from : enter;
+              const toAnimation = tech.id == selectedTechId ? enter : leave;
+              const isReactRelated =
+              tech.id == "react" ||
+              tech.id == "react-native" ||
+              tech.id == "electron";
+        
+              return (
+                <Spring
+                  from={{
+                    opacity: isReactRelated ? fromAnimation.opacity : 1,
+                    transform: isReactRelated? 'none': fromAnimation.transform,
+                  }}
+                  to={{
+                    opacity: isReactRelated ? toAnimation.opacity : 1,
+                    transform: isReactRelated? 'none': toAnimation.transform,
+                  }}
+                >
+                  {
+                    props => (
+                      <Div
+                        style={{
+                          opacity: isReactRelated ? props.opacity : 1,
+                          transform: !isReactRelated ? props.transform : "unset"
+                        }}
+                        className={styles.background_image_container}
+                      >
+                        <img
+                          src={tech.firstLogo}
+                          // style={{
+                          //   left: imagePosition.left ? imagePosition.left : "unset",
+                          //   right: imagePosition.right ? imagePosition.right : "unset",
+                          //   top: imagePosition.top ? imagePosition.top : "unset",
+                          //   bottom: imagePosition.bottom ? imagePosition.bottom : "unset",
+                          //   transform: isReactRelated ? props.transform : "unset"
+                          // }}
+                          style={{
+                            left: 90,
+                            top: 90
+                          }}
+                          className={styles.background_image}
+                        ></img>
+                      </Div>
+                    )
+                  }
+                </Spring>
+              )
+            }
           )}
         </Transition>
         <div className={styles.left_background_gradient}></div>
