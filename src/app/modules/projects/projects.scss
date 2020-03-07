@@ -31,7 +31,9 @@
     z-index: 0;
 
     .background_image {
-      object-fit: cover;      
+      object-fit: cover;
+      width: 300px;
+      height: 300px;
     }
   }
 
