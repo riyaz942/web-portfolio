@@ -50,7 +50,7 @@
 
   .left_container {
     width: 30vw;
-    padding-top: 40px;
+    padding-top: 10px;
     //    background-image: linear-gradient(rgba(0,0,0,0.3), transparent);
     z-index: 3;
     position: relative;
@@ -58,7 +58,7 @@
     .content_container {
       color: white;
       bottom: 0;
-      margin-bottom: 70px;
+      margin-bottom: 40px;
       position: absolute;
 
       .title {
@@ -66,7 +66,7 @@
       }
 
       .description_container {
-        margin-top: 36px;
+        margin-top: 18px;
         margin-left: 22px;
 
         .description {

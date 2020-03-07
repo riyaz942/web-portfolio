@@ -7,7 +7,7 @@ import find from "lodash/find";
 import { Transition, Spring } from "react-spring/renderprops";
 import RightContainer from "Common/containers/rightContainer";
 import techDoodleImage from "Images/tech-doodle-background-image.png";
-import { random } from "Common/utils";
+import { random, parseNewLine } from "Common/utils";
 
 export default class Projects extends Component {
   constructor(props) {
@@ -254,8 +254,8 @@ export default class Projects extends Component {
                 <div className={styles.title}>{tech.name}</div>
 
                 <Div align="start" className={styles.description_container}>
-                  <div className={styles.description}>{tech.duration}</div>
-                  <div className={styles.description}>{tech.position}</div>
+                  <div className={styles.description}>{parseNewLine(tech.description)}</div>
+                  {/* <div className={styles.description}>{tech.position}</div> */}
                 </Div>
               </Div>
             )}
