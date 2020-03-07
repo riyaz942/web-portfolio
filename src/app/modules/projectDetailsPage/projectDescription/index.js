@@ -2,16 +2,7 @@ import React, { Component, Fragment } from "react";
 import map from 'lodash/map';
 import styles from './project_description.module.scss';
 import Div from 'Common/components/div';
-import reactStringReplace from 'react-string-replace';
-
-const parseNewLine = object => {
-  //const regexNewLine=/@(\w+)/g
-  const newLineMatch = (match, index, offset) => {
-    return <br />
-  }
-
-  return reactStringReplace(object, "<br/>", newLineMatch)
-}
+import { parseNewLine } from 'Common/utils';
 
 const getHighlight = (highlight) => {
 

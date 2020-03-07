@@ -96,7 +96,7 @@ const ProjectDetailsPage = ({
   });
 
   const containerOpacityAnimation = useSpring({
-    from: { opacity: 0 },
+    from: { opacity: !isEmpty(position)? 0 : 1 },
     opacity: 1,
     delay: !isEmpty(position)? 500: 0,
     onStart: () => {
