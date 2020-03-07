@@ -78,7 +78,7 @@ export default class Projects extends Component {
           return {
             transform: "rotate(270deg)",
             top: `${imageTop}vh`,
-            right: 0
+            right: '-63px'
           };
 
         case 2:
@@ -91,7 +91,7 @@ export default class Projects extends Component {
         case 3:
           return {
             transform: "rotate(90deg)",
-            left: 0,
+            left: '-63px',
             top: `${imageTop}vh`
           };
       }
@@ -215,7 +215,7 @@ export default class Projects extends Component {
                         className={styles.background_image_container}
                       >
                         <img
-                          src={tech.firstLogo}
+                          src={tech.backgroundImage}
                           style={{
                             left: imagePosition.left,
                             right: imagePosition.right,
