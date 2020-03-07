@@ -25,23 +25,25 @@ class TimelineSelector extends Component {
       item => item.id == selecteditem.id
     );
 
-    const updatedlistValue = map(listValue, item => {
-      if (selecteditem.id == item.id)
+    if (currentIndex != selectedIndex) {
+      const updatedlistValue = map(listValue, item => {
+        if (selecteditem.id == item.id)
+          return {
+            ...item,
+            isSelected: true
+          };
         return {
           ...item,
-          isSelected: true
+          isSelected: false
         };
-      return {
-        ...item,
-        isSelected: false
-      };
-    });
+      });
 
-    onItemSelected({
-      selectedId: selecteditem.id,
-      selectionNext: selectedIndex > currentIndex
-    });
-    this.setState({ listValue: updatedlistValue });
+      onItemSelected({
+        selectedId: selecteditem.id,
+        selectionNext: selectedIndex > currentIndex
+      });
+      this.setState({ listValue: updatedlistValue });
+    }
   };
 
   render() {
@@ -78,7 +80,7 @@ class TimelineSelector extends Component {
                   justify
                   className={`${styles.company_logo_container} ${
                     !item.isSelected ? styles.onclick_selector : ""
-                  }`}
+                    }`}
                   onClick={() => this.onClickitemItem(item)}
                 >
                   <Div
@@ -95,24 +97,24 @@ class TimelineSelector extends Component {
                         opacity: props.opacity,
                         marginLeft: props.marginLeft,
                         maxWidth: props.maxWidth,
-                        paddingRight: props.paddingRight,                       
+                        paddingRight: props.paddingRight,
                       }}
                       className={styles.title}
                     >
                       {item.name}
                     </div>
                   ) : (
-                    <img
-                      style={{
-                        opacity: props.opacity,
-                        marginLeft: props.marginLeft,
-                        maxWidth: props.maxWidth,
-                        paddingRight: props.paddingRight
-                      }}
-                      className={styles.logo}
-                      src={item.restLogo}
-                    />
-                  )}
+                      <img
+                        style={{
+                          opacity: props.opacity,
+                          marginLeft: props.marginLeft,
+                          maxWidth: props.maxWidth,
+                          paddingRight: props.paddingRight
+                        }}
+                        className={styles.logo}
+                        src={item.restLogo}
+                      />
+                    )}
                 </Div>
               </Fragment>
             )}

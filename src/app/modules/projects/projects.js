@@ -196,11 +196,11 @@ export default class Projects extends Component {
                 <Spring
                   from={{
                     opacity: isReactRelated ? fromAnimation.opacity : 1,
-                    transform: isReactRelated? 'none': fromAnimation.transform,
+                    transform: fromAnimation.transform,
                   }}
                   to={{
                     opacity: isReactRelated ? toAnimation.opacity : 1,
-                    transform: isReactRelated? 'none': toAnimation.transform,
+                    transform: toAnimation.transform,
                   }}
                 >
                   {
@@ -214,16 +214,12 @@ export default class Projects extends Component {
                       >
                         <img
                           src={tech.firstLogo}
-                          // style={{
-                          //   left: imagePosition.left ? imagePosition.left : "unset",
-                          //   right: imagePosition.right ? imagePosition.right : "unset",
-                          //   top: imagePosition.top ? imagePosition.top : "unset",
-                          //   bottom: imagePosition.bottom ? imagePosition.bottom : "unset",
-                          //   transform: isReactRelated ? props.transform : "unset"
-                          // }}
                           style={{
-                            left: 90,
-                            top: 90
+                            left: imagePosition.left ? imagePosition.left : "unset",
+                            right: imagePosition.right ? imagePosition.right : "unset",
+                            top: imagePosition.top ? imagePosition.top : "unset",
+                            bottom: imagePosition.bottom ? imagePosition.bottom : "unset",
+                            transform: tech.id == 'android' ? imagePosition.transform :props.transform
                           }}
                           className={styles.background_image}
                         ></img>
