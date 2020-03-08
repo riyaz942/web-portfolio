@@ -18,7 +18,7 @@ export const techList = [
     backgroundImage: reactBackgroundImage,
     description: `I have the most as well as recent experience in React compared to other technology in my list.
     <br/>Have created and architected web projects from scratch as well as jumped on ongoing projects.
-    <br/><br/> I also have professional experience with other packages that aid React development including: React Router, Styled Components, Storybook, Enzyme and React Testing Library.`,
+    <br/><br/> I also have professional experience with other packages that aid React development including: React Router, Aphrodite, React-Final-Form, Redux.`,
     projects: ['snapteam', 'nykaa', 'wakency'],
   },
   {
@@ -27,7 +27,7 @@ export const techList = [
     firstLogo: androidIcon,
     backgroundImage: androidBackgroundImage, //but recently have not touched on Android development so have to freshen up a bit on it.
     description: `I started my development journey with Android and have the most experience in it along with React.<br/><br/>
-    I have complete lifecycle experience on Android app developement from creating to publishing and managing, and have experience with needed android libraries which includes: Retrofit, Dagger, Glide,`,
+    I have complete lifecycle experience on Android app developement from creating to publishing and managing, and have experience with needed android libraries which includes: Retrofit, Dagger, Picasso,`,
     projects: ['vc_music_player', 'measure']
   },
   {
@@ -35,7 +35,9 @@ export const techList = [
     name: 'React-Native',
     firstLogo: reactNativeIcon,
     backgroundImage: reactNativeBackgroundImage,
-    description: `I have worked on and published a React-Native app so i am familiar with its lifecycle<br/><br/>`,
+    description: `I have created and published a React-Native app for iOS and Android so i am familiar with its lifecycle while working with React-Native CLI.<br/><br/>
+    I have contributed some bug fixes to some open source React-Native libraries during my period developing on react native.
+    `,
     projects: ['lighthouse', 'pulse']
   },
   {
@@ -52,7 +54,7 @@ export const techList = [
     name: 'Electron',
     firstLogo: electronIcon,
     backgroundImage: electronBackgroundImage,
-    description: 'Have experience in creating an electron app with the help of React while also considering Desktop and Web environments like Desktop/Web notifications and screen routing for Web and Desktop<br/><br/>Written configurations to bundle Web app and Electron app individually.',
+    description: 'I have experience in creating an electron app with the help of React while also considering platform specific technicalities during development like, Desktop/Web notifications, screen routing, storage.<br/><br/>Written configurations to bundle Web app and Electron app seperatly for both.',
     projects: ['snapteam']
   }
 ];
