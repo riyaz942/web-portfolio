@@ -4,11 +4,11 @@ import PaginationButton from "Common/components/paginationButton";
 import Div from "Common/components/div";
 import Swiper from 'react-id-swiper';
 import map from 'lodash/map';
-import {projectImages} from 'Constants/projectImageConstants';
+import {getProjectImages} from 'Constants/projectImageConstants';
 
 class ProjectViewPager extends Component {
   render() {
-    const { match } = this.props;
+    const { match, projectId } = this.props;
     const params = {
       containerClass: "custom_container",
       autoplay: {
@@ -21,13 +21,14 @@ class ProjectViewPager extends Component {
         dynamicBullets: true
       }
     };
-
+    const projectImages = getProjectImages(projectId);
+    console.log('projectImages: ', projectImages);
     return (
       <Div fillParent className={styles.swiper_container}>
         <Swiper
           {...params}>
           {
-            (match && match.params) && map(projectImages[match.params.projectSlug], projectImage => (
+            map(projectImages, projectImage => (
               <img className={styles.swiper_item} src={projectImage} />
             ))
           }

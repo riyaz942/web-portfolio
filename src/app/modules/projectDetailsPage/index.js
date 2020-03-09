@@ -51,9 +51,12 @@ const ProjectDetailsPage = ({
   style,
   clearProjectPosition
 }) => {
-  const [project] = useState(match && match.params ? projectsListValue[match.params.projectSlug] : {});
-  const [position] = useState(projectReducer.position);
 
+  const projectId = (match && match.params) ? match.params.projectSlug : '';
+
+  const [project] = useState(projectsListValue[projectId] || {} );
+  const [position] = useState(projectReducer.position);
+  // console.log(project);
   //-------------------------------------------ScrollAnimation
   const imageWidth = 150;
   const imageRef = useRef(null);
@@ -144,7 +147,9 @@ const ProjectDetailsPage = ({
             className={styles.left_container}
             style={containerOpacityAnimation}
           >
-           <ProjectViewPager />
+           <ProjectViewPager
+            projectId={projectId}
+           />
           </Div>
           <Div animate className={styles.right_container}>
             <Div
