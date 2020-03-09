@@ -2,14 +2,15 @@ import React, { Component } from "react";
 import styles from "./project_view_pager.module.scss";
 import PaginationButton from "Common/components/paginationButton";
 import Div from "Common/components/div";
-import Swiper from 'react-id-swiper';
-import map from 'lodash/map';
-import {getProjectImages} from 'Constants/projectImageConstants';
+import Swiper from "react-id-swiper";
+import map from "lodash/map";
+import { getProjectImages } from "Constants/projectImageConstants";
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 class ProjectViewPager extends Component {
   state = {
-    currentSlide: 0,
-  }
+    currentSlide: 0
+  };
 
   render() {
     const { projectId } = this.props;
@@ -19,10 +20,10 @@ class ProjectViewPager extends Component {
       containerClass: "custom_container",
       autoplay: {
         delay: 2500,
-        disableOnInteraction: false
+        disableOnInteraction: true
       },
       pagination: {
-        el: '.swiper-pagination',
+        el: ".swiper-pagination",
         clickable: true,
         dynamicBullets: true
       },
@@ -42,24 +43,22 @@ class ProjectViewPager extends Component {
             this.swiper = swiper;
           }}
         >
-          {
-            map(projectImages, projectImage => (
-              <img className={styles.swiper_item} src={projectImage} />
-            ))
-          }
+          {map(projectImages, projectImage => (
+            <img className={styles.swiper_item} src={projectImage} />
+          ))}
         </Swiper>
 
-          <PaginationButton
-            isEnabled={currentSlide != 0}
-            onClick={() => this.swiper.slidePrev()}
-            className={styles.pagination_button_left}
-          />
-          <PaginationButton
-            isRight
-            isEnabled={currentSlide < totalItems-1}
-            onClick={() => this.swiper.slideNext()}
-            className={styles.pagination_button_right}
-          />
+        <PaginationButton
+          isEnabled={currentSlide != 0}
+          onClick={() => this.swiper.slidePrev()}
+          className={styles.pagination_button_left}
+        />
+        <PaginationButton
+          isRight
+          isEnabled={currentSlide < totalItems - 1}
+          onClick={() => this.swiper.slideNext()}
+          className={styles.pagination_button_right}
+        />
       </Div>
     );
   }
