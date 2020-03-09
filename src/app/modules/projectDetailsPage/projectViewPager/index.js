@@ -7,8 +7,14 @@ import map from 'lodash/map';
 import {getProjectImages} from 'Constants/projectImageConstants';
 
 class ProjectViewPager extends Component {
+  state = {
+    currentSlide: 0,
+  }
+
   render() {
-    const { match, projectId } = this.props;
+    const { projectId } = this.props;
+    const { currentSlide } = this.state;
+
     const params = {
       containerClass: "custom_container",
       autoplay: {
@@ -19,14 +25,23 @@ class ProjectViewPager extends Component {
         el: '.swiper-pagination',
         clickable: true,
         dynamicBullets: true
+      },
+      on: {
+        slideChange: () =>
+          this.setState({ currentSlide: this.swiper.realIndex })
       }
     };
     const projectImages = getProjectImages(projectId);
-    console.log('projectImages: ', projectImages);
+    const totalItems = projectImages ? projectImages.length : 0;
+
     return (
-      <Div fillParent className={styles.swiper_container}>
+      <Div align justify fillParent className={styles.swiper_container}>
         <Swiper
-          {...params}>
+          {...params}
+          getSwiper={swiper => {
+            this.swiper = swiper;
+          }}
+        >
           {
             map(projectImages, projectImage => (
               <img className={styles.swiper_item} src={projectImage} />
@@ -34,10 +49,17 @@ class ProjectViewPager extends Component {
           }
         </Swiper>
 
-        <Div align row justify="space_between" className={styles.pagination_container}>
-          <PaginationButton />
-          <PaginationButton isRight />
-        </Div>
+          <PaginationButton
+            isEnabled={currentSlide != 0}
+            onClick={() => this.swiper.slidePrev()}
+            className={styles.pagination_button_left}
+          />
+          <PaginationButton
+            isRight
+            isEnabled={currentSlide < totalItems-1}
+            onClick={() => this.swiper.slideNext()}
+            className={styles.pagination_button_right}
+          />
       </Div>
     );
   }
