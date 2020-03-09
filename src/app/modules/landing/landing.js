@@ -54,45 +54,42 @@ export default class Landing extends Component {
     if (this.previousBodyType == landingPageBody.NONE) {
       fromAnimation = {
         opacity: 0,
-        marginTop: '100px',
-        marginLeft: '0px'
+        transform: 'translate(0px, 100px)',
       };
       enterAnimation = {
         opacity: 1,
-        marginTop: '0px',
-        marginLeft: '0px'
+        transform: 'translate(0px, 0px)',
       }
       leaveAnimation = {
         opacity: 0,
-        marginTop: '-100px',
-        marginLeft: '0px'
+        transform: 'translate(0px, -100px)',
       }
     }
     else if (bodyType == landingPageBody.TIMELINE) {
       fromAnimation = {
         opacity: 0,
-        marginLeft: '-300px',
+        transform: 'translate(-300px, 0px)',
       };
       enterAnimation = {
         opacity: 1,
-        marginLeft: '0px',
+        transform: 'translate(0px, 0px)',
       };
       leaveAnimation = {
         opacity: 0,
-        marginLeft: '300px',
+        transform: 'translate(300px, 0px)',
       };
     } else if (bodyType == landingPageBody.PROJECT) {
       fromAnimation = {
         opacity: 0,
-        marginLeft: '300px',
+        transform: 'translate(300px, 0px)',
       };
       enterAnimation = {
         opacity: 1,
-        marginLeft: '0px',
+        transform: 'translate(0px, 0px)',
       };
       leaveAnimation = {
         opacity: 0,
-        marginLeft: '-300px',
+        transform: 'translate(-300px, 0px)',
       };
     }
 
