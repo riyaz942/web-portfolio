@@ -26,6 +26,7 @@ class Header extends Component {
     }
   }
 
+  /* -------------------------------------------------- Change page state functions------------------------------------------- */
   showFullScreen = () => {
     // from header to full screen
     this.setState({
@@ -49,12 +50,14 @@ class Header extends Component {
     }, 500);
   };
 
+  /* --------------------------------------------------Header click Functions------------------------------------------- */
+
   onClickProfilePic = () => {
     const { isFullScreen } = this.state;
-
     if (!isFullScreen) this.showFullScreen();
   };
 
+  /* ------------------------------------------------------- */
   onClickProject = () => {
     const { isFullScreen } = this.state;
     const { updateBodyType } = this.props;
@@ -68,6 +71,7 @@ class Header extends Component {
     if (isFullScreen) this.hideFullScreen();
   };
 
+  /* ------------------------------------------------------- */
   onClickTimeline = () => {
     const { isFullScreen } = this.state;
     const { updateBodyType } = this.props;
@@ -158,8 +162,6 @@ class Header extends Component {
                 className={styles.underline}
               ></div>
             </Div>
-
-            
 
             <Div
               align
