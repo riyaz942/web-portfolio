@@ -1,11 +1,17 @@
+@import '~Styles/mixins.module';
+
 .social_container {
 
-  .icon {
+  .icon_link {
     margin-left: 29px;
+    @include on_click_button;
+  }
+
+  .icon {
     width: 16px;
   }
 
-  .icon:first-child {
+  .icon_link:first-child {
     margin-left: 0px;
   }
 }

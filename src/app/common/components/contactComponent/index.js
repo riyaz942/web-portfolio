@@ -16,15 +16,24 @@ const ContactComponent = ({ className, isWhite }) => {
       align
       className={`${styles.social_container} ${className}`}
     >
-      <img
-        src={isWhite ? iconGithubWhite : iconGithub}
-        className={styles.icon}
-      />
-      <img
-        src={isWhite ? iconLinkedInWhite : iconLinkedIn}
-        className={styles.icon}
-      />
-      <img src={isWhite ? iconEmailWhite : iconEmail} className={styles.icon} />
+      <a className={styles.icon_link} target="_blank" href="https://github.com/riyaz942">
+        <img
+          src={isWhite ? iconGithubWhite : iconGithub}
+          className={styles.icon}
+        />
+      </a>
+      <a className={styles.icon_link} target="_blank" href="https://www.linkedin.com/in/riyaz-ahmed-72622ab9/">
+        <img
+          src={isWhite ? iconLinkedInWhite : iconLinkedIn}
+          className={styles.icon}
+        />
+      </a>
+      <a className={styles.icon_link} target="_blank" href="mailto:ahmed.riyaz94@email.com">
+        <img
+          src={isWhite ? iconEmailWhite : iconEmail}
+          className={styles.icon}
+        />
+      </a>
     </Div>
   );
 };
