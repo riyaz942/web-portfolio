@@ -1,14 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import Intro from '../intro/intro';
 import styles from './loader.scss';
-import profilePic from 'Images/profile-pic.jpeg';
-// import backgroundDarkDoodleFixed from 'Images/background-dark-doodle-first-layer.png';
-// import backgroundDarkDoodleFirst from 'Images/background-dark-doodle-fixed-layer.png';
-// import backgroundDarkDoodleSecond from 'Images/background-dark-doodle-second-layer.png';
-
-// import backgroundImageNykaa from 'Images/background-image-nykaa.jpg';
-// import backgroundImageTailoredTech from 'Images/background-image-tailoredtech.jpg';
-
 import { loaderPageStates } from '../../constants/loaderConstants';
 import { Transition, Spring } from 'react-spring/renderprops';
 import Div from 'Common/components/div';
@@ -16,10 +8,6 @@ import Div from 'Common/components/div';
 const assetsImages = require.context(`../../../assets/images`, false, /.*\.png$|jpg$|jpeg$/);
 const assetTechnologyImages = require.context(`../../../assets/images/technology`, false, /.*\.png$|jpg$/);
 const projectImages = require.context(`../../../assets/images/projectImages/snapteam`, false, /.*\.png$|jpg$/);
-// const Landing = React.lazy(() => import("./modules/landing/landing"));
-// const ProjectDetailsPage = React.lazy(() =>
-//   import("./modules/projectDetailsPage")
-// );
 
 export default class Loader extends Component {
   constructor(props) {
