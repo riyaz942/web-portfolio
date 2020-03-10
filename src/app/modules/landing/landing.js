@@ -15,6 +15,7 @@ export default class Landing extends Component {
 
   constructor(props) {
     super(props);
+    //TODO matchPath 'projects/*' and set to either timeline or projects and in header
     this.previousBodyType = landingPageBody.NONE;
   }
 
