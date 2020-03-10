@@ -87,12 +87,33 @@
     .content_container {
       overflow: auto;
       margin-top: 10px;
-      z-index: 1;
+      z-index: 1;      
+
+      // For scroll bar
+      // margin-right: -10px;
+      // padding-right: 10px;
+  
 
       .content {
         margin-top: 290px;
         margin-bottom: 350px;
       }
     }
+
+    // .content_container::-webkit-scrollbar {
+    //   margin-right: -8px;
+    //   width: 4px !important;
+    // }
+    
+    // /* Track */
+    // .content_container::-webkit-scrollbar-track {
+    //   border-radius: 10px !important;
+    // }
+    
+    // /* Handle */
+    // .content_container::-webkit-scrollbar-thumb {
+    //   background: rgba($color-dark, 0.3) !important;
+    //   border-radius: 10px !important;
+    // }
   }
 }
