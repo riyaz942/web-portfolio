@@ -3,9 +3,7 @@ import PropTypes from "prop-types";
 import { Transition, config } from "react-spring/renderprops";
 import Div from 'Common/components/div';
 import styles from './header_description.module.scss';
-import iconEmail from 'Icons/icon-email.png';
-import iconLinkedIn from 'Icons/icon-linkedin.png';
-import iconGithub from 'Icons/icon-github.png';
+import ContactComponent from "Common/components/contactComponent";
 
 class HeaderDescription extends Component {
   render() {
@@ -52,11 +50,7 @@ class HeaderDescription extends Component {
                 that i worked on.
               </Div>
 
-              <Div row justify align className={styles.social_container}>
-                <img src={iconGithub} className={styles.icon} />
-                <img src={iconLinkedIn} className={styles.icon} />
-                <img src={iconEmail} className={styles.icon} />
-              </Div>
+              <ContactComponent />
             </Div>
           ))
         }
