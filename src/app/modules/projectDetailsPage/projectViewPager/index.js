@@ -5,7 +5,6 @@ import Div from "Common/components/div";
 import Swiper from "react-id-swiper";
 import map from "lodash/map";
 import { getProjectImages } from "Constants/projectImageConstants";
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 class ProjectViewPager extends Component {
   state = {
@@ -18,6 +17,9 @@ class ProjectViewPager extends Component {
 
     const params = {
       containerClass: "custom_container",
+      zoom: {
+        maxRatio: 2,
+      },
       autoplay: {
         delay: 2500,
         disableOnInteraction: true
@@ -44,7 +46,9 @@ class ProjectViewPager extends Component {
           }}
         >
           {map(projectImages, projectImage => (
-            <img className={styles.swiper_item} src={projectImage} />
+            <div className="swiper-zoom-container">
+              <img className={styles.swiper_item} src={projectImage} />
+            </div>
           ))}
         </Swiper>
 
