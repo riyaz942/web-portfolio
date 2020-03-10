@@ -7,7 +7,7 @@ import styles from './contact_component.module.scss';
 
 const ContactComponent = ({className}) => {
   return (
-    <Div row justify align className={styles.social_container}>
+    <Div row justify align className={`${styles.social_container} ${className}`}>
       <img src={iconGithub} className={styles.icon} />
       <img src={iconLinkedIn} className={styles.icon} />
       <img src={iconEmail} className={styles.icon} />

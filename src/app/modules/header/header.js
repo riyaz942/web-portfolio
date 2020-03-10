@@ -6,6 +6,7 @@ import Div from "Common/components/div";
 import { Spring, Transition, config } from "react-spring/renderprops";
 import HeaderDescription from "./headerDescription";
 import HeaderBackground from "./headerBackground";
+import ContactComponent from 'Common/components/contactComponent';
 
 class Header extends Component {
   state = {
@@ -162,6 +163,10 @@ class Header extends Component {
                 className={styles.underline}
               ></div>
             </Div>
+
+            <ContactComponent
+              className={styles.header_contact_container}
+            />
 
             <Div
               align

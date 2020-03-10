@@ -15,6 +15,13 @@ $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
   top: 0;
   overflow: hidden;
 
+  .header_contact_container {
+    position: absolute;
+    opacity: 1;
+    left: 66px;
+    top: 26px;
+  }
+
   .header_link_container {
     position: absolute;
     opacity: 1;
@@ -65,11 +72,21 @@ $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
   .header_link_container {
     transition: opacity 600ms ease 600ms, top 600ms ease 600ms;
   }
+
+  .header_contact_container {
+    transition: opacity 600ms ease 600ms, top 600ms ease 600ms;
+  }
 }
 
 //--------------------------------------------------------fullScreen
 .header_fullscreen {
   .header_link_container {
+    transition: opacity 600ms ease, top 600ms ease;
+    top: -20px;
+    opacity: 0;
+  }
+
+  .header_contact_container {
     transition: opacity 600ms ease, top 600ms ease;
     top: -20px;
     opacity: 0;

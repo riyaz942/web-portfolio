@@ -50,7 +50,9 @@ class HeaderDescription extends Component {
                 that i worked on.
               </Div>
 
-              <ContactComponent />
+              <ContactComponent
+                className={styles.contact_container}
+              />
             </Div>
           ))
         }
