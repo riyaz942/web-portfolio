@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import Intro from '../intro/intro';
 import styles from './loader.scss';
-// import profilePic from 'Images/profile-pic.jpeg';
+import profilePic from 'Images/profile-pic.jpeg';
 // import backgroundDarkDoodleFixed from 'Images/background-dark-doodle-first-layer.png';
 // import backgroundDarkDoodleFirst from 'Images/background-dark-doodle-fixed-layer.png';
 // import backgroundDarkDoodleSecond from 'Images/background-dark-doodle-second-layer.png';
@@ -13,13 +13,14 @@ import { loaderPageStates } from '../../constants/loaderConstants';
 import { Transition, Spring } from 'react-spring/renderprops';
 import Div from 'Common/components/div';
 
-const assetsImages = require.context(`../../../assets/images`, false, /.*\.png$/);
-const assetTechnologyImages = require.context(`../../../assets/images/technology`, false, /.*\.png$/);
-const projectImages = require.context(`../../../assets/images/projectImages/snapteam`, false, /.*\.png$/);
+const assetsImages = require.context(`../../../assets/images`, false, /.*\.png$|jpg$|jpeg$/);
+const assetTechnologyImages = require.context(`../../../assets/images/technology`, false, /.*\.png$|jpg$/);
+const projectImages = require.context(`../../../assets/images/projectImages/snapteam`, false, /.*\.png$|jpg$/);
 // const Landing = React.lazy(() => import("./modules/landing/landing"));
 // const ProjectDetailsPage = React.lazy(() =>
 //   import("./modules/projectDetailsPage")
 // );
+
 export default class Loader extends Component {
   constructor(props) {
     super(props);
@@ -35,75 +36,56 @@ export default class Loader extends Component {
       disableIntro: true,
     }
     this.previousContentLoadedPercentage = 0;
-
-    const interval = setInterval(() => {
-      const { itemsLoaded, totalItems } = this.state;
-
-      if (itemsLoaded != totalItems) {
-        this.documentLoaded();
-        if (itemsLoaded == totalItems) {
-          this.completeLoading();
-          clearInterval(interval);
-        }
-      } else {
-        this.completeLoading();
-        clearInterval(interval);
-      }
-    }, 500);
   }
 
   getImagesFromContext = (images) => {
     const extractedImages = [];
-    
     images.keys().forEach((key) => {
       extractedImages.push(images(key));
     });
+
     return extractedImages;
   }
 
   preloadImage = (src) => {
-    console.log('Preloading :', src);
+    // console.log('Preloading :', src);
     const image = new Image();
     image.src = src;
-
+    // image.complete;
     return image;
   }
 
   getTotalLoadingItems = () => {
-    // const scriptTags = Array.from(document.scripts);
-    // const styleTags = Array.from(document.styleSheets);
     const images = Array.from(document.images);
-    // images.push(this.preloadImage(profilePic));
 
     this.getImagesFromContext(assetsImages).map(image => images.push(this.preloadImage(image)));
     this.getImagesFromContext(assetTechnologyImages).map(image => images.push(this.preloadImage(image)));
     this.getImagesFromContext(projectImages).map(image => images.push(this.preloadImage(image)));
+    import("Modules/landing/landing").then(Landing => { this.incrementLoading() }); // increment manually being called.
+    import("Modules/projectDetailsPage").then(ProjectDetailsPage => { }); // Asyncronysly complete on background. //Todo unless if its the projects page .. use routeMatch 
 
-    // TODO remove Fake loading
-    this.setState({ totalItems: images.length + 2 });
+    // TODO .. if all the components are loaded then don't show loader and directly call isComplete;
 
-    /*     if(scriptTags)
-          scriptTags.forEach(element => {      
-            element.onload = this.documentLoaded;
-            element.onerror = this.documentLoaded;
-          });
-    */
+    //If all the items are loaded immediatly then the 
+    this.setState({ totalItems: images.length + 3 });
+    let areImagesLoaded = true;
 
     if (images)
       images.forEach(element => {
-        element.onload = this.documentLoaded;
-        element.onerror = this.documentLoaded;
+        element.onload = this.incrementLoading;
+        element.onerror = this.incrementLoading;
+        if(areImagesLoaded) {
+          areImagesLoaded = element.complete;
+          console.log('images loaded', element);
+        }
       });
 
-    /*  if(styleTags)
-          styleTags.forEach(element => {
-            debugger;
-            element.onload = this.documentLoaded;
-            element.onerror = this.documentLoaded; 
-          }); */
+    if (areImagesLoaded) {
+      this.completeLoading(true); // immediatly load page.
+    }
   }
 
-  documentLoaded = () => {
+  incrementLoading = () => {
     const {
       totalItems,
       itemsLoaded,
@@ -116,21 +98,35 @@ export default class Loader extends Component {
       itemsLoaded: itemsLoaded + 1,
     });
 
-    // if (itemsLoaded+1 == totalItems) {
-    //   this.completeLoading();
-    // }
+    if ((itemsLoaded + 1) == totalItems) {
+      this.completeLoading();
+    } else if (totalItems - (itemsLoaded + 1) <= 2) {
+      // This condition checks if the items loaded 
+      setTimeout(() => {
+        this.incrementLoading();
+      }, 500);
+    }
   }
 
-  completeLoading = () => {
+  completeLoading = (showImmediately) => {
     const { contentLoadedPercentage, disableIntro } = this.state;
 
-    if (contentLoadedPercentage != 100)
+    if (showImmediately) {
+      return this.setState({
+        pageState: loaderPageStates.SHOW_PAGE
+      });
+    }
+
+    if (contentLoadedPercentage != 100) // if by chance its not 100 then show 100 on page
       this.setState({ contentLoadedPercentage: 100 });
 
+
+
     this.setState({
-      pageState: loaderPageStates.COMPLETED_LOADING,
+      pageState: loaderPageStates.COMPLETED_LOADING, // complete loading animation takes around 400 ms to hide
     });
 
+    // so created a timeout to not show content immediately
     setTimeout(() => {
       if (!disableIntro) {
         this.setState({
