@@ -1,20 +1,25 @@
 import React, { Component, Fragment } from 'react';
 import Intro from '../intro/intro';
 import styles from './loader.scss';
-import { Math } from 'core-js';
-import profilePic from 'Images/profile-pic.jpeg';
-import backgroundDarkDoodleFixed from 'Images/background-dark-doodle-first-layer.png';
-import backgroundDarkDoodleFirst from 'Images/background-dark-doodle-fixed-layer.png';
-import backgroundDarkDoodleSecond from 'Images/background-dark-doodle-second-layer.png';
+// import profilePic from 'Images/profile-pic.jpeg';
+// import backgroundDarkDoodleFixed from 'Images/background-dark-doodle-first-layer.png';
+// import backgroundDarkDoodleFirst from 'Images/background-dark-doodle-fixed-layer.png';
+// import backgroundDarkDoodleSecond from 'Images/background-dark-doodle-second-layer.png';
 
-import backgroundImageNykaa from 'Images/background-image-nykaa.jpg';
-import backgroundImageTailoredTech from 'Images/background-image-tailoredtech.jpg';
+// import backgroundImageNykaa from 'Images/background-image-nykaa.jpg';
+// import backgroundImageTailoredTech from 'Images/background-image-tailoredtech.jpg';
 
 import { loaderPageStates } from '../../constants/loaderConstants';
-import PageReveal from '../../common/components/pageReveal';
 import { Transition, Spring } from 'react-spring/renderprops';
 import Div from 'Common/components/div';
 
+const assetsImages = require.context(`../../../assets/images`, false, /.*\.png$/);
+const assetTechnologyImages = require.context(`../../../assets/images/technology`, false, /.*\.png$/);
+const projectImages = require.context(`../../../assets/images/projectImages/snapteam`, false, /.*\.png$/);
+// const Landing = React.lazy(() => import("./modules/landing/landing"));
+// const ProjectDetailsPage = React.lazy(() =>
+//   import("./modules/projectDetailsPage")
+// );
 export default class Loader extends Component {
   constructor(props) {
     super(props);
@@ -47,7 +52,17 @@ export default class Loader extends Component {
     }, 500);
   }
 
+  getImagesFromContext = (images) => {
+    const extractedImages = [];
+    
+    images.keys().forEach((key) => {
+      extractedImages.push(images(key));
+    });
+    return extractedImages;
+  }
+
   preloadImage = (src) => {
+    console.log('Preloading :', src);
     const image = new Image();
     image.src = src;
 
@@ -58,21 +73,21 @@ export default class Loader extends Component {
     // const scriptTags = Array.from(document.scripts);
     // const styleTags = Array.from(document.styleSheets);
     const images = Array.from(document.images);
-    images.push(this.preloadImage(profilePic));
-    images.push(this.preloadImage(backgroundDarkDoodleFixed));
-    images.push(this.preloadImage(backgroundDarkDoodleFirst));
-    images.push(this.preloadImage(backgroundDarkDoodleSecond));
-    images.push(this.preloadImage(backgroundImageNykaa));
-    images.push(this.preloadImage(backgroundImageTailoredTech));
+    // images.push(this.preloadImage(profilePic));
+
+    this.getImagesFromContext(assetsImages).map(image => images.push(this.preloadImage(image)));
+    this.getImagesFromContext(assetTechnologyImages).map(image => images.push(this.preloadImage(image)));
+    this.getImagesFromContext(projectImages).map(image => images.push(this.preloadImage(image)));
 
     // TODO remove Fake loading
-    this.setState({ totalItems: images.length + 3 });
+    this.setState({ totalItems: images.length + 2 });
 
     /*     if(scriptTags)
           scriptTags.forEach(element => {      
             element.onload = this.documentLoaded;
             element.onerror = this.documentLoaded;
-          }); */
+          });
+    */
 
     if (images)
       images.forEach(element => {
