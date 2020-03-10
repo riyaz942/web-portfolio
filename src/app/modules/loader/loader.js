@@ -25,9 +25,8 @@ export default class Loader extends Component {
   constructor(props) {
     super(props);
 
-    document.addEventListener('DOMContentLoaded', this.getTotalLoadingItems, false);
-    // window.addEventListener('load', this.completeLoading);
-
+    // document.addEventListener('DOMContentLoaded', this.getTotalLoadingItems, false);
+    // window.addEventListener('load', this.completeLoading);    
     this.state = {
       contentLoadedPercentage: 0,
       totalItems: 0,
@@ -38,23 +37,11 @@ export default class Loader extends Component {
     this.previousContentLoadedPercentage = 0;
   }
 
-  getImagesFromContext = (images) => {
-    const extractedImages = [];
-    images.keys().forEach((key) => {
-      extractedImages.push(images(key));
-    });
-
-    return extractedImages;
+  componentDidMount() {
+    this.getTotalLoadingItems();
   }
 
-  preloadImage = (src) => {
-    // console.log('Preloading :', src);
-    const image = new Image();
-    image.src = src;
-    // image.complete;
-    return image;
-  }
-
+  //---------------------------------------- called after DomContentLoad
   getTotalLoadingItems = () => {
     const images = Array.from(document.images);
 
@@ -85,6 +72,27 @@ export default class Loader extends Component {
     }
   }
 
+
+  //---------------------------------------- Helper Functions
+  getImagesFromContext = (images) => {
+    const extractedImages = [];
+    images.keys().forEach((key) => {
+      extractedImages.push(images(key));
+    });
+
+    return extractedImages;
+  }
+
+  preloadImage = (src) => {
+    // console.log('Preloading :', src);
+    const image = new Image();
+    image.src = src;
+    // image.complete;
+    return image;
+  }
+
+
+  /*--------------------------------------Loading Functions */
   incrementLoading = () => {
     const {
       totalItems,
@@ -108,6 +116,7 @@ export default class Loader extends Component {
     }
   }
 
+
   completeLoading = (showImmediately) => {
     const { contentLoadedPercentage, disableIntro } = this.state;
 
@@ -119,8 +128,6 @@ export default class Loader extends Component {
 
     if (contentLoadedPercentage != 100) // if by chance its not 100 then show 100 on page
       this.setState({ contentLoadedPercentage: 100 });
-
-
 
     this.setState({
       pageState: loaderPageStates.COMPLETED_LOADING, // complete loading animation takes around 400 ms to hide
@@ -139,6 +146,7 @@ export default class Loader extends Component {
       }
     }, 500);
   }
+
 
   onIntroAnimationEnd = () => {
     this.setState({
