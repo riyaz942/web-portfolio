@@ -18,6 +18,7 @@ import { projectsListValue } from "Constants/projectsConstants";
 import ProjectDescription from "./projectDescription";
 import isEmpty from "lodash/isEmpty";
 import ProjectViewPager from "./projectViewPager";
+import crossIcon from 'Icons/icon-cross.png';
 
 const getBackgroundAnimation = position => {
   const to = {
@@ -45,11 +46,16 @@ const getBackgroundAnimation = position => {
   };
 };
 
+const onClickClose = (history) => {
+  history.replace('/');
+}
+
 const ProjectDetailsPage = ({
   match,
   projectReducer,
   style,
-  clearProjectPosition
+  clearProjectPosition,
+  history
 }) => {
 
   const projectId = (match && match.params) ? match.params.projectSlug : '';
@@ -149,6 +155,11 @@ const ProjectDetailsPage = ({
           >
            <ProjectViewPager
             projectId={projectId}
+           />
+           <img
+            src={crossIcon}
+            className={styles.cross_img}
+            onClick={()=>onClickClose(history)}
            />
           </Div>
           <Div animate className={styles.right_container}>

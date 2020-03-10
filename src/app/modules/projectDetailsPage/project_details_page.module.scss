@@ -12,6 +12,18 @@
   .left_container {
     width: 55%;
     background-color: $color-dark;
+    position: relative;
+
+    .cross_img {
+      width: 16px;
+      object-fit: contain;
+      position: absolute;
+      top: 20px;
+      left: 20px;
+
+      @include on_click_button;
+      z-index: 2;
+    }
   }
 
   .right_container {
