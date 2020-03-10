@@ -14,18 +14,6 @@ $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
   top: 0;  
   overflow: hidden;
   
-  // .background_gradient {
-  //   position: absolute;
-  //   left: 0;
-  //   right: 0;
-  //   top: 0;  
-  //   height: 70px; 
-  //   // Helps with the frame rate otherwise it will animate the height and opacity
-
-  //   transition: opacity 1s $transition-type;
-  //   background-image: linear-gradient(rgba(0,0,0,0.3), transparent);
-  // }
-
   .header_link_container {
     position: absolute;
     opacity: 1;
@@ -71,62 +59,19 @@ $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
 
 //--------------------------------------------------------normal header state
 .header_normal {
-  // height: 70px;
-  // background-color: transparent;
-  // transition: height 1s ,background-color 1s $transition-type;
-
-  // .background_gradient {
-  //   opacity: 1;
-  // }
 
   .header_link_container {
     transition: opacity 600ms ease 600ms, top 600ms ease 600ms;
   }
 
-  .content_container {
-    width: 70px;
-    height: 70px;
-    margin-top: 10px;
-    margin-right: 40px;
-    transition: height 600ms ease, width 600ms ease, margin-right 600ms ease, margin-top 600ms ease;
-  }
-
-  .user_pic {
-    width: 50px;
-    height: 50px;
-    box-shadow: 0px 5px 12px 3px rgba(0, 0, 0, 0);
-    transition: height 600ms ease, width 600ms ease, box-shadow 600ms ease;
-  }
 }
 
 //--------------------------------------------------------fullScreen
 .header_fullscreen {
-  // height: 100%;
-  // background-color: $color-dark;
-  // transition: height 1s ,background-color 1s $transition-type;
-
-  // .background_gradient {
-  //   opacity: 0;
-  // }
 
   .header_link_container {
     transition: opacity 600ms ease, top 600ms ease;
     top: -20px;
     opacity: 0;
-  }
-
-  .content_container {
-    width: 500px;
-    height: 500px;
-    margin-right: calc(50% - 250px);
-    margin-top: calc(50vh - 250px);
-    transition: height $transition-time $transition-type 300ms, width $transition-time $transition-type 300ms, margin-right $transition-time $transition-type 300ms, margin-top $transition-time $transition-type 300ms;
-  }
-
-  .user_pic {
-    width: 200px;
-    height: 200px;
-    box-shadow: 0px 5px 12px 3px rgba(0, 0, 0, 0.35);
-    transition: height $transition-time $transition-type 300ms, width $transition-time $transition-type 300ms, box-shadow $transition-time $transition-type 300ms;
   }
 }
