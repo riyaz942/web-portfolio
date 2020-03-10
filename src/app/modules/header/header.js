@@ -95,14 +95,28 @@ class Header extends Component {
       <Spring
         to={{
           backgroundColor: isFullScreen ? "#333333ff" : "#33333300",
-          height: isFullScreen ? "calc(100vh + 0px)" : "calc(0vh + 70px)" //Because have to keep a same format even the operator and type of units
+          topContainerHeight: isFullScreen
+            ? "calc(100vh + 0px)"
+            : "calc(0vh + 70px)", //Because have to keep a same format even the operator and type of units
+
+          containerwidth: isFullScreen ? 500 : 70, // will also work for height
+          userPicWidth: isFullScreen ? 200 : 50,
+          transform: isFullScreen
+            ? "translate(calc(250px - 50vw), calc(50vh - 250px))"
+            : "translate(calc(-40px - 0vw), calc(0vh - -10px))",
+          boxShadow: isFullScreen
+            ? "0px 5px 12px 3px rgba(0, 0, 0, 0.35)"
+            : "0px 5px 12px 3px rgba(0, 0, 0, 0)",
+          // Header underLine animation
+          marginLeft: bodyType == landingPageBody.TIMELINE ? 6 : 82,
+          underlineWidth: bodyType == landingPageBody.TIMELINE ? 62 : 37
         }}
       >
-        {props => (
+        {springProps => (
           <div
             style={{
-              backgroundColor: props.backgroundColor,
-              height: props.height
+              backgroundColor: springProps.backgroundColor,
+              height: springProps.topContainerHeight
             }}
             className={`${
               isFullScreen ? styles.header_fullscreen : styles.header_normal
@@ -136,73 +150,59 @@ class Header extends Component {
                   Tech
                 </div>
               </Div>
-              <Spring
-                to={{
-                  marginLeft: bodyType == landingPageBody.TIMELINE ? 6 : 82,
-                  width: bodyType == landingPageBody.TIMELINE ? 62 : 37
+              <div
+                style={{
+                  marginLeft: springProps.marginLeft,
+                  width: springProps.underlineWidth
                 }}
-              >
-                {props => (
-                  <div style={props} className={styles.underline}></div>
-                )}
-              </Spring>
+                className={styles.underline}
+              ></div>
             </Div>
 
-            <Spring
-              to={{
-                containerwidth: isFullScreen ? 500 : 70, // will also work for height
-                userPicWidth: isFullScreen ? 200 : 50,
-                transform: isFullScreen
-                  ? "translate(calc(250px - 50vw), calc(50vh - 250px))"
-                  : "translate(calc(-40px - 0vw), calc(0vh - -10px))",
-                boxShadow: isFullScreen ? '0px 5px 12px 3px rgba(0, 0, 0, 0.35)' : '0px 5px 12px 3px rgba(0, 0, 0, 0)'
-              }}
-            >
-              {springProps => (
-                <Div
-                  align
-                  style={{
-                    width: springProps.containerwidth,
-                    height: springProps.containerwidth,
-                    transform: springProps.transform
-                  }}
-                  className={styles.content_container}
-                >
-                  <Transition
-                    items={true}
-                    key={1}
-                    from={{ opacity: 0, marginTop: "100px" }}
-                    enter={{ opacity: 1, marginTop: "0px" }}
-                    leave={{ opacity: 0 }}
-                    config={{ delay: 600 }}
-                  >
-                    {value =>
-                      value &&
-                      (props => (
-                        <img
-                          style={{
-                            ...props,
-                            width: springProps.userPicWidth,
-                            height: springProps.userPicWidth,
-                            boxShadow: springProps.boxShadow,
-                          }}
-                          src={profilePic}
-                          className={styles.user_pic}
-                          onClick={this.onClickProfilePic}
-                        />
-                      ))
-                    }
-                  </Transition>
+            
 
-                  <HeaderDescription
-                    showDescription={showDescription}
-                    onClickProject={this.onClickProject}
-                    onClickTimeline={this.onClickTimeline}
-                    isFirstTime={isFirstTime}
-                  />
-                </Div>
-              )}
-            </Spring>
+            <Div
+              align
+              style={{
+                width: springProps.containerwidth,
+                height: springProps.containerwidth,
+                transform: springProps.transform
+              }}
+              className={styles.content_container}
+            >
+              <Transition
+                items={true}
+                key={1}
+                from={{ opacity: 0, marginTop: "100px" }}
+                enter={{ opacity: 1, marginTop: "0px" }}
+                leave={{ opacity: 0 }}
+                config={{ delay: 600 }}
+              >
+                {value =>
+                  value &&
+                  (props => (
+                    <img
+                      style={{
+                        ...props,
+                        width: springProps.userPicWidth,
+                        height: springProps.userPicWidth,
+                        boxShadow: springProps.boxShadow
+                      }}
+                      src={profilePic}
+                      className={`${styles.user_pic} ${!isFullScreen ? styles.user_pic_clickable : ''}`}
+                      onClick={this.onClickProfilePic}
+                    />
+                  ))
+                }
+              </Transition>
+
+              <HeaderDescription
+                showDescription={showDescription}
+                onClickProject={this.onClickProject}
+                onClickTimeline={this.onClickTimeline}
+                isFirstTime={isFirstTime}
+              />
+            </Div>
           </div>
         )}
       </Spring>
