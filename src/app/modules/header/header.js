@@ -165,6 +165,7 @@ class Header extends Component {
             </Div>
 
             <ContactComponent
+              isWhite
               className={styles.header_contact_container}
             />
 

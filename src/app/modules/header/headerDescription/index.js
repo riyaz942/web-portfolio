@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import { Transition, config } from "react-spring/renderprops";
 import Div from 'Common/components/div';
 import styles from './header_description.module.scss';
