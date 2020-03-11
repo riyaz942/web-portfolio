@@ -7,7 +7,7 @@ export default class Intro extends Component {
   // Welcome, just so you know
   // There is actually no point, to this this whole scentence
   // Just wanted to show of this animation :p
-
+  secondDivMargin = 102; // fallback
   state = {
     divPositionX: 96, // fall back
     divPositionY: 31, // fall back
@@ -59,19 +59,23 @@ export default class Intro extends Component {
   }
 
   componentDidMount() {
-    setTimeout(()=>{
+    setTimeout(() => {
       this.animateNext(0);
-      this.setState({showAnimationContainer: true})
-  }, 600)
+      this.setState({ showAnimationContainer: true })
+    }, 600)
   }
 
   animateNext = (index) => {
     const { refObject } = this.state;
-    
+
     this.updateDivPositions(index);
-    
-    if(index < refObject.length - 1) {
-      setTimeout(()=> this.animateNext(index+1), refObject[index].nextTimeoutDuration);
+
+    if (index < refObject.length - 1) {
+      //Setting the leftMargin of the second div
+      if(index == 3 && refObject[3].ref.current && refObject[4].ref.current) {
+        this.secondDivMargin = refObject[3].ref.current.offsetWidth/2 - refObject[4].ref.current.offsetWidth/2;
+      }
+      setTimeout(() => this.animateNext(index + 1), refObject[index].nextTimeoutDuration);
     } else {
       const { onAnimationEnd } = this.props;
       // setTimeout(()=>onAnimationEnd(), refObject[index].nextTimeoutDuration)      
@@ -145,7 +149,7 @@ export default class Intro extends Component {
     return (
       <Div justify align style={style} className={styles.intro_container}>
         <div style={{
-          opacity: showAnimationContainer? 1: 0,
+          opacity: showAnimationContainer ? 1 : 0,
           position: 'absolute',
           transition: 'all 0.5s ease',
           top: `calc(50% - ${divPositionY}px)`,
@@ -163,22 +167,22 @@ export default class Intro extends Component {
               <div ref={refObject[1].ref} className={`${styles.intro_text} ${styles.reveal_animate_skew} ${refObject[1].isVisible ? styles.animate : ''}`}>
                 Welcome &nbsp;
             </div>
-            <div className={styles.reveal_container}>
-              <span ref={refObject[2].ref} className={`${styles.intro_text} ${styles.reveal_animate_right} ${refObject[2].isVisible ? styles.animate : ''}`}>
-                Just so you know
+              <div className={styles.reveal_container}>
+                <span ref={refObject[2].ref} className={`${styles.intro_text} ${styles.reveal_animate_right} ${refObject[2].isVisible ? styles.animate : ''}`}>
+                  Just so you know
               </span>
-            </div>
+              </div>
             </Div>
             <div ref={refObject[3].ref} className={`${styles.intro_text} ${styles.flip_animate_top} ${refObject[3].isVisible ? styles.animate : ''}`}>
               There is actually no point
           </div>
           </div>
 
-          <Div row style={{overflow: 'hidden'}}>
+          <Div row style={{ overflow: 'hidden' }}>
             <span
               ref={refObject[4].ref}
               className={`${styles.intro_text} ${styles.reveal_animate_top} ${refObject[4].isVisible ? styles.animate : ''}`}
-              style={{ marginLeft: 102 }}>
+              style={{ marginLeft: this.secondDivMargin }}>
 
               to this scentence,
             {/*Margin left would be variable at somepoint in the future*/}
