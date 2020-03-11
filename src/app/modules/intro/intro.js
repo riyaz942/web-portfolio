@@ -28,7 +28,7 @@ export default class Intro extends Component {
         ref: React.createRef(),
         direction: 'right',
         isVisible: false,
-        nextTimeoutDuration: 1000,
+        nextTimeoutDuration: 1500,
       },
       {
         ref: React.createRef(),
