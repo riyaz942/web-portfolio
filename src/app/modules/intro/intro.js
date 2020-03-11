@@ -11,12 +11,13 @@ export default class Intro extends Component {
   state = {
     divPositionX: 96, // fall back
     divPositionY: 31, // fall back
+    showAnimationContainer: false,
     refObject: [
       {
         ref: React.createRef(),
         direction: 'init',
         isVisible: true,
-        nextTimeoutDuration: 1000,
+        nextTimeoutDuration: 1500,
       },
       {
         ref: React.createRef(),
@@ -34,13 +35,13 @@ export default class Intro extends Component {
         ref: React.createRef(),
         direction: 'bottom-center',
         isVisible: false,
-        nextTimeoutDuration: 1000,
+        nextTimeoutDuration: 600,
       },
       {
         ref: React.createRef(),
         direction: 'bottom',
         isVisible: false,
-        nextTimeoutDuration: 1400,
+        nextTimeoutDuration: 1800,
       },
       {
         ref: React.createRef(),
@@ -58,7 +59,10 @@ export default class Intro extends Component {
   }
 
   componentDidMount() {
-    this.animateNext(0);
+    setTimeout(()=>{
+      this.animateNext(0);
+      this.setState({showAnimationContainer: true})
+  }, 600)
   }
 
   animateNext = (index) => {
@@ -124,7 +128,7 @@ export default class Intro extends Component {
     } else if (direction == 'init') {
       this.setState({
         divPositionX: objectWidth / 2,
-        divPositionY: (objectHeight + componentHeightPadding) / 2
+        divPositionY: (objectHeight + componentHeightPadding) / 2,
       })
     }
   }
@@ -134,17 +138,20 @@ export default class Intro extends Component {
       divPositionY,
       divPositionX,
       refObject,
+      showAnimationContainer,
     } = this.state;
     const { style } = this.props;
 
     return (
       <Div justify align style={style} className={styles.intro_container}>
         <div style={{
+          opacity: showAnimationContainer? 1: 0,
           position: 'absolute',
           transition: 'all 0.5s ease',
           top: `calc(50% - ${divPositionY}px)`,
           left: `calc(50% - ${divPositionX}px)`
-        }}>
+        }}
+        >
           <div>
             <span ref={refObject[0].ref} className={styles.intro_text}>
               Hi There,
@@ -171,14 +178,14 @@ export default class Intro extends Component {
             <span
               ref={refObject[4].ref}
               className={`${styles.intro_text} ${styles.reveal_animate_top} ${refObject[4].isVisible ? styles.animate : ''}`}
-              style={{ marginLeft: 120 }}>
+              style={{ marginLeft: 102 }}>
 
-              to this scentence, &nbsp;
+              to this scentence,
             {/*Margin left would be variable at somepoint in the future*/}
             </span>
             <Div align>
               <span ref={refObject[5].ref} className={`${styles.intro_text} ${styles.animate_right} ${refObject[5].isVisible ? styles.animate : ''}`}>
-                Just wanted to show of this animation
+                &nbsp; Just wanted to show of this animation
               </span>
               <span ref={refObject[6].ref} className={`${styles.intro_text} ${styles.reveal_center_animate_skew} ${refObject[6].isVisible ? styles.animate : ''}`}>
                 &#128523;
@@ -186,6 +193,11 @@ export default class Intro extends Component {
             </Div>
           </Div>
 
+        </div>
+
+        <div className={styles.cover_reveal_container}>
+          <div className={`${styles.cover_reveal_layer} ${styles.animate_layer}`}>
+          </div>
         </div>
       </Div>
     )
