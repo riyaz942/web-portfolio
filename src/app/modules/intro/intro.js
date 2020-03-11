@@ -34,13 +34,13 @@ export default class Intro extends Component {
         ref: React.createRef(),
         direction: 'bottom-center',
         isVisible: false,
-        nextTimeoutDuration: 1100,
+        nextTimeoutDuration: 1000,
       },
       {
         ref: React.createRef(),
         direction: 'bottom',
         isVisible: false,
-        nextTimeoutDuration: 1200,
+        nextTimeoutDuration: 1400,
       },
       {
         ref: React.createRef(),
@@ -153,22 +153,24 @@ export default class Intro extends Component {
 
           <div className={styles.inline_container}>
             <Div row align>
-              <span ref={refObject[1].ref} className={`${styles.intro_text} ${styles.animate_bottom} ${refObject[1].isVisible ? styles.animate : ''}`}>
+              <div ref={refObject[1].ref} className={`${styles.intro_text} ${styles.reveal_animate_skew} ${refObject[1].isVisible ? styles.animate : ''}`}>
                 Welcome &nbsp;
-            </span>
-              <span ref={refObject[2].ref} className={`${styles.intro_text} ${styles.animate_right} ${refObject[2].isVisible ? styles.animate : ''}`}>
+            </div>
+            <div className={styles.reveal_container}>
+              <span ref={refObject[2].ref} className={`${styles.intro_text} ${styles.reveal_animate_right} ${refObject[2].isVisible ? styles.animate : ''}`}>
                 Just so you know
-            </span>
+              </span>
+            </div>
             </Div>
-            <span ref={refObject[3].ref} className={`${styles.intro_text} ${styles.animate_bottom} ${refObject[3].isVisible ? styles.animate : ''}`}>
+            <div ref={refObject[3].ref} className={`${styles.intro_text} ${styles.flip_animate_top} ${refObject[3].isVisible ? styles.animate : ''}`}>
               There is actually no point
-          </span>
+          </div>
           </div>
 
-          <Div row>
+          <Div row style={{overflow: 'hidden'}}>
             <span
               ref={refObject[4].ref}
-              className={`${styles.intro_text} ${styles.animate_bottom} ${refObject[4].isVisible ? styles.animate : ''}`}
+              className={`${styles.intro_text} ${styles.reveal_animate_top} ${refObject[4].isVisible ? styles.animate : ''}`}
               style={{ marginLeft: 120 }}>
 
               to this scentence, &nbsp;
@@ -177,8 +179,8 @@ export default class Intro extends Component {
             <Div align>
               <span ref={refObject[5].ref} className={`${styles.intro_text} ${styles.animate_right} ${refObject[5].isVisible ? styles.animate : ''}`}>
                 Just wanted to show of this animation
-            </span>
-              <span ref={refObject[6].ref} className={`${styles.intro_text} ${styles.animate_bottom} ${refObject[6].isVisible ? styles.animate : ''}`}>
+              </span>
+              <span ref={refObject[6].ref} className={`${styles.intro_text} ${styles.reveal_center_animate_skew} ${refObject[6].isVisible ? styles.animate : ''}`}>
                 &#128523;
             </span>
             </Div>

@@ -1,6 +1,10 @@
 @import '~Styles/colors.module';
 @import '~Styles/mixins.module';
 
+$transition-curve: cubic-bezier(0.7, 0, 0.3, 1); //$transition-fast-in-slow-out;
+$transition-skew-reveal: $transition-slow-in-fast-out;
+$transition-reveal-right: $transition-fast-in-slow-out;
+
 .intro_container {
   height: 100%;
   width: 100%;
@@ -11,24 +15,22 @@
     color: white;
     font-size: 50px;
     white-space: nowrap;
+    transition: all 0.4s $transition-curve;
   }
 
   .animate_left {
-    transition: transform 0.5s $transition-fast-in-slow-out, opacity 0.5s ease;
     // margin-right: -150px;
     transform: translate(-150px, 0px);
     opacity: 0;
   }
 
   .animate_right {
-    transition: transform 0.5s $transition-fast-in-slow-out, opacity 0.5s ease;
     // margin-left: -150px;
     transform: translate(-150px, 0px);
     opacity: 0;
   }
 
   .animate_bottom {
-    transition: transform 0.5s $transition-fast-in-slow-out, opacity 0.5s ease;
     // margin-top: -100px;
     transform: translate(0px, -80px);
     opacity: 0;
@@ -43,5 +45,116 @@
     display: inline-block;
     text-align: center;
   }
+
+  .reveal_container {
+    overflow: hidden;
+  }
+
+//----------------------------reveal-center-skew
+.reveal_center_animate_skew {
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: " ";
+    position: absolute;
+    display: block;
+    height: 100%;
+    width: 130%;
+    left: 0;
+    top: 0;
+    background: $color-dark;
+    z-index: 1;
+    transform: skew(-45deg);
+    transition: .4s all $transition-skew-reveal;
+  }
+  &::before {
+    content: " ";
+    position: absolute;
+    display: block;
+    height: 100%;
+    width: 130%;
+    right: 0;
+    top: 0;
+    background: $color-dark;
+    z-index: 1;
+    transform: skew(-15deg);
+    transition: .4s all $transition-skew-reveal;
+  }
+}
+
+.animate.reveal_center_animate_skew {
+  &::after {
+    left: 130%;
+  }
+
+  &:before {
+    right: 130%;
+  }
+}
+
+//----------------------------reveal-top
+  .reveal_animate_top {
+    opacity: 1;
+    transform: translateY(-100px);
+  }
+
+  .animate.reveal_animate_top {
+    transform: translateY(0px);
+  }
+
+//----------------------------reveal-right
+  .reveal_animate_right {
+    opacity: 0;
+    margin-left: -300px;
+    transition: all 0.8s $transition-reveal-right;
+  }
+
+  .animate.reveal_animate_right {
+    opacity: 1;
+    margin-left: 0px;
+  }
+  
+//----------------------------flip_animate
+
+  .flip_animate_top {
+    transform: rotateX(90deg);
+    opacity: 0;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    transform-origin: top;
+  }
+  
+  .animate.flip_animate_top {
+    transform: rotateX(0deg);
+    opacity: 1;
+  }
+
+//---------------------------reveal-skew
+  .reveal_animate_skew {
+    position: relative;
+    overflow: hidden;
+  
+    &::after {
+      content: " ";
+      position: absolute;
+      display: block;
+      height: 100%;
+      width: 110%;
+      left: -20px;
+      top: 0;
+      background: $color-dark;
+      z-index: 1;
+      transform: skew(-45deg);
+      transition: .4s all $transition-skew-reveal;
+    }
+  }
+
+  .animate.reveal_animate_skew {
+    &::after {
+      left: 100%;
+    }
+  }
+//------------------------end
+  
 }
 
