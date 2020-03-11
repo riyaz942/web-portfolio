@@ -4,9 +4,9 @@ import Div from 'Common/components/div';
 
 export default class Intro extends Component {
   // Hi There,
-  // Welcome ...... to my portfolio website
-  // This message has no point to it
-  // Just showing of this animation :p
+  // Welcome, just so you know
+  // There is actually no point, to this this whole scentence
+  // Just wanted to show of this animation :p
 
   state = {
     divPositionX: 96, // fall back
@@ -16,87 +16,65 @@ export default class Intro extends Component {
         ref: React.createRef(),
         direction: 'init',
         isVisible: true,
+        nextTimeoutDuration: 1000,
       },
       {
         ref: React.createRef(),
         direction: 'bottom',
         isVisible: false,
+        nextTimeoutDuration: 1000,
       },
       {
         ref: React.createRef(),
         direction: 'right',
         isVisible: false,
+        nextTimeoutDuration: 1000,
       },
       {
         ref: React.createRef(),
         direction: 'bottom-center',
         isVisible: false,
+        nextTimeoutDuration: 1100,
       },
       {
         ref: React.createRef(),
         direction: 'bottom',
         isVisible: false,
+        nextTimeoutDuration: 1200,
       },
       {
         ref: React.createRef(),
         direction: 'right',
         isVisible: false,
+        nextTimeoutDuration: 1500,
       },
       {
         ref: React.createRef(),
         direction: 'bottom',
         isVisible: false,
-      },
-      {
-        ref: React.createRef(),
-        direction: 'bottom',
-        isVisible: false,
+        nextTimeoutDuration: 1000,
       },
     ]
   }
 
   componentDidMount() {
-    const { onAnimationEnd } = this.props;
-    // onAnimationEnd();
-    this.updatedivPositions(0);
-
-    setTimeout(() => {
-      this.updatedivPositions(1);
-
-      setTimeout(() => {
-        this.updatedivPositions(2);
-
-        setTimeout(() => {
-          this.updatedivPositions(3);
-
-          setTimeout(() => {
-            this.updatedivPositions(4);
-
-            setTimeout(() => {
-              this.updatedivPositions(5);
-
-              setTimeout(() => {
-                this.updatedivPositions(6);
-
-                setTimeout(() => {
-                  onAnimationEnd();
-                }, 1000);
-
-              }, 1100);
-
-            }, 1000);
-
-          }, 1000);
-
-        }, 1000);
-
-      }, 1000);
-
-    }, 1000);
-
+    this.animateNext(0);
   }
 
-  updatedivPositions(referenceObjectIndex) {
+  animateNext = (index) => {
+    const { refObject } = this.state;
+    
+    this.updateDivPositions(index);
+    
+    if(index < refObject.length - 1) {
+      setTimeout(()=> this.animateNext(index+1), refObject[index].nextTimeoutDuration);
+    } else {
+      const { onAnimationEnd } = this.props;
+      // setTimeout(()=>onAnimationEnd(), refObject[index].nextTimeoutDuration)      
+    }
+  }
+
+  updateDivPositions(referenceObjectIndex) {
     const { divPositionX, divPositionY, refObject } = this.state;
     const { ref: { current }, direction } = refObject[referenceObjectIndex];
     //console.log(this.myInput.current.offsetWidth)
@@ -167,7 +145,6 @@ export default class Intro extends Component {
           top: `calc(50% - ${divPositionY}px)`,
           left: `calc(50% - ${divPositionX}px)`
         }}>
-
           <div>
             <span ref={refObject[0].ref} className={styles.intro_text}>
               Hi There,
@@ -184,7 +161,7 @@ export default class Intro extends Component {
             </span>
             </Div>
             <span ref={refObject[3].ref} className={`${styles.intro_text} ${styles.animate_bottom} ${refObject[3].isVisible ? styles.animate : ''}`}>
-              this website was made
+              There is actually no point
           </span>
           </div>
 
@@ -192,14 +169,14 @@ export default class Intro extends Component {
             <span
               ref={refObject[4].ref}
               className={`${styles.intro_text} ${styles.animate_bottom} ${refObject[4].isVisible ? styles.animate : ''}`}
-              style={{ marginLeft: 241 }}>
+              style={{ marginLeft: 120 }}>
 
-              with React &nbsp;
+              to this scentence, &nbsp;
             {/*Margin left would be variable at somepoint in the future*/}
             </span>
             <Div align>
               <span ref={refObject[5].ref} className={`${styles.intro_text} ${styles.animate_right} ${refObject[5].isVisible ? styles.animate : ''}`}>
-                and not some yucky website builder.
+                Just wanted to show of this animation
             </span>
               <span ref={refObject[6].ref} className={`${styles.intro_text} ${styles.animate_bottom} ${refObject[6].isVisible ? styles.animate : ''}`}>
                 &#128523;

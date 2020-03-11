@@ -1,3 +1,4 @@
+$transition-fast-in-slow-out: cubic-bezier(0.1, 0.82, 0.25, 1);//cubic-bezier(0.1, 0.82, 0.25, 1);
 
 @mixin on_click_button {
   cursor: pointer;

@@ -1,4 +1,5 @@
 @import '~Styles/colors.module';
+@import '~Styles/mixins.module';
 
 .intro_container {
   height: 100%;
@@ -12,32 +13,30 @@
     white-space: nowrap;
   }
 
-  .intro_text_container2 {
-    margin-top: -67px;
-    margin-right: -1086px;
-  }
-
   .animate_left {
-    transition: all 0.5s ease;
-    margin-right: -150px;
+    transition: transform 0.5s $transition-fast-in-slow-out, opacity 0.5s ease;
+    // margin-right: -150px;
+    transform: translate(-150px, 0px);
     opacity: 0;
   }
 
   .animate_right {
-    transition: all 0.5s ease;
-    margin-left: -150px;
+    transition: transform 0.5s $transition-fast-in-slow-out, opacity 0.5s ease;
+    // margin-left: -150px;
+    transform: translate(-150px, 0px);
     opacity: 0;
   }
 
   .animate_bottom {
-    transition: all 0.5s ease;
-    margin-top: -100px;
+    transition: transform 0.5s $transition-fast-in-slow-out, opacity 0.5s ease;
+    // margin-top: -100px;
+    transform: translate(0px, -80px);
     opacity: 0;
   }
 
   .animate {
     opacity: 1;
-    margin: 0px;
+    transform: translate(0px, 0px);
   }
 
   .inline_container {

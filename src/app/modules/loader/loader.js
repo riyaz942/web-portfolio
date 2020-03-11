@@ -20,7 +20,7 @@ export default class Loader extends Component {
       totalItems: 0,
       itemsLoaded: 0,
       pageState: loaderPageStates.IS_LOADING,
-      disableIntro: true,
+      disableIntro: false,
     }
     this.previousContentLoadedPercentage = 0;
   }
