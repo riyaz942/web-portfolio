@@ -55,7 +55,7 @@ export default class Landing extends Component {
     if (this.previousBodyType == landingPageBody.NONE) {
       fromAnimation = {
         opacity: 0,
-        transform: 'translate(0px, 100px)',
+        transform: 'translate(0px, 0px)',
       };
       enterAnimation = {
         opacity: 1,
@@ -63,7 +63,7 @@ export default class Landing extends Component {
       }
       leaveAnimation = {
         opacity: 0,
-        transform: 'translate(0px, -100px)',
+        transform: 'translate(0px, 0px)',
       }
     }
     else if (bodyType == landingPageBody.TIMELINE) {

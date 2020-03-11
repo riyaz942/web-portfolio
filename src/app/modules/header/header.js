@@ -178,6 +178,7 @@ class Header extends Component {
               }}
               className={styles.content_container}
             >
+            {/* Only Animates first time when the user image is shown */}
               <Transition
                 items={true}
                 key={1}
