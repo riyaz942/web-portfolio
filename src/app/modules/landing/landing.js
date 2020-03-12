@@ -24,45 +24,38 @@ export default class Landing extends Component {
     this.setState({ bodyType });
   };
 
-  getBodyContent = () => ({
-    [landingPageBody.TIMELINE]: props => (
-      <Div
-        fillParent
-        style={props}
-        className={styles.body_content_container}
-      >
-        <Timeline />
-      </Div>
-    ),
-    [landingPageBody.PROJECT]: props => (
-      <Div
-        fillParent
-        style={props}
-        className={styles.body_content_container}
-      >
-        <Projects />
-      </Div>
+  getBodyContent = (bodyType) => {
+    return (
+      props => (
+        <Div
+          fillParent
+          style={props}
+          className={styles.body_content_container}
+        >
+          {bodyType == landingPageBody.PROJECT && <Projects />}
+          {bodyType == landingPageBody.TIMELINE && <Timeline />}
+        </Div>
+      )
     )
-  });
+  }
 
   render() {
     const { bodyType } = this.state;
-    const bodyContent = this.getBodyContent();
     let fromAnimation, enterAnimation, leaveAnimation;
 
     if (this.previousBodyType == landingPageBody.NONE) {
       fromAnimation = {
-        opacity: 0,
+        opacity: 1,
         transform: 'translate(0px, 0px)',
       };
       enterAnimation = {
         opacity: 1,
         transform: 'translate(0px, 0px)',
-      }
+      };
       leaveAnimation = {
-        opacity: 0,
+        opacity: 1,
         transform: 'translate(0px, 0px)',
-      }
+      };
     }
     else if (bodyType == landingPageBody.TIMELINE) {
       fromAnimation = {
@@ -98,14 +91,18 @@ export default class Landing extends Component {
           <Header bodyType={bodyType} updateBodyType={this.updateBodyType} />
 
           <Div fillParent className={styles.body_container}>
-            <Transition
-              items={bodyType}
-              from={fromAnimation}
-              enter={enterAnimation}
-              leave={leaveAnimation}
-            >
-              {bodyType => bodyContent[bodyType]}
-            </Transition>
+            {
+              landingPageBody.NONE != bodyType && (
+                <Transition
+                  items={bodyType}
+                  from={fromAnimation}
+                  enter={enterAnimation}
+                  leave={leaveAnimation}
+                >
+                  {bodyType => this.getBodyContent(bodyType)}
+                </Transition>
+              )
+            }
           </Div>
         </React.Fragment>
       </Div>

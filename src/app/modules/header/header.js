@@ -30,6 +30,7 @@ class Header extends Component {
 
   /* -------------------------------------------------- Change page state functions------------------------------------------- */
   showFullScreen = () => {
+    const { updateBodyType } = this.props;
     this.isGoingFullScreen = true
     // from header to full screen
     this.setState({
@@ -37,6 +38,8 @@ class Header extends Component {
     });
 
     setTimeout(() => {
+      
+      updateBodyType(landingPageBody.NONE);
       this.setState({
         showDescription: true
       });
