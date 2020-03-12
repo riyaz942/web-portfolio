@@ -10,6 +10,7 @@ $transition-reveal-right: $transition-fast-in-slow-out;
   width: 100%;
   overflow: hidden;
   position: relative;
+  background: $color-dark;
 
   .intro_text {
     color: white;

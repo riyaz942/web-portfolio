@@ -29,7 +29,7 @@ class Loader extends Component {
       contentLoadedPercentage: 0,
       totalItems: 0,
       pageState: loaderPageStates.IS_LOADING,
-      disableIntro: true
+      disableIntro: false
     };
 
     this.lastUpdated = 0;
@@ -190,9 +190,13 @@ class Loader extends Component {
   };
 
   onIntroAnimationEnd = () => {
-    this.setState({
-      pageState: loaderPageStates.SHOW_PAGE
-    });
+    this.setState({pageState: loaderPageStates.INTRO_COMPLETED});
+
+    setTimeout(()=>{
+      this.setState({
+        pageState: loaderPageStates.SHOW_PAGE
+      });  
+    }, 500);
   };
 
   render() {
