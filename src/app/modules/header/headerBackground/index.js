@@ -6,10 +6,10 @@ import backgroundDarkDoodleFirst from 'Images/background-dark-doodle-first-layer
 import backgroundDarkDoodleSecond from 'Images/background-dark-doodle-second-layer.png';
 
 const calc = (x, y) => [x - window.innerWidth / 2, y - window.innerHeight / 2];
-const trans1 = (x, y) => `translate3d(${x / 20}px,${y / 20}px,0)`;
-const trans2 = (x, y) => `translate3d(${x / 15}px,${y / 15}px,0)`;
-const trans3 = (x, y) => `translate3d(${x / 10}px,${y / 10}px,0)`;
-const trans4 = (x, y) => `translate3d(${x / 3.5}px,${y / 3.5}px,0)`;
+const trans1 = (x, y) => `translate(${x / 20}px,${y / 20}px)`;
+const trans2 = (x, y) => `translate(${x / 15}px,${y / 15}px)`;
+const trans3 = (x, y) => `translate(${x / 10}px,${y / 10}px)`;
+const trans4 = (x, y) => `translate(${x / 3.5}px,${y / 3.5}px)`;
 
 const HeaderBackground = ({ clientX, clientY }) => {
   const animationProps = useSpring({ xy: calc(clientX, clientY), config: { mass: 10, tension: 550, friction: 140 } });
