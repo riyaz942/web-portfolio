@@ -218,7 +218,6 @@ class Header extends Component {
                       style={{
                         ...props,
                         width: springProps.userPicWidth,
-                        height: springProps.userPicWidth,
                         boxShadow: springProps.boxShadow
                       }}
                       src={profilePic}
