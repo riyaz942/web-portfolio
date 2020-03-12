@@ -78,7 +78,7 @@ export default class Intro extends Component {
       setTimeout(() => this.animateNext(index + 1), refObject[index].nextTimeoutDuration);
     } else {
       const { onAnimationEnd } = this.props;
-      // setTimeout(()=>onAnimationEnd(), refObject[index].nextTimeoutDuration)      
+      setTimeout(()=>onAnimationEnd(), refObject[index].nextTimeoutDuration)      
     }
   }
 
