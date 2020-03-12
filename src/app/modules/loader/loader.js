@@ -10,11 +10,16 @@ const assetTechnologyImages = require.context(`../../../assets/images/technology
 const projectImages = require.context(`../../../assets/images/projectImages/snapteam`, false, /.*\.png$|jpg$/);
 
 export default class Loader extends Component {
+  requestFrameLastUpdated = 0;
+  requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
+                            window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+
+  cancelAnimationFrame = window.cancelAnimationFrame || window.mozCancelAnimationFrame;
+  
+  itemsLoaded = 0;
+
   constructor(props) {
     super(props);
-
-    // document.addEventListener('DOMContentLoaded', this.getTotalLoadingItems, false);
-    // window.addEventListener('load', this.completeLoading);    
     this.state = {
       contentLoadedPercentage: 0,
       totalItems: 0,
@@ -22,7 +27,6 @@ export default class Loader extends Component {
       pageState: loaderPageStates.IS_LOADING,
       disableIntro: false,
     }
-    this.previousContentLoadedPercentage = 0;
   }
 
   componentDidMount() {
@@ -85,10 +89,8 @@ export default class Loader extends Component {
     const {
       totalItems,
       itemsLoaded,
-      contentLoadedPercentage,
     } = this.state;
 
-    this.previousContentLoadedPercentage = contentLoadedPercentage;
     this.setState({
       contentLoadedPercentage: Math.trunc(((itemsLoaded + 1) / totalItems) * 100),
       itemsLoaded: itemsLoaded + 1,
@@ -97,7 +99,7 @@ export default class Loader extends Component {
     if ((itemsLoaded + 1) == totalItems) {
       this.completeLoading();
     } else if (totalItems - (itemsLoaded + 1) <= 2) {
-      // This condition checks if the items loaded 
+      // This condition checks if the items loaded then manually loads it by its self
       setTimeout(() => {
         this.incrementLoading();
       }, 500);
@@ -165,7 +167,6 @@ export default class Loader extends Component {
                 <div className={styles.loading_text}>Loading ...</div>
 
                 <Spring
-                  from={{ width: `${this.previousContentLoadedPercentage}vw`, x: this.previousContentLoadedPercentage }}
                   to={{ width: `${contentLoadedPercentage}vw`, x: contentLoadedPercentage }}
                 >
                   {props => (
