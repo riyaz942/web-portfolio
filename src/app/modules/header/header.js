@@ -9,6 +9,7 @@ import HeaderBackground from "./headerBackground";
 import ContactComponent from "Common/components/contactComponent";
 
 class Header extends Component {
+  isGoingFullScreen = false;
   state = {
     isFullScreen: true,
     showDescription: true,
@@ -29,6 +30,7 @@ class Header extends Component {
 
   /* -------------------------------------------------- Change page state functions------------------------------------------- */
   showFullScreen = () => {
+    this.isGoingFullScreen = true
     // from header to full screen
     this.setState({
       isFullScreen: true
@@ -42,6 +44,7 @@ class Header extends Component {
   };
 
   hideFullScreen = () => {
+    this.isGoingFullScreen = false
     this.setState({ showDescription: false });
 
     setTimeout(() => {
@@ -143,6 +146,7 @@ class Header extends Component {
                 tension: 500,
                 fiction: 26
               }}
+              config={{ delay: this.isGoingFullScreen? 200 : 0 }}
             >
               {showDescription =>
                 showDescription &&
