@@ -13,11 +13,11 @@ class HeaderDescription extends Component {
         items={showDescription}
         from={{
           opacity: 0,
-          marginTop: "0px"
+          transform: 'translateY(0px)'
         }}
         enter={{
           opacity: 1,
-          marginTop: "-100px"
+          transform: 'translateY(-100px)'
         }}
         leave={{
           opacity: 0

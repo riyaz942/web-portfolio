@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, memo } from "react";
 import styles from "./projects.scss";
 import Div from "Common/components/div";
 import TimelineSelector from "Common/containers/timelineSelector";
@@ -9,7 +9,7 @@ import RightContainer from "Common/containers/rightContainer";
 import techDoodleImage from "Images/tech-doodle-background-image.png";
 import { random, parseNewLine } from "Common/utils";
 
-export default class Projects extends Component {
+class Projects extends Component {
   constructor(props) {
     super(props);
     this.isFirstAnimation = true;
@@ -104,13 +104,15 @@ export default class Projects extends Component {
   };
 
   getBackgroundTransition = (techType, imageAlignment) => {
+    let transition = {};
+
     if (
       techType == "react" ||
       techType == "react-native" ||
       techType == "electron"
     ) {
       // transform and rotate are going to be used by image tag
-      return {
+      transition = {
         from: {
           opacity: 0,
           transform: "scale(0) rotate(360deg)"
@@ -127,27 +129,30 @@ export default class Projects extends Component {
     } else if (techType == "android") {
       switch (imageAlignment) {
         case 0:
-          return {
+          transition = {
             from: {
               transform: "translate(0vw, -100vh)"
             },
             enter: { transform: "translate(0vw, 0vh)" },
             leave: { transform: "translate(0vw,-100vh)" }
           };
+        break;
         case 1:
-          return {
+          transition = {
             from: { transform: "translate(100vw, 0vh)" },
             enter: { transform: "translate(0vw, 0vh)" },
             leave: { transform: "translate(100vw, 0vh)" }
           };
+        break;
         case 2:
-          return {
+          transition = {
             from: { transform: "translate(0vw, 100vh)" },
             enter: { transform: "translate(0vw, 0vh)" },
             leave: { transform: "translate(0vw, 100vh)" }
           };
+        break;
         case 3:
-          return {
+          transition = {
             from: {
               transform: "translate(-100vw, 0vh)"
             },
@@ -156,14 +161,26 @@ export default class Projects extends Component {
               transform: "translate(-100vw, 0vh)"
             }
           };
+        break;
       }
     }
 
-    return {
-      from: { transform: "translate(0vw, -100vh)" },
-      enter: { transform: "translate(0vw, 0vh)" },
-      leave: { transform: "translate(0vw, -100vh)" }
-    };
+    if (!transition.from) {
+      transition = {
+        from: { transform: "translate(0vw, -100vh)" },
+        enter: { transform: "translate(0vw, 0vh)" },
+        leave: { transform: "translate(0vw, -100vh)" }
+      };
+    }
+
+    if (this.isFirstAnimation) {
+      transition = {
+        ...transition,
+        from: transition.enter,
+      }
+    }
+
+    return transition;
   };
 
   render() {
@@ -267,3 +284,5 @@ export default class Projects extends Component {
     );
   }
 }
+
+export default memo(Projects)

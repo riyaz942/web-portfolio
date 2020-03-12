@@ -108,7 +108,7 @@ class Loader extends Component {
   valuateProgress = timeStamp => {
     const { totalItems } = this.state;
     const isLastPercentage = totalItems - this.itemsLoaded <= 2;
-    const updateStateAfter = isLastPercentage? 500: 300;  //600 ms for the last 2 percentage
+    const updateStateAfter = isLastPercentage? 600: 400;  //600 ms for the last 2 percentage
 
     if (timeStamp - this.lastUpdated >= updateStateAfter /*ms*/) {
       this.lastUpdated = timeStamp;

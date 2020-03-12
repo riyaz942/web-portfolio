@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, memo } from "react";
 import styles from "./timeline.scss";
 import Div from "Common/components/div";
 import TimelineSelector from "Common/containers/timelineSelector";
@@ -7,7 +7,7 @@ import find from "lodash/find";
 import { Transition } from "react-spring/renderprops";
 import RightContainer from "Common/containers/rightContainer";
 
-export default class Timeline extends Component {
+class Timeline extends Component {
   state = {
     selectedTimelineId: "nykaa",
     selectionNext: true
@@ -110,3 +110,5 @@ export default class Timeline extends Component {
     );
   }
 }
+
+export default memo(Timeline);

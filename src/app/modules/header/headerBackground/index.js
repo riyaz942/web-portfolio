@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment, memo } from 'react';
 import styles from './header_background.module.scss';
 import { useSpring, animated, useTransition, config } from 'react-spring';
 import backgroundDarkDoodleFixed from 'Images/background-dark-doodle-fixed-layer.png';
@@ -26,4 +26,4 @@ const HeaderBackground = ({ clientX, clientY }) => {
   )
 }
 
-export default HeaderBackground;
+export default memo(HeaderBackground);

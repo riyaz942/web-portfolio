@@ -148,7 +148,7 @@ class Header extends Component {
                 showDescription &&
                 (props => (
                   <div
-                    style={{ ...props }}
+                    style={props}
                     className={styles.header_background_container}
                   >
                     <HeaderBackground clientX={clientX} clientY={clientY} />
@@ -199,8 +199,8 @@ class Header extends Component {
               <Transition
                 items={true}
                 key={1}
-                from={{ opacity: 0, marginTop: "100px" }}
-                enter={{ opacity: 1, marginTop: "0px" }}
+                from={{ opacity: 0, transform: 'translateY(100px)'}}
+                enter={{ opacity: 1, transform: 'translateY(0px)'}}
                 leave={{ opacity: 0 }}
                 config={{ delay: 600 }}
               >
