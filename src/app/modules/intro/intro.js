@@ -35,13 +35,13 @@ export default class Intro extends Component {
         ref: React.createRef(),
         direction: 'bottom-center',
         isVisible: false,
-        nextTimeoutDuration: 600,
+        nextTimeoutDuration: 1000,
       },
       {
         ref: React.createRef(),
         direction: 'bottom',
         isVisible: false,
-        nextTimeoutDuration: 1800,
+        nextTimeoutDuration: 1400,
       },
       {
         ref: React.createRef(),

@@ -192,12 +192,12 @@ $transition-reveal-right: $transition-fast-in-slow-out;
     left: 0;
     right: 100%;
 	}
-	30%,
+	40%,
 	70% {
     right: 0;
     left: 0;
-		-webkit-animation-timing-function: $transition-slow-in-fast-out;
-		animation-timing-function: $transition-slow-in-fast-out;
+		-webkit-animation-timing-function: ease;
+		animation-timing-function: ease;
 	}
 	100% {
     left: 100%;
