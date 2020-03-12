@@ -192,9 +192,9 @@ export default class Intro extends Component {
                 &nbsp; Just wanted to show of this animation
               </span>
               <span ref={refObject[6].ref} className={`${styles.intro_text} ${styles.reveal_center_animate_skew} ${refObject[6].isVisible ? styles.animate : ''}`}>
-                &#128523;
+                🙈
             </span>
-            </Div>
+           </Div>
           </Div>
 
         </div>
