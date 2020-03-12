@@ -92,3 +92,13 @@ $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
     opacity: 0;
   }
 }
+
+.header_background_container {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  overflow: hidden;
+  transform: scale(1.1);
+}

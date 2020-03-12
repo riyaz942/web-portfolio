@@ -6,7 +6,7 @@ import Div from "Common/components/div";
 import { Spring, Transition, config } from "react-spring/renderprops";
 import HeaderDescription from "./headerDescription";
 import HeaderBackground from "./headerBackground";
-import ContactComponent from 'Common/components/contactComponent';
+import ContactComponent from "Common/components/contactComponent";
 
 class Header extends Component {
   state = {
@@ -133,12 +133,29 @@ class Header extends Component {
                 : null
             }
           >
-            <HeaderBackground
-              clientX={clientX}
-              clientY={clientY}
-              showBackground={showDescription}
-              isFirstTime={isFirstTime}
-            />
+            <Transition
+              items={showDescription}
+              from={{ opacity: 0 }}
+              enter={{ opacity: 1 }}
+              leave={{ opacity: 0 }}
+              config={isFirstTime ? config.molasses : {
+                mass: 1,
+                tension: 500,
+                fiction: 26
+              }}
+            >
+              {showDescription =>
+                showDescription &&
+                (props => (
+                  <div
+                    style={{ ...props }}
+                    className={styles.header_background_container}
+                  >
+                    <HeaderBackground clientX={clientX} clientY={clientY} />
+                  </div>
+                ))
+              }
+            </Transition>
 
             <Div className={`${styles.header_link_container}`}>
               <Div row className={styles.bodytype_container}>
@@ -178,7 +195,7 @@ class Header extends Component {
               }}
               className={styles.content_container}
             >
-            {/* Only Animates first time when the user image is shown */}
+              {/* Only Animates first time when the user image is shown */}
               <Transition
                 items={true}
                 key={1}
@@ -198,7 +215,9 @@ class Header extends Component {
                         boxShadow: springProps.boxShadow
                       }}
                       src={profilePic}
-                      className={`${styles.user_pic} ${!isFullScreen ? styles.user_pic_clickable : ''}`}
+                      className={`${styles.user_pic} ${
+                        !isFullScreen ? styles.user_pic_clickable : ""
+                      }`}
                       onClick={this.onClickProfilePic}
                     />
                   ))
