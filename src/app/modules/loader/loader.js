@@ -5,6 +5,7 @@ import { loaderPageStates } from "../../constants/loaderConstants";
 import { Transition, Spring } from "react-spring/renderprops";
 import Div from "Common/components/div";
 import { withRouter, matchPath } from 'react-router';
+import { CookieService } from "Common/utils/cookieService";
 
 const assetsImages = require.context(
   `../../../assets/images`,
@@ -83,13 +84,14 @@ class Loader extends Component {
     if (areImagesLoaded) {
       this.completeLoading(true); // immediatly load page.
     } else {
+      const introAlreadyShown = CookieService.get('INTRO_COMPLETED');
       const match = matchPath(location.pathname, {
         path: "/project/:projectSlug?",
         exact: true,
         strict: false
       });
       
-      if (match) {
+      if (match && introAlreadyShown) {
         // Todo also check if intro animation is done or not ... if not the make this condition false
         this.completeLoading(true); // immediatly load page.
       } else {
@@ -160,6 +162,7 @@ class Loader extends Component {
 
   completeLoading = showImmediately => {
     const { contentLoadedPercentage, disableIntro } = this.state;
+    const introAlreadyShown = CookieService.get('INTRO_COMPLETED');
 
     if (showImmediately) {
       return this.setState({
@@ -177,7 +180,7 @@ class Loader extends Component {
 
     // so created a timeout to not show content immediately
     setTimeout(() => {
-      if (!disableIntro) {
+      if (!disableIntro && !introAlreadyShown) {
         this.setState({
           pageState: loaderPageStates.SHOW_INTRO
         });

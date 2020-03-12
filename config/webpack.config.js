@@ -285,7 +285,7 @@ module.exports = function(webpackEnv) {
         // Icons: path.resolve(__dirname, '../src/assets/icons'),
         // Hoc: path.resolve(__dirname, '../src/modules/hoc'),
         Constants: path.resolve(__dirname, '../src/app/constants'),
-        // Utils: path.resolve(__dirname, '../src/utils'),
+        // Utils: path.resolve(__dirname, '../src/app/utils'),
       },
       plugins: [
         // Adds support for installing with Plug'n'Play, leading to faster installs and adding

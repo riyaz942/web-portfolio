@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styles from './intro.scss';
 import Div from 'Common/components/div';
+import { CookieService } from "Common/utils/cookieService";
 
 export default class Intro extends Component {
   // Hi There,
@@ -78,6 +79,7 @@ export default class Intro extends Component {
       setTimeout(() => this.animateNext(index + 1), refObject[index].nextTimeoutDuration);
     } else {
       const { onAnimationEnd } = this.props;
+      CookieService.set('INTRO_COMPLETED', true);
       setTimeout(()=>onAnimationEnd(), refObject[index].nextTimeoutDuration)      
     }
   }
