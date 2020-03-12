@@ -29,7 +29,7 @@ class Loader extends Component {
       contentLoadedPercentage: 0,
       totalItems: 0,
       pageState: loaderPageStates.IS_LOADING,
-      disableIntro: false
+      disableIntro: true
     };
 
     this.lastUpdated = 0;
@@ -105,11 +105,14 @@ class Loader extends Component {
   // Because if we keep updating the progress bar on callback of items loaded then the animation suffers
   valuateProgress = timeStamp => {
     const { totalItems } = this.state;
-    if (timeStamp - this.lastUpdated >= 800 /*ms*/) {
+    const isLastPercentage = totalItems - this.itemsLoaded <= 2;
+    const updateStateAfter = isLastPercentage? 500: 300;  //600 ms for the last 2 percentage
+
+    if (timeStamp - this.lastUpdated >= updateStateAfter /*ms*/) {
       this.lastUpdated = timeStamp;
 
       // manually incrementing the progress for the last 2 percent to make a seemless animation.
-      if (totalItems - this.itemsLoaded <= 2) {
+      if (isLastPercentage) {
         this.itemsLoaded = this.itemsLoaded + 1;
       }
 
