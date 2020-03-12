@@ -1,4 +1,4 @@
-import React, { Component, memo } from "react";
+import React, { Component } from "react";
 import styles from "./projects.scss";
 import Div from "Common/components/div";
 import TimelineSelector from "Common/containers/timelineSelector";
@@ -285,4 +285,4 @@ class Projects extends Component {
   }
 }
 
-export default memo(Projects)
+export default Projects;

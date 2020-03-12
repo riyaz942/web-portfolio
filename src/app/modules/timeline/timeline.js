@@ -1,4 +1,4 @@
-import React, { Component, memo } from "react";
+import React, { Component } from "react";
 import styles from "./timeline.scss";
 import Div from "Common/components/div";
 import TimelineSelector from "Common/containers/timelineSelector";
@@ -64,7 +64,6 @@ class Timeline extends Component {
           enter={this.getImageBackgroundAnimation(selectionNext).enter}
           leave={this.getImageBackgroundAnimation(selectionNext).leave}
         >
-          {/* {timeline => props => <animated.div style={{ backgroundImage: `url(${timeline.backgroundImage})`, ...props}} className={styles.background_image}></animated.div>} */}
 
           {timeline => props => (
             <img
@@ -111,4 +110,4 @@ class Timeline extends Component {
   }
 }
 
-export default memo(Timeline);
+export default Timeline;

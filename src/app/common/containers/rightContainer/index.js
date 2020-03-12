@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, memo } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import styles from "./right_container.module.scss";
@@ -321,4 +321,4 @@ const mapDispathToProps = dispatch => {
 export default connect(
   null,
   mapDispathToProps
-)(withRouter(RightContainer));
+)(withRouter(memo(RightContainer)));

@@ -28,7 +28,6 @@ export default class Landing extends Component {
     [landingPageBody.TIMELINE]: props => (
       <Div
         fillParent
-        animate
         style={props}
         className={styles.body_content_container}
       >
@@ -38,7 +37,6 @@ export default class Landing extends Component {
     [landingPageBody.PROJECT]: props => (
       <Div
         fillParent
-        animate
         style={props}
         className={styles.body_content_container}
       >
