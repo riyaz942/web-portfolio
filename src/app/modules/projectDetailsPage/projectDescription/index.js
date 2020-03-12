@@ -19,25 +19,25 @@ const getHighlight = (highlight) => {
 const ProjectDescription = ({ description, className }) => {
   return (
     <Div align="stretch" className={`${styles.description_container} ${className}`}>
-      {map(description, description => {
+      {map(description, (description, index) => {
         if (description.type == "text") {
-          return <div className={`${styles.text} ${getHighlight(description.highlight)}`}>{parseNewLine(description.value)}</div>;
+          return <div key={index} className={`${styles.text} ${getHighlight(description.highlight)}`}>{parseNewLine(description.value)}</div>;
         } else if (description.type == 'points') {
 
           return (
-            <Div className={`${styles.points_container} ${getHighlight(description.highlight)}`}>
+            <Div key={index} className={`${styles.points_container} ${getHighlight(description.highlight)}`}>
               {description.title ? <div className={styles.title}>{description.title}</div> : null}
               <ul className={styles.points_ul}>
                 {
-                  map(description.value, value => (
-                    <li>{value}</li>
+                  map(description.value, (value, index) => (
+                    <li key={index}>{value}</li>
                   ))
                 }
               </ul>
             </Div>
           )
         } else if (description.type == 'header') {
-          return (<div className={styles.header}>{description.value}</div>)
+          return (<div key={index} className={styles.header}>{description.value}</div>)
         }
 
         return null;

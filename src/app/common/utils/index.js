@@ -8,7 +8,7 @@ export const random = (min, max) => { // min and max included
 export const parseNewLine = object => {
   //const regexNewLine=/@(\w+)/g
   const newLineMatch = (match, index, offset) => {
-    return (<br />);
+    return (<br key={index} />);
   }
 
   return reactStringReplace(object, "<br/>", newLineMatch)

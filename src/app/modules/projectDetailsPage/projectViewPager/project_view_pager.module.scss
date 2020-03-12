@@ -11,14 +11,14 @@
   position: absolute;
   left: 30px;
   box-shadow: 0px 5px 12px 3px rgba(0, 0, 0, 0.2);
-  background: $color-dark;
+  background-color: $color-dark !important;
   z-index: 2;
 }
 
 .pagination_button_right {
   position: absolute;
   right: 30px;
-  background: $color-dark;
+  background-color: $color-dark !important;
   box-shadow: 0px 5px 12px 3px rgba(0, 0, 0, 0.2);
   z-index: 2;
 }

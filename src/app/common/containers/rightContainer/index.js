@@ -251,10 +251,11 @@ class RightContainer extends Component {
                 className={styles.slide_inner_container}
               >
                 {map(projects[item.id], (slide, index) => (
-                  <Spring to={this.getPropertyBasedOnState(slide.state)}>
+                  <Spring
+                    key={slide.slug}
+                    to={this.getPropertyBasedOnState(slide.state)}>
                     {props => (
                       <Div
-                        key={index}
                         onClick={() => this.onClickProject(slide)}
                         style={{ ...props, zIndex: index }}
                         className={`${styles.slide_items} ${

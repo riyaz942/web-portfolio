@@ -224,7 +224,7 @@ const ProjectDetailsPage = ({
               <div className={`${styles.title} ${styles.project_involvement}`}>
                 Project Involment
               </div>
-              <div className={styles.value}>Major</div>
+              <div className={styles.value}>Undefined</div>
             </Div>
 
             <Div

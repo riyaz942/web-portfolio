@@ -45,8 +45,8 @@ class ProjectViewPager extends Component {
             this.swiper = swiper;
           }}
         >
-          {map(projectImages, projectImage => (
-            <div className="swiper-zoom-container">
+          {map(projectImages, (projectImage, index) => (
+            <div className="swiper-zoom-container" key={index}>
               <img className={styles.swiper_item} src={projectImage} />
             </div>
           ))}

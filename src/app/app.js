@@ -28,7 +28,7 @@ const App = () => {
         <Div className={styles.main_container}>
           <Loader>
             <Router>
-              <Suspense fallback={() => null}>
+              <Suspense fallback={null}>
                 <Switch>
                   <Route path="/">
                     <Landing />
