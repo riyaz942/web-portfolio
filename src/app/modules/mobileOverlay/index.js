@@ -7,7 +7,7 @@ const MobileOverlay = () => {
   return (
     <Div className={styles.mobile_overlay_top_container}>
       <Div fillParent className={styles.content_container}>
-        <div alignSelf="stretch" className={styles.message_container}>
+        <div className={styles.message_container}>
           <div>Sorry, the mobile resposive part is still under development🙈, Open this site on Desktop to get the full experience.
           </div>
 

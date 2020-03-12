@@ -227,8 +227,7 @@ const ProjectDetailsPage = ({
               <div className={styles.value}>Undefined</div>
             </Div>
 
-            <Div
-              animate
+            <animated.div
               className={styles.content_container}
               onScroll={onScroll}
               style={containerOpacityAnimation}
@@ -237,7 +236,7 @@ const ProjectDetailsPage = ({
                 className={styles.content}
                 description={project.description}
               />
-            </Div>
+            </animated.div>
           </Div>
         </Fragment>
       ) : null}
