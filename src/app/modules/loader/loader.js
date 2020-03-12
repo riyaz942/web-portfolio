@@ -6,6 +6,7 @@ import { Transition, Spring } from "react-spring/renderprops";
 import Div from "Common/components/div";
 import { withRouter, matchPath } from 'react-router';
 import { CookieService } from "Common/utils/cookieService";
+import MobileOverlay from 'Modules/mobileOverlay';
 
 const assetsImages = require.context(
   `../../../assets/images`,
@@ -208,6 +209,7 @@ class Loader extends Component {
 
     return (
       <Div className={styles.loader_top_container}>
+        <MobileOverlay />
         {pageState == loaderPageStates.SHOW_PAGE && children}
         {/* LOADER */}
         <Transition
