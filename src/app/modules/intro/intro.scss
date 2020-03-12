@@ -98,6 +98,7 @@ $transition-reveal-right: $transition-fast-in-slow-out;
   .reveal_animate_top {
     opacity: 1;
     transform: translateY(-100px);
+    color: $color-blue;
   }
 
   .animate.reveal_animate_top {
@@ -108,12 +109,14 @@ $transition-reveal-right: $transition-fast-in-slow-out;
   .reveal_animate_right {
     opacity: 0;
     margin-left: -300px;
-    transition: all 0.8s $transition-reveal-right;
+    transition: color 1s ease, opacity 0.8s $transition-reveal-right,  margin-left 0.8s $transition-reveal-right;
+    color: $color-blue;
   }
 
   .animate.reveal_animate_right {
     opacity: 1;
     margin-left: 0px;
+    color: white;
   }
   
 //----------------------------flip_animate
@@ -135,6 +138,7 @@ $transition-reveal-right: $transition-fast-in-slow-out;
     position: relative;
     overflow: hidden;
     opacity: 0;
+    color: $color-blue;
   
     &::after {
       content: " ";

@@ -184,7 +184,7 @@ export default class Intro extends Component {
               className={`${styles.intro_text} ${styles.reveal_animate_top} ${refObject[4].isVisible ? styles.animate : ''}`}
               style={{ marginLeft: this.secondDivMargin }}>
 
-              to this scentence,
+              to this sentence,
             {/*Margin left would be variable at somepoint in the future*/}
             </span>
             <Div align>
