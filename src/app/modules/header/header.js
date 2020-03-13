@@ -24,7 +24,7 @@ class Header extends Component {
     if (isFirstTime) {
       setTimeout(() => {
         this.setState({ isFirstTime: false });
-      }, 1000);
+      }, 1500);
     }
   }
 
