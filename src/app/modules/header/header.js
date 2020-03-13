@@ -115,9 +115,11 @@ class Header extends Component {
           boxShadow: isFullScreen
             ? "0px 5px 12px 3px rgba(0, 0, 0, 0.35)"
             : "0px 5px 12px 3px rgba(0, 0, 0, 0)",
-          // Header underLine animation
-          transformUnderline: bodyType == landingPageBody.TIMELINE ? 'translateX(6px)' : 'translateX(82px)',
-          underlineWidth: bodyType == landingPageBody.TIMELINE ? 62 : 37
+        }}
+        config={{
+          mass: 1,
+          tension: 200,
+          fiction: 20
         }}
       >
         {springProps => (
@@ -128,11 +130,11 @@ class Header extends Component {
             }}
             className={`${
               isFullScreen ? styles.header_fullscreen : styles.header_normal
-            } ${styles.header_container}`}
+              } ${styles.header_container}`}
             onMouseMove={
               showDescription
                 ? ({ clientX: x, clientY: y }) =>
-                    this.setState({ clientX: x, clientY: y })
+                  this.setState({ clientX: x, clientY: y })
                 : null
             }
           >
@@ -145,10 +147,10 @@ class Header extends Component {
                 isFirstTime
                   ? config.molasses
                   : {
-                      mass: 1,
-                      tension: 500,
-                      fiction: 26
-                    }
+                    mass: 1,
+                    tension: 500,
+                    fiction: 26
+                  }
               }
               config={{ delay: this.isGoingFullScreen ? 200 : 0 }}
             >
@@ -165,29 +167,42 @@ class Header extends Component {
               }
             </Transition>
 
-            <Div className={`${styles.header_link_container}`}>
-              <Div row className={styles.bodytype_container}>
-                <div
-                  className={styles.header_link_button}
-                  onClick={this.onClickTimeline}
-                >
-                  Timeline
-                </div>
-                <div
-                  className={styles.header_link_button}
-                  onClick={this.onClickProject}
-                >
-                  Tech
-                </div>
-              </Div>
-              <div
-                style={{
-                  transform: springProps.transformUnderline,
-                  width: springProps.underlineWidth
-                }}
-                className={styles.underline}
-              ></div>
-            </Div>
+            <Spring
+              to={{
+                // Header underLine animation
+                transformUnderline: bodyType == landingPageBody.TIMELINE ? 'translateX(6px)' : 'translateX(82px)',
+                underlineWidth: bodyType == landingPageBody.TIMELINE ? 62 : 37
+
+              }}>
+              {
+                springHeaderActionProps => (
+                  <Div className={`${styles.header_link_container}`}>
+                    <Div row className={styles.bodytype_container}>
+                      <div
+                        className={styles.header_link_button}
+                        onClick={this.onClickTimeline}
+                      >
+                        Timeline
+                      </div>
+                      <div
+                        className={styles.header_link_button}
+                        onClick={this.onClickProject}
+                      >
+                        Tech
+                      </div>
+                    </Div>
+                    <div
+                      style={{
+                        transform: springHeaderActionProps.transformUnderline,
+                        width: springHeaderActionProps.underlineWidth
+                      }}
+                      className={styles.underline}
+                    ></div>
+                  </Div>
+                )
+              }
+            </Spring>
+
 
             <ContactComponent
               isWhite
@@ -208,15 +223,14 @@ class Header extends Component {
                 (props => (
                   <img
                     style={{
-                      ...props,
-                      width: 200,
+                      opacity: props.opacity,
                       boxShadow: springProps.boxShadow,
                       transform: isFirstTime ? props.transform : springProps.userPicTranform
                     }}
                     src={profilePic}
                     className={`${styles.user_pic} ${
                       !isFullScreen ? styles.user_pic_clickable : ""
-                    }`}
+                      }`}
                     onClick={this.onClickProfilePic}
                   />
                 ))
