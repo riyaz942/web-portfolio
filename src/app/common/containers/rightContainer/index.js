@@ -322,4 +322,4 @@ const mapDispathToProps = dispatch => {
 export default connect(
   null,
   mapDispathToProps
-)(withRouter(memo(RightContainer)));
+)(memo(withRouter((RightContainer))));

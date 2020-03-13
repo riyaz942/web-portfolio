@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, memo } from "react";
 import styles from "./div.module.scss";
 import { animated } from "react-spring";
 
@@ -65,4 +65,4 @@ class Div extends Component {
   }
 }
 
-export default Div;
+export default memo(Div);

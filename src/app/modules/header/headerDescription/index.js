@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, memo } from "react";
 import { Transition, config } from "react-spring/renderprops";
 import Div from 'Common/components/div';
 import styles from './header_description.module.scss';
@@ -60,4 +60,4 @@ class HeaderDescription extends Component {
   }
 }
 
-export default HeaderDescription;
+export default memo(HeaderDescription);
