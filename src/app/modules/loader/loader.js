@@ -234,6 +234,7 @@ class Loader extends Component {
                     width: `${contentLoadedPercentage}vw`,
                     x: contentLoadedPercentage
                   }}
+                  config={{ mass: 10, tension: 550, friction: 120  }}
                 >
                   {props => (
                     <Div
