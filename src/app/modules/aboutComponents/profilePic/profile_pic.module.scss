@@ -11,5 +11,5 @@
   z-index: 2;
 }
 .user_pic_clickable {
-  @include on_click_button;
+  cursor: pointer;
 }

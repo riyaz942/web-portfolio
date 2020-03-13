@@ -31,8 +31,9 @@ export default class Landing extends Component {
   componentDidMount() {
     setTimeout(() => {
       this.setState({ isFirstTime: false });
+    }, 1500);
 
-      // setInterval(()=> {
+      //     setInterval(()=> {
       //   const { isFullScreen } = this.state;
 
       //   if (isFullScreen) {
@@ -41,7 +42,6 @@ export default class Landing extends Component {
       //   }
 
       // }, 5000);
-    }, 1500);
   }
 
   //-------------------------------------------Header Logic-------------------------------------------
@@ -164,17 +164,17 @@ export default class Landing extends Component {
       <Div className={styles.landing_container}>
         {/* <Header bodyType={bodyType} updateBodyType={this.updateBodyType} /> */}
 
-        <ProfilePic
-          isFirstTime={isFirstTime}
-          isFullScreen={isFullScreen}
-          onClickProfilePic={this.onClickProfilePic}
-        />
         <HeaderDescription
           showDescription={showDescription}
           onClickProject={this.onClickProject}
           onClickTimeline={this.onClickTimeline}
           isFirstTime={isFirstTime}
           className={styles.header_description}
+        />
+        <ProfilePic
+          isFirstTime={isFirstTime}
+          isFullScreen={isFullScreen}
+          onClickProfilePic={this.onClickProfilePic}
         />
 
         <Div fillParent className={styles.body_container}>
