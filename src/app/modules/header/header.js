@@ -116,7 +116,7 @@ class Header extends Component {
             ? "0px 5px 12px 3px rgba(0, 0, 0, 0.35)"
             : "0px 5px 12px 3px rgba(0, 0, 0, 0)",
           // Header underLine animation
-          marginLeft: bodyType == landingPageBody.TIMELINE ? 6 : 82,
+          transformUnderline: bodyType == landingPageBody.TIMELINE ? 'translateX(6px)' : 'translateX(82px)',
           underlineWidth: bodyType == landingPageBody.TIMELINE ? 62 : 37
         }}
       >
@@ -182,7 +182,7 @@ class Header extends Component {
               </Div>
               <div
                 style={{
-                  marginLeft: springProps.marginLeft,
+                  transform: springProps.transformUnderline,
                   width: springProps.underlineWidth
                 }}
                 className={styles.underline}
@@ -198,7 +198,7 @@ class Header extends Component {
             <Transition
               items={true}
               key={1}
-              from={{ opacity: 0, transform: "translate(calc(100px - 50vw), calc(50vh - 150px)) scale(1)" }}
+              from={{ opacity: 0, transform: "translate(calc(100px - 50vw), calc(50vh - 100px)) scale(1)" }}
               enter={{ opacity: 1, transform: "translate(calc(100px - 50vw), calc(50vh - 250px)) scale(1)" }}
               leave={{ opacity: 0 }}
               config={{ delay: 600 }}

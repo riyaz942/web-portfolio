@@ -20,6 +20,7 @@ $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
     opacity: 1;
     left: 66px;
     top: 26px;
+    transform: translateY(0px);
   }
 
   .header_link_container {
@@ -27,7 +28,8 @@ $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
     opacity: 1;
     right: 130px;
     top: 26px;
-
+    transform: translateY(0px);
+    
     .bodytype_container {
       padding: 0px 6px;
 
@@ -69,25 +71,25 @@ $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
 //--------------------------------------------------------normal header state
 .header_normal {
   .header_link_container {
-    transition: opacity 600ms ease 600ms, top 600ms ease 600ms;
+    transition: opacity 600ms ease 600ms, transform 600ms ease 600ms;
   }
 
   .header_contact_container {
-    transition: opacity 600ms ease 600ms, top 600ms ease 600ms;
+    transition: opacity 600ms ease 600ms, transform 600ms ease 600ms;
   }
 }
 
 //--------------------------------------------------------fullScreen
 .header_fullscreen {
   .header_link_container {
-    transition: opacity 600ms ease, top 600ms ease;
-    top: -20px;
+    transition: opacity 600ms ease, transform 600ms ease;
+    transform: translateY(-20px);
     opacity: 0;
   }
 
   .header_contact_container {
-    transition: opacity 600ms ease, top 600ms ease;
-    top: -20px;
+    transition: opacity 600ms ease, transform 600ms ease;
+    transform: translateY(-20px);
     opacity: 0;
   }
 }
