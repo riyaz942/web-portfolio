@@ -12,7 +12,7 @@ const trans3 = (x, y) => `translate(${x / 10}px,${y / 10}px)`;
 const trans4 = (x, y) => `translate(${x / 3.5}px,${y / 3.5}px)`;
 
 const BackgroundAnimator = ({ clientX, clientY }) => {
-  const animationProps = useSpring({ xy: calc(clientX, clientY), config: { mass: 10, tension: 550, friction: 140 } });
+  const animationProps = useSpring({ xy: calc(clientX, clientY), config: { mass: 10, tension: 550, friction: 240 } });
 
   return (
       <Fragment>
