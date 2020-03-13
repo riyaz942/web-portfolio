@@ -1,5 +1,5 @@
 import React, { Component, Fragment, memo } from 'react';
-import styles from './header_background.module.scss';
+import styles from './background_animator.module.scss';
 import { useSpring, animated, useTransition, config } from 'react-spring';
 import backgroundDarkDoodleFixed from 'Images/background-dark-doodle-fixed-layer.png';
 import backgroundDarkDoodleFirst from 'Images/background-dark-doodle-first-layer.png';
@@ -11,7 +11,7 @@ const trans2 = (x, y) => `translate(${x / 15}px,${y / 15}px)`;
 const trans3 = (x, y) => `translate(${x / 10}px,${y / 10}px)`;
 const trans4 = (x, y) => `translate(${x / 3.5}px,${y / 3.5}px)`;
 
-const HeaderBackground = ({ clientX, clientY }) => {
+const BackgroundAnimator = ({ clientX, clientY }) => {
   const animationProps = useSpring({ xy: calc(clientX, clientY), config: { mass: 10, tension: 550, friction: 140 } });
 
   return (
@@ -26,4 +26,4 @@ const HeaderBackground = ({ clientX, clientY }) => {
   )
 }
 
-export default memo(HeaderBackground);
+export default memo(BackgroundAnimator);

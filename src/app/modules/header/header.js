@@ -5,7 +5,7 @@ import { landingPageBody } from "../../constants/landingConstants";
 import Div from "Common/components/div";
 import { Spring, Transition, config } from "react-spring/renderprops";
 import HeaderDescription from "./headerDescription";
-import HeaderBackground from "./headerBackground";
+import BackgroundAnimator from "./backgroundAnimator";
 import ContactComponent from "Common/components/contactComponent";
 
 class Header extends Component {
@@ -95,9 +95,9 @@ class Header extends Component {
       <Spring
         to={{
           backgroundColor: isFullScreen ? "#333333ff" : "#33333300",
-          topContainerHeight: isFullScreen
-            ? "calc(100vh + 0px)"
-            : "calc(0vh + 70px)", //Because have to keep a same format even the operator and type of units
+          // topContainerHeight: isFullScreen
+          //   ? "calc(100vh + 0px)"
+          //   : "calc(0vh + 70px)", //Because have to keep a same format even the operator and type of units
 
           userPicTranform: isFullScreen
             ? "translate(calc(100px - 50vw), calc(50vh - 250px)) scale(1)"
@@ -116,7 +116,8 @@ class Header extends Component {
           <div
             style={{
               backgroundColor: springProps.backgroundColor,
-              height: springProps.topContainerHeight
+              height: '100vh'
+              // height: springProps.topContainerHeight
             }}
             className={`${
               isFullScreen ? styles.header_fullscreen : styles.header_normal
@@ -151,7 +152,7 @@ class Header extends Component {
                     style={props}
                     className={styles.header_background_container}
                   >
-                    <HeaderBackground clientX={clientX} clientY={clientY} />
+                    <BackgroundAnimator clientX={clientX} clientY={clientY} />
                   </div>
                 ))
               }
