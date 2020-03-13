@@ -198,8 +198,8 @@ class Header extends Component {
             <Transition
               items={true}
               key={1}
-              from={{ opacity: 0, transform: "translateY(100px)" }}
-              enter={{ opacity: 1, transform: "translateY(0px)" }}
+              from={{ opacity: 0, transform: "translate(calc(100px - 50vw), calc(50vh - 150px)) scale(1)" }}
+              enter={{ opacity: 1, transform: "translate(calc(100px - 50vw), calc(50vh - 250px)) scale(1)" }}
               leave={{ opacity: 0 }}
               config={{ delay: 600 }}
             >
@@ -211,7 +211,7 @@ class Header extends Component {
                       ...props,
                       width: 200,
                       boxShadow: springProps.boxShadow,
-                      transform: springProps.userPicTranform
+                      transform: isFirstTime ? props.transform : springProps.userPicTranform
                     }}
                     src={profilePic}
                     className={`${styles.user_pic} ${
