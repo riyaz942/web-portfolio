@@ -6,18 +6,18 @@ import ContactComponent from "Common/components/contactComponent";
 
 class HeaderDescription extends Component {
   render() {
-    const { showDescription, onClickProject, onClickTimeline, isFirstTime } = this.props;
+    const { showDescription, onClickProject, onClickTimeline, isFirstTime, className } = this.props;
 
     return (
       <Transition
         items={showDescription}
         from={{
           opacity: 0,
-          transform: 'translateY(0px)'
+          transform: 'translate(calc(50vw - 265px), calc(50vh - 0px))'
         }}
         enter={{
           opacity: 1,
-          transform: 'translateY(-100px)'
+          transform: 'translate(calc(50vw - 265px), calc(50vh - 145px))'
         }}
         leave={{
           opacity: 0
@@ -29,7 +29,7 @@ class HeaderDescription extends Component {
           (props => (
             <Div
               style={props}
-              className={styles.user_description_container}
+              className={`${styles.user_description_container} ${className}`}
             >
               <div className={styles.user_description}>
                 Hi, <br />I am <b className={styles.name}>Riyaz Ahmed</b>, and here is a bit about my self just typing out random description to make it a bit longer.

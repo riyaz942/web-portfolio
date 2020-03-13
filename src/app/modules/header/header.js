@@ -31,14 +31,13 @@ class Header extends Component {
   /* -------------------------------------------------- Change page state functions------------------------------------------- */
   showFullScreen = () => {
     const { updateBodyType } = this.props;
-    this.isGoingFullScreen = true
+    this.isGoingFullScreen = true;
     // from header to full screen
     this.setState({
       isFullScreen: true
     });
 
     setTimeout(() => {
-      
       updateBodyType(landingPageBody.NONE);
       this.setState({
         showDescription: true
@@ -47,7 +46,7 @@ class Header extends Component {
   };
 
   hideFullScreen = () => {
-    this.isGoingFullScreen = false
+    this.isGoingFullScreen = false;
     this.setState({ showDescription: false });
 
     setTimeout(() => {
@@ -110,11 +109,9 @@ class Header extends Component {
             ? "calc(100vh + 0px)"
             : "calc(0vh + 70px)", //Because have to keep a same format even the operator and type of units
 
-          containerwidth: isFullScreen ? 500 : 70, // will also work for height
-          userPicWidth: isFullScreen ? 200 : 50,
-          transform: isFullScreen
-            ? "translate(calc(250px - 50vw), calc(50vh - 250px))"
-            : "translate(calc(-40px - 0vw), calc(0vh - -10px))",
+          userPicTranform: isFullScreen
+            ? "translate(calc(100px - 50vw), calc(50vh - 250px)) scale(1)"
+            : "translate(calc(-40px - 0vw), calc(0vh - -10px)) scale(0.25)",
           boxShadow: isFullScreen
             ? "0px 5px 12px 3px rgba(0, 0, 0, 0.35)"
             : "0px 5px 12px 3px rgba(0, 0, 0, 0)",
@@ -144,12 +141,16 @@ class Header extends Component {
               from={{ opacity: 0 }}
               enter={{ opacity: 1 }}
               leave={{ opacity: 0 }}
-              config={isFirstTime ? config.molasses : {
-                mass: 1,
-                tension: 500,
-                fiction: 26
-              }}
-              config={{ delay: this.isGoingFullScreen? 200 : 0 }}
+              config={
+                isFirstTime
+                  ? config.molasses
+                  : {
+                      mass: 1,
+                      tension: 500,
+                      fiction: 26
+                    }
+              }
+              config={{ delay: this.isGoingFullScreen ? 200 : 0 }}
             >
               {showDescription =>
                 showDescription &&
@@ -193,50 +194,41 @@ class Header extends Component {
               className={styles.header_contact_container}
             />
 
-            <Div
-              align
-              style={{
-                width: springProps.containerwidth,
-                height: springProps.containerwidth,
-                transform: springProps.transform
-              }}
-              className={styles.content_container}
+            {/* Only Animates first time when the user image is shown */}
+            <Transition
+              items={true}
+              key={1}
+              from={{ opacity: 0, transform: "translateY(100px)" }}
+              enter={{ opacity: 1, transform: "translateY(0px)" }}
+              leave={{ opacity: 0 }}
+              config={{ delay: 600 }}
             >
-              {/* Only Animates first time when the user image is shown */}
-              <Transition
-                items={true}
-                key={1}
-                from={{ opacity: 0, transform: 'translateY(100px)'}}
-                enter={{ opacity: 1, transform: 'translateY(0px)'}}
-                leave={{ opacity: 0 }}
-                config={{ delay: 600 }}
-              >
-                {value =>
-                  value &&
-                  (props => (
-                    <img
-                      style={{
-                        ...props,
-                        width: springProps.userPicWidth,
-                        boxShadow: springProps.boxShadow
-                      }}
-                      src={profilePic}
-                      className={`${styles.user_pic} ${
-                        !isFullScreen ? styles.user_pic_clickable : ""
-                      }`}
-                      onClick={this.onClickProfilePic}
-                    />
-                  ))
-                }
-              </Transition>
-
-              <HeaderDescription
-                showDescription={showDescription}
-                onClickProject={this.onClickProject}
-                onClickTimeline={this.onClickTimeline}
-                isFirstTime={isFirstTime}
-              />
-            </Div>
+              {value =>
+                value &&
+                (props => (
+                  <img
+                    style={{
+                      ...props,
+                      width: 200,
+                      boxShadow: springProps.boxShadow,
+                      transform: springProps.userPicTranform
+                    }}
+                    src={profilePic}
+                    className={`${styles.user_pic} ${
+                      !isFullScreen ? styles.user_pic_clickable : ""
+                    }`}
+                    onClick={this.onClickProfilePic}
+                  />
+                ))
+              }
+            </Transition>
+            <HeaderDescription
+              showDescription={showDescription}
+              onClickProject={this.onClickProject}
+              onClickTimeline={this.onClickTimeline}
+              isFirstTime={isFirstTime}
+              className={styles.header_description}
+            />
           </div>
         )}
       </Spring>

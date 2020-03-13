@@ -53,17 +53,16 @@ $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
     }
   }
 
-  .content_container {
+  .user_pic {
     position: absolute;
     right: 0;
+    transform-origin: top right;
 
-    .user_pic {
-      border-radius: 50%;
-      z-index: 1;
-    }
-    .user_pic_clickable {
-      @include on_click_button;
-    }
+    border-radius: 50%;
+    z-index: 1;
+  }
+  .user_pic_clickable {
+    @include on_click_button;
   }
 }
 
@@ -101,4 +100,10 @@ $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
   bottom: 0;
   overflow: hidden;
   transform: scale(1.1);
+}
+
+
+.header_description {
+  max-width: 350px;
+  position: absolute;
 }
