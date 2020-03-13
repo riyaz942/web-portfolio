@@ -68,12 +68,7 @@ class Header extends Component {
     const { isFullScreen } = this.state;
     const { updateBodyType } = this.props;
 
-    if (isFullScreen) {
-      setTimeout(() => {
-        updateBodyType(landingPageBody.PROJECT);
-      }, 600);
-    } else updateBodyType(landingPageBody.PROJECT);
-
+    updateBodyType(landingPageBody.PROJECT);
     if (isFullScreen) this.hideFullScreen();
   };
 
@@ -82,12 +77,7 @@ class Header extends Component {
     const { isFullScreen } = this.state;
     const { updateBodyType } = this.props;
 
-    if (isFullScreen) {
-      setTimeout(() => {
-        updateBodyType(landingPageBody.TIMELINE);
-      }, 600);
-    } else updateBodyType(landingPageBody.TIMELINE);
-
+    updateBodyType(landingPageBody.TIMELINE);
     if (isFullScreen) this.hideFullScreen();
   };
 
