@@ -29,57 +29,11 @@ class Header extends Component {
   }
 
   /* -------------------------------------------------- Change page state functions------------------------------------------- */
-  showFullScreen = () => {
-    const { updateBodyType } = this.props;
-    this.isGoingFullScreen = true;
-    // from header to full screen
-    this.setState({
-      isFullScreen: true
-    });
-
-    setTimeout(() => {
-      updateBodyType(landingPageBody.NONE);
-      this.setState({
-        showDescription: true
-      });
-    }, 500);
-  };
-
-  hideFullScreen = () => {
-    this.isGoingFullScreen = false;
-    this.setState({ showDescription: false });
-
-    setTimeout(() => {
-      this.setState({
-        isFullScreen: false
-      });
-    }, 600);
-  };
+ 
 
   /* --------------------------------------------------Header click Functions------------------------------------------- */
 
-  onClickProfilePic = () => {
-    const { isFullScreen } = this.state;
-    if (!isFullScreen) this.showFullScreen();
-  };
-
-  /* ------------------------------------------------------- */
-  onClickProject = () => {
-    const { isFullScreen } = this.state;
-    const { updateBodyType } = this.props;
-
-    updateBodyType(landingPageBody.PROJECT);
-    if (isFullScreen) this.hideFullScreen();
-  };
-
-  /* ------------------------------------------------------- */
-  onClickTimeline = () => {
-    const { isFullScreen } = this.state;
-    const { updateBodyType } = this.props;
-
-    updateBodyType(landingPageBody.TIMELINE);
-    if (isFullScreen) this.hideFullScreen();
-  };
+ 
 
   render() {
     const {
@@ -200,33 +154,6 @@ class Header extends Component {
               className={styles.header_contact_container}
             />
 
-            {/* Only Animates first time when the user image is shown */}
-            <Transition
-              items={true}
-              key={1}
-              from={{ opacity: 0, transform: "translate(calc(100px - 50vw), calc(50vh - 100px)) scale(1)" }}
-              enter={{ opacity: 1, transform: "translate(calc(100px - 50vw), calc(50vh - 250px)) scale(1)" }}
-              leave={{ opacity: 0 }}
-              config={{ delay: 600 }}
-            >
-              {value =>
-                value &&
-                (props => (
-                  <img
-                    style={{
-                      opacity: props.opacity,
-                      boxShadow: springProps.boxShadow,
-                      transform: isFirstTime ? props.transform : springProps.userPicTranform
-                    }}
-                    src={profilePic}
-                    className={`${styles.user_pic} ${
-                      !isFullScreen ? styles.user_pic_clickable : ""
-                      }`}
-                    onClick={this.onClickProfilePic}
-                  />
-                ))
-              }
-            </Transition>
             <HeaderDescription
               showDescription={showDescription}
               onClickProject={this.onClickProject}

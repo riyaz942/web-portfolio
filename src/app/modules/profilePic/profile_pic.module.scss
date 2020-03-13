@@ -1,0 +1,15 @@
+@import "~Styles/colors.module";
+@import "~Styles/mixins.module";
+
+.user_pic {
+  width: 200px;
+  position: absolute;
+  right: 0;
+  transform-origin: top right;
+
+  border-radius: 50%;
+  z-index: 1;
+}
+.user_pic_clickable {
+  @include on_click_button;
+}

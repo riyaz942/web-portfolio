@@ -54,19 +54,6 @@ $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
       background: white;
     }
   }
-
-  .user_pic {
-    width: 200px;
-    position: absolute;
-    right: 0;
-    transform-origin: top right;
-
-    border-radius: 50%;
-    z-index: 1;
-  }
-  .user_pic_clickable {
-    @include on_click_button;
-  }
 }
 
 //--------------------------------------------------------normal header state

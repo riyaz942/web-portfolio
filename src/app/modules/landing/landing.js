@@ -7,10 +7,18 @@ import { landingPageBody } from "../../constants/landingConstants";
 import Projects from "../projects/projects";
 import Div from "Common/components/div";
 import { Transition } from "react-spring/renderprops";
+import ProfilePic from "../profilePic";
 
 export default class Landing extends Component {
+  isGoingFullScreen = false;
   state = {
     bodyType: landingPageBody.NONE,
+
+    isFullScreen: true,
+    showDescription: true,
+    clientX: 0,
+    clientY: 0,
+    isFirstTime: true
   };
 
   constructor(props) {
@@ -19,6 +27,72 @@ export default class Landing extends Component {
     this.previousBodyType = landingPageBody.NONE;
   }
 
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({ isFirstTime: false });
+
+      // setInterval(()=> {
+      //   const { isFullScreen } = this.state;
+
+      //   if (isFullScreen) {
+      //     this.hideFullScreen();
+      //     this.updateBodyType(Math.random() > 0.5 ? landingPageBody.TIMELINE: landingPageBody.PROJECT);
+      //   }
+
+      // }, 5000);
+    }, 1500);
+  }
+
+//-------------------------------------------Header Logic-------------------------------------------
+
+  onClickProfilePic = () => {
+    const { isFullScreen } = this.state;
+    if (!isFullScreen) this.showFullScreen();
+  };
+
+  onClickProject = () => {
+    const { isFullScreen } = this.state;
+
+    this.updateBodyType(landingPageBody.PROJECT);
+    if (isFullScreen) this.hideFullScreen();
+  };
+
+  onClickTimeline = () => {
+    const { isFullScreen } = this.state;
+
+    this.updateBodyType(landingPageBody.TIMELINE);
+    if (isFullScreen) this.hideFullScreen();
+  };
+
+  //-----------------------------ShowFullScreen
+  showFullScreen = () => {
+    this.isGoingFullScreen = true;
+    // from header to full screen
+    this.setState({
+      isFullScreen: true
+    });
+
+    setTimeout(() => {
+      this.updateBodyType(landingPageBody.NONE);
+      this.setState({
+        showDescription: true
+      });
+    }, 500);
+  };
+
+  //-----------------------------HideFullScreen
+  hideFullScreen = () => {
+    this.isGoingFullScreen = false;
+    this.setState({ showDescription: false });
+
+    setTimeout(() => {
+      this.setState({
+        isFullScreen: false
+      });
+    }, 600);
+  };
+
+  //-------------------------------------------Body Logic-------------------------------------------
   updateBodyType = bodyType => {
     this.previousBodyType = this.state.bodyType;
     this.setState({ bodyType });
@@ -40,7 +114,7 @@ export default class Landing extends Component {
   }
 
   render() {
-    const { bodyType } = this.state;
+    const { bodyType, isFirstTime, isFullScreen } = this.state;
     let fromAnimation, enterAnimation, leaveAnimation;
 
     if (this.previousBodyType == landingPageBody.NONE) {
@@ -87,9 +161,12 @@ export default class Landing extends Component {
 
     return (
       <Div className={styles.landing_container}>
-        <React.Fragment>
-          <Header bodyType={bodyType} updateBodyType={this.updateBodyType} />
-
+          {/* <Header bodyType={bodyType} updateBodyType={this.updateBodyType} /> */}
+          <ProfilePic 
+            isFirstTime={isFirstTime}
+            isFullScreen={isFullScreen}
+            onClickProfilePic={this.onClickProfilePic}
+          />
           <Div fillParent className={styles.body_container}>
             {
               landingPageBody.NONE != bodyType && (
@@ -104,7 +181,6 @@ export default class Landing extends Component {
               )
             }
           </Div>
-        </React.Fragment>
       </Div>
     );
   }
