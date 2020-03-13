@@ -111,48 +111,7 @@ class Header extends Component {
               }
             </Transition>
 
-            <Spring
-              to={{
-                // Header underLine animation
-                transformUnderline: bodyType == landingPageBody.TIMELINE ? 'translateX(6px)' : 'translateX(82px)',
-                underlineWidth: bodyType == landingPageBody.TIMELINE ? 62 : 37
-
-              }}>
-              {
-                springHeaderActionProps => (
-                  <Div className={`${styles.header_link_container}`}>
-                    <Div row className={styles.bodytype_container}>
-                      <div
-                        className={styles.header_link_button}
-                        onClick={this.onClickTimeline}
-                      >
-                        Timeline
-                      </div>
-                      <div
-                        className={styles.header_link_button}
-                        onClick={this.onClickProject}
-                      >
-                        Tech
-                      </div>
-                    </Div>
-                    <div
-                      style={{
-                        transform: springHeaderActionProps.transformUnderline,
-                        width: springHeaderActionProps.underlineWidth
-                      }}
-                      className={styles.underline}
-                    ></div>
-                  </Div>
-                )
-              }
-            </Spring>
-
-
-            <ContactComponent
-              isWhite
-              className={styles.header_contact_container}
-            />
-
+            
           </div>
         )}
       </Spring>

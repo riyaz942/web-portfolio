@@ -1,0 +1,36 @@
+
+.header_container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  z-index: 1;
+  padding: 0px 130px 0px 66px;
+  
+  .header_link_container {    
+    .bodytype_container {
+      //padding: 0px 6px;
+  
+      .header_link_button {
+        color: white;
+        font-size: 16px;
+        transition: opacity 0.6s ease;
+        &:hover {
+          cursor: pointer;
+          opacity: 0.4;
+        }
+      }
+  
+      .header_link_button:nth-child(2) {
+        margin-left: 16px;
+      }
+    }
+  
+    .underline {
+      height: 1px;
+      width: 62px;
+      background: white;
+    }
+  }
+}

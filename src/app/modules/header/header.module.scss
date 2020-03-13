@@ -15,45 +15,6 @@ $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
   top: 0;
   overflow: hidden;
 
-  .header_contact_container {
-    position: absolute;
-    opacity: 1;
-    left: 66px;
-    top: 26px;
-    transform: translateY(0px);
-  }
-
-  .header_link_container {
-    position: absolute;
-    opacity: 1;
-    right: 130px;
-    top: 26px;
-    transform: translateY(0px);
-    
-    .bodytype_container {
-      padding: 0px 6px;
-
-      .header_link_button {
-        color: white;
-        font-size: 16px;
-        transition: opacity 0.6s ease;
-        &:hover {
-          cursor: pointer;
-          opacity: 0.4;
-        }
-      }
-
-      .header_link_button:nth-child(2) {
-        margin-left: 16px;
-      }
-    }
-
-    .underline {
-      height: 1px;
-      width: 62px;
-      background: white;
-    }
-  }
 }
 
 //--------------------------------------------------------normal header state

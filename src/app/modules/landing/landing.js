@@ -9,6 +9,7 @@ import Div from "Common/components/div";
 import { Transition } from "react-spring/renderprops";
 import ProfilePic from "Modules/aboutComponents/profilePic";
 import HeaderDescription from "Modules/aboutComponents/headerDescription";
+import HeaderLinks from 'Modules/aboutComponents/headerLinks';
 
 export default class Landing extends Component {
   isGoingFullScreen = false;
@@ -175,6 +176,13 @@ export default class Landing extends Component {
           isFirstTime={isFirstTime}
           isFullScreen={isFullScreen}
           onClickProfilePic={this.onClickProfilePic}
+        />
+
+        <HeaderLinks
+          isFullScreen={isFullScreen}
+          bodyType={bodyType}
+          onClickTimeline={this.onClickTimeline}
+          onClickProject={this.onClickProject}
         />
 
         <Div fillParent className={styles.body_container}>
