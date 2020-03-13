@@ -157,7 +157,7 @@ export default class Landing extends Component {
       <Div
         className={styles.landing_container}
         onMouseMove={
-          showDescription
+          allowMouseHover
             ? ({ clientX: x, clientY: y }) =>
               this.setState({ clientX: x, clientY: y })
             : null
