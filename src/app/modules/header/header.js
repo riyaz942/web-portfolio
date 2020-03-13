@@ -4,7 +4,6 @@ import profilePic from "Images/profile-pic.jpeg";
 import { landingPageBody } from "../../constants/landingConstants";
 import Div from "Common/components/div";
 import { Spring, Transition, config } from "react-spring/renderprops";
-import HeaderDescription from "./headerDescription";
 import BackgroundAnimator from "./backgroundAnimator";
 import ContactComponent from "Common/components/contactComponent";
 
@@ -154,13 +153,6 @@ class Header extends Component {
               className={styles.header_contact_container}
             />
 
-            <HeaderDescription
-              showDescription={showDescription}
-              onClickProject={this.onClickProject}
-              onClickTimeline={this.onClickTimeline}
-              isFirstTime={isFirstTime}
-              className={styles.header_description}
-            />
           </div>
         )}
       </Spring>

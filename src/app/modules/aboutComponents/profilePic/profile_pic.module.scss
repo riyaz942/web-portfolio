@@ -8,7 +8,7 @@
   transform-origin: top right;
 
   border-radius: 50%;
-  z-index: 1;
+  z-index: 2;
 }
 .user_pic_clickable {
   @include on_click_button;

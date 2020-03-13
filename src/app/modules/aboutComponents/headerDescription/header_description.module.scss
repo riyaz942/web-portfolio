@@ -5,6 +5,9 @@
   border-radius: 35px;
   box-shadow: 0px 5px 12px 3px rgba(0, 0, 0, 0.35);
   background-color: rgba(#ffffff, 0.87);
+  max-width: 350px;
+  position: absolute;
+  z-index: 1;
 
   color: $color-dark;
   font-size: 13px;

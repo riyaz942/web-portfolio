@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import styles from "./landing.scss";
 import Header from "../header/header";
 import Timeline from "../timeline/timeline";
@@ -7,7 +7,8 @@ import { landingPageBody } from "../../constants/landingConstants";
 import Projects from "../projects/projects";
 import Div from "Common/components/div";
 import { Transition } from "react-spring/renderprops";
-import ProfilePic from "../profilePic";
+import ProfilePic from "Modules/aboutComponents/profilePic";
+import HeaderDescription from "Modules/aboutComponents/headerDescription";
 
 export default class Landing extends Component {
   isGoingFullScreen = false;
@@ -43,7 +44,7 @@ export default class Landing extends Component {
     }, 1500);
   }
 
-//-------------------------------------------Header Logic-------------------------------------------
+  //-------------------------------------------Header Logic-------------------------------------------
 
   onClickProfilePic = () => {
     const { isFullScreen } = this.state;
@@ -114,7 +115,7 @@ export default class Landing extends Component {
   }
 
   render() {
-    const { bodyType, isFirstTime, isFullScreen } = this.state;
+    const { bodyType, isFirstTime, isFullScreen, showDescription } = this.state;
     let fromAnimation, enterAnimation, leaveAnimation;
 
     if (this.previousBodyType == landingPageBody.NONE) {
@@ -161,26 +162,35 @@ export default class Landing extends Component {
 
     return (
       <Div className={styles.landing_container}>
-          {/* <Header bodyType={bodyType} updateBodyType={this.updateBodyType} /> */}
-          <ProfilePic 
-            isFirstTime={isFirstTime}
-            isFullScreen={isFullScreen}
-            onClickProfilePic={this.onClickProfilePic}
-          />
-          <Div fillParent className={styles.body_container}>
-            {
-              landingPageBody.NONE != bodyType && (
-                <Transition
-                  items={bodyType}
-                  from={fromAnimation}
-                  enter={enterAnimation}
-                  leave={leaveAnimation}
-                >
-                  {bodyType => this.getBodyContent(bodyType)}
-                </Transition>
-              )
-            }
-          </Div>
+        {/* <Header bodyType={bodyType} updateBodyType={this.updateBodyType} /> */}
+
+        <ProfilePic
+          isFirstTime={isFirstTime}
+          isFullScreen={isFullScreen}
+          onClickProfilePic={this.onClickProfilePic}
+        />
+        <HeaderDescription
+          showDescription={showDescription}
+          onClickProject={this.onClickProject}
+          onClickTimeline={this.onClickTimeline}
+          isFirstTime={isFirstTime}
+          className={styles.header_description}
+        />
+
+        <Div fillParent className={styles.body_container}>
+          {
+            landingPageBody.NONE != bodyType && (
+              <Transition
+                items={bodyType}
+                from={fromAnimation}
+                enter={enterAnimation}
+                leave={leaveAnimation}
+              >
+                {bodyType => this.getBodyContent(bodyType)}
+              </Transition>
+            )
+          }
+        </Div>
       </Div>
     );
   }
