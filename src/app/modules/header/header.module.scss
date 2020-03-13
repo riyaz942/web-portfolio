@@ -4,17 +4,18 @@
 $transition-time: 1s;
 $transition-type: cubic-bezier(0.1, 0.82, 0.25, 1);
 // cubic-bezier(0.550, 0.055, 0.675, 0.190) // need to try
-
 //-----------------------------------------------------------prefixed header state
 .header_container {
   // align-items: center;
-  z-index: 10;
   position: absolute;
   left: 0;
   right: 0;
   top: 0;
   overflow: hidden;
-
+  height: 100vh;
+  transform-origin: top;
+  background: $color-dark;
+  z-index: 1;
 }
 
 //--------------------------------------------------------normal header state

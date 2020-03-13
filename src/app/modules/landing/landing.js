@@ -12,11 +12,10 @@ import HeaderDescription from "Modules/aboutComponents/headerDescription";
 import HeaderLinks from 'Modules/aboutComponents/headerLinks';
 
 export default class Landing extends Component {
-  isGoingFullScreen = false;
   state = {
     bodyType: landingPageBody.NONE,
-
     isFullScreen: true,
+    allowMouseHover: false,
     showDescription: true,
     clientX: 0,
     clientY: 0,
@@ -31,18 +30,8 @@ export default class Landing extends Component {
 
   componentDidMount() {
     setTimeout(() => {
-      this.setState({ isFirstTime: false });
-    }, 1500);
-
-      //     setInterval(()=> {
-      //   const { isFullScreen } = this.state;
-
-      //   if (isFullScreen) {
-      //     this.hideFullScreen();
-      //     this.updateBodyType(Math.random() > 0.5 ? landingPageBody.TIMELINE: landingPageBody.PROJECT);
-      //   }
-
-      // }, 5000);
+      this.setState({ isFirstTime: false, allowMouseHover: true });
+    }, 1400);
   }
 
   //-------------------------------------------Header Logic-------------------------------------------
@@ -68,7 +57,6 @@ export default class Landing extends Component {
 
   //-----------------------------ShowFullScreen
   showFullScreen = () => {
-    this.isGoingFullScreen = true;
     // from header to full screen
     this.setState({
       isFullScreen: true
@@ -79,13 +67,17 @@ export default class Landing extends Component {
       this.setState({
         showDescription: true
       });
+
+      setTimeout(()=> {
+        this.setState({allowMouseHover: true})
+      }, 500);
+
     }, 500);
   };
 
   //-----------------------------HideFullScreen
   hideFullScreen = () => {
-    this.isGoingFullScreen = false;
-    this.setState({ showDescription: false });
+    this.setState({ showDescription: false, allowMouseHover: false });
 
     setTimeout(() => {
       this.setState({
@@ -116,7 +108,7 @@ export default class Landing extends Component {
   }
 
   render() {
-    const { bodyType, isFirstTime, isFullScreen, showDescription } = this.state;
+    const { bodyType, isFirstTime, isFullScreen, showDescription, clientX, clientY, allowMouseHover } = this.state;
     let fromAnimation, enterAnimation, leaveAnimation;
 
     if (this.previousBodyType == landingPageBody.NONE) {
@@ -162,29 +154,14 @@ export default class Landing extends Component {
     }
 
     return (
-      <Div className={styles.landing_container}>
-        {/* <Header bodyType={bodyType} updateBodyType={this.updateBodyType} /> */}
-
-        <HeaderDescription
-          showDescription={showDescription}
-          onClickProject={this.onClickProject}
-          onClickTimeline={this.onClickTimeline}
-          isFirstTime={isFirstTime}
-          className={styles.header_description}
-        />
-        <ProfilePic
-          isFirstTime={isFirstTime}
-          isFullScreen={isFullScreen}
-          onClickProfilePic={this.onClickProfilePic}
-        />
-
-        <HeaderLinks
-          isFullScreen={isFullScreen}
-          bodyType={bodyType}
-          onClickTimeline={this.onClickTimeline}
-          onClickProject={this.onClickProject}
-        />
-
+      <Div
+        className={styles.landing_container}
+        onMouseMove={
+          showDescription
+            ? ({ clientX: x, clientY: y }) =>
+              this.setState({ clientX: x, clientY: y })
+            : null
+        }>
         <Div fillParent className={styles.body_container}>
           {
             landingPageBody.NONE != bodyType && (
@@ -199,6 +176,36 @@ export default class Landing extends Component {
             )
           }
         </Div>
+
+        <Header
+          isFirstTime={isFirstTime}
+          isFullScreen={isFullScreen}
+          showDescription={showDescription}
+          clientX={clientX}
+          clientY={clientY}
+        />
+
+        <HeaderDescription
+          showDescription={showDescription}
+          onClickProject={this.onClickProject}
+          onClickTimeline={this.onClickTimeline}
+          isFirstTime={isFirstTime}
+          className={styles.header_description}
+        />
+
+        <ProfilePic
+          isFirstTime={isFirstTime}
+          isFullScreen={isFullScreen}
+          onClickProfilePic={this.onClickProfilePic}
+        />
+
+        <HeaderLinks
+          isFullScreen={isFullScreen}
+          bodyType={bodyType}
+          onClickTimeline={this.onClickTimeline}
+          onClickProject={this.onClickProject}
+        />
+
       </Div>
     );
   }
