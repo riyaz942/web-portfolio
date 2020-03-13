@@ -45,16 +45,16 @@ export default class Landing extends Component {
 
     if (this.previousBodyType == landingPageBody.NONE) {
       fromAnimation = {
-        opacity: 0,
-        transform: 'translate(0px, 100px)',
+        opacity: 1,
+        transform: 'translate(0px, 0px)',
       };
       enterAnimation = {
         opacity: 1,
         transform: 'translate(0px, 0px)',
       };
       leaveAnimation = {
-        opacity: 0,
-        transform: 'translate(0px, -100px)',
+        opacity: 1,
+        transform: 'translate(0px, 0px)',
       };
     }
     else if (bodyType == landingPageBody.TIMELINE) {
@@ -98,9 +98,6 @@ export default class Landing extends Component {
                   from={fromAnimation}
                   enter={enterAnimation}
                   leave={leaveAnimation}
-                  config={{
-                    delay: this.previousBodyType? 500 : 0
-                  }}
                 >
                   {bodyType => this.getBodyContent(bodyType)}
                 </Transition>

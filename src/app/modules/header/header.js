@@ -53,7 +53,7 @@ class Header extends Component {
       this.setState({
         isFullScreen: false
       });
-    }, 500);
+    }, 600);
   };
 
   /* --------------------------------------------------Header click Functions------------------------------------------- */
