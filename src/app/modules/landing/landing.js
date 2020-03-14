@@ -58,18 +58,16 @@ export default class Landing extends Component {
   //-----------------------------ShowFullScreen
   showFullScreen = () => {
     // from header to full screen
-    this.setState({
-      isFullScreen: true
-    });
+    this.setState({isFullScreen: true});
+    this.updateBodyType(landingPageBody.NONE);
 
     setTimeout(() => {
-      this.updateBodyType(landingPageBody.NONE);
       this.setState({
         showDescription: true
       });
 
-      setTimeout(()=> {
-        this.setState({allowMouseHover: true})
+      setTimeout(() => {
+        this.setState({ allowMouseHover: true })
       }, 500);
 
     }, 500);
@@ -111,7 +109,7 @@ export default class Landing extends Component {
     const { bodyType, isFirstTime, isFullScreen, showDescription, clientX, clientY, allowMouseHover } = this.state;
     let fromAnimation, enterAnimation, leaveAnimation;
 
-    if (this.previousBodyType == landingPageBody.NONE) {
+    if (this.previousBodyType == landingPageBody.NONE || bodyType == landingPageBody.NONE) {
       fromAnimation = {
         opacity: 1,
         transform: 'translate(0px, 100px)',
@@ -121,8 +119,8 @@ export default class Landing extends Component {
         transform: 'translate(0px, 0px)',
       };
       leaveAnimation = {
-        opacity: 1,
-        transform: 'translate(0px, -100px)',
+        opacity: 0,
+        transform: 'translate(0px, 100px)',
       };
     }
     else if (bodyType == landingPageBody.TIMELINE) {
@@ -163,21 +161,18 @@ export default class Landing extends Component {
             : null
         }>
         <Div fillParent className={styles.body_container}>
-          {
-            landingPageBody.NONE != bodyType && (
-              <Transition
-                items={bodyType}
-                from={fromAnimation}
-                enter={enterAnimation}
-                leave={leaveAnimation}
-                config={{
-                  delay: this.previousBodyType == landingPageBody.NONE ? 500 : 0
-                }}
-              >
-                {bodyType => this.getBodyContent(bodyType)}
-              </Transition>
-            )
-          }
+          <Transition
+            items={bodyType}
+            key={bodyType => bodyType}
+            from={fromAnimation}
+            enter={enterAnimation}
+            leave={leaveAnimation}
+            config={{
+              delay: this.previousBodyType == landingPageBody.NONE ? 500 : 0
+            }}
+          >
+            {bodyType => this.getBodyContent(bodyType)}
+          </Transition>
         </Div>
 
         <Header
