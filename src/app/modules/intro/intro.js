@@ -6,8 +6,12 @@ import { CookieService } from "Common/utils/cookieService";
 export default class Intro extends Component {
   // Hi There,
   // Welcome, just so you know
-  // There is actually no point, to this this whole scentence
-  // Just wanted to show of this animation :p
+  // There is actually no point, to this this whole sentence
+  // Just wanted to show of this animation.
+  // I really didn't thought
+  // through the message
+  // :P  
+
   secondDivMargin = 102; // fallback
   state = {
     divPositionX: 96, // fall back
