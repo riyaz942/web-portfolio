@@ -37,7 +37,7 @@ export const projectsListValue = {
       },
       {
         type: 'text',
-        value: 'In Bijli I mostly worked on React and Electron, and worked with Laravel for one feature.<br/> Took the lead for the web and electron sprints, for a period ',
+        value: 'In Bijli I mostly worked on React and Electron, and worked with Laravel for one feature.<br/>',
       },
       {
         type: 'points',
