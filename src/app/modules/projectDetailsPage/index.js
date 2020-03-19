@@ -46,8 +46,12 @@ const getBackgroundAnimation = position => {
   };
 };
 
-const onClickClose = (history) => {
-  history.replace('/');
+const onClickClose = (history, position) => {
+
+  if (position)
+    history.goBack();
+  else 
+    history.replace('/');
 }
 
 const ProjectDetailsPage = ({
@@ -159,7 +163,7 @@ const ProjectDetailsPage = ({
            <img
             src={crossIcon}
             className={styles.cross_img}
-            onClick={()=>onClickClose(history)}
+            onClick={()=>onClickClose(history, imgPosition)}
            />
           </Div>
           <Div animate className={styles.right_container}>
