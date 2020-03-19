@@ -39,6 +39,24 @@
         width: 120px;
       }
 
+      &:hover {
+        .title_container {
+
+          .title {
+            opacity: 0;
+          }
+
+          .description {
+            opacity: 0;
+          }
+
+          .overlay_view_project {
+            opacity: 1;
+            transform: translateY(0px);
+          }
+        }
+      }
+
       .title_container {
         height: 100px;
         padding: 0px 18px 18px 18px;
@@ -48,12 +66,25 @@
 
         .title {
           font-size: 25px;
+          opacity: 1;
+          transition: opacity 0.5s $transition-fast-in-slow-out;
         }
 
         .description {
           margin-top: 6px;
           font-size: 12px;
           text-transform: capitalize;
+          opacity: 1;
+          transition: opacity 0.5s $transition-fast-in-slow-out;
+        }
+
+        .overlay_view_project {
+          position: absolute;
+          font-size: 18px;
+          align-self: center;
+          transform: translateY(45px);
+          opacity: 0;
+          transition: opacity 0.5s $transition-fast-in-slow-out, transform 0.5s $transition-fast-in-slow-out;
         }
       }
 
