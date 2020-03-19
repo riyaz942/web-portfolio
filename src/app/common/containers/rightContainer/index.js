@@ -122,37 +122,32 @@ class RightContainer extends Component {
     const { item } = this.props;
 
     const selectedIndex =
-      projects[item.id].findIndex(
-        slide => slide.state == "CENTERED"
-      ) + 1; // move to next slide
+      projects[item.id].findIndex(slide => slide.state == "CENTERED") + 1; // move to next slide
 
     if (selectedIndex < projects[item.id].length) {
-      const updatedSlide = map(
-        projects[item.id],
-        (slide, index) => {
-          if (index < selectedIndex - 1) {
-            return {
-              ...slide,
-              state: "GONE"
-            };
-          } else if (index == selectedIndex - 1) {
-            return {
-              ...slide,
-              state: "BEHIND"
-            };
-          } else if (index == selectedIndex) {
-            return {
-              ...slide,
-              state: "CENTERED"
-            };
-          } else {
-            return {
-              ...slide,
-              state: "LIST"
-            };
-          }
+      const updatedSlide = map(projects[item.id], (slide, index) => {
+        if (index < selectedIndex - 1) {
+          return {
+            ...slide,
+            state: "GONE"
+          };
+        } else if (index == selectedIndex - 1) {
+          return {
+            ...slide,
+            state: "BEHIND"
+          };
+        } else if (index == selectedIndex) {
+          return {
+            ...slide,
+            state: "CENTERED"
+          };
+        } else {
+          return {
+            ...slide,
+            state: "LIST"
+          };
         }
-      );
+      });
 
       this.setState({
         projects: {
@@ -168,37 +163,32 @@ class RightContainer extends Component {
     const { item } = this.props;
 
     const selectedIndex =
-      projects[item.id].findIndex(
-        slide => slide.state == "CENTERED"
-      ) - 1; // move to next slide
+      projects[item.id].findIndex(slide => slide.state == "CENTERED") - 1; // move to next slide
 
     if (selectedIndex >= 0) {
-      const updatedSlide = map(
-        projects[item.id],
-        (slide, index) => {
-          if (index < selectedIndex - 1) {
-            return {
-              ...slide,
-              state: "GONE"
-            };
-          } else if (index == selectedIndex - 1) {
-            return {
-              ...slide,
-              state: "BEHIND"
-            };
-          } else if (index == selectedIndex) {
-            return {
-              ...slide,
-              state: "CENTERED"
-            };
-          } else {
-            return {
-              ...slide,
-              state: "LIST"
-            };
-          }
+      const updatedSlide = map(projects[item.id], (slide, index) => {
+        if (index < selectedIndex - 1) {
+          return {
+            ...slide,
+            state: "GONE"
+          };
+        } else if (index == selectedIndex - 1) {
+          return {
+            ...slide,
+            state: "BEHIND"
+          };
+        } else if (index == selectedIndex) {
+          return {
+            ...slide,
+            state: "CENTERED"
+          };
+        } else {
+          return {
+            ...slide,
+            state: "LIST"
+          };
         }
-      );
+      });
 
       this.setState({
         projects: {
@@ -223,9 +213,7 @@ class RightContainer extends Component {
     const { projects } = this.state;
     const { item } = this.props;
     const selectedIndex = projects[item.id]
-      ? projects[item.id].findIndex(
-          slide => slide.state == "CENTERED"
-        )
+      ? projects[item.id].findIndex(slide => slide.state == "CENTERED")
       : 0;
 
     const isPrevButtonClickable = selectedIndex > 0;
@@ -236,64 +224,49 @@ class RightContainer extends Component {
     return (
       <Div flex className={styles.right_container}>
         <Div className={styles.slide_container}>
-          <Transition
-            items={item}
-            keys={item => item.id}
-            from={{ opacity: 0 }}
-            enter={{ opacity: 1 }}
-            leave={{ opacity: 0 }}
+          <Div
+            row
+            align="end"
+            className={styles.slide_inner_container}
           >
-            {item => props => (
-              <Div
-                style={props}
-                row
-                align="end"
-                className={styles.slide_inner_container}
+            {map(projects[item.id], (slide, index) => (
+              <Spring
+                key={slide.slug}
+                to={this.getPropertyBasedOnState(slide.state)}
               >
-                {map(projects[item.id], (slide, index) => (
-                  <Spring
-                    key={slide.slug}
-                    to={this.getPropertyBasedOnState(slide.state)}>
-                    {props => (
-                      <Div
-                        onClick={() => this.onClickProject(slide)}
-                        style={{ ...props, zIndex: index }}
-                        className={`${styles.slide_items} ${
-                          slide.state == "CENTERED" ? styles.is_selected : ""
-                        }`}
-                      >
-                        <Div fillParent align justify>
-                          <img
-                            ref={slide.ref}
-                            src={slide.icon}
-                            className={styles.image}
-                          />
-                        </Div>
+                {props => (
+                  <Div
+                    onClick={() => this.onClickProject(slide)}
+                    style={{ ...props, zIndex: index }}
+                    className={`${styles.slide_items} ${
+                      slide.state == "CENTERED" ? styles.is_selected : ""
+                    }`}
+                  >
+                    <Div fillParent align justify>
+                      <img
+                        ref={slide.ref}
+                        src={slide.icon}
+                        className={styles.image}
+                      />
+                    </Div>
 
-                        <Div
-                          alignSelf="stretch"
-                          justify="start"
-                          align="end"
-                          className={styles.title_container}
-                        >
-                          <div className={styles.title}>{slide.name}</div>
-                          <div className={styles.description}>
-                            {slide.tech.join(" | ")}
-                          </div>
-                        </Div>
-                        <div
-                          className={styles.bottom_background_gradient}
-                        ></div>
-                        <Div justify align className={styles.view_overlay}>
-                          View Project
-                        </Div>
-                      </Div>
-                    )}
-                  </Spring>
-                ))}
-              </Div>
-            )}
-          </Transition>
+                    <Div
+                      alignSelf="stretch"
+                      justify="start"
+                      align="end"
+                      className={styles.title_container}
+                    >
+                      <div className={styles.title}>{slide.name}</div>
+                      <div className={styles.description}>
+                        {slide.tech.join(" | ")}
+                      </div>
+                    </Div>
+                    <div className={styles.bottom_background_gradient}></div>
+                  </Div>
+                )}
+              </Spring>
+            ))}
+          </Div>
         </Div>
 
         <Div row>
@@ -322,4 +295,4 @@ const mapDispathToProps = dispatch => {
 export default connect(
   null,
   mapDispathToProps
-)(memo(withRouter((RightContainer))));
+)(memo(withRouter(RightContainer)));
