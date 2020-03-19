@@ -205,12 +205,11 @@ class RightContainer extends Component {
       setProjectPosition,
       history: { push }
     } = this.props;
-    debugger
 
     const imgRect = project.imgRef.current.getBoundingClientRect();
     const slideRect = project.slideRef.current.getBoundingClientRect()
 
-    setProjectPosition(imgRect);
+    setProjectPosition({ img: imgRect, slide: slideRect });
     push(`/project/${project.slug}`);
   };
 

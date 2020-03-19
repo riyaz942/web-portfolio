@@ -35,7 +35,7 @@ const getBackgroundAnimation = position => {
         height: `calc(0vh + ${position.height}px)`,
         width: `calc(0vw + ${position.width}px)`,
         transform: `translate(${position.left}px, ${position.top}px)`,
-        borderRadius: 100
+        borderRadius: 12,
       }
     };
   }
@@ -61,8 +61,8 @@ const ProjectDetailsPage = ({
   const projectId = (match && match.params) ? match.params.projectSlug : '';
 
   const [project] = useState(projectsListValue[projectId] || {} );
-  const [position] = useState(projectReducer.position);
-  // console.log(project);
+  const { imgPosition, slidePosition } =projectReducer;
+
   //-------------------------------------------ScrollAnimation
   const imageWidth = 150;
   const imageRef = useRef(null);
@@ -105,9 +105,9 @@ const ProjectDetailsPage = ({
   });
 
   const containerOpacityAnimation = useSpring({
-    from: { opacity: !isEmpty(position)? 0 : 1 },
+    from: { opacity: !isEmpty(imgPosition)? 0 : 1 },
     opacity: 1,
-    delay: !isEmpty(position)? 500: 0,
+    delay: !isEmpty(imgPosition)? 500: 0,
     onStart: () => {
       if (componentReady) {
         setShowContent(true);
@@ -118,17 +118,17 @@ const ProjectDetailsPage = ({
 
   const imageTransitionAnimation = useSpring({
     to: animateTo,
-    from: position
+    from: imgPosition
       ? {
-        height: position.height,
-        width: position.width,
-        transform: `translate(${position.left}px, ${position.top}px)`
+        height: imgPosition.height,
+        width: imgPosition.width,
+        transform: `translate(${imgPosition.left}px, ${imgPosition.top}px)`
       }: {}
   });
 
   const backgroundTransitionAnimation = useSpring({
-    to: getBackgroundAnimation(position).to,
-    from: getBackgroundAnimation(position).from
+    to: getBackgroundAnimation(slidePosition).to,
+    from: getBackgroundAnimation(slidePosition).from
   });
 
   useEffect(() => {
@@ -191,7 +191,7 @@ const ProjectDetailsPage = ({
                 height: imgWidthAnim,
                 left: imgLeftAnim,
                 top: imgTopAnim,
-                opacity: isEmpty(position) ? containerOpacityAnimation.opacity : showContent ? 1 : 0
+                opacity: isEmpty(imgPosition) ? containerOpacityAnimation.opacity : showContent ? 1 : 0
               }}
             />
 
@@ -252,7 +252,7 @@ const ProjectDetailsPage = ({
             }}
           />
 
-          { (!hideTransitionElement && !isEmpty(position) ) && (
+          { (!hideTransitionElement && !isEmpty(imgPosition) ) && (
             <animated.img
               src={project.icon}
               style={{
