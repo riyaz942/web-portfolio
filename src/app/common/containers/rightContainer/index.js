@@ -57,7 +57,7 @@ class RightContainer extends Component {
         slug: project,
         state,
         imgRef: React.createRef(),
-        slideRef: React.createRef(),
+        slideRef: React.createRef()
       };
     });
   };
@@ -207,7 +207,7 @@ class RightContainer extends Component {
     } = this.props;
 
     const imgRect = project.imgRef.current.getBoundingClientRect();
-    const slideRect = project.slideRef.current.getBoundingClientRect()
+    const slideRect = project.slideRef.current.getBoundingClientRect();
 
     setProjectPosition({ img: imgRect, slide: slideRect });
     push(`/project/${project.slug}`);
@@ -228,53 +228,66 @@ class RightContainer extends Component {
     return (
       <Div flex className={styles.right_container}>
         <Div className={styles.slide_container}>
-          <Div
-            row
-            align="end"
-            className={styles.slide_inner_container}
+          <Transition
+            items={item}
+            keys={item => item.id}
+            from={{ opacity: 0 }}
+            enter={{ opacity: 1 }}
+            leave={{ opacity: 0 }}
           >
-            {map(projects[item.id], (slide, index) => (
-              <Spring
-                key={slide.slug}
-                to={this.getPropertyBasedOnState(slide.state)}
+            {item => props => (
+              <Div
+                row
+                style={props}
+                align="end"
+                className={styles.slide_inner_container}
               >
-                {props => (
-                  <div
-                    ref={slide.slideRef}
-                    onClick={() => this.onClickProject(slide)}
-                    style={{ ...props, zIndex: index }}
-                    className={`${styles.slide_items} ${
-                      slide.state == "CENTERED" ? styles.is_selected : ""
-                    }`}
+                {map(projects[item.id], (slide, index) => (
+                  <Spring
+                    key={slide.slug}
+                    to={this.getPropertyBasedOnState(slide.state)}
                   >
-                    <Div fillParent align justify>
-                      <img
-                        ref={slide.imgRef}
-                        src={slide.icon}
-                        className={styles.image}
-                      />
-                    </Div>
+                    {props => (
+                      <div
+                        ref={slide.slideRef}
+                        onClick={() => this.onClickProject(slide)}
+                        style={{ ...props, zIndex: index }}
+                        className={`${styles.slide_items} ${
+                          slide.state == "CENTERED" ? styles.is_selected : ""
+                        }`}
+                      >
+                        <Div fillParent align justify>
+                          <img
+                            ref={slide.imgRef}
+                            src={slide.icon}
+                            className={styles.image}
+                          />
+                        </Div>
 
-                    <Div
-                      alignSelf="stretch"
-                      justify="start"
-                      align="end"
-                      className={styles.title_container}
-                    >
-                      <div className={styles.title}>{slide.name}</div>
-                      <div className={styles.description}>
-                        {slide.tech.join(" | ")}
+                        <Div
+                          alignSelf="stretch"
+                          justify="start"
+                          align="end"
+                          className={styles.title_container}
+                        >
+                          <div className={styles.title}>{slide.name}</div>
+                          <div className={styles.description}>
+                            {slide.tech.join(" | ")}
+                          </div>
+                          <div className={styles.overlay_view_project}>
+                            View Project
+                          </div>
+                        </Div>
+                        <div
+                          className={styles.bottom_background_gradient}
+                        ></div>
                       </div>
-                      <div className={styles.overlay_view_project}>
-                        View Project
-                      </div>
-                    </Div>
-                    <div className={styles.bottom_background_gradient}></div>
-                  </div>
-                )}
-              </Spring>
-            ))}
-          </Div>
+                    )}
+                  </Spring>
+                ))}
+              </Div>
+            )}
+          </Transition>
         </Div>
 
         <Div row>
