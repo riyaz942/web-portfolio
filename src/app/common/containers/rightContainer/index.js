@@ -56,7 +56,8 @@ class RightContainer extends Component {
         ...projectsListValue[project],
         slug: project,
         state,
-        ref: React.createRef()
+        imgRef: React.createRef(),
+        slideRef: React.createRef(),
       };
     });
   };
@@ -204,8 +205,12 @@ class RightContainer extends Component {
       setProjectPosition,
       history: { push }
     } = this.props;
-    const rect = project.ref.current.getBoundingClientRect();
-    setProjectPosition(rect);
+    debugger
+
+    const imgRect = project.imgRef.current.getBoundingClientRect();
+    const slideRect = project.slideRef.current.getBoundingClientRect()
+
+    setProjectPosition(imgRect);
     push(`/project/${project.slug}`);
   };
 
@@ -235,7 +240,8 @@ class RightContainer extends Component {
                 to={this.getPropertyBasedOnState(slide.state)}
               >
                 {props => (
-                  <Div
+                  <div
+                    ref={slide.slideRef}
                     onClick={() => this.onClickProject(slide)}
                     style={{ ...props, zIndex: index }}
                     className={`${styles.slide_items} ${
@@ -244,7 +250,7 @@ class RightContainer extends Component {
                   >
                     <Div fillParent align justify>
                       <img
-                        ref={slide.ref}
+                        ref={slide.imgRef}
                         src={slide.icon}
                         className={styles.image}
                       />
@@ -265,7 +271,7 @@ class RightContainer extends Component {
                       </div>
                     </Div>
                     <div className={styles.bottom_background_gradient}></div>
-                  </Div>
+                  </div>
                 )}
               </Spring>
             ))}

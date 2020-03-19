@@ -23,6 +23,9 @@
     left: 0;
 
     .slide_items {
+      display: flex;
+      flex-direction: column;
+      
       width: 183px;
       min-width: 183px;
       height: 311px;
