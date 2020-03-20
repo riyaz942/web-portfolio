@@ -29,6 +29,7 @@ $transition-type: cubic-bezier(0.550, 0.055, 0.675, 0.190);
       left: 0;
       bottom: 0;
       background: $color-dark;
+      overflow: hidden;
 
       .percentage_text {
         color: white;
@@ -41,6 +42,23 @@ $transition-type: cubic-bezier(0.550, 0.055, 0.675, 0.190);
     }
   }
 }
+
+
+
+.background_gradient {
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  left: 0;
+  top: 0;
+  
+  background-size: cover;
+  background-position: left top;
+  background-repeat: no-repeat;
+  transform: scale(1.1);
+}
+
+
 
 @keyframes show {
   from {

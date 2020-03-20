@@ -4,9 +4,12 @@ import styles from "./loader.scss";
 import { loaderPageStates } from "../../constants/loaderConstants";
 import { Transition, Spring } from "react-spring/renderprops";
 import Div from "Common/components/div";
-import { withRouter, matchPath } from 'react-router';
+import { withRouter, matchPath } from "react-router";
 import { CookieService } from "Common/utils/cookieService";
-import MobileOverlay from 'Modules/mobileOverlay';
+import MobileOverlay from "Modules/mobileOverlay";
+import backgroundDarkDoodleFixed from "Images/background-dark-doodle-fixed-layer.png";
+import backgroundDarkDoodleFirst from "Images/background-dark-doodle-first-layer.png";
+import backgroundDarkDoodleSecond from "Images/background-dark-doodle-second-layer.png";
 
 const assetsImages = require.context(
   `../../../assets/images`,
@@ -85,13 +88,13 @@ class Loader extends Component {
     if (areImagesLoaded) {
       this.completeLoading(true); // immediatly load page.
     } else {
-      const introAlreadyShown = CookieService.get('INTRO_COMPLETED');
+      const introAlreadyShown = CookieService.get("INTRO_COMPLETED");
       const match = matchPath(location.pathname, {
         path: "/project/:projectSlug?",
         exact: true,
         strict: false
       });
-      
+
       if (match && introAlreadyShown) {
         // Todo also check if intro animation is done or not ... if not the make this condition false
         this.completeLoading(true); // immediatly load page.
@@ -100,7 +103,7 @@ class Loader extends Component {
           window,
           this.valuateProgress
         );
-      }      
+      }
     }
   };
 
@@ -109,7 +112,7 @@ class Loader extends Component {
   valuateProgress = timeStamp => {
     const { totalItems } = this.state;
     const isLastPercentage = totalItems - this.itemsLoaded <= 2;
-    const updateStateAfter = isLastPercentage? 600: 400;  //600 ms for the last 2 percentage
+    const updateStateAfter = isLastPercentage ? 600 : 400; //600 ms for the last 2 percentage
 
     if (timeStamp - this.lastUpdated >= updateStateAfter /*ms*/) {
       this.lastUpdated = timeStamp;
@@ -162,8 +165,9 @@ class Loader extends Component {
   };
 
   completeLoading = showImmediately => {
+
     const { contentLoadedPercentage, disableIntro } = this.state;
-    const introAlreadyShown = CookieService.get('INTRO_COMPLETED');
+    const introAlreadyShown = CookieService.get("INTRO_COMPLETED");
 
     if (showImmediately) {
       return this.setState({
@@ -194,12 +198,12 @@ class Loader extends Component {
   };
 
   onIntroAnimationEnd = () => {
-    this.setState({pageState: loaderPageStates.INTRO_COMPLETED});
+    this.setState({ pageState: loaderPageStates.INTRO_COMPLETED });
 
-    setTimeout(()=>{
+    setTimeout(() => {
       this.setState({
         pageState: loaderPageStates.SHOW_PAGE
-      });  
+      });
     }, 500);
   };
 
@@ -242,7 +246,25 @@ class Loader extends Component {
                       row
                       className={styles.loader_width_percentage}
                       style={props}
-                    >
+                    >                      
+                      <div
+                        className={styles.background_gradient}
+                        style={{
+                          backgroundImage: `url(${backgroundDarkDoodleFixed})`
+                        }}
+                      ></div>
+                      <div
+                        className={styles.background_gradient}
+                        style={{
+                          backgroundImage: `url(${backgroundDarkDoodleSecond})`
+                        }}
+                      ></div>
+                      <div
+                        className={styles.background_gradient}
+                        style={{
+                          backgroundImage: `url(${backgroundDarkDoodleFirst})`
+                        }}
+                      ></div>
                       <div className={styles.percentage_text}>
                         {Math.floor(props.x)}
                       </div>
@@ -275,6 +297,5 @@ class Loader extends Component {
     );
   }
 }
-
 
 export default withRouter(Loader);
