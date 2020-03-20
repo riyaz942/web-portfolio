@@ -7,9 +7,6 @@ import Div from "Common/components/div";
 import { withRouter, matchPath } from "react-router";
 import { CookieService } from "Common/utils/cookieService";
 import MobileOverlay from "Modules/mobileOverlay";
-import backgroundDarkDoodleFixed from "Images/background-dark-doodle-fixed-layer.png";
-import backgroundDarkDoodleFirst from "Images/background-dark-doodle-first-layer.png";
-import backgroundDarkDoodleSecond from "Images/background-dark-doodle-second-layer.png";
 import BackgroundAnimator from "../header/backgroundAnimator";
 
 const assetsImages = require.context(
@@ -166,7 +163,6 @@ class Loader extends Component {
   };
 
   completeLoading = showImmediately => {
-
     const { contentLoadedPercentage, disableIntro } = this.state;
     const introAlreadyShown = CookieService.get("INTRO_COMPLETED");
 
@@ -214,6 +210,9 @@ class Loader extends Component {
 
     return (
       <Div className={styles.loader_top_container}>
+        <div className={styles.background_container}>
+          <BackgroundAnimator clientX={0} clientY={0} />
+        </div>
         <MobileOverlay />
         {pageState == loaderPageStates.SHOW_PAGE && children}
         {/* LOADER */}
@@ -233,13 +232,11 @@ class Loader extends Component {
                 className={styles.loader_container}
               >
                 <div className={styles.loading_text}>Loading ...</div>
-
                 <Spring
                   to={{
                     width: `${contentLoadedPercentage}vw`,
                     x: contentLoadedPercentage
                   }}
-                  // config={{ mass: 10, tension: 550, friction: 120  }}
                 >
                   {props => (
                     <Div
@@ -247,14 +244,7 @@ class Loader extends Component {
                       row
                       className={styles.loader_width_percentage}
                       style={props}
-                    >     
-                    <div className={styles.background_container}>
-                      <BackgroundAnimator
-                        clientX={0}
-                        clientY={0}
-                      />
-                    </div>                 
-                      
+                    >
                       <div className={styles.percentage_text}>
                         {Math.floor(props.x)}
                       </div>

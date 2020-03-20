@@ -51,7 +51,9 @@ $transition-type: cubic-bezier(0.550, 0.055, 0.675, 0.190);
   width: 100vw;
   left: 0;
   top: 0;
-  
+  opacity: 0.5;
+  background: $color-dark;
+
   transform: scale(1.1);
 }
 
