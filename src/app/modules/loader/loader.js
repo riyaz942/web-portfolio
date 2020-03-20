@@ -10,6 +10,7 @@ import MobileOverlay from "Modules/mobileOverlay";
 import backgroundDarkDoodleFixed from "Images/background-dark-doodle-fixed-layer.png";
 import backgroundDarkDoodleFirst from "Images/background-dark-doodle-first-layer.png";
 import backgroundDarkDoodleSecond from "Images/background-dark-doodle-second-layer.png";
+import BackgroundAnimator from "../header/backgroundAnimator";
 
 const assetsImages = require.context(
   `../../../assets/images`,
@@ -246,25 +247,14 @@ class Loader extends Component {
                       row
                       className={styles.loader_width_percentage}
                       style={props}
-                    >                      
-                      <div
-                        className={styles.background_gradient}
-                        style={{
-                          backgroundImage: `url(${backgroundDarkDoodleFixed})`
-                        }}
-                      ></div>
-                      <div
-                        className={styles.background_gradient}
-                        style={{
-                          backgroundImage: `url(${backgroundDarkDoodleSecond})`
-                        }}
-                      ></div>
-                      <div
-                        className={styles.background_gradient}
-                        style={{
-                          backgroundImage: `url(${backgroundDarkDoodleFirst})`
-                        }}
-                      ></div>
+                    >     
+                    <div className={styles.background_container}>
+                      <BackgroundAnimator
+                        clientX={0}
+                        clientY={0}
+                      />
+                    </div>                 
+                      
                       <div className={styles.percentage_text}>
                         {Math.floor(props.x)}
                       </div>
