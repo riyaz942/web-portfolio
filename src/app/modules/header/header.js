@@ -33,6 +33,7 @@ const Header = ({ isFullScreen, showDescription, clientX, clientY, isFirstTime }
     containerTransition.map(({ item: containerItem, props: transitionProps }) => (
       containerItem && (
         <animated.div
+          key='header-container'
           style={transitionProps}
           className={styles.header_container}
         >
@@ -40,6 +41,7 @@ const Header = ({ isFullScreen, showDescription, clientX, clientY, isFirstTime }
             backgroundAnimatorTransition.map(({ item: backgroundItem, props: backgroundProps }) => (
               backgroundItem && (
                 <animated.div
+                  key='background'
                   style={backgroundProps}
                   className={styles.header_background_container}
                 >

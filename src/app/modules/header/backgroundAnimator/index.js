@@ -13,7 +13,6 @@ const trans4 = (x, y) => `translate(${x / 3.5}px,${y / 3.5}px)`;
 
 const BackgroundAnimator = ({ clientX, clientY }) => {
   const animationProps = useSpring({ xy: calc(clientX, clientY), config: { mass: 10, tension: 550, friction: 240 } });
-  console.log({clientX, clientY});
   return (
       <Fragment>
         <animated.div className={styles.background_gradient} style={{ transform: animationProps.xy.interpolate(trans1), backgroundImage: `url(${backgroundDarkDoodleFixed})` }}>

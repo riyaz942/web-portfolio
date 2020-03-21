@@ -32,6 +32,7 @@ const ProfilePic = ({ isFirstTime, isFullScreen, onClickProfilePic }) => {
     transition.map(({ item, props: transitionProps }) => (
       item && (
         <animated.img
+          key="profile-pic"
           style={{
             opacity: transitionProps.opacity,
             boxShadow: springProps.boxShadow,

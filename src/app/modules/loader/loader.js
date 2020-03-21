@@ -93,7 +93,7 @@ class Loader extends Component {
         exact: true,
         strict: false
       });
-
+      
       if (match && introAlreadyShown) {
         // Todo also check if intro animation is done or not ... if not the make this condition false
         this.completeLoading(true); // immediatly load page.

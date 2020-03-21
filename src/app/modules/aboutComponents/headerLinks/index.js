@@ -30,6 +30,7 @@ const HeaderLinks = ({ isFullScreen, bodyType, onClickTimeline, onClickProject }
     transition.map(({ item, props: transitionProps }) => (
       !item && (
         <Div
+          key="header-container"
           animate
           row
           align

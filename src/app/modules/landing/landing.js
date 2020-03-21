@@ -176,6 +176,7 @@ export default class Landing extends Component {
         </Div>
 
         <Header
+          key='header'
           isFirstTime={isFirstTime}
           isFullScreen={isFullScreen}
           showDescription={showDescription}
@@ -184,6 +185,7 @@ export default class Landing extends Component {
         />
 
         <HeaderDescription
+          key='header-description'
           showDescription={showDescription}
           onClickProject={this.onClickProject}
           onClickTimeline={this.onClickTimeline}
@@ -192,12 +194,14 @@ export default class Landing extends Component {
         />
 
         <ProfilePic
+          key="profile-pic"
           isFirstTime={isFirstTime}
           isFullScreen={isFullScreen}
           onClickProfilePic={this.onClickProfilePic}
         />
 
         <HeaderLinks
+          key='header-links'
           isFullScreen={isFullScreen}
           bodyType={bodyType}
           onClickTimeline={this.onClickTimeline}
