@@ -31,7 +31,7 @@ export default class Landing extends Component {
   componentDidMount() {
     setTimeout(() => {
       this.setState({ isFirstTime: false, allowMouseHover: true });
-    }, 1400);
+    }, 1100);
   }
 
   //-------------------------------------------Header Logic-------------------------------------------

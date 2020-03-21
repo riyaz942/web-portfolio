@@ -22,7 +22,7 @@ class HeaderDescription extends Component {
         leave={{
           opacity: 0
         }}
-        config={isFirstTime ? { delay: 600 } : config.default}
+        config={isFirstTime ? { delay: 300 } : config.default}
       >
         {showDescription =>
           showDescription &&
