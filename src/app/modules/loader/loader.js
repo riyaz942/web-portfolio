@@ -31,6 +31,7 @@ class Loader extends Component {
     this.state = {
       contentLoadedPercentage: 0,
       totalItems: 0,
+      showBackground: true,
       pageState: loaderPageStates.IS_LOADING,
       disableIntro: false
     };
@@ -168,7 +169,8 @@ class Loader extends Component {
 
     if (showImmediately) {
       return this.setState({
-        pageState: loaderPageStates.SHOW_PAGE
+        pageState: loaderPageStates.SHOW_PAGE,
+        showBackground: false
       });
     }
 
@@ -190,6 +192,7 @@ class Loader extends Component {
         this.setState({
           pageState: loaderPageStates.SHOW_PAGE
         });
+        setTimeout(()=>this.setState({showBackground: false}), 100)
       }
     }, 500);
   };
@@ -201,62 +204,64 @@ class Loader extends Component {
       this.setState({
         pageState: loaderPageStates.SHOW_PAGE
       });
+      setTimeout(()=>this.setState({showBackground: false}), 100)
     }, 500);
   };
 
   render() {
     const { children } = this.props;
-    const { contentLoadedPercentage, pageState } = this.state;
+    const { contentLoadedPercentage, pageState, showBackground } = this.state;
 
     return (
       <Div className={styles.loader_top_container}>
         <MobileOverlay />
         {pageState == loaderPageStates.SHOW_PAGE && children}
-
-
-
-        <Div row align className={styles.background_loader_container}>
-          <div className={styles.background_container}>
-            <div className={styles.background}>
-              <BackgroundAnimator clientX={0} clientY={0} />
-            </div>
-          </div>
-          <Transition
-            items={pageState}
-            from={{ opacity: 1 }}
-            enter={{ opacity: 1 }}
-            leave={{ opacity: 0 }}
-          >
-            {pageState =>
-              pageState == loaderPageStates.IS_LOADING &&
-              (transitionProps => (
-                <Fragment>
-                  <Spring
-                    to={{
-                      width: `calc(100vw - ${contentLoadedPercentage}vw)`,
-                      x: contentLoadedPercentage
-                    }}
-                  >
-                    {
-                      springProps => (
-                        <Fragment>
-                          <div style={transitionProps} className={styles.percentage_text}>{Math.floor(springProps.x)}</div>
-                          <div style={{
-                            opacity: transitionProps.opacity,
-                            width: springProps.width,
-                          }} className={styles.loading_text_container}>
-                            <div className={styles.loading_text}>
-                              Loading...
+        {
+          showBackground && (
+            <Div row align className={styles.background_loader_container}>
+              <div className={styles.background_container}>
+                <div className={styles.background}>
+                  <BackgroundAnimator clientX={0} clientY={0} />
+                </div>
+              </div>
+              <Transition
+                items={pageState}
+                from={{ opacity: 1 }}
+                enter={{ opacity: 1 }}
+                leave={{ opacity: 0 }}
+              >
+                {pageState =>
+                  pageState == loaderPageStates.IS_LOADING &&
+                  (transitionProps => (
+                    <Fragment>
+                      <Spring
+                        to={{
+                          width: `calc(100vw - ${contentLoadedPercentage}vw)`,
+                          x: contentLoadedPercentage
+                        }}
+                      >
+                        {
+                          springProps => (
+                            <Fragment>
+                              <div style={transitionProps} className={styles.percentage_text}>{Math.floor(springProps.x)}</div>
+                              <div style={{
+                                opacity: transitionProps.opacity,
+                                width: springProps.width,
+                              }} className={styles.loading_text_container}>
+                                <div className={styles.loading_text}>
+                                  Loading...
+                                </div>
                               </div>
-                          </div>
-                        </Fragment>
-                      )
-                    }
-                  </Spring>
-                </Fragment>
-              ))}
-          </Transition>
-        </Div>
+                            </Fragment>
+                          )
+                        }
+                      </Spring>
+                    </Fragment>
+                  ))}
+              </Transition>
+            </Div>
+          )
+        }
 
         {/* Intro Animation */}
         <Transition
