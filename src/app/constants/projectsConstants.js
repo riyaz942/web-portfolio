@@ -11,6 +11,7 @@ export const projectsListValue = {
   snapteam: {
     name: 'Snapteam/Bijli',
     tech: ['react', 'electron', 'laravel'],
+    involvement: 'Major',
     icon: bijliIcon,
     description: [
       {
@@ -60,6 +61,7 @@ export const projectsListValue = {
     name: 'Wakency',
     tech: ['react'],
     icon: wakencyIcon,
+    involvement: 'Intermittent',
     link: {
       type: 'visit',
       value: 'https://www.wakency.com/'
@@ -92,14 +94,14 @@ export const projectsListValue = {
       }
     ]
   },
-
   nykaa: {
     name: 'Nykaa',
     tech: ['react'],
     icon: nykaaIcon,
+    involvement: 'Intermittent',
     link: {
       type: 'visit',
-      link: 'https://www.nykaa.com/'
+      value: 'https://www.nykaa.com/'
     },
     description: [
       {
@@ -112,12 +114,17 @@ export const projectsListValue = {
         value: 'My Contribution :',        
       },
       {
+        type: 'text',
+        value: 'I was actively involved in building new features like new signup/signin flow, had introduced a AR makeup try-on using Modi-face for the iOS webview with stage releases.<br/>Also maintained entire Nykaa Pro module while working on these new features.'
+      },
+      {
         type: 'points',
         value: [
           'New mobile signup/signin flow',
           'Trending Search and Search history',
           'Nykaa Pro',
-          'Worked on AR Makeup with modiface'
+          'Worked on a AR makeup try-on with modiface',
+          'Unit test cases with jest'
         ]
       }
     ]
@@ -126,6 +133,7 @@ export const projectsListValue = {
     name: 'Pulse/Sprout',
     tech: ['react-native'],
     icon: pulseIcon,
+    involvement: 'Major',
     link: {
       type: 'visit',
       value:  'https://www.youtube.com/watch?v=wOsy7b2Q-J4'
@@ -151,6 +159,7 @@ export const projectsListValue = {
     name: 'LightHouse Project',
     tech: ['react-native'],
     icon: lighthouseIcon,
+    involvement: 'Major',
     link: {
       type: 'visit',
       value: 'https://play.google.com/store/apps/details?id=com.tailoredtech.lighthouse'
@@ -171,6 +180,7 @@ export const projectsListValue = {
     name: 'Benefactory',
     tech: ['laravel', 'vanila-js', 'scss'],
     icon: benefactoryIcon,
+    involvement: 'Major',
     link: {
       type: 'visit',
       value: 'http://benefactory.live/'
@@ -191,6 +201,7 @@ export const projectsListValue = {
     name: 'Measure',
     tech: ['android'],
     icon: measureIcon,
+    involvement: 'Major',
     link: {
       type: 'visit',
       value: 'https://play.google.com/store/apps/details?id=com.informedtech.measure.app'
@@ -209,8 +220,13 @@ export const projectsListValue = {
         type: 'points',
         value: [
           'BLE Integration with their weighing scale device',
-          'MP charts implementation.',
-          'Local notification implementation.'
+          'MP Charts implementation.',
+          'Local notification implementation.',
+          'MVC architecture',
+          'Butterknife',
+          'Retrofit',
+          'Active Android',
+          'EventBus'
         ]
       }
     ]
@@ -219,15 +235,16 @@ export const projectsListValue = {
     name: 'VC Music Player',
     tech: ['android'],
     icon: vcMusicPlayerIcon,
+    involvement: 'Owned',
     description: [
       {
         type: 'text',
         highlight: 'green',
-        value: 'Vc music player is an app with bloated features 😆, the intention for this app was to reduce navigation and make the music search and selection seamless and simple while also having a feature to play video with only music within a playlist and switch between music and video mode.'
+        value: 'The intention for this app was to reduce navigation and make the music library management seamless and simple while also having a unique features to play video with only music within a playlist and switch between music and video mode.<br/> It also has voice recognition implementation to play/pause, search, switch playlist, shuffle, etc.'
       },
       {
         type: 'text',
-        value: 'I did a stupid thing and lost the keystore so i was not able to upload the latest build and the uploaded app is stuck with a version having a runtime permission crash so had to unpublish to maintain the rating 😆.'
+        value: 'I did a blunder and lost the keystore so i was not able to upload the latest build and the uploaded app is stuck with a version having a runtime permission crash so had to unpublish to maintain the rating 😆.'
       },
       {
         type: 'points',

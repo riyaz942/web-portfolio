@@ -228,7 +228,7 @@ const ProjectDetailsPage = ({
               <div className={`${styles.title} ${styles.project_involvement}`}>
                 Project Involment
               </div>
-              <div className={styles.value}>Undefined</div>
+              <div className={styles.value}>{project.involvement}</div>
             </Div>
 
             <animated.div
