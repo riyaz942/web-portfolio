@@ -150,9 +150,27 @@ export const projectsListValue = {
         value: 'The purpose of the Sprout app users is to quickly and conveniently book meals from Sprout.<br/> It was not published due to some business operation issue on the clients end.'
       },
       {
+        type: 'header',
+        value: 'My Contribution :',        
+      },
+      {
         type: 'text',
-        value: 'Pulse was built on react native with a team strength of 2 people. As such there wasn’t any feature complexity other than UI.'
-      }
+        value: 'Created this apps component architecture and Api calls system with Redux middleware and Axios so that it would automatically handle common responses and make api implementation simple and easy on each screen.<br/>Also worked on the Apps flows and screens which include Login flow, Meal selection flow and Home flow.'
+      },
+      {
+        type: 'points',
+        value: [
+          'Redux',
+          'Axios',
+          'RN Razorpay',
+          'RN Navigation (Wix)',
+          "RN Swiper",
+          'RN Facebook sdk',
+          'RN Fabric (Crash Reporting)',
+          'RN Branch (Deeplinking)',
+          'RN Firebase'
+        ]
+      },
     ]
   },
   lighthouse: {
@@ -173,6 +191,24 @@ export const projectsListValue = {
       {
         type: 'text',
         value: 'The app helps to schedule a time and a place to meet with a mentee and has checkin and checkout features to track hours spent for a meeting and providing prior notifications for meetings.'
+      },
+      {
+        type: 'header',
+        value: 'My Contribution :',        
+      },
+      {
+        type: 'text',
+        value: 'Jumped on this project during the middle stages and worked on Home Screen, Create meeting flow, View meetings flow and Notifications.'
+      },
+      {
+        type: 'points',
+        value: [
+          'React Navigation',
+          'RN FCM',
+          'RN Fabric (Crash Reporting)',
+          'RN Actionsheet',
+          'Tcomb form native'
+        ]
       }
     ]
   },
@@ -213,6 +249,14 @@ export const projectsListValue = {
         value: 'Measure is an fitness app which helps track habit and weight to provide detailed information about your health so that the user can make informed decisions about their health.<br/>The app is integrated with their weighing scale device so the weight data is directly taken from the device.'
       },
       {
+        type: 'header',
+        value: 'My Contribution :',        
+      },
+      {
+        type: 'text',
+        value: 'Created this apps BLE paring system to connect with the clients smart Weighing scale device using Androids BluetoothGatt Class along with the Charts and rest of the flow except onboarding flow.'
+      },
+      {
         type: 'text',
         value: 'The app is not actively maintained now.'
       },
@@ -226,7 +270,9 @@ export const projectsListValue = {
           'Butterknife',
           'Retrofit',
           'Active Android',
-          'EventBus'
+          'EventBus',
+          'Fabric (Crash Reporting)',
+          'Firebase Notifications'
         ]
       }
     ]
