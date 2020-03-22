@@ -228,8 +228,25 @@ export const projectsListValue = {
         value: 'Benefactory envisions a future where everyday people have the power to seamlessly act on urgent issues while they’re on the go. Benefactory partner with your frequently visited websites - from shopping to booking a ride - to place our micro-donation ACT widget, that responds to crises dominating the headlines, so you can add a donation to your cart at checkout.'
       },
       {
+        type: 'header',
+        value: 'My Contribution :',        
+      },
+      {
         type: 'text',
-        value: 'Benefactory didn’t have any feature complexity other than UI, they have updated their website so these designs won’t be available.'
+        value: 'Created the whole frontend of this app and designed the ui to be responsive. Used laravels blade to templating engine to create reusable components and defined scss classes to typography and responsiveness. Used Laravel Mix and webpack for versioning.<br/>Benefactory didn’t have any feature complexity other than UI, they have updated their website so these designs won’t be available.',
+      },
+      {
+        type: 'points',
+        value: [
+          'Flexbox',
+          'Media queries',
+          'Scss',
+          'Css Grid',
+          'Webpack',
+          'Jquery',
+          'Laravel mix',
+          
+        ]
       }
     ]
   },
