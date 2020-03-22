@@ -33,6 +33,11 @@ export const projectsListValue = {
         ]
       },
       {
+        type: 'text',
+        highlight: 'green',
+        value: 'This Project was also displayed on tech crunch 2018.'
+      },
+      {
         type: 'header',
         value: 'My Contribution :',        
       },
