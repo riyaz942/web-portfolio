@@ -51,7 +51,15 @@ export const projectsListValue = {
           'Worked with string replace to add functionality to a part of a string',
           'Redux-api-middleware',
           'React-Router-v4',
-          'React-redux-form'
+          'React-redux-form',
+          'Aphrodite',
+          'Redux-api-middleware',
+          'Material-UI',
+          'Firebase',
+          'Redux',
+          'React-Router',
+          'Redux-Form',
+          'Css Modules'
         ]
       }
     ]
@@ -245,7 +253,7 @@ export const projectsListValue = {
           'Webpack',
           'Jquery',
           'Laravel mix',
-          
+
         ]
       }
     ]
