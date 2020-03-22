@@ -38,14 +38,14 @@ export const projectsListValue = {
       },
       {
         type: 'text',
-        value: 'In Bijli I mostly worked on React and Electron, and worked with Laravel for one feature.<br/>',
+        value: 'In Bijli I mostly worked on React and Electron, and worked with Laravel for one feature.<br/>Have Architectured Home page components to connect with other tabs which communicate with each other and handle realtime data updates.',
       },
       {
         type: 'points',
         title: 'These are some feature complexity faced and technology used :',
         value: [
           'Electron and Web build process with webpack',
-          "A custom made compose flow (Similar to gmail's compose)",
+          "A custom made Compose flow (Drafting messages having people Mentions with attachments.)",
           'Pusher implementation for real time data updates',
           'Css in js implementation with aphrodite',
           'Worked with string replace to add functionality to a part of a string',
