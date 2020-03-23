@@ -8,9 +8,7 @@ const MobileOverlay = () => {
     <Div className={styles.mobile_overlay_top_container}>
       <Div fillParent className={styles.content_container}>
         <div className={styles.message_container}>
-          <div>Sorry, the mobile resposive part is still under development🙈, Open this site on Desktop to get the full experience.
-          </div>
-
+          <div>The mobile responsive is still under development 🙈, Open this site on Desktop to get the full experience.</div>
           <ContactComponent isWhite className={styles.contact_component}/>
         </div>
       </Div>
