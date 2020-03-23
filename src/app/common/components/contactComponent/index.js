@@ -32,13 +32,13 @@ const ContactComponent = ({ className, isWhite }) => {
       </a>
       <a className={styles.icon_link} target="_blank" href="mailto:ahmed.riyaz94@email.com">
         <img
-          src={isWhite ? iconResumeWhite : iconResume}
+          src={isWhite ? iconEmailWhite : iconEmail}
           className={styles.icon}
         />
       </a>
-      <a className={styles.icon_link} target="_blank" href="mailto:ahmed.riyaz94@email.com">
+      <a className={styles.icon_link} target="_blank" href="https://drive.google.com/file/d/1nJupBjmgbRRbMwE1CTuYSKOdS9bh5g7t/view?usp=sharing">
         <img
-          src={isWhite ? iconEmailWhite : iconEmail}
+          src={isWhite ? iconResumeWhite : iconResume}
           className={styles.icon}
         />
       </a>
