@@ -32,7 +32,8 @@ class HeaderDescription extends Component {
               className={styles.user_description_container}
             >
               <div className={styles.user_description}>
-                Hi, <br />I am <b className={styles.name}>Riyaz Ahmed</b>, A 25-year-old self-taught developer with 4+ years of software development experience on various platforms, I like to build polished and well detailed apps with fluid animations to compliment the design.
+                Hi, <br />I am <b className={styles.name}>Riyaz Ahmed</b>, A 25-year-old self-taught developer with 4+ years of software development experience on various platforms, Passionate to build polished, innovative and well-detailed apps with fluid animations to complement the design.
+                {/* <br/><br/> In my spare time, I usually read or play video games but mostly i try to work on new ideas and learn. */}
               </div>
 
               <Div row justify align className={styles.user_button_container}>
