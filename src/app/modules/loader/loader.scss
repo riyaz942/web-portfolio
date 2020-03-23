@@ -7,41 +7,6 @@ $transition-type: cubic-bezier(0.550, 0.055, 0.675, 0.190);
   position: relative;
   overflow: hidden;
   
-  // .loader_container {
-  //   position: absolute;
-  //   left: 0;
-  //   right: 0;
-  //   top: 0;
-  //   bottom: 0;
-  //   background: black;
-
-  //   .loading_text {
-  //     margin-left: auto;
-  //     align-self: center;
-  //     color: white;
-  //     font-size: 40px;
-  //     margin-right: 36px;
-  //   }
-
-  //   .loader_width_percentage {
-  //     position: absolute;
-  //     top: 0;
-  //     left: 0;
-  //     bottom: 0;
-  //     background: $color-dark;
-  //     overflow: hidden;
-
-  //     .percentage_text {
-  //       color: white;
-  //       font-size: 50px;
-  //       animation: show 600ms ease;
-  //       align-self: center;
-  //       margin-left: auto;
-  //       margin-right: 30px;
-  //     }
-  //   }
-  // }
-
   .background_loader_container {
     width: 100vw;
     height: 100vh;

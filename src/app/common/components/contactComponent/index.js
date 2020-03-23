@@ -10,7 +10,7 @@ import iconResumeWhite from 'Icons/icon-resume-white.png';
 import Div from "Common/components/div";
 import styles from "./contact_component.module.scss";
 
-const ContactComponent = ({ className, isWhite }) => {
+const ContactComponent = ({ className, isWhite, hideResume }) => {
   return (
     <Div
       row
@@ -36,12 +36,16 @@ const ContactComponent = ({ className, isWhite }) => {
           className={styles.icon}
         />
       </a>
-      <a className={styles.icon_link} target="_blank" href="https://drive.google.com/file/d/1nJupBjmgbRRbMwE1CTuYSKOdS9bh5g7t/view?usp=sharing">
-        <img
-          src={isWhite ? iconResumeWhite : iconResume}
-          className={styles.icon}
-        />
-      </a>
+      {
+        !hideResume && (
+          <a className={styles.icon_link} target="_blank" href="https://drive.google.com/file/d/1nJupBjmgbRRbMwE1CTuYSKOdS9bh5g7t/view?usp=sharing">
+          <img
+            src={isWhite ? iconResumeWhite : iconResume}
+            className={styles.icon}
+          />
+        </a>  
+        )
+      }
     </Div>
   );
 };
