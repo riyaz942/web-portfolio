@@ -55,6 +55,7 @@
     "react-router-dom": "^5.1.2",
     "react-spring": "^8.0.27",
     "react-string-replace": "^0.4.4",
+    "react-zoom-pan-pinch": "^1.6.1",
     "redux": "^4.0.4",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",

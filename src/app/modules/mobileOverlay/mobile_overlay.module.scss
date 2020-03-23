@@ -11,27 +11,38 @@
   display: none;
   background: $color-dark;
   color: white;
-  font-size: 18px;
+  font-size: 16px;
 
   .content_container {
-    padding: 26px;
+    padding: 20px;
+    overflow: auto;
 
     .message_container {
-      padding: 20px;
-      background: rgba(white, 0.3);
+      padding: 16px;
+      text-align: center;
     }
 
     .contact_component {
-      margin-top: 30px;
+      margin-top: 16px;
+      margin-bottom: 10px;
     }
+
   }
 }
 
+.hint_text {
+  color: $color-blue;
+}
 
+.resume_image {
+  width: 100%;
+  // height: -webkit-fill-available;
+  object-fit: contain;
+  object-position: top;
+}
 
 @include medium {
   .mobile_overlay_top_container {
-    display: block;
-
+    display: flex;
   }
 }
