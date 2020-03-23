@@ -50,7 +50,7 @@ export const projectsListValue = {
         title: 'These are some feature complexity faced and technology used :',
         value: [
           'Electron and Web build process with webpack',
-          "A custom made Compose flow (Drafting messages having people Mentions with attachments.)",
+          "A custom made Compose flow (Drafting messages, tagging, file attachments, etc)",
           'Pusher implementation for real time data updates',
           'Css in js implementation with aphrodite',
           'Worked with string replace to add functionality to a part of a string',
@@ -246,7 +246,7 @@ export const projectsListValue = {
       },
       {
         type: 'text',
-        value: 'Created the whole frontend of this app and designed the ui to be responsive. Used laravels blade to templating engine to create reusable components and defined scss classes to typography and responsiveness. Used Laravel Mix and webpack for versioning.<br/>Benefactory didn’t have any feature complexity other than UI, they have updated their website so these designs won’t be available.',
+        value: 'Created the whole frontend of this app and designed the ui to be responsive. Used laravels blade to templating engine to create reusable components and defined scss classes to typograph and responsive. Used Laravel Mix and webpack for versioning.<br/>Benefactory didn’t have any feature complexity other than UI, they have updated their website so these designs won’t be available.',
       },
       {
         type: 'points',
@@ -320,7 +320,7 @@ export const projectsListValue = {
       },
       {
         type: 'text',
-        value: 'I did a blunder and lost the keystore so i was not able to upload the latest build and the uploaded app is stuck with a version having a runtime permission crash so had to unpublish to maintain the rating 😆.'
+        value: 'I did a blunder and lost the keystore so i was not able to upload the latest build and the uploaded app is stuck with a version having a runtime permission crash so had to unpublish to maintain the rating 🙈.'
       },
       {
         type: 'points',

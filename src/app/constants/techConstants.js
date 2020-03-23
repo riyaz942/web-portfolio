@@ -16,9 +16,8 @@ export const techList = [
     name: 'React',
     firstLogo: reactIcon,
     backgroundImage: reactBackgroundImage,
-    description: `I have the most as well as recent experience in React compared to other technology in my list.
-    <br/>Have created and architected web projects from scratch as well as jumped on ongoing projects.
-    <br/><br/> I also have professional experience with other packages that aid React development including: React Router, Aphrodite, React-Final-Form, Redux.`,
+    description: `I have the most as well as recent experience in React compared to other technology in my list. I have created and architected web projects from scratch as well as jumped on ongoing projects.
+    <br/><br/>I am familiar with recent techniques and libraries used in react like code-splitting, Hooks, React-Router, Final-Form, Redux, Redux-api-middleware, css in js, etc.`,
     projects: ['snapteam', 'nykaa', 'wakency'],
   },
   {
@@ -27,7 +26,7 @@ export const techList = [
     firstLogo: androidIcon,
     backgroundImage: androidBackgroundImage, //but recently have not touched on Android development so have to freshen up a bit on it.
     description: `I started my development journey with Android and have the most experience in it along with React.<br/><br/>
-    I have complete lifecycle experience on Android app developement from creating to publishing and managing, and have experience with needed android libraries which includes: Retrofit, Dagger, Picasso,`,
+    I have complete lifecycle experience on Android app developement from creating to publishing and managing, and have experience with needed android libraries which includes: Retrofit, Dagger, Picasso, ActiveAndroid, etc.`,
     projects: ['vc_music_player', 'measure']
   },
   {
@@ -46,7 +45,7 @@ export const techList = [
     firstLogo: laravelIcon,
     backgroundImage: laravelBackgroundImage,
     description: `I have a bit of experience in Laravel and backend development although have not created any project from scratch but have worked on seperate modules and features.<br/><br/>
-    But I am familiar with the backend development and the frameworks features like: MVC architecture, HTML template engine (blade), Eloquent ORM, Artisan and Seeders.`,
+    I am familiar with backend development and the frameworks features like: MVC architecture, HTML template engine (blade), Eloquent ORM, Artisan and Seeders.`,
     projects: ['benefactory', 'snapteam']
   },
   {
