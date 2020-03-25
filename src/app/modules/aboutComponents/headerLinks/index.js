@@ -40,7 +40,6 @@ const HeaderLinks = ({ isFullScreen, bodyType, onClickTimeline, onClickProject }
         >
           <ContactComponent
             isWhite
-            hideResume
           />
 
           <Div className={`${styles.header_link_container}`}>
