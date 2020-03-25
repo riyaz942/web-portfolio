@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./mobile_overlay.module.scss";
 import Div from "Common/components/div";
 import ContactComponent from "Common/components/contactComponent";
-import resumeDarkImage from "Images/resume/resume-dark-compressed.jpg";
+import resumeDarkImage from "Images/resume/Riyaz-resume-dark-min.jpg";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 const MobileOverlay = () => {
