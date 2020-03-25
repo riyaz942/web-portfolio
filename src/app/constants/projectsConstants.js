@@ -192,7 +192,7 @@ export const projectsListValue = {
     icon: lighthouseIcon,
     involvement: 'Major',
     link: {
-      type: 'visit',
+      type: 'download',
       value: 'https://play.google.com/store/apps/details?id=com.tailoredtech.lighthouse'
     },
     description: [
@@ -269,7 +269,7 @@ export const projectsListValue = {
     icon: measureIcon,
     involvement: 'Major',
     link: {
-      type: 'visit',
+      type: 'download',
       value: 'https://play.google.com/store/apps/details?id=com.informedtech.measure.app'
     },
     description: [
@@ -312,6 +312,10 @@ export const projectsListValue = {
     tech: ['android'],
     icon: vcMusicPlayerIcon,
     involvement: 'Owned',
+    link: {
+      type: 'download',
+      value: 'https://drive.google.com/open?id=1Fo3FSfu7NHTJ60Y0uQcWYpv6mX1Tetqe'
+    },
     description: [
       {
         type: 'text',
