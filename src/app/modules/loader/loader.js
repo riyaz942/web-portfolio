@@ -192,7 +192,7 @@ class Loader extends Component {
         this.setState({
           pageState: loaderPageStates.SHOW_PAGE
         });
-        setTimeout(()=>this.setState({showBackground: false}), 200)
+        setTimeout(()=>this.setState({showBackground: false}), 400)
       }
     }, 500);
   };
@@ -204,7 +204,7 @@ class Loader extends Component {
       this.setState({
         pageState: loaderPageStates.SHOW_PAGE
       });
-      setTimeout(()=>this.setState({showBackground: false}), 200)
+      setTimeout(()=>this.setState({showBackground: false}), 400)
     }, 500);
   };
 
