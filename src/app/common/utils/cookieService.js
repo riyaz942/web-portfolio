@@ -27,7 +27,11 @@ export const CookieService = {
     *   secure: true, // default: false
     * }
     * */
-    jsCookie.set(name, value, additional);
+
+    jsCookie.set(name, value, {
+      ...additional,
+      expires: 20
+    });
   },
   get(name){
     return jsCookie.get(name);
