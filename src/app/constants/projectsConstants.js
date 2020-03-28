@@ -324,7 +324,7 @@ export const projectsListValue = {
       },
       {
         type: 'text',
-        value: 'I did a blunder and lost the keystore so i was not able to upload the latest build and the uploaded app is stuck with a version having a runtime permission crash so had to unpublish to maintain the rating 🙈.'
+        value: 'I did a blunder and lost the keystore so i was not able to upload the latest build and the uploaded app is stuck with a version having a runtime permission crash so had to unpublish to maintain the rating.'
       },
       {
         type: 'points',
