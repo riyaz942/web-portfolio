@@ -28,7 +28,7 @@ export default class Intro extends Component {
         ref: React.createRef(),
         direction: 'bottom',
         isVisible: false,
-        nextTimeoutDuration: 900,
+        nextTimeoutDuration: 1100,
       },
       {
         ref: React.createRef(),
@@ -195,7 +195,7 @@ export default class Intro extends Component {
             </span>
             <Div align>
               <span ref={refObject[5].ref} className={`${styles.intro_text} ${styles.animate_right} ${refObject[5].isVisible ? styles.animate : ''}`}>
-                &nbsp; Just wanted to show of this animation
+                &nbsp; Just wanted to show off this animation
               </span>
               <span ref={refObject[6].ref} className={`${styles.intro_text} ${styles.reveal_center_animate_skew} ${refObject[6].isVisible ? styles.animate : ''}`}>
                 🙈
