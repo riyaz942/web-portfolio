@@ -19,11 +19,6 @@ const assetTechnologyImages = require.context(
   false,
   /.*\.png$|jpg$/
 );
-const projectImages = require.context(
-  `../../../assets/images/projectImages/snapteam`,
-  false,
-  /.*\.png$|jpg$/
-);
 
 class Loader extends Component {
   constructor(props) {
@@ -62,9 +57,6 @@ class Loader extends Component {
       images.push(this.preloadImage(image))
     );
     this.getImagesFromContext(assetTechnologyImages).map(image =>
-      images.push(this.preloadImage(image))
-    );
-    this.getImagesFromContext(projectImages).map(image =>
       images.push(this.preloadImage(image))
     );
     import("Modules/landing/landing").then(Landing => {
