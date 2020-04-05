@@ -120,7 +120,7 @@ export const projectsListValue = {
       {
         type: 'text',
         highlight: 'green',
-        value: "Nykaa is an e-commerce website offering beauty and wellness products from more than 500 leading brands.<br/> Nykaa’s website was initially built with magento but it was hard to scale with it, so they started moving the frontend to react and backend on python."
+        value: "Nykaa is an e-commerce website offering beauty and wellness products from more than 500 leading brands. <br/><br/>Nykaa follows an inventory-based model with warehouses in Mumbai, New Delhi, and Chennai as its offline presence is in 60 stores and expanding"
       },
       {
         type: 'header',
