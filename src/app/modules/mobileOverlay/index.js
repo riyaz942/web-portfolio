@@ -11,8 +11,8 @@ const MobileOverlay = () => {
       <Div fillParent className={styles.content_container}>
         <div className={styles.message_container}>
           <div>
-            The mobile responsive is still under development 🙈, Open this site
-            on Desktop to get the full experience.
+            The <span className={styles.hightlight_text}>Mobile Responsive</span> is still <span className={styles.hightlight_text}>Under Development</span> 🙈, Open this site
+            on <span className={styles.hightlight_text}>Desktop</span> to get the full experience.
             <br />
             You can checkout my resume below or download from link.
           </div>
