@@ -32,12 +32,12 @@ class HeaderDescription extends Component {
               className={styles.user_description_container}
             >
               <div className={styles.user_description}>
-                Hi, <br />I am <b className={styles.name}>Riyaz Ahmed</b>, A 25-year-old self-taught developer with 4+ years of software development experience on various platforms, Passionate to build polished, innovative and well-detailed apps with fluid animations to complement the design.
+                Hi, <br />I am <b className={styles.name}>Riyaz Ahmed</b>, A Self-taught Developer with 4+ years of Software Development experience on various Platforms, Passionate to build Polished, Innovative and well-detailed Apps with Fluid Animations to complement the Design.
                 {/* <br/><br/> In my spare time, I usually read or play video games but mostly i try to work on new ideas and learn. */}
               </div>
 
               <Div row justify align className={styles.user_button_container}>
-                You can checkout my
+                Checkout my
                 <Div align className={styles.user_button} onClick={onClickTimeline}>
                   Timeline
                   <div className={styles.underline}></div>
@@ -47,7 +47,7 @@ class HeaderDescription extends Component {
                   Technologies
                   <div className={styles.underline}></div>
                 </Div>
-                that i worked on.
+                that I worked on.
               </Div>
 
               <ContactComponent
