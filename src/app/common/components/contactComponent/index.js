@@ -30,7 +30,7 @@ const ContactComponent = ({ className, isWhite, hideResume }) => {
           className={styles.icon}
         />
       </a>
-      <a className={styles.icon_link} target="_blank" href="mailto:ahmed.riyaz94@email.com">
+      <a className={styles.icon_link} target="_blank" href="mailto:ahmed.riyaz94@gmail.com">
         <img
           src={isWhite ? iconEmailWhite : iconEmail}
           className={styles.icon}

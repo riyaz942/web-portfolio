@@ -9,7 +9,6 @@ const calc = (x, y) => [x - window.innerWidth / 2, y - window.innerHeight / 2];
 const trans1 = (x, y) => `translate(${x / 20}px,${y / 20}px)`;
 const trans2 = (x, y) => `translate(${x / 15}px,${y / 15}px)`;
 const trans3 = (x, y) => `translate(${x / 10}px,${y / 10}px)`;
-const trans4 = (x, y) => `translate(${x / 3.5}px,${y / 3.5}px)`;
 
 const BackgroundAnimator = ({ clientX, clientY }) => {
   const animationProps = useSpring({ xy: calc(clientX, clientY), config: { mass: 10, tension: 550, friction: 240 } });
