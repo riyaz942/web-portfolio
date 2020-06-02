@@ -4,19 +4,19 @@
 .right_container {
   overflow: hidden;
   z-index: 3;
-  padding-left: 250px;
+  padding-left: 200px;
 
   .slide_container {
     position: relative;
     align-self: stretch;
-    height: 450px;
+    height: 400px;
     padding: 50px 0px 50px 260px;
   }
 
   .slide_inner_container {
     align-self: stretch;
     overflow-x: hidden;
-    height: 450px;
+    height: 400px;
     padding: 50px 0px 50px 260px;
     position: absolute;
     top: 0;

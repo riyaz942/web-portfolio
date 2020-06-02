@@ -59,8 +59,8 @@ class Projects extends Component {
   };
 
   getImagePosition = (techType, imageAlignment) => {
-    const lowerRange = 10;
-    const higherRange = techType == 'android' ? 70 : 30;
+    const lowerRange = 15;
+    const higherRange = techType == 'android' ? 70 : 20;
 
     const imageLeft = random(lowerRange, higherRange);
     const imageTop = random(lowerRange, higherRange);
@@ -279,7 +279,10 @@ class Projects extends Component {
           </Transition>
         </Div>
 
-        <RightContainer item={tech} />
+        <RightContainer
+          item={tech}
+          className={styles.right_container}
+        />
       </Div>
     );
   }

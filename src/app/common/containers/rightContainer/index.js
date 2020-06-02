@@ -215,7 +215,7 @@ class RightContainer extends Component {
 
   render() {
     const { projects } = this.state;
-    const { item } = this.props;
+    const { item, className } = this.props;
     const selectedIndex = projects[item.id]
       ? projects[item.id].findIndex(slide => slide.state == "CENTERED")
       : 0;
@@ -226,7 +226,7 @@ class RightContainer extends Component {
       : false;
 
     return (
-      <Div flex className={styles.right_container}>
+      <Div flex className={`${styles.right_container} ${className}`}>
         <Div className={styles.slide_container}>
           <Transition
             items={item}
