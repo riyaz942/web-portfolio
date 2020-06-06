@@ -14,6 +14,8 @@ import {
 } from "react-router-dom";
 import { configureStore, history } from "./redux/store/store.dev";
 import { Transition } from "react-spring/renderprops";
+import NewProjectDetailsPage from './modules/newProjectDetailsPage';
+
 const Landing = React.lazy(() => import("./modules/landing/landing"));
 const ProjectDetailsPage = React.lazy(() =>
   import("./modules/projectDetailsPage")
@@ -30,6 +32,11 @@ const App = () => {
             <Router>
               <Suspense fallback={null}>
                 <Switch>
+                 <Route
+                    exact
+                    path="/new-project/:projectSlug?"
+                    component={NewProjectDetailsPage}
+                  />
                   <Route path="/">
                     <Landing />
                     <Route
@@ -60,6 +67,7 @@ const App = () => {
                       }}
                     />
                   </Route>
+
                 </Switch>
               </Suspense>
             </Router>
