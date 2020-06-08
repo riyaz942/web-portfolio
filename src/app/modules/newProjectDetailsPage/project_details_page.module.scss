@@ -1,9 +1,14 @@
 .container {
   width: 100vw;
-  
+  overflow: scroll;
 
   .content {
     width: 980px;
-  }
+    flex-wrap: wrap;
 
+    .image {
+      width: 400px;
+      object-fit: contain;
+    }
+  }
 }
