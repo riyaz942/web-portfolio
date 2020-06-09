@@ -18,6 +18,7 @@ import { projectsListValue } from "Constants/projectsConstants";
 import ProjectDescription from "./projectDescription";
 import isEmpty from "lodash/isEmpty";
 import ElementTransition from './elementTransition';
+import ProjectImageGrid from './projectImageGrid';
 import crossIcon from "Icons/icon-cross.png";
 
 const onClickClose = (history, position) => {
@@ -181,6 +182,9 @@ const ProjectDetailsPage = ({
             <ProjectDescription
               className={styles.content}
               description={project.description}
+            />
+            <ProjectImageGrid 
+              projectId={projectId}
             />
           </animated.div>
         </Div>

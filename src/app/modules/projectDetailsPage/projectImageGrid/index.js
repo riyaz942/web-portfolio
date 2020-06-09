@@ -4,7 +4,7 @@ import Div from "Common/components/div";
 import { getProjectImages } from "Constants/projectImageConstants";
 import map from "lodash/map";
 
-export default class NewProjectDetailsPage extends Component {
+export default class ProjectImageGrid extends Component {
 
   getImageRatio = (projectImages) => {
     return map(projectImages, projectImage => {
@@ -38,10 +38,8 @@ export default class NewProjectDetailsPage extends Component {
   }
 
   render() {
-    const { match } = this.props;
-    const projectId = match && match.params ? match.params.projectSlug : "";
+    const { projectId } = this.props;
     const projectImages = this.getImageRatio(getProjectImages(projectId));
-    console.log(projectImages);
 
     return (
       <Div align className={styles.container}>
