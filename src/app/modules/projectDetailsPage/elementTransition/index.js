@@ -29,23 +29,28 @@ const getBackgroundAnimation = position => {
   };
 };
 
-const ElementTransition = ({ projectReducer, hideTransitionElement, animateImageTo, project }) => {
-  const { imgPosition, slidePosition } = projectReducer;
+const getImageAnimation = (position) => {
+  if (!position)
+    return {};
+
+  return {
+    height: position.height,
+    width: position.width,
+    transform: `translate(${position.left}px, ${position.top}px)`
+  }
+}
+
+const ElementTransition = ({ projectReducer, hideTransitionElement, project }) => {
+  const { imgPosition, slidePosition, imgDestination } = projectReducer;
 
   const backgroundTransitionAnimation = useSpring({
     to: getBackgroundAnimation(slidePosition).to,
     from: getBackgroundAnimation(slidePosition).from
   });
-
+  console.log(imgDestination)
   const imageTransitionAnimation = useSpring({
-    to: animateImageTo,
-    from: imgPosition
-      ? {
-        height: imgPosition.height,
-        width: imgPosition.width,
-        transform: `translate(${imgPosition.left}px, ${imgPosition.top}px)`
-      }
-      : {}
+    to: getImageAnimation(imgDestination),
+    from: getImageAnimation(imgPosition),
   });
 
 

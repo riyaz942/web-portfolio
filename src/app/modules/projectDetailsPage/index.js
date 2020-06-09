@@ -12,7 +12,7 @@ import { withRouter } from "react-router";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { useSpring, animated } from "react-spring";
-import { clearProjectPosition } from "Redux/actions/projectActions";
+import { clearProjectPosition, setProjectDestination } from "Redux/actions/projectActions";
 // import lighthouseProjectIcon from 'Icons/project-icon-lighthouse.png';
 import { projectsListValue } from "Constants/projectsConstants";
 import ProjectDescription from "./projectDescription";
@@ -30,6 +30,7 @@ const ProjectDetailsPage = ({
   projectReducer,
   style,
   clearProjectPosition,
+  setProjectDestination,
   history
 }) => {
   const projectId = match && match.params ? match.params.projectSlug : "";
@@ -72,11 +73,6 @@ const ProjectDetailsPage = ({
   const [hideTransitionElement, setHideTransitionElement] = useState(false);
   const [componentReady, setComponentReady] = useState(false);
   const [showContent, setShowContent] = useState(false);
-  const [animateImageTo, setAnimateImageTo] = useState({
-    height: 0,
-    width: 0,
-    transform: "translate(0px, 0px)"
-  });
 
   const containerOpacityAnimation = useSpring({
     from: { opacity: !isEmpty(imgPosition) ? 0 : 1 },
@@ -92,11 +88,7 @@ const ProjectDetailsPage = ({
 
   useEffect(() => {
     const currentRect = imageRef.current.getBoundingClientRect();
-    setAnimateImageTo({
-      height: currentRect.height,
-      width: currentRect.width,
-      transform: `translate(${currentRect.left}px, ${currentRect.top}px)`
-    });
+    setProjectDestination(currentRect);
     setComponentReady(true);
 
     return () => clearProjectPosition();
@@ -196,8 +188,7 @@ const ProjectDetailsPage = ({
 
       {componentReady && !isEmpty(project) && (
         <ElementTransition 
-          project={project}        
-          animateImageTo={animateImageTo}
+          project={project}
           hideTransitionElement={hideTransitionElement}
         />
       )}
@@ -213,7 +204,8 @@ const mapStateToProps = state => {
 
 const mapDispathToProps = dispatch => {
   return {
-    clearProjectPosition: bindActionCreators(clearProjectPosition, dispatch)
+    clearProjectPosition: bindActionCreators(clearProjectPosition, dispatch),
+    setProjectDestination: bindActionCreators(setProjectDestination, dispatch)
   };
 };
 
