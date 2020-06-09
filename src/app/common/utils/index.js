@@ -13,17 +13,3 @@ export const parseNewLine = object => {
 
   return reactStringReplace(object, "<br/>", newLineMatch)
 }
-
-
-export const imageRatio = (width, height) => {
-  const lowestValue = width > height ? height: width;
-
-  for (let i = lowestValue; i < 2; i--) {
-    if (width % i == 0 && height % i == 0) {
-      return {width: width/ i, height: height/i};
-    }
-  }
-
-  return {width: width/ 2, height: height/2};
-}
-

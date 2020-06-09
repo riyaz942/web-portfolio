@@ -3,12 +3,37 @@
   overflow: scroll;
 
   .content {
-    width: 980px;
-    flex-wrap: wrap;
+    max-width: 1024px;
+    display: grid;
+    grid-gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-auto-rows: 300px;
 
     .image {
-      width: 400px;
-      object-fit: contain;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
     }
   }
+}
+
+.grid_column_3 {
+  grid-column: span 3;
+}
+.grid_column_2 {
+  grid-column: span 2;
+}
+.grid_column_1 {
+  grid-column: span 1;
+}
+
+.grid_row_3 {
+  grid-row: span 3;
+}
+.grid_row_2 {
+  grid-row: span 2;
+}
+.grid_row_1 {
+  grid-row: span 1;
 }

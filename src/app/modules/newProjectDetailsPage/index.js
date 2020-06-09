@@ -2,35 +2,60 @@ import React, { Component } from "react";
 import styles from "./project_details_page.module.scss";
 import Div from "Common/components/div";
 import { getProjectImages } from "Constants/projectImageConstants";
-import { imageRatio } from "Common/utils";
 import map from "lodash/map";
 
 export default class NewProjectDetailsPage extends Component {
-  state = {
-    result: [],
+
+  getImageRatio = (projectImages) => {
+    return map(projectImages, projectImage => {
+      if (projectImage.ratioWidth || projectImage.ratioHeight) {
+        return projectImage;
+      }
+
+      const height = projectImage.height;
+      const width = projectImage.width;
+
+      const percentage = Math.floor(Math.min(height, width)/ Math.max(height, width) * 100);
+
+      if (percentage > 40 && percentage < 70) {
+        //2 : 1
+        return {
+          ...projectImage,
+          ratioWidth: width > height ? 2 : 1,
+          ratioHeight: height > width ? 2 : 1,
+        }
+      }  else if (percentage < 40) {
+        // 3 : 1
+        return {
+          ...projectImage,
+          ratioWidth: width > height ? 3 : 1,
+          ratioHeight: height > width ? 3 : 1,
+        }
+      }
+
+      return {...projectImage, ratioWidth: 1, ratioHeight: 1};
+    });
   }
 
   render() {
     const { match } = this.props;
     const projectId = match && match.params ? match.params.projectSlug : "";
-    const projectImages = getProjectImages(projectId);
-    const {result} = this.state;
+    const projectImages = this.getImageRatio(getProjectImages(projectId));
+    console.log(projectImages);
 
     return (
       <Div align className={styles.container}>
         <Div row className={styles.content}>
-          <p>
-            {
-              JSON.stringify(result, null, 0)
-            }
-          </p>
-          {map(projectImages, (projectImage, index) => {
-            // console.log(imageRatio());
 
+          {map(projectImages, (projectImage, index) => {
             return (
               <img
                 key={index}
-                className={styles.image}
+                className={[
+                  styles.image,
+                  styles[`grid_column_${projectImage.ratioWidth}`],
+                  styles[`grid_row_${projectImage.ratioHeight}`],
+                ].join(' ')}
                 src={projectImage.image}
               />
             );
@@ -40,18 +65,3 @@ export default class NewProjectDetailsPage extends Component {
     );
   }
 }
-
-
-// function getImageSize(imgSrc) {
-//   var imgLoader = new Image(); // create a new image object
-
-//  imgLoader.onload = function() { // assign onload handler
-//      var height = imgLoader.height;
-//      var width = imgLoader.width;
-//      alert ('Image size: '+width+'x'+height);
-//  }
-
-//  imgLoader.src = imgSrc; // set the image source
-// }
-
-
