@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import Intro from "../intro/intro";
+// import Intro from "../intro/intro";
 import styles from "./loader.scss";
 import { loaderPageStates } from "../../constants/loaderConstants";
 import { Transition, Spring } from "react-spring/renderprops";
@@ -28,7 +28,7 @@ class Loader extends Component {
       totalItems: 0,
       showBackground: true,
       pageState: loaderPageStates.IS_LOADING,
-      disableIntro: false
+      disableIntro: true
     };
 
     this.lastUpdated = 0;
@@ -256,7 +256,7 @@ class Loader extends Component {
         }
 
         {/* Intro Animation */}
-        <Transition
+        {/* <Transition
           items={pageState}
           from={{ opacity: 0 }}
           enter={{ opacity: 1 }}
@@ -271,7 +271,7 @@ class Loader extends Component {
               />
             ))
           }
-        </Transition>
+        </Transition> */}
       </Div>
     );
   }

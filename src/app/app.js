@@ -2,7 +2,6 @@ import React, { Suspense } from "react";
 import { Provider } from "react-redux";
 import { ConnectedRouter } from "connected-react-router";
 import styles from "./app.scss";
-import Intro from "./modules/intro/intro";
 
 import Div from "Common/components/div";
 import Loader from "./modules/loader/loader";
