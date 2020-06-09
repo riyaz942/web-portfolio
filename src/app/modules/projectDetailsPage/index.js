@@ -17,8 +17,7 @@ import { clearProjectPosition } from "Redux/actions/projectActions";
 import { projectsListValue } from "Constants/projectsConstants";
 import ProjectDescription from "./projectDescription";
 import isEmpty from "lodash/isEmpty";
-import ProjectViewPager from "./projectViewPager";
-import crossIcon from 'Icons/icon-cross.png';
+import crossIcon from "Icons/icon-cross.png";
 
 const getBackgroundAnimation = position => {
   const to = {
@@ -35,7 +34,7 @@ const getBackgroundAnimation = position => {
         height: `calc(0vh + ${position.height}px)`,
         width: `calc(0vw + ${position.width}px)`,
         transform: `translate(${position.left}px, ${position.top}px)`,
-        borderRadius: 12,
+        borderRadius: 12
       }
     };
   }
@@ -47,12 +46,9 @@ const getBackgroundAnimation = position => {
 };
 
 const onClickClose = (history, position) => {
-
-  if (position)
-    history.goBack();
-  else 
-    history.replace('/');
-}
+  if (position) history.goBack();
+  else history.replace("/");
+};
 
 const ProjectDetailsPage = ({
   match,
@@ -61,11 +57,10 @@ const ProjectDetailsPage = ({
   clearProjectPosition,
   history
 }) => {
+  const projectId = match && match.params ? match.params.projectSlug : "";
 
-  const projectId = (match && match.params) ? match.params.projectSlug : '';
-
-  const [project] = useState(projectsListValue[projectId] || {} );
-  const { imgPosition, slidePosition } =projectReducer;
+  const [project] = useState(projectsListValue[projectId] || {});
+  const { imgPosition, slidePosition } = projectReducer;
 
   //-------------------------------------------ScrollAnimation
   const imageWidth = 150;
@@ -109,9 +104,9 @@ const ProjectDetailsPage = ({
   });
 
   const containerOpacityAnimation = useSpring({
-    from: { opacity: !isEmpty(imgPosition)? 0 : 1 },
+    from: { opacity: !isEmpty(imgPosition) ? 0 : 1 },
     opacity: 1,
-    delay: !isEmpty(imgPosition)? 500: 0,
+    delay: !isEmpty(imgPosition) ? 500 : 0,
     onStart: () => {
       if (componentReady) {
         setShowContent(true);
@@ -124,10 +119,11 @@ const ProjectDetailsPage = ({
     to: animateTo,
     from: imgPosition
       ? {
-        height: imgPosition.height,
-        width: imgPosition.width,
-        transform: `translate(${imgPosition.left}px, ${imgPosition.top}px)`
-      }: {}
+          height: imgPosition.height,
+          width: imgPosition.width,
+          transform: `translate(${imgPosition.left}px, ${imgPosition.top}px)`
+        }
+      : {}
   });
 
   const backgroundTransitionAnimation = useSpring({
@@ -148,101 +144,95 @@ const ProjectDetailsPage = ({
   }, []);
 
   return (
-    <Div row className={styles.project_details_container} style={style}>
-      {!isEmpty(project) ? (
-        <Fragment>
-          <Div
-            animate
-            justify
-            className={styles.left_container}
-            style={containerOpacityAnimation}
-          >
-           <ProjectViewPager
-            projectId={projectId}
-           />
-           <img
+    <Div justify row className={styles.project_details_container} style={style}>
+      {/*
+        <img
             src={crossIcon}
             className={styles.cross_img}
             onClick={()=>onClickClose(history, imgPosition)}
            />
+      */}
+      {!isEmpty(project) ? (
+        <Div animate className={styles.right_container}>
+          <Div
+            animate
+            row
+            justify="end"
+            align
+            className={styles.link_container}
+            style={containerOpacityAnimation}
+          >
+            {project.link ? (
+              <a
+                href={project.link.value}
+                className={styles.project_link}
+                target="_blank"
+              >
+                {project.link.type}
+              </a>
+            ) : null}
           </Div>
-          <Div animate className={styles.right_container}>
-            <Div
-              animate
-              row
-              justify="end"
-              align
-              className={styles.link_container}
-              style={containerOpacityAnimation}
-            >
-              {project.link ? (
-                <a
-                  href={project.link.value}
-                  className={styles.project_link}
-                  target="_blank"
-                >
-                  {project.link.type}
-                </a>
-              ) : null}
-            </Div>
 
-            <animated.img
-              ref={imageRef}
-              className={styles.project_image}
-              src={project.icon}
-              style={{
-                width: imgWidthAnim,
-                height: imgWidthAnim,
-                left: imgLeftAnim,
-                top: imgTopAnim,
-                opacity: isEmpty(imgPosition) ? containerOpacityAnimation.opacity : showContent ? 1 : 0
-              }}
+          <animated.img
+            ref={imageRef}
+            className={styles.project_image}
+            src={project.icon}
+            style={{
+              width: imgWidthAnim,
+              height: imgWidthAnim,
+              left: imgLeftAnim,
+              top: imgTopAnim,
+              opacity: isEmpty(imgPosition)
+                ? containerOpacityAnimation.opacity
+                : showContent
+                ? 1
+                : 0
+            }}
+          />
+
+          <animated.div
+            className={styles.project_name}
+            style={{
+              fontSize: titleSizeAnim,
+              left: titleLeftAnim,
+              top: titleTopAnim,
+              opacity: containerOpacityAnimation.opacity
+            }}
+          >
+            {project.name}
+          </animated.div>
+
+          <Div
+            animate
+            align="end"
+            style={{
+              top: subDetailsTop,
+              opacity: showContent
+                ? subDetailsAlpha
+                : containerOpacityAnimation.opacity
+            }}
+            className={styles.project_sub_details_container}
+          >
+            <div className={styles.title}>Platform</div>
+            <div className={styles.value}>{project.tech.join(" | ")}</div>
+
+            <div className={`${styles.title} ${styles.project_involvement}`}>
+              Project Involment
+            </div>
+            <div className={styles.value}>{project.involvement}</div>
+          </Div>
+
+          <animated.div
+            className={styles.content_container}
+            onScroll={onScroll}
+            style={containerOpacityAnimation}
+          >
+            <ProjectDescription
+              className={styles.content}
+              description={project.description}
             />
-
-            <animated.div
-              className={styles.project_name}
-              style={{
-                fontSize: titleSizeAnim,
-                left: titleLeftAnim,
-                top: titleTopAnim,
-                opacity: containerOpacityAnimation.opacity
-              }}
-            >
-              {project.name}
-            </animated.div>
-
-            <Div
-              animate
-              align="end"
-              style={{
-                top: subDetailsTop,
-                opacity: showContent
-                  ? subDetailsAlpha
-                  : containerOpacityAnimation.opacity
-              }}
-              className={styles.project_sub_details_container}
-            >
-              <div className={styles.title}>Platform</div>
-              <div className={styles.value}>{project.tech.join(" | ")}</div>
-
-              <div className={`${styles.title} ${styles.project_involvement}`}>
-                Project Involment
-              </div>
-              <div className={styles.value}>{project.involvement}</div>
-            </Div>
-
-            <animated.div
-              className={styles.content_container}
-              onScroll={onScroll}
-              style={containerOpacityAnimation}
-            >
-              <ProjectDescription
-                className={styles.content}
-                description={project.description}
-              />
-            </animated.div>
-          </Div>
-        </Fragment>
+          </animated.div>
+        </Div>
       ) : null}
 
       {componentReady && !isEmpty(project) && (
@@ -256,7 +246,7 @@ const ProjectDetailsPage = ({
             }}
           />
 
-          { (!hideTransitionElement && !isEmpty(imgPosition) ) && (
+          {!hideTransitionElement && !isEmpty(imgPosition) && (
             <animated.img
               src={project.icon}
               style={{
