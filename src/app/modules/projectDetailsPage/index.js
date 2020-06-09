@@ -242,6 +242,8 @@ const ProjectDetailsPage = ({
               ...backgroundTransitionAnimation,
               position: "absolute",
               background: "white",
+              left:0,
+              right: 0,
               zIndex: -3
             }}
           />
@@ -253,6 +255,8 @@ const ProjectDetailsPage = ({
                 ...imageTransitionAnimation,
                 objectFit: "contain",
                 position: "absolute",
+                left:0,
+                right: 0,
                 zIndex: 2
               }}
             />
