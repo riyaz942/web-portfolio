@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import styles from "./project_details_page.module.scss";
+import styles from "./project_image_grid.module.scss";
 import Div from "Common/components/div";
 import { getProjectImages } from "Constants/projectImageConstants";
 import map from "lodash/map";
