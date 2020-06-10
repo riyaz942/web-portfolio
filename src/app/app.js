@@ -12,6 +12,7 @@ import {
   useRouteMatch
 } from "react-router-dom";
 import { configureStore, history } from "./redux/store/store.dev";
+import { config } from 'react-spring';
 import { Transition } from "react-spring/renderprops";
 
 const Landing = React.lazy(() => import("./modules/landing/landing"));
@@ -44,6 +45,7 @@ const App = () => {
                             from={{ opacity: 1 }}
                             enter={{ opacity: 1 }}
                             leave={{ opacity: 0 }}
+                            config={config.stiff}
                           >
                             {item =>
                               item &&

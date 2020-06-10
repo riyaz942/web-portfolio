@@ -41,7 +41,7 @@ const ProjectDetailsPage = ({
 
   //-------------------------------------------ScrollAnimation
   const [{ st }, set] = useSpring(() => ({ st: 0 }));
-  const onScroll = useCallback(e => set({ st: e.target.scrollTop }), []);
+  let onScroll = useCallback(e => set({ st: e.target.scrollTop }), []);
   //-------------------------------------------End
 
   const [hideTransitionElement, setHideTransitionElement] = useState(false);
@@ -65,7 +65,9 @@ const ProjectDetailsPage = ({
     setProjectDestination(currentRect);
     setComponentReady(true);
 
-    return () => clearProjectPosition();
+    return () => {
+      clearProjectPosition();
+    };
   }, []);
 
   return (
