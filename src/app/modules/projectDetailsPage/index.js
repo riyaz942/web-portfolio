@@ -1,9 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useState,
-  useRef
-} from "react";
+import React, { useCallback, useEffect, useState, useRef } from "react";
 import Div from "Common/components/div";
 import styles from "./project_details_page.module.scss";
 import map from "lodash/map";
@@ -11,14 +6,17 @@ import { withRouter } from "react-router";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { useSpring, animated } from "react-spring";
-import { clearProjectPosition, setProjectDestination } from "Redux/actions/projectActions";
+import {
+  clearProjectPosition,
+  setProjectDestination
+} from "Redux/actions/projectActions";
 // import lighthouseProjectIcon from 'Icons/project-icon-lighthouse.png';
 import { projectsListValue } from "Constants/projectsConstants";
 import ProjectDescription from "./projectDescription";
 import isEmpty from "lodash/isEmpty";
-import ElementTransition from './elementTransition';
-import ElementScroll from './elementScroll';
-import ProjectImageGrid from './projectImageGrid';
+import ElementTransition from "./elementTransition";
+import ElementScroll from "./elementScroll";
+import ProjectImageGrid from "./projectImageGrid";
 import crossIcon from "Icons/icon-cross.png";
 
 const onClickClose = (history, position) => {
@@ -80,34 +78,36 @@ const ProjectDetailsPage = ({
            />
       */}
       {!isEmpty(project) ? (
-        <Div animate className={styles.right_container}>
-          <Div
-            animate
-            row
-            justify="end"
-            align
-            className={styles.link_container}
-            style={containerOpacityAnimation}
-          >
-            {project.link ? (
-              <a
-                href={project.link.value}
-                className={styles.project_link}
-                target="_blank"
-              >
-                {project.link.type}
-              </a>
-            ) : null}
+        <Div animate className={styles.container}>
+          <Div className={styles.header_container}>
+            <Div
+              animate
+              row
+              justify="end"
+              align
+              className={styles.link_container}
+              style={containerOpacityAnimation}
+            >
+              {project.link ? (
+                <a
+                  href={project.link.value}
+                  className={styles.project_link}
+                  target="_blank"
+                >
+                  {project.link.type}
+                </a>
+              ) : null}
+            </Div>
+
+            <ElementScroll
+              st={st}
+              project={project}
+              showContent={showContent}
+              imageRef={imageRef}
+              imgPosition={imgPosition}
+              containerOpacityAnimation={containerOpacityAnimation}
+            />
           </Div>
-          
-          <ElementScroll
-            st={st}
-            project={project}
-            showContent={showContent}
-            imageRef={imageRef}
-            imgPosition={imgPosition}
-            containerOpacityAnimation={containerOpacityAnimation}
-          />
 
           <animated.div
             className={styles.content_container}
@@ -118,15 +118,13 @@ const ProjectDetailsPage = ({
               className={styles.content}
               description={project.description}
             />
-            <ProjectImageGrid 
-              projectId={projectId}
-            />
+            <ProjectImageGrid projectId={projectId} />
           </animated.div>
         </Div>
       ) : null}
 
       {componentReady && !isEmpty(project) && (
-        <ElementTransition 
+        <ElementTransition
           project={project}
           hideTransitionElement={hideTransitionElement}
         />
