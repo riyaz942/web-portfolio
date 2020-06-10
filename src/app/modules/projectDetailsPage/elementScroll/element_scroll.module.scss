@@ -1,0 +1,34 @@
+@import '~Styles/colors.module';
+
+.project_image {
+  position: absolute;
+  object-fit: contain;
+}
+
+.project_name {
+  position: absolute;
+  color: $color-dark;
+  line-height: 1;
+}
+
+.project_sub_details_container {
+  position: absolute;
+  right: 0;
+  font-size: 15px;
+  font-weight: 500;
+  color: $color-dark;
+  line-height: 1;      
+
+  .title {
+    color: $color-brown-grey;
+    margin-bottom: 2px;
+  }
+
+  .value {
+    text-transform: capitalize;
+  }
+
+  .project_involvement {
+    margin-top: 15px;
+  }
+}

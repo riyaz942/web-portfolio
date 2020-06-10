@@ -2,7 +2,6 @@ import React, {
   useCallback,
   useEffect,
   useState,
-  Fragment,
   useRef
 } from "react";
 import Div from "Common/components/div";
@@ -18,6 +17,7 @@ import { projectsListValue } from "Constants/projectsConstants";
 import ProjectDescription from "./projectDescription";
 import isEmpty from "lodash/isEmpty";
 import ElementTransition from './elementTransition';
+import ElementScroll from './elementScroll';
 import ProjectImageGrid from './projectImageGrid';
 import crossIcon from "Icons/icon-cross.png";
 
@@ -35,39 +35,12 @@ const ProjectDetailsPage = ({
   history
 }) => {
   const projectId = match && match.params ? match.params.projectSlug : "";
-
   const [project] = useState(projectsListValue[projectId] || {});
   const { imgPosition } = projectReducer;
+  const imageRef = useRef(null);
 
   //-------------------------------------------ScrollAnimation
-  const imageWidth = 150;
-  const imageRef = useRef(null);
   const [{ st }, set] = useSpring(() => ({ st: 0 }));
-  const imgTopAnim = st.interpolate(o => (70 - o / 2 > 0 ? 70 - o / 2 : 0));
-  const imgWidthAnim = st.interpolate(o =>
-    imageWidth - o / 1.5 > 48 ? imageWidth - o / 1.5 : 48
-  );
-  const imgLeftAnim = st.interpolate(
-    o =>
-      `calc(${50 - o / 1.5 / 3 > 0 ? 50 - o / 1.5 / 3 : 0}% - ${
-        imageWidth / 2 - o / 1.5 > 0 ? imageWidth / 2 - o / 1.5 : 0
-      }px)`
-  );
-
-  const titleTopAnim = st.interpolate(
-    o => (220 - o / 1.1 > 0 ? 220 - o / 1.1 : 0) + 14
-  );
-  const titleLeftAnim = st.interpolate(o => (o / 2.5 < 60 ? o / 2.5 : 60));
-  const titleSizeAnim = st.interpolate(o =>
-    36 - o / 10 > 18 ? 36 - o / 10 : 18
-  );
-
-  const subDetailsTop = st.interpolate(o =>
-    220 - o / 1.1 > 0 ? 220 - o / 1.1 : 0
-  );
-  const subDetailsAlpha = st.interpolate(o =>
-    1 - o / 150 > 0 ? 1 - o / 150 : 0
-  );
   const onScroll = useCallback(e => set({ st: e.target.scrollTop }), []);
   //-------------------------------------------End
 
@@ -124,55 +97,15 @@ const ProjectDetailsPage = ({
               </a>
             ) : null}
           </Div>
-
-          <animated.img
-            ref={imageRef}
-            className={styles.project_image}
-            src={project.icon}
-            style={{
-              width: imgWidthAnim,
-              height: imgWidthAnim,
-              left: imgLeftAnim,
-              top: imgTopAnim,
-              opacity: isEmpty(imgPosition)
-                ? containerOpacityAnimation.opacity
-                : showContent
-                ? 1
-                : 0
-            }}
+          
+          <ElementScroll
+            st={st}
+            project={project}
+            showContent={showContent}
+            imageRef={imageRef}
+            imgPosition={imgPosition}
+            containerOpacityAnimation={containerOpacityAnimation}
           />
-
-          <animated.div
-            className={styles.project_name}
-            style={{
-              fontSize: titleSizeAnim,
-              left: titleLeftAnim,
-              top: titleTopAnim,
-              opacity: containerOpacityAnimation.opacity
-            }}
-          >
-            {project.name}
-          </animated.div>
-
-          <Div
-            animate
-            align="end"
-            style={{
-              top: subDetailsTop,
-              opacity: showContent
-                ? subDetailsAlpha
-                : containerOpacityAnimation.opacity
-            }}
-            className={styles.project_sub_details_container}
-          >
-            <div className={styles.title}>Platform</div>
-            <div className={styles.value}>{project.tech.join(" | ")}</div>
-
-            <div className={`${styles.title} ${styles.project_involvement}`}>
-              Project Involment
-            </div>
-            <div className={styles.value}>{project.involvement}</div>
-          </Div>
 
           <animated.div
             className={styles.content_container}
