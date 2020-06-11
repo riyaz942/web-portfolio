@@ -17,7 +17,7 @@ import isEmpty from "lodash/isEmpty";
 import ElementTransition from "./elementTransition";
 import ElementScroll from "./elementScroll";
 import ProjectImageGrid from "./projectImageGrid";
-import crossIcon from "Icons/icon-cross.png";
+import backIcon from "Icons/icon-left-arrow-dark.png";
 
 const onClickClose = (history, position) => {
   if (position) history.goBack();
@@ -41,17 +41,19 @@ const ProjectDetailsPage = ({
 
   //-------------------------------------------ScrollAnimation
   const [{ st }, set] = useSpring(() => ({ st: 0 }));
-  let onScroll = useCallback(e => {
+  let onScroll = useCallback(
+    e => {
+      // Shows/Hides header based on scroll position
+      if (e.target.scrollTop > 260 && !headerShadow) {
+        setHeaderShadow(true);
+      } else if (e.target.scrollTop < 260 && headerShadow) {
+        setHeaderShadow(false);
+      }
 
-    // Shows/Hides header based on scroll position
-    if ( e.target.scrollTop > 260 && !headerShadow) {
-      setHeaderShadow(true);
-    } else if (  e.target.scrollTop < 260 && headerShadow ) {
-      setHeaderShadow(false);
-    }
-
-    set({ st: e.target.scrollTop })
-  }, [headerShadow]); //Update memoized callback when headerShadow state updates
+      set({ st: e.target.scrollTop });
+    },
+    [headerShadow]
+  ); //Update memoized callback when headerShadow state updates
   //-------------------------------------------End
 
   const [hideTransitionElement, setHideTransitionElement] = useState(false);
@@ -83,37 +85,50 @@ const ProjectDetailsPage = ({
 
   return (
     <Div justify row className={styles.project_details_container} style={style}>
-      <Div className={`${styles.background_header} ${headerShadow ? styles.has_shadow : ''}`}>
-        <img
-          src={crossIcon}
-          className={styles.cross_img}
-          onClick={() => onClickClose(history, imgPosition)}
-        />
+      <Div
+        justify
+        align
+        animate
+        style={containerOpacityAnimation}
+        className={`${styles.header_container} ${
+          headerShadow ? styles.has_shadow : ""
+        }`}
+      >
+        <Div
+          row
+          justify="space_between"
+          className={styles.header_content}
+        >
+          <img
+            src={backIcon}
+            className={styles.cross_img}
+            onClick={() => onClickClose(history, imgPosition)}
+          />
+
+          {project.link ? (
+            <a
+              href={project.link.value}
+              className={styles.project_link}
+              target="_blank"
+            >
+              {project.link.type}
+            </a>
+          ) : null}
+        </Div>
       </Div>
       {/*
 
       */}
       {!isEmpty(project) ? (
         <Div animate className={styles.container}>
-          <Div className={styles.header_container}>
-            <Div
-              animate
+          <Div className={styles.shadow_header}>
+            {/* <Div
               row
               justify="end"
               align
               className={styles.link_container}
               style={containerOpacityAnimation}
-            >
-              {project.link ? (
-                <a
-                  href={project.link.value}
-                  className={styles.project_link}
-                  target="_blank"
-                >
-                  {project.link.type}
-                </a>
-              ) : null}
-            </Div>
+            ></Div> */}
 
             <ElementScroll
               st={st}
