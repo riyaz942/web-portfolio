@@ -34,12 +34,24 @@ const ProjectDetailsPage = ({
 }) => {
   const projectId = match && match.params ? match.params.projectSlug : "";
   const [project] = useState(projectsListValue[projectId] || {});
+  const [headerShadow, setHeaderShadow] = useState(false);
+
   const { imgPosition } = projectReducer;
   const imageRef = useRef(null);
 
   //-------------------------------------------ScrollAnimation
   const [{ st }, set] = useSpring(() => ({ st: 0 }));
-  let onScroll = useCallback(e => set({ st: e.target.scrollTop }), []);
+  let onScroll = useCallback(e => {
+
+    // Shows/Hides header based on scroll position
+    if ( e.target.scrollTop > 260 && !headerShadow) {
+      setHeaderShadow(true);
+    } else if (  e.target.scrollTop < 260 && headerShadow ) {
+      setHeaderShadow(false);
+    }
+
+    set({ st: e.target.scrollTop })
+  }, [headerShadow]); //Update memoized callback when headerShadow state updates
   //-------------------------------------------End
 
   const [hideTransitionElement, setHideTransitionElement] = useState(false);
@@ -58,6 +70,7 @@ const ProjectDetailsPage = ({
     }
   });
 
+  // On Component Mount
   useEffect(() => {
     const currentRect = imageRef.current.getBoundingClientRect();
     setProjectDestination(currentRect);
@@ -70,12 +83,15 @@ const ProjectDetailsPage = ({
 
   return (
     <Div justify row className={styles.project_details_container} style={style}>
-      {/*
+      <Div className={`${styles.background_header} ${headerShadow ? styles.has_shadow : ''}`}>
         <img
-            src={crossIcon}
-            className={styles.cross_img}
-            onClick={()=>onClickClose(history, imgPosition)}
-           />
+          src={crossIcon}
+          className={styles.cross_img}
+          onClick={() => onClickClose(history, imgPosition)}
+        />
+      </Div>
+      {/*
+
       */}
       {!isEmpty(project) ? (
         <Div animate className={styles.container}>

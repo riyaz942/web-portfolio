@@ -9,15 +9,25 @@
   top: 0;
   z-index: 20;
 
-  .cross_img {
-    width: 16px;
-    object-fit: contain;
-    position: absolute;
-    top: 20px;
-    left: 20px;
+  .has_shadow {
+    box-shadow: 0px 5px 12px 3px rgba(0, 0, 0, 0.2);
+  }
 
-    @include on_click_button;
+  .background_header {
     z-index: 2;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    min-height: 68px;
+    transition: box-shadow 0.6s ease;
+
+    .cross_img {
+      width: 16px;
+      object-fit: contain;
+  
+      @include on_click_button;
+    }
   }
 
   // .left_container {
@@ -31,7 +41,7 @@
   .container {
     flex: 1;
     max-width: 980px;
-    margin: 30px 10px 0px 10px;
+    margin: 10px 10px 0px 10px;
     // overflow: auto;
     position: relative;
 
@@ -39,7 +49,8 @@
       align-self: stretch;
       // overflow: auto;
       position: relative;
-      margin: 0px 80px
+      margin: 0px 80px;
+      z-index: 4;
     }
 
     .link_container {
