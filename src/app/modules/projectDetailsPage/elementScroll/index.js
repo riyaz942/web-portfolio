@@ -2,11 +2,14 @@ import React, {
   Fragment,
   memo,
   useRef,
+  useState,
+  useEffect,
  } from "react";
 import { useSpring, animated } from "react-spring";
 import isEmpty from 'lodash/isEmpty';
 import styles from './element_scroll.module.scss';
 import Div from "Common/components/div";
+import useBreakpoint from 'Common/hooks/useBreakpoint';
 
 const ElementScroll = ({
   project, 
@@ -16,8 +19,15 @@ const ElementScroll = ({
   containerOpacityAnimation,
   showContent,  
 }) => {
-
   const imageWidth = 150;
+  const [titleWidth, setTitleWidth] = useState(100); 
+  const titleRef = useRef(null);
+  const screenSize = useBreakpoint();
+  
+  useEffect(()=> {
+    setTitleWidth(titleRef.current.getBoundingClientRect().width);    
+  },[]);
+
   const imgTopAnim = st.interpolate(o => (70 - o / 2 > 0 ? 70 - o / 2 : 0));
   const imgWidthAnim = st.interpolate(o =>
     imageWidth - o / 1.5 > 48 ? imageWidth - o / 1.5 : 48
@@ -33,6 +43,12 @@ const ElementScroll = ({
     o => (220 - o / 1.1 > 0 ? 220 - o / 1.1 : 0) + 14
   );
   const titleLeftAnim = st.interpolate(o => (o / 2.5 < 60 ? o / 2.5 : 60));
+  const titleLeftAnimResposive = st.interpolate(o =>
+    o / 2.5 < 60
+      ? `calc( ${50 - o/3}% - ${(titleWidth - o/2.5)  / 2}px  + ${o / 2.5}px)`
+      : "calc( 0% - 0px + 60px)"
+  );
+
   const titleSizeAnim = st.interpolate(o =>
     36 - o / 10 > 18 ? 36 - o / 10 : 18
   );
@@ -44,7 +60,6 @@ const ElementScroll = ({
     1 - o / 150 > 0 ? 1 - o / 150 : 0
   );
 
-  
   return (
     <Fragment>
       <animated.img
@@ -65,10 +80,11 @@ const ElementScroll = ({
       />
 
       <animated.div
+        ref={titleRef}
         className={styles.project_name}
         style={{
           fontSize: titleSizeAnim,
-          left: titleLeftAnim,
+          left: screenSize == 'sm' ? titleLeftAnimResposive : titleLeftAnim,
           top: titleTopAnim,
           opacity: containerOpacityAnimation.opacity
         }}

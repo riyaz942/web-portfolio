@@ -1,4 +1,5 @@
 @import '~Styles/colors.module';
+@import '~Styles/mixins.module';
 
 .project_image {
   position: absolute;
@@ -30,5 +31,12 @@
 
   .project_involvement {
     margin-top: 15px;
+  }
+}
+
+
+@include small {
+  .project_sub_details_container {
+    display: none;
   }
 }
