@@ -49,7 +49,7 @@ const ElementTransition = ({ projectReducer, hideTransitionElement, project }) =
     to: getBackgroundAnimation(slidePosition).to,
     from: getBackgroundAnimation(slidePosition).from
   });
-  console.log(imgDestination)
+
   const imageTransitionAnimation = useSpring({
     to: getImageAnimation(imgDestination),
     from: getImageAnimation(imgPosition),

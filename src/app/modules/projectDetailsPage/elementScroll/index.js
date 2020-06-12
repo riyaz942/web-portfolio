@@ -4,7 +4,7 @@ import React, {
   useRef,
   useState,
   useEffect,
- } from "react";
+} from "react";
 import { useSpring, animated } from "react-spring";
 import isEmpty from 'lodash/isEmpty';
 import styles from './element_scroll.module.scss';
@@ -12,21 +12,21 @@ import Div from "Common/components/div";
 import useBreakpoint from 'Common/hooks/useBreakpoint';
 
 const ElementScroll = ({
-  project, 
-  st, 
-  imageRef, 
-  imgPosition, 
+  project,
+  st,
+  imageRef,
+  imgPosition,
   containerOpacityAnimation,
-  showContent,  
+  showContent,
 }) => {
   const imageWidth = 150;
-  const [titleWidth, setTitleWidth] = useState(100); 
+  const [titleWidth, setTitleWidth] = useState(100);
   const titleRef = useRef(null);
   const screenSize = useBreakpoint();
-  
-  useEffect(()=> {
-    setTitleWidth(titleRef.current.getBoundingClientRect().width);    
-  },[]);
+
+  useEffect(() => {
+    setTitleWidth(titleRef.current.getBoundingClientRect().width);
+  }, []);
 
   const imgTopAnim = st.interpolate(o => (70 - o / 2 > 0 ? 70 - o / 2 : 0));
   const imgWidthAnim = st.interpolate(o =>
@@ -35,7 +35,7 @@ const ElementScroll = ({
   const imgLeftAnim = st.interpolate(
     o =>
       `calc(${50 - o / 1.5 / 3 > 0 ? 50 - o / 1.5 / 3 : 0}% - ${
-        imageWidth / 2 - o / 1.5 > 0 ? imageWidth / 2 - o / 1.5 : 0
+      imageWidth / 2 - o / 1.5 > 0 ? imageWidth / 2 - o / 1.5 : 0
       }px)`
   );
 
@@ -43,11 +43,7 @@ const ElementScroll = ({
     o => (220 - o / 1.1 > 0 ? 220 - o / 1.1 : 0) + 14
   );
   const titleLeftAnim = st.interpolate(o => (o / 2.5 < 60 ? o / 2.5 : 60));
-  const titleLeftAnimResposive = st.interpolate(o =>
-    o / 2.5 < 60
-      ? `calc( ${50 - o/3}% - ${(titleWidth - o/2.5)  / 2}px  + ${o / 2.5}px)`
-      : "calc( 0% - 0px + 60px)"
-  );
+  const titleLeftAnimResposive = st.interpolate(o => `calc(${50 - o / 3 > 0 ? 50 - o / 3 : 0}% - ${titleWidth / 2 - o / 1.5 > 0 ? titleWidth / 2 - o / 1.5 : 0}px + ${o / 2.5 < 60 ? o / 2.5 : 60}px)`);
 
   const titleSizeAnim = st.interpolate(o =>
     36 - o / 10 > 18 ? 36 - o / 10 : 18
@@ -74,8 +70,8 @@ const ElementScroll = ({
           opacity: isEmpty(imgPosition)
             ? containerOpacityAnimation.opacity
             : showContent
-            ? 1
-            : 0
+              ? 1
+              : 0
         }}
       />
 
