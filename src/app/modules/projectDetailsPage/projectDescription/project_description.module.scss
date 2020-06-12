@@ -1,5 +1,5 @@
 @import '~Styles/colors.module';
-
+@import '~Styles/mixins.module';
 
 .sub_info_container {
   font-size: 15px;
@@ -7,6 +7,7 @@
   color: $color-dark;
   line-height: 1;
   padding: 0px 10px 10px;
+  display: none;
 
   .title {
     color: $color-brown-grey;
@@ -48,11 +49,17 @@
 
 }
 
-
 .highlight_green {
   background-color: rgba($color-green, 0.1);
 }
   
 .highlight_blue {
   background-color: rgba($color-blue, 0.1);
+}
+
+
+@include small {
+  .sub_info_container {
+    display: flex;
+  }
 }
