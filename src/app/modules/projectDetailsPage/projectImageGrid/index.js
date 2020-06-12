@@ -46,15 +46,15 @@ export default class ProjectImageGrid extends Component {
       <Div row className={styles.content}>
         {map(projectImages, (projectImage, index) => {
           return (
-            <img
+            <div
               key={index}
-              onClick={()=>gridItemSelected(index)}
+              onClick={() => gridItemSelected(index)}
+              style={{ backgroundImage: `url(${projectImage.image})` }}
               className={[
                 styles.image,
                 styles[`grid_column_${projectImage.ratioWidth}`],
                 styles[`grid_row_${projectImage.ratioHeight}`]
-              ].join(" ")}
-              src={projectImage.image}
+              ].join(" ")}              
             />
           );
         })}
