@@ -7,18 +7,22 @@ import map from "lodash/map";
 import { getProjectImages } from "Constants/projectImageConstants";
 
 class ProjectViewPager extends Component {
-  state = {
-    currentSlide: 0
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentSlide: props.initialSlide
+    };
+  }
 
   render() {
-    const { projectId } = this.props;
+    const { projectId, initialSlide } = this.props;
     const { currentSlide } = this.state;
 
     const params = {
       containerClass: "custom_container",
+      initialSlide,
       zoom: {
-        maxRatio: 2,
+        maxRatio: 2
       },
       autoplay: {
         delay: 2500,
@@ -67,5 +71,9 @@ class ProjectViewPager extends Component {
     );
   }
 }
+
+ProjectViewPager.defaultProps = {
+  initialSlide: 0
+};
 
 export default ProjectViewPager;

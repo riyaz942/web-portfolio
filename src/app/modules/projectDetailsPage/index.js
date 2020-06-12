@@ -12,8 +12,9 @@ import {
 } from "Redux/actions/projectActions";
 // import lighthouseProjectIcon from 'Icons/project-icon-lighthouse.png';
 import { projectsListValue } from "Constants/projectsConstants";
-import ProjectDescription from "./projectDescription";
 import isEmpty from "lodash/isEmpty";
+import ProjectViewPager from "./projectViewPager";
+import ProjectDescription from "./projectDescription";
 import ElementTransition from "./elementTransition";
 import ElementScroll from "./elementScroll";
 import ProjectImageGrid from "./projectImageGrid";
@@ -35,6 +36,8 @@ const ProjectDetailsPage = ({
   const projectId = match && match.params ? match.params.projectSlug : "";
   const [project] = useState(projectsListValue[projectId] || {});
   const [headerShadow, setHeaderShadow] = useState(false);
+  const [showViewPagerModal, toggleViewPager] = useState(false);
+  const [gridIndex, setGridIndex] = useState(0);
 
   const { imgPosition } = projectReducer;
   const imageRef = useRef(null);
@@ -85,6 +88,14 @@ const ProjectDetailsPage = ({
 
   return (
     <Div justify row className={styles.project_details_container} style={style}>
+      {showViewPagerModal && (
+        <Div className={styles.modal_view_pager}>
+          <ProjectViewPager
+            projectId={projectId}
+            initialSlide={gridIndex}
+          />
+        </Div>
+      )}
       <Div
         justify
         align
@@ -94,11 +105,7 @@ const ProjectDetailsPage = ({
           headerShadow ? styles.has_shadow : ""
         }`}
       >
-        <Div
-          row
-          justify="space_between"
-          className={styles.header_content}
-        >
+        <Div row justify="space_between" className={styles.header_content}>
           <img
             src={backIcon}
             className={styles.cross_img}
@@ -116,9 +123,6 @@ const ProjectDetailsPage = ({
           ) : null}
         </Div>
       </Div>
-      {/*
-
-      */}
       {!isEmpty(project) ? (
         <Div animate className={styles.container}>
           <Div className={styles.shadow_header}>
@@ -137,11 +141,14 @@ const ProjectDetailsPage = ({
             onScroll={onScroll}
             style={containerOpacityAnimation}
           >
-            <ProjectDescription
-              className={styles.content}
-              project={project}
+            <ProjectDescription className={styles.content} project={project} />
+            <ProjectImageGrid
+              projectId={projectId}
+              gridItemSelected={(index)=> {
+                toggleViewPager(true);
+                setGridIndex(index)
+              }}
             />
-            <ProjectImageGrid projectId={projectId} />
           </animated.div>
         </Div>
       ) : null}

@@ -1,6 +1,18 @@
 @import '~Styles/colors.module';
 @import '~Styles/mixins.module';
 
+.modal_view_pager {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 8;
+
+  background: rgba($color-dark, 0.9);
+}
+
+
 .project_details_container {
   position: fixed;
   left: 0;

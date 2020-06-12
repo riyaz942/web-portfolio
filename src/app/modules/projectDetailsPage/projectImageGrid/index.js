@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import styles from "./project_image_grid.module.scss";
 import Div from "Common/components/div";
 import { getProjectImages } from "Constants/projectImageConstants";
@@ -39,7 +39,7 @@ export default class ProjectImageGrid extends Component {
   };
 
   render() {
-    const { projectId } = this.props;
+    const { projectId, gridItemSelected } = this.props;
     const projectImages = this.getImageRatio(getProjectImages(projectId));
 
     return (
@@ -48,6 +48,7 @@ export default class ProjectImageGrid extends Component {
           return (
             <img
               key={index}
+              onClick={()=>gridItemSelected(index)}
               className={[
                 styles.image,
                 styles[`grid_column_${projectImage.ratioWidth}`],
