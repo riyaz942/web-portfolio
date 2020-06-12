@@ -10,6 +10,19 @@
   z-index: 8;
 
   background: rgba($color-dark, 0.9);
+
+  .close_icon {
+    height: 24px;
+    width: 24px;
+    object-fit: contain;
+
+    position: absolute;
+    left: 20px;
+    top: 20px;
+
+    z-index: 8;
+    @include on_click_button;
+  }
 }
 
 

@@ -16,6 +16,14 @@
     object-position: top;
     box-shadow: 0px 5px 12px 3px rgba(0, 0, 0, 0.2);
     border-radius: 12px;
+    
+    cursor: pointer;
+    transition: transform 500ms cubic-bezier(0.1, 0.82, 0.25, 1);
+  
+    &:hover {
+      transform: scale(1.02);
+      opacity: 0.9;
+    }
   }
 }
 

@@ -19,6 +19,7 @@ import ElementTransition from "./elementTransition";
 import ElementScroll from "./elementScroll";
 import ProjectImageGrid from "./projectImageGrid";
 import backIcon from "Icons/icon-left-arrow-dark.png";
+import closeIcon from 'Icons/icon-cross.png';
 
 const onClickClose = (history, position) => {
   if (position) history.goBack();
@@ -90,6 +91,11 @@ const ProjectDetailsPage = ({
     <Div justify row className={styles.project_details_container} style={style}>
       {showViewPagerModal && (
         <Div className={styles.modal_view_pager}>
+          <img 
+            src={closeIcon} 
+            onClick={()=>toggleViewPager(false)}
+            className={styles.close_icon}
+          />
           <ProjectViewPager
             projectId={projectId}
             initialSlide={gridIndex}
