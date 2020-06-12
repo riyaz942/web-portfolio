@@ -82,13 +82,14 @@
   overflow: auto;
   margin-top: 10px;
   z-index: 1;
+  padding-top: 290px;
 
   .content {
-    margin-top: 290px;
     padding: 0px 80px;
     margin-bottom: 50px;
   }
 }
+
 
 @include large {
   .header_container {

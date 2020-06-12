@@ -122,14 +122,6 @@ const ProjectDetailsPage = ({
       {!isEmpty(project) ? (
         <Div animate className={styles.container}>
           <Div className={styles.shadow_header}>
-            {/* <Div
-              row
-              justify="end"
-              align
-              className={styles.link_container}
-              style={containerOpacityAnimation}
-            ></Div> */}
-
             <ElementScroll
               st={st}
               project={project}
@@ -147,7 +139,7 @@ const ProjectDetailsPage = ({
           >
             <ProjectDescription
               className={styles.content}
-              description={project.description}
+              project={project}
             />
             <ProjectImageGrid projectId={projectId} />
           </animated.div>

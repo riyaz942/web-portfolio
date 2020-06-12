@@ -1,5 +1,25 @@
 @import '~Styles/colors.module';
 
+
+.sub_info_container {
+  font-size: 15px;
+  font-weight: 500;
+  color: $color-dark;
+  line-height: 1;
+  padding: 0px 10px 10px;
+
+  .title {
+    color: $color-brown-grey;
+    margin-bottom: 2px;
+  }
+
+  .value {
+    text-transform: capitalize;
+  }
+
+}
+
+
 .description_container {
   font-size: 15px;
   color: $color-dark;
