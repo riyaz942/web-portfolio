@@ -1,6 +1,8 @@
 @import '~Styles/colors.module';
+@import '~Styles/mixins.module';
 
 .user_description_container {
+  left: calc(50vw - 265px);
   padding: 118px 90px 41px;
   border-radius: 35px;
   box-shadow: 0px 5px 12px 3px rgba(0, 0, 0, 0.35);
@@ -49,5 +51,14 @@
         width: 100%;
       }
     }
+  }
+}
+
+@include medium {
+  .user_description_container {
+    padding: 118px 20px 41px;
+    border-radius: unset;
+    max-width: unset;
+    left: unset;
   }
 }
