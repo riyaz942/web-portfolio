@@ -38,8 +38,14 @@ const HeaderLinks = ({ isFullScreen, bodyType, onClickTimeline, onClickProject }
           style={transitionProps}
           className={styles.header_container}
         >
+          <Div column className={styles.hamburger_menu}>
+            <div className={styles.hamburger_row}></div>
+            <div className={styles.hamburger_row}></div>
+          </Div>
+
           <ContactComponent
             isWhite
+            className={styles.contact_container}
           />
 
           <Div className={`${styles.header_link_container}`}>
