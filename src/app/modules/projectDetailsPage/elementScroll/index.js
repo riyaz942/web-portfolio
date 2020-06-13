@@ -28,6 +28,7 @@ const ElementScroll = ({
     setTitleWidth(titleRef.current.getBoundingClientRect().width);
   }, []);
 
+  // ------------------------------------------------IMAGE ANIMATION
   const imgTopAnim = st.interpolate(o => (70 - o / 2 > 0 ? 70 - o / 2 : 0));
   const imgWidthAnim = st.interpolate(o =>
     imageWidth - o / 1.5 > 48 ? imageWidth - o / 1.5 : 48
@@ -39,16 +40,19 @@ const ElementScroll = ({
       }px)`
   );
 
-  const titleTopAnim = st.interpolate(
-    o => (220 - o / 1.1 > 0 ? 220 - o / 1.1 : 0) + 14
-  );
-  const titleLeftAnim = st.interpolate(o => (o / 2.5 < 60 ? o / 2.5 : 60));
-  const titleLeftAnimResposive = st.interpolate(o => `calc(${50 - o / 3 > 0 ? 50 - o / 3 : 0}% - ${titleWidth / 2 - o / 1.5 > 0 ? titleWidth / 2 - o / 1.5 : 0}px + ${o / 2.5 < 60 ? o / 2.5 : 60}px)`);
+  // ------------------------------------------------TITLE ANIMATION
+  // title width calculation
+  // the original width of the title is 18 px and displaying with scale(2) makes it 32px
+  // the title width needs to be calculated 18px font-size / 2
+  // but the titleWidth getBoundClient is returning the size which is displayed 32px
+  // so to get 18px/2 which is the original title width size by half
+  // we calulate it as 32px/4
+  const titleTopAnim = st.interpolate(o => (220 - o / 1.1 > 0 ? 220 - o / 1.1 : 0) + 14);
+  const titleLeftAnim = st.interpolate(o => titleWidth / 4 + o / 2 / 100 > 60 ? 60 : titleWidth /4 + o / 2 / 100);
+  const titleLeftAnimResposive = st.interpolate(o => `calc(${50 - o / 3 > 0 ? 50 - o / 3 : 0}% - ${titleWidth /4 - o / 1.5 > 0 ? titleWidth /4 - o / 1.5 : 0}px + ${o / 2.5 < 60 ? o / 2.5 : 60}px)`);
+  const titleSizeAnim = st.interpolate(o => `scale(${2 - o / 2 / 100 < 1 ? 1 : 2 - o / 2 / 100})`);
 
-  const titleSizeAnim = st.interpolate(o =>
-    36 - o / 10 > 18 ? 36 - o / 10 : 18
-  );
-
+  // -----------------------------------------------SUB DETAIL ANIMATION
   const subDetailsTop = st.interpolate(o =>
     220 - o / 1.1 > 0 ? 220 - o / 1.1 : 0
   );
@@ -79,7 +83,7 @@ const ElementScroll = ({
         ref={titleRef}
         className={styles.project_name}
         style={{
-          fontSize: titleSizeAnim,
+          transform: titleSizeAnim,
           left: screenSize == 'sm' ? titleLeftAnimResposive : titleLeftAnim,
           top: titleTopAnim,
           opacity: containerOpacityAnimation.opacity
