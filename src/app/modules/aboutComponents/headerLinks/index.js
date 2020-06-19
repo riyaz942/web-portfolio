@@ -43,6 +43,12 @@ const HeaderLinks = ({ isFullScreen, bodyType, onClickTimeline, onClickProject }
             <div className={styles.hamburger_row}></div>
           </Div>
 
+          <div className={styles.bubble_backdrop}>
+            <Div align row className={styles.speech_bubble_container}>
+              <ContactComponent />
+            </Div>
+          </div>
+
           <ContactComponent
             isWhite
             className={styles.contact_container}

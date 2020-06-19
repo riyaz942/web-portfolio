@@ -1,3 +1,4 @@
+@import '~Styles/colors.module';
 @import '~Styles/mixins.module';
 
 .header_container {
@@ -38,9 +39,10 @@
 
 .hamburger_menu {
   display: none;
-  height: 20px;
+  height: 10px;
   width: 15px;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  z-index: 4;
   @include on_click_button;
 
   .hamburger_row {
@@ -49,6 +51,44 @@
     height: 3px;
   }
 }
+
+
+.bubble_backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  z-index: 3;
+
+  background: rgba($color-dark, 0.2);
+  backdrop-filter: blur(1px);
+}
+
+.speech_bubble_container {
+  display: inline-block;
+  position: relative;
+  margin: 63px 0px 0px 17px;
+  border-radius: 10px;
+  padding: 10px 30px;
+  background: white;
+  box-shadow:	0 0.125rem 0.5rem rgba(0, 0, 0, .3), 0 0.0625rem 0.125rem rgba(0, 0, 0, .2);
+}
+
+.speech_bubble_container::before {
+	content: '';
+	position: absolute;
+	width: 0;
+	height: 0;
+	bottom: 100%;
+  left: 12px; // offset should move with padding of parent
+  border: 7px solid transparent;
+	border-top: none;
+
+  border-bottom-color: #fff;
+	filter: drop-shadow(0 -0.0625rem 0.0625rem rgba(0, 0, 0, .1));
+}
+
 
 @include medium {
   .header_container {
