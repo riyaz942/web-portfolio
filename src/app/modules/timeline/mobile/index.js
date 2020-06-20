@@ -15,11 +15,20 @@ export default class TimelineMobile extends Component {
   };
 
   render() {
+    const { selectedTimelineId } = this.state;
+
     return (
       <Div fillParent className={styles.timeline_container}>
         <Div className={styles.image_container}>
           {
-            timelineListValue.map(timelineValue => <img className={styles.image} src={timelineValue.backgroundImage} />)
+            timelineListValue.map(timelineValue => {
+
+              if (timelineValue.id === selectedTimelineId) {
+                return <img className={`${styles.image} ${styles.selected_image}`} src={timelineValue.backgroundImage} />
+              }
+
+              return <img className={styles.image} src={timelineValue.backgroundImage} />
+            })
           }
         </Div>
         <Div fillParent className={styles.content_container}>

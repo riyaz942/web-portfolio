@@ -15,9 +15,15 @@
   bottom: 0;
 
   .image {
-    flex: 1;
+    height: calc((100vh - 400px) / 2);
     width: 100%;
     object-fit: cover;
+    transition: height 0.5s ease;
+  }
+
+  .selected_image {
+    flex: unset;
+    height: 400px;
   }
 }
 
