@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Div from 'Common/components/div';
 
-export default class MobileProject extends Component {
+export default class ProjectMobile extends Component {
   render() {
      return (
        <Div>

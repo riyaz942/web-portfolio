@@ -1,0 +1,8 @@
+@import '~Styles/colors.module';
+@import '~Styles/mixins.module';
+
+.timeline_container {
+  padding: 80px 20px 20px 20px;
+  position: relative;
+  overflow: hidden;
+}

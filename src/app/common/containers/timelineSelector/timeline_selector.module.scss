@@ -26,7 +26,6 @@
   width: 38px;
 }
 
-
 .vertical_divider {
   width: 5px;
   height: 30px;
@@ -39,4 +38,17 @@
 .title {
   white-space: nowrap;
   color: white;
+}
+
+@include medium {
+  .container {
+    flex-direction: row;
+    padding: 20px;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+
+  .vertical_divider {
+    display: none;
+  }
 }

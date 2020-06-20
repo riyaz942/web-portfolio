@@ -33,11 +33,11 @@ class Timeline extends Component {
         enter: { transform: 'translateY(0vh)' },
         leave: { transform: 'translateY(0vh)' }
       };
-    } 
+    }
     else if (selectionNext) {
       return {
         from: { transform: 'translateY(100vh)' },
-        enter: {  transform: 'translateY(0vh)'  },
+        enter: { transform: 'translateY(0vh)' },
         leave: { transform: 'translateY(-100vh)' }
       };
     }
@@ -78,8 +78,8 @@ class Timeline extends Component {
 
         <Div className={styles.left_container}>
           <TimelineSelector
-            onItemSelected={this.onTimelineSelected}
             listValue={timelineListValue}
+            onItemSelected={this.onTimelineSelected}
           />
 
           <Transition

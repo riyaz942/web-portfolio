@@ -49,7 +49,6 @@ class TimelineSelector extends Component {
   render() {
     const { listValue } = this.state;
     const { tech } = this.props;
-
     // margin-left: 39px;
     // padding-right: 10px;
     // /* display: none; */
@@ -59,8 +58,9 @@ class TimelineSelector extends Component {
     // 27
     // 34
     // 37
+
     return (
-      <Div align="start">
+      <Div align="start" className={styles.container}>
         {map(listValue, (item, index) => (
           <Spring
             key={item.id}
@@ -68,7 +68,7 @@ class TimelineSelector extends Component {
               maxWidth: item.isSelected ? 95 : 0,
               opacity: item.isSelected ? 1 : 0,
               paddingRight: item.isSelected ? 10 : 0,
-              marginLeft: tech ? 38 : item.isSelected ? item.restMargin : 38
+              marginLeft: tech ? 38 : item.isSelected ? item.restMargin : 38,
             }}
           >
             {props => (
