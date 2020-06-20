@@ -5,11 +5,14 @@ import Timeline from "../timeline/timeline";
 import Loader from "../loader/loader";
 import { landingPageBody } from "../../constants/landingConstants";
 import Projects from "../projects/projects";
+import ProjectsMobile from '../projects/mobile';
 import Div from "Common/components/div";
 import { Transition } from "react-spring/renderprops";
 import ProfilePic from "Modules/aboutComponents/profilePic";
 import HeaderDescription from "Modules/aboutComponents/headerDescription";
 import HeaderLinks from 'Modules/aboutComponents/headerLinks';
+import { screenSize } from 'Common/hooks/useBreakpoint';
+import TimelineMobile from "../timeline/mobile";
 
 export default class Landing extends Component {
   state = {
@@ -58,7 +61,7 @@ export default class Landing extends Component {
   //-----------------------------ShowFullScreen
   showFullScreen = () => {
     // from header to full screen
-    this.setState({isFullScreen: true});
+    this.setState({ isFullScreen: true });
     this.updateBodyType(landingPageBody.NONE);
 
     setTimeout(() => {
@@ -91,6 +94,8 @@ export default class Landing extends Component {
   };
 
   getBodyContent = (bodyType) => {
+    const showMobile = screenSize === 'sm' || screenSize === 'md';
+
     return (
       props => (
         <Div
@@ -98,8 +103,8 @@ export default class Landing extends Component {
           style={props}
           className={styles.body_content_container}
         >
-          {bodyType == landingPageBody.PROJECT && <Projects />}
-          {bodyType == landingPageBody.TIMELINE && <Timeline />}
+          {bodyType == landingPageBody.PROJECT && (showMobile ? <ProjectsMobile /> : <Projects />)}
+          {bodyType == landingPageBody.TIMELINE && (showMobile ? <TimelineMobile /> :  <Timeline />)}
         </Div>
       )
     )

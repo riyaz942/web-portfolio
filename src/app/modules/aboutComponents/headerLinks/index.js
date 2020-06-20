@@ -49,8 +49,7 @@ const HeaderLinks = ({
             showMenu ? styles.header_container__increase_index : ""
           }`}
         >
-          <Div
-            column
+          <Div            
             className={`${styles.hamburger_menu} ${
               showMenu ? styles.hamburger__selected : ""
             }`}
