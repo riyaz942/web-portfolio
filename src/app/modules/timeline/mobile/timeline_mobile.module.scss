@@ -42,18 +42,24 @@
   z-index: 1;
 }
 
-.title {
-  align-self: center;
-  font-size: 28px;
-  margin-top: 16px;
+.details_top_container {
+  position: relative;
+  height: 150px;
 }
 
-.description {
-  align-self: center;
-  font-size: 14px;
-  margin-top: 4px;
-}
+.details_container {
+  position: absolute;
 
-.margin_8 {
-  margin-top: 8px;
+  .title {
+    align-self: center;
+    font-size: 28px;
+    margin: 16px 0px 8px 0px;
+  }
+  
+  .description {
+    align-self: center;
+    font-size: 14px;
+    margin-top: 4px;
+  }
+  
 }

@@ -4,6 +4,7 @@ import TimelineSelector from "Common/containers/timelineSelector";
 import { timelineListValue } from "Constants/timelineConstants";
 import styles from './timeline_mobile.module.scss';
 import find from 'lodash/find';
+import { Transition } from "react-spring/renderprops";
 
 export default class TimelineMobile extends Component {
 
@@ -39,10 +40,29 @@ export default class TimelineMobile extends Component {
             listValue={timelineListValue}
             onItemSelected={this.onTimelineSelected}
           />
-          <div className={styles.title}>{timeline.companyName}</div>
-          <div className={`${styles.description} ${styles.margin_8}`}>{timeline.duration}</div>
-          <div className={styles.description}>{timeline.position}</div>
-          <div className={styles.description}>{timeline.location}</div>
+          <Div align justify className={styles.details_top_container}>
+            <Transition
+              items={timeline}
+              keys={timeline => timeline.id}
+              from={{ opacity: 0 }}
+              enter={{ opacity: 1 }}
+              leave={{ opacity: 0 }}
+            >
+              {timeline => props => (
+                <Div
+                  align="center"
+                  alignSelf="center"
+                  style={{ opacity: props.opacity }}
+                  className={styles.details_container}
+                >
+                  <div className={styles.title}>{timeline.companyName}</div>
+                  <div className={styles.description}>{timeline.duration}</div>
+                  <div className={styles.description}>{timeline.position}</div>
+                  <div className={styles.description}>{timeline.location}</div>
+                </Div>
+              )}
+            </Transition>
+          </Div>
         </Div>
       </Div>
     )
