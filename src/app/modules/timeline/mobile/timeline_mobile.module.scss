@@ -5,6 +5,7 @@
   padding: 80px 20px 20px 20px;
   position: relative;
   overflow: hidden;
+  color: white;
 }
 
 .image_container {
@@ -39,4 +40,20 @@
 
 .content_container {
   z-index: 1;
+}
+
+.title {
+  align-self: center;
+  font-size: 28px;
+  margin-top: 16px;
+}
+
+.description {
+  align-self: center;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.margin_8 {
+  margin-top: 8px;
 }
