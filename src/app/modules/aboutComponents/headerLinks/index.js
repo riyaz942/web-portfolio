@@ -1,33 +1,42 @@
-import React, { Component, memo } from 'react';
-import { useSpring, useTransition, animated } from 'react-spring';
-import styles from './header_links.module.scss';
+import React, { Component, memo, useState } from "react";
+import { useSpring, useTransition, animated } from "react-spring";
+import styles from "./header_links.module.scss";
 import { landingPageBody } from "Constants/landingConstants";
-import ContactComponent from 'Common/components/contactComponent';
-import Div from 'Common/components/div';
+import ContactComponent from "Common/components/contactComponent";
+import Div from "Common/components/div";
 
-const HeaderLinks = ({ isFullScreen, bodyType, onClickTimeline, onClickProject }) => {
+const HeaderLinks = ({
+  isFullScreen,
+  bodyType,
+  onClickTimeline,
+  onClickProject
+}) => {
+  const [showMenu, setMenuState] = useState(false);
   const transition = useTransition(isFullScreen, null, {
     from: {
       opacity: 0,
-      transform: 'translateY(-20px)',
+      transform: "translateY(-20px)"
     },
     enter: {
       opacity: 1,
-      transform: 'translateY(0px)',
+      transform: "translateY(0px)"
     },
     leave: {
       opacity: 0,
-      transform: 'translateY(-20px)',
-    },
+      transform: "translateY(-20px)"
+    }
     // config: { delay: isFullScreen ? 600 : 0 }
   });
   const springProps = useSpring({
-    transformUnderline: bodyType == landingPageBody.TIMELINE ? 'translateX(0px)' : 'translateX(77px)',
+    transformUnderline:
+      bodyType == landingPageBody.TIMELINE
+        ? "translateX(0px)"
+        : "translateX(77px)",
     underlineWidth: bodyType == landingPageBody.TIMELINE ? 62 : 37
   });
 
-  return (
-    transition.map(({ item, props: transitionProps }) => (
+  return transition.map(
+    ({ item, props: transitionProps }) =>
       !item && (
         <Div
           key="header-container"
@@ -38,21 +47,32 @@ const HeaderLinks = ({ isFullScreen, bodyType, onClickTimeline, onClickProject }
           style={transitionProps}
           className={styles.header_container}
         >
-          <Div column className={styles.hamburger_menu}>
+          <Div
+            column
+            className={`${styles.hamburger_menu} ${showMenu ? styles.hamburger__selected : ''}`}
+            onClick={() => setMenuState(!showMenu)}
+          >
             <div className={styles.hamburger_row}></div>
             <div className={styles.hamburger_row}></div>
           </Div>
 
-          <div className={styles.bubble_backdrop}>
-            <Div align row className={styles.speech_bubble_container}>
-              <ContactComponent />
-            </Div>
-          </div>
+          {showMenu && (
+            <div
+              className={styles.bubble_backdrop}
+              onClick={() => setMenuState(!showMenu)}
+            >
+              <Div
+                align
+                row
+                className={styles.speech_bubble_container}
+                onClick={event => event.stopPropagation()}
+              >
+                <ContactComponent />
+              </Div>
+            </div>
+          )}
 
-          <ContactComponent
-            isWhite
-            className={styles.contact_container}
-          />
+          <ContactComponent isWhite className={styles.contact_container} />
 
           <Div className={`${styles.header_link_container}`}>
             <Div row className={styles.bodytype_container}>
@@ -79,8 +99,7 @@ const HeaderLinks = ({ isFullScreen, bodyType, onClickTimeline, onClickProject }
           </Div>
         </Div>
       )
-    ))
-  )
-}
+  );
+};
 
 export default memo(HeaderLinks);

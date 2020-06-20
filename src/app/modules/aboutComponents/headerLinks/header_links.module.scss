@@ -39,7 +39,7 @@
 
 .hamburger_menu {
   display: none;
-  height: 10px;
+  height: 11px;
   width: 15px;
   justify-content: space-between;
   z-index: 4;
@@ -49,9 +49,20 @@
     background-color: white;
     border-radius: 10px;
     height: 3px;
+    transform-origin: left;
+    transition: transform 0.4s ease;
   }
 }
 
+.hamburger__selected {
+  .hamburger_row:first-child {
+    transform: rotateZ(45deg) translate(-2px, -2px);
+  }
+
+  .hamburger_row:last-child {
+    transform: rotateZ(-45deg);
+  }
+}
 
 .bubble_backdrop {
   position: fixed;
