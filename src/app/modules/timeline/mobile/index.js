@@ -6,16 +6,28 @@ import styles from './timeline_mobile.module.scss';
 
 export default class TimelineMobile extends Component {
 
-  onTimelineSelected = (value) => {
+  state = {
+    selectedTimelineId: 'nykaa'
   }
+
+  onTimelineSelected = ({ selectedId }) => {
+    this.setState({ selectedTimelineId: selectedId });
+  };
 
   render() {
     return (
       <Div fillParent className={styles.timeline_container}>
-        <TimelineSelector
-          listValue={timelineListValue}
-          onItemSelected={this.onTimelineSelected}
-        />
+        <Div className={styles.image_container}>
+          {
+            timelineListValue.map(timelineValue => <img className={styles.image} src={timelineValue.backgroundImage} />)
+          }
+        </Div>
+        <Div fillParent className={styles.content_container}>
+          <TimelineSelector
+            listValue={timelineListValue}
+            onItemSelected={this.onTimelineSelected}
+          />
+        </Div>
       </Div>
     )
   }

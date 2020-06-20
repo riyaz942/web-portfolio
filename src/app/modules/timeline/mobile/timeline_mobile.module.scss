@@ -6,3 +6,31 @@
   position: relative;
   overflow: hidden;
 }
+
+.image_container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  .image {
+    flex: 1;
+    width: 100%;
+    object-fit: cover;
+  }
+}
+
+.image_container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba($color-dark, 0.7);
+}
+
+.content_container {
+  z-index: 1;
+}
