@@ -45,11 +45,15 @@ const HeaderLinks = ({
           align
           justify="space_between"
           style={transitionProps}
-          className={styles.header_container}
+          className={`${styles.header_container} ${
+            showMenu ? styles.header_container__increase_index : ""
+          }`}
         >
           <Div
             column
-            className={`${styles.hamburger_menu} ${showMenu ? styles.hamburger__selected : ''}`}
+            className={`${styles.hamburger_menu} ${
+              showMenu ? styles.hamburger__selected : ""
+            }`}
             onClick={() => setMenuState(!showMenu)}
           >
             <div className={styles.hamburger_row}></div>
