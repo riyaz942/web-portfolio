@@ -5,7 +5,6 @@ import styles from "./right_container.module.scss";
 import Div from "Common/components/div";
 import map from "lodash/map";
 import { Spring } from "react-spring/renderprops";
-import leftArrowIcon from "Icons/icon-left-arrow.png";
 import { withRouter } from "react-router";
 import { projectsListValue } from "Constants/projectsConstants";
 import isEmpty from "lodash/isEmpty";

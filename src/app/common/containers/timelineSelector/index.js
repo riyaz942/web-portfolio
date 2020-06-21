@@ -48,7 +48,7 @@ class TimelineSelector extends Component {
 
   render() {
     const { listValue } = this.state;
-    const { tech } = this.props;
+    const { tech, className } = this.props;
     // margin-left: 39px;
     // padding-right: 10px;
     // /* display: none; */
@@ -60,7 +60,7 @@ class TimelineSelector extends Component {
     // 37
 
     return (
-      <Div align="start" className={styles.container}>
+      <Div align="start" className={`${styles.container} ${className}`}>
         {map(listValue, (item, index) => (
           <Spring
             key={item.id}
@@ -123,6 +123,10 @@ class TimelineSelector extends Component {
       </Div>
     );
   }
+}
+
+TimelineSelector.defaultProps = {
+  className: ''
 }
 
 export default TimelineSelector;

@@ -2,7 +2,7 @@
 @import '~Styles/mixins.module';
 
 .timeline_container {
-  padding: 80px 20px 20px 20px;
+  //padding: 80px 20px 20px 20px;
   position: relative;
   overflow: hidden;
   color: white;
@@ -26,25 +26,30 @@
     flex: unset;
     height: 400px;
   }
-}
 
-.image_container::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba($color-dark, 0.7);
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba($color-dark, 0.7);
+  }
 }
 
 .content_container {
   z-index: 1;
 }
 
+.timeline_selector_container {
+  margin: 80px 20px 0px;
+}
+
 .details_top_container {
   position: relative;
   height: 150px;
+  margin: 0px 20px 0px;
 }
 
 .details_container {
@@ -63,3 +68,12 @@
   }
   
 }
+
+.view_pager_container {
+
+}
+
+
+
+
+
