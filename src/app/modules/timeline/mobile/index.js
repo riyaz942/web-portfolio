@@ -33,10 +33,6 @@ export default class TimelineMobile extends Component {
 
   onTimelineSelected = ({ selectedId }) => {
     const projectsList = this.getProjects(selectedId);
-    console.log({
-      swiper: this.swiper
-    });
-    //this.swiper.update();
     this.setState({ selectedTimelineId: selectedId, projectsList });
   };
 
