@@ -125,7 +125,7 @@ export default class TimelineMobile extends Component {
             <PaginationButton
               isEnabled={true}
               onClick={null}
-              className={styles.left_button_container}
+              className={styles.left_button}
             />
             <PaginationButton
               isEnabled={true}
