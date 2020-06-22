@@ -48,7 +48,7 @@
 
 .details_top_container {
   position: relative;
-  height: 150px;
+  height: 130px;
   margin: 0px 20px 0px;
 }
 
@@ -75,13 +75,14 @@
 }
 
 .project_list_item {
-  transition: transform 0.6s ease;
+  transition: background-color 0.6s, transform 0.6s ease;
   margin-right: unset;  
   // margin: 0px 20px;
 }
 
 .project_list_item__selected {
   transform: scale(1.1);
+  background-color: white;
 }
 
 .pagination_button_container {
