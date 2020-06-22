@@ -252,7 +252,7 @@ class RightContainer extends Component {
                         index={index}
                         slide={slide}
                         onClickProject={this.onClickProject}
-                        {...props}
+                        style={props}
                       />
                     )}
                   </Spring>

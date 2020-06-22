@@ -70,10 +70,14 @@
 }
 
 .view_pager_container {
-
+  margin-top: 26px;
+  max-height: calc(40vh);
 }
 
+.project_list_item {
+  margin-right: unset;  
+}
 
-
-
-
+.pagination_button_container {
+  margin: 18px 0px;
+}

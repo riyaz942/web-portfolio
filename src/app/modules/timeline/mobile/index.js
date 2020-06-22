@@ -8,6 +8,8 @@ import Swiper from "react-id-swiper";
 import find from "lodash/find";
 import map from "lodash/map";
 import styles from "./timeline_mobile.module.scss";
+import ProjectListItem from 'Common/components/projectListItem';
+import PaginationButton from "Common/components/paginationButton";
 
 export default class TimelineMobile extends Component {
   state = {
@@ -44,14 +46,10 @@ export default class TimelineMobile extends Component {
     const params = {
       containerClass: "custom_container",
       slidesPerView: 2,
-      spaceBetween: 30,
-      shouldSwiperUpdate: true,
+      //slidesPerView: 'auto',
       centeredSlides: true,
-      pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
-        dynamicBullets: true
-      }
+      spaceBetween: 40,
+      shouldSwiperUpdate: true,
     };
 
     return (
@@ -114,13 +112,26 @@ export default class TimelineMobile extends Component {
               }}
             >
               {map(projectsList, (project, index) => (
-                <img
+                <ProjectListItem
                   key={index}
-                  className={styles.swiper_item}
-                  src={project.icon}
+                  slide={project}
+                  className={styles.project_list_item}
+                  onClickProject={null}
                 />
               ))}
             </Swiper>
+          </Div>
+          <Div alignSelf="center" row className={styles.pagination_button_container}>
+            <PaginationButton
+              isEnabled={true}
+              onClick={null}
+              className={styles.left_button_container}
+            />
+            <PaginationButton
+              isEnabled={true}
+              onClick={null}
+              isRight
+            />
           </Div>
         </Div>
       </Div>

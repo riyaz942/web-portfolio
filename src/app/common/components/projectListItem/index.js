@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import styles from './project_list_item.module.scss';
 import Div from 'Common/components/div';
 
-const ProjectListItem = ({ index, slide, onClickProject, ...rest }) => {
+const ProjectListItem = ({ index, slide, onClickProject, style, className }) => {
 
   return (
     <div
       ref={slide.slideRef}
       onClick={() => onClickProject(slide)}
-      style={{ ...rest, zIndex: index }}
-      className={`${styles.slide_items} ${
+      style={{ ...style, zIndex: index }}
+      className={`${styles.slide_items} ${className} ${
         slide.state == "CENTERED" ? styles.is_selected : ""
         }`}
     >
@@ -40,6 +40,11 @@ const ProjectListItem = ({ index, slide, onClickProject, ...rest }) => {
       ></div>
     </div>
   )
+}
+
+ProjectListItem.defaultProps ={
+  index: 0,
+  className: ''
 }
 
 export default ProjectListItem;
