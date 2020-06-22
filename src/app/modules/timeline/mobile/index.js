@@ -72,7 +72,6 @@ class TimelineMobile extends Component {
     const params = {
       containerClass: "custom_container",
       slidesPerView: 2,
-      //slidesPerView: 'auto',
       centeredSlides: true,
       shouldSwiperUpdate: true,
       on: {
@@ -145,7 +144,7 @@ class TimelineMobile extends Component {
                   <ProjectListItem
                     key={index}
                     slide={project}
-                    className={styles.project_list_item}
+                    className={`${index == currentSlide ? styles.project_list_item__selected : ''} ${styles.project_list_item}`}
                     onClickProject={this.onClickProject}
                   />
                 </Div>
