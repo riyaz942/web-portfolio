@@ -75,3 +75,13 @@
 .is_selected {
   background-color: rgba(white, 1);
 }
+
+
+@include medium {
+
+  .title_container {
+    align-items: center;
+    text-align: center;
+  }
+
+}
