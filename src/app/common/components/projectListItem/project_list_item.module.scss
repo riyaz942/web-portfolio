@@ -77,11 +77,36 @@
 }
 
 
-@include medium {
+@include small {
+  .slide_items {
+    $slide-width: 150px;
 
-  .title_container {
-    align-items: center;
-    text-align: center;
+    width: $slide-width;
+    min-width: $slide-width;
+    height: $slide-width * 1.69;
+  
+    .image {
+      width: $slide-width * 0.65;
+    }
   }
+  .slide_items {
+    .title_container {
+      height: 80px;
+      align-items: center;
+      text-align: center;
+  
+      .title {
+        font-size: 20px;
+      }
+  
+      .description {
+        font-size: 10px;
+      }
+  
+      .overlay_view_project {
+        font-size: 14px;
+      }
+    }
+  }  
 
 }

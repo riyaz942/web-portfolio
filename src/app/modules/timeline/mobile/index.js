@@ -71,7 +71,6 @@ class TimelineMobile extends Component {
       slidesPerView: 2,
       //slidesPerView: 'auto',
       centeredSlides: true,
-      spaceBetween: 40,
       shouldSwiperUpdate: true,
     };
 
@@ -135,12 +134,14 @@ class TimelineMobile extends Component {
               }}
             >
               {map(projectsList, (project, index) => (
-                <ProjectListItem
-                  key={index}
-                  slide={project}
-                  className={styles.project_list_item}
-                  onClickProject={this.onClickProject}
-                />
+                <Div align justify>
+                  <ProjectListItem
+                    key={index}
+                    slide={project}
+                    className={styles.project_list_item}
+                    onClickProject={this.onClickProject}
+                  />
+                </Div>
               ))}
             </Swiper>
           </Div>
@@ -149,11 +150,13 @@ class TimelineMobile extends Component {
               isEnabled={true}
               onClick={null}
               className={styles.left_button}
+              onClick={() => this.swiper.slidePrev()}
             />
             <PaginationButton
               isEnabled={true}
               onClick={null}
               isRight
+              onClick={() => this.swiper.slideNext()}
             />
           </Div>
         </Div>
