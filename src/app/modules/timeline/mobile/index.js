@@ -18,6 +18,7 @@ import { setProjectPosition } from "Redux/actions/projectActions";
 class TimelineMobile extends Component {
   state = {
     selectedTimelineId: "nykaa",
+    currentSlide: 0,
     projectsList: []
   };
 
@@ -58,20 +59,26 @@ class TimelineMobile extends Component {
 
   onTimelineSelected = ({ selectedId }) => {
     const projectsList = this.getProjects(selectedId);
-    this.setState({ selectedTimelineId: selectedId, projectsList });
+    this.setState({ selectedTimelineId: selectedId, projectsList, currentSlide: 0 });
   };
 
   render() {
-    const { selectedTimelineId, projectsList } = this.state;
+    const { selectedTimelineId, projectsList, currentSlide } = this.state;
     const timeline = find(timelineListValue, timelineItem => {
       return timelineItem.id === selectedTimelineId;
     });
+    const totalItems = projectsList ? projectsList.length : 0;
+
     const params = {
       containerClass: "custom_container",
       slidesPerView: 2,
       //slidesPerView: 'auto',
       centeredSlides: true,
       shouldSwiperUpdate: true,
+      on: {
+        slideChange: () =>
+          this.setState({ currentSlide: this.swiper.realIndex })
+      }
     };
 
     return (
@@ -147,13 +154,13 @@ class TimelineMobile extends Component {
           </Div>
           <Div alignSelf="center" row className={styles.pagination_button_container}>
             <PaginationButton
-              isEnabled={true}
+              isEnabled={currentSlide != 0}
               onClick={null}
               className={styles.left_button}
               onClick={() => this.swiper.slidePrev()}
             />
             <PaginationButton
-              isEnabled={true}
+              isEnabled={currentSlide < totalItems - 1}
               onClick={null}
               isRight
               onClick={() => this.swiper.slideNext()}

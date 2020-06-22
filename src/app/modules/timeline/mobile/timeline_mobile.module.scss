@@ -34,7 +34,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba($color-dark, 0.7);
+    background: rgba($color-dark, 0.8);
   }
 }
 
@@ -85,4 +85,10 @@
   .left_button {
     margin-right: 18px;
   }
+}
+
+@include small {
+  .view_pager_container {
+    max-height: calc(35vh);
+  }  
 }
