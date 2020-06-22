@@ -11,6 +11,7 @@ import isEmpty from "lodash/isEmpty";
 import { Transition } from "react-spring/renderprops";
 import PaginationButton from "Common/components/paginationButton";
 import { setProjectPosition } from "Redux/actions/projectActions";
+import ProjectListItem from "Common/components/projectListItem";
 
 class RightContainer extends Component {
   state = {
@@ -247,40 +248,12 @@ class RightContainer extends Component {
                     to={this.getPropertyBasedOnState(slide.state)}
                   >
                     {props => (
-                      <div
-                        ref={slide.slideRef}
-                        onClick={() => this.onClickProject(slide)}
-                        style={{ ...props, zIndex: index }}
-                        className={`${styles.slide_items} ${
-                          slide.state == "CENTERED" ? styles.is_selected : ""
-                        }`}
-                      >
-                        <Div fillParent align justify>
-                          <img
-                            ref={slide.imgRef}
-                            src={slide.icon}
-                            className={styles.image}
-                          />
-                        </Div>
-
-                        <Div
-                          alignSelf="stretch"
-                          justify="start"
-                          align="end"
-                          className={styles.title_container}
-                        >
-                          <div className={styles.title}>{slide.name}</div>
-                          <div className={styles.description}>
-                            {slide.tech.join(" | ")}
-                          </div>
-                          <div className={styles.overlay_view_project}>
-                            View Project
-                          </div>
-                        </Div>
-                        <div
-                          className={styles.bottom_background_gradient}
-                        ></div>
-                      </div>
+                      <ProjectListItem
+                        index={index}
+                        slide={slide}
+                        onClickProject={this.onClickProject}
+                        {...props}
+                      />
                     )}
                   </Spring>
                 ))}
