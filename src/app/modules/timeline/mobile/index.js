@@ -1,17 +1,21 @@
 import React, { Component } from "react";
 import Div from "Common/components/div";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import TimelineSelector from "Common/containers/timelineSelector";
 import { timelineListValue } from "Constants/timelineConstants";
 import { projectsListValue } from "Constants/projectsConstants";
 import { Transition } from "react-spring/renderprops";
+import { withRouter } from "react-router";
 import Swiper from "react-id-swiper";
 import find from "lodash/find";
 import map from "lodash/map";
 import styles from "./timeline_mobile.module.scss";
 import ProjectListItem from 'Common/components/projectListItem';
 import PaginationButton from "Common/components/paginationButton";
+import { setProjectPosition } from "Redux/actions/projectActions";
 
-export default class TimelineMobile extends Component {
+class TimelineMobile extends Component {
   state = {
     selectedTimelineId: "nykaa",
     projectsList: []
@@ -30,8 +34,27 @@ export default class TimelineMobile extends Component {
       return timelineItem.id === selectedId;
     });
 
-    return timeline.projects.map(project => projectsListValue[project]);
+    return timeline.projects.map(project => ({
+      ...projectsListValue[project],
+      slug: project,
+      imgRef: React.createRef(),
+      slideRef: React.createRef()
+    }));
   };
+
+  onClickProject = project => {
+    const {
+      setProjectPosition,
+      history: { push }
+    } = this.props;
+
+    const imgRect = project.imgRef.current.getBoundingClientRect();
+    const slideRect = project.slideRef.current.getBoundingClientRect();
+
+    setProjectPosition({ img: imgRect, slide: slideRect });
+    push(`/project/${project.slug}`);
+  };
+
 
   onTimelineSelected = ({ selectedId }) => {
     const projectsList = this.getProjects(selectedId);
@@ -116,7 +139,7 @@ export default class TimelineMobile extends Component {
                   key={index}
                   slide={project}
                   className={styles.project_list_item}
-                  onClickProject={null}
+                  onClickProject={this.onClickProject}
                 />
               ))}
             </Swiper>
@@ -138,3 +161,14 @@ export default class TimelineMobile extends Component {
     );
   }
 }
+
+const mapDispathToProps = dispatch => {
+  return {
+    setProjectPosition: bindActionCreators(setProjectPosition, dispatch)
+  };
+};
+
+export default connect(
+  null,
+  mapDispathToProps
+)(withRouter(TimelineMobile));
