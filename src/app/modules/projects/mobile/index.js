@@ -14,6 +14,7 @@ import styles from "./projects_mobile.module.scss";
 import ProjectListItem from 'Common/components/projectListItem';
 import PaginationButton from "Common/components/paginationButton";
 import { setProjectPosition } from "Redux/actions/projectActions";
+import techDoodleImage from "Images/tech-doodle-background-image.png";
 
 class ProjectsMobile extends Component {
   state = {
@@ -83,7 +84,13 @@ class ProjectsMobile extends Component {
     return (
       <Div fillParent className={styles.timeline_container}>
         {/* Background div image */}
-        <Div className={styles.image_container}>
+        <Div
+          className={styles.image_container}
+          style={{
+            backgroundImage: `url(${techDoodleImage})`,
+            backgroundSize: 'contain'
+          }}
+        >
 
         </Div>
 
@@ -110,7 +117,7 @@ class ProjectsMobile extends Component {
                   className={styles.details_container}
                 >
                   <div className={styles.title}>{tech.name}</div>
-                  <div className={styles.description}>{tech.descritpion}</div>
+                  <div className={styles.description}>{tech.description}</div>
                 </Div>
               )}
             </Transition>
