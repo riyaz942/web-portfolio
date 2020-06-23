@@ -59,7 +59,9 @@ class TimelineMobile extends Component {
 
   onTimelineSelected = ({ selectedId }) => {
     const projectsList = this.getProjects(selectedId);
-    this.setState({ selectedTimelineId: selectedId, projectsList, currentSlide: 0 });
+    this.setState({ selectedTimelineId: selectedId, projectsList, currentSlide: 0 }, ()=> {
+      this.swiper.slideTo(0);
+    });
   };
 
   render() {
