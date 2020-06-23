@@ -1,0 +1,100 @@
+@import '~Styles/colors.module';
+@import '~Styles/mixins.module';
+
+.timeline_container {
+  //padding: 80px 20px 20px 20px;
+  position: relative;
+  overflow: hidden;
+  color: white;
+}
+
+.image_container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  .image {
+    height: calc((100vh - 400px) / 2);
+    width: 100%;
+    object-fit: cover;
+    transition: height 0.5s ease;
+  }
+
+  .selected_image {
+    flex: unset;
+    height: 400px;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba($color-dark, 0.8);
+  }
+}
+
+.content_container {
+  z-index: 1;
+}
+
+.timeline_selector_container {
+  margin: 80px 20px 0px;
+}
+
+.details_top_container {
+  position: relative;
+  height: 130px;
+  margin: 0px 20px 0px;
+}
+
+.details_container {
+  position: absolute;
+
+  .title {
+    align-self: center;
+    font-size: 30px;
+    margin: 16px 0px 8px 0px;
+  }
+  
+  .description {
+    align-self: center;
+    font-size: 12px;
+    margin-top: 4px;
+  }
+  
+}
+
+.view_pager_container {
+  margin-top: auto;
+  max-height: calc(40vh);
+}
+
+.project_list_item {
+  transition: background-color 0.6s, transform 0.6s ease;
+  margin-right: unset;  
+  // margin: 0px 20px;
+}
+
+.project_list_item__selected {
+  transform: scale(1.1);
+  background-color: white;
+}
+
+.pagination_button_container {
+  margin: 26px 0px 18px;
+
+  .left_button {
+    margin-right: 18px;
+  }
+}
+
+@include small {
+  .view_pager_container {
+    max-height: calc(35vh);
+  }  
+}
