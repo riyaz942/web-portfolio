@@ -7,7 +7,7 @@ import find from "lodash/find";
 import { Transition, Spring } from "react-spring/renderprops";
 import RightContainer from "Common/containers/rightContainer";
 import techDoodleImage from "Images/tech-doodle-background-image.png";
-import { random, parseNewLine } from "Common/utils";
+import { random, parseNewLine, getImagePosition, getBackgroundTransition } from "Common/utils";
 
 class Projects extends Component {
   constructor(props) {
@@ -15,11 +15,11 @@ class Projects extends Component {
     this.isFirstAnimation = true;
     const selectedTechId = 'react';
     const imageAlignment = random(0, 3);
-
-    const imagePosition = this.getImagePosition(selectedTechId, imageAlignment);
-    const backgroundTransition = this.getBackgroundTransition(
+    const imagePosition = getImagePosition(selectedTechId, imageAlignment);
+    const backgroundTransition = getBackgroundTransition(
       selectedTechId,
-      imageAlignment
+      imageAlignment,
+      this.isFirstAnimation
     );
 
     this.state = {
@@ -41,10 +41,11 @@ class Projects extends Component {
     const { techTransitionAnimation } = this.state;
 
     const imageAlignment = random(0, 3);
-    const imagePosition = this.getImagePosition(selectedId, imageAlignment);
-    const backgroundTransition = this.getBackgroundTransition(
+    const imagePosition = getImagePosition(selectedId, imageAlignment);
+    const backgroundTransition = getBackgroundTransition(
       selectedId,
-      imageAlignment
+      imageAlignment,
+      this.isFirstAnimation,
     );
 
     this.setState({
@@ -56,131 +57,6 @@ class Projects extends Component {
         }
       }
     });
-  };
-
-  getImagePosition = (techType, imageAlignment) => {
-    const lowerRange = 15;
-    const higherRange = techType == 'android' ? 70 : 20;
-
-    const imageLeft = random(lowerRange, higherRange);
-    const imageTop = random(lowerRange, higherRange);
-
-    if (techType == "android") {
-      switch (imageAlignment) {
-        case 0:
-          return {
-            transform: "rotate(180deg)",
-            left: `${imageLeft}vw`,
-            top: 0
-          };
-
-        case 1:
-          return {
-            transform: "rotate(270deg)",
-            top: `${imageTop}vh`,
-            right: '-63px'
-          };
-
-        case 2:
-          return {
-            transform: "rotate(0deg)",
-            left: `${imageLeft}vw`,
-            bottom: 0
-          };
-
-        case 3:
-          return {
-            transform: "rotate(90deg)",
-            left: '-63px',
-            top: `${imageTop}vh`
-          };
-      }
-    }
-
-    return {
-      left: `${imageLeft}vw`,
-      top: `${imageTop}vh`
-    };
-  };
-
-  getBackgroundTransition = (techType, imageAlignment) => {
-    let transition = {};
-
-    if (
-      techType == "react" ||
-      techType == "react-native" ||
-      techType == "electron"
-    ) {
-      // transform and rotate are going to be used by image tag
-      transition = {
-        from: {
-          opacity: 0,
-          transform: "scale(0) rotate(360deg)"
-        },
-        enter: {
-          opacity: 1,
-          transform: "scale(1) rotate(0deg)"
-        },
-        leave: {
-          opacity: 0,
-          transform: "scale(0) rotate(360deg)"
-        }
-      };
-    } else if (techType == "android") {
-      switch (imageAlignment) {
-        case 0:
-          transition = {
-            from: {
-              transform: "translate(0vw, -100vh)"
-            },
-            enter: { transform: "translate(0vw, 0vh)" },
-            leave: { transform: "translate(0vw,-100vh)" }
-          };
-        break;
-        case 1:
-          transition = {
-            from: { transform: "translate(100vw, 0vh)" },
-            enter: { transform: "translate(0vw, 0vh)" },
-            leave: { transform: "translate(100vw, 0vh)" }
-          };
-        break;
-        case 2:
-          transition = {
-            from: { transform: "translate(0vw, 100vh)" },
-            enter: { transform: "translate(0vw, 0vh)" },
-            leave: { transform: "translate(0vw, 100vh)" }
-          };
-        break;
-        case 3:
-          transition = {
-            from: {
-              transform: "translate(-100vw, 0vh)"
-            },
-            enter: { transform: "translate(0vw, 0vh)" },
-            leave: {
-              transform: "translate(-100vw, 0vh)"
-            }
-          };
-        break;
-      }
-    }
-
-    if (!transition.from) {
-      transition = {
-        from: { transform: "translate(0vw, -100vh)" },
-        enter: { transform: "translate(0vw, 0vh)" },
-        leave: { transform: "translate(0vw, -100vh)" }
-      };
-    }
-
-    if (this.isFirstAnimation) {
-      transition = {
-        ...transition,
-        from: transition.enter,
-      }
-    }
-
-    return transition;
   };
 
   render() {
