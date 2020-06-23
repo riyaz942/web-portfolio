@@ -14,9 +14,14 @@ export const parseNewLine = object => {
   return reactStringReplace(object, "<br/>", newLineMatch)
 }
 
-export const getImagePosition = (techType, imageAlignment) => {
-  const lowerRange = 15;
-  const higherRange = techType == 'android' ? 70 : 20;
+export const getImagePosition = (techType, imageAlignment, isMobile = false) => {
+  let lowerRange = 15;
+  let higherRange = techType == 'android' ? 70 : 20;
+
+  if (isMobile) {
+    lowerRange = techType == 'android' ? 15 : 30;
+    higherRange = techType == 'android' ? 70 : 35;
+  }
 
   const imageLeft = random(lowerRange, higherRange);
   const imageTop = random(lowerRange, higherRange);

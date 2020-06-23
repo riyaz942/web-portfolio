@@ -5,7 +5,7 @@ import { bindActionCreators } from "redux";
 import TimelineSelector from "Common/containers/timelineSelector";
 import { techList } from "Constants/techConstants";
 import { projectsListValue } from "Constants/projectsConstants";
-import { Transition } from "react-spring/renderprops";
+import { Transition, Spring } from "react-spring/renderprops";
 import { withRouter } from "react-router";
 import Swiper from "react-id-swiper";
 import find from "lodash/find";
@@ -15,17 +15,38 @@ import ProjectListItem from 'Common/components/projectListItem';
 import PaginationButton from "Common/components/paginationButton";
 import { setProjectPosition } from "Redux/actions/projectActions";
 import techDoodleImage from "Images/tech-doodle-background-image.png";
-import { random, parseNewLine } from "Common/utils";
+import { random, parseNewLine, getImagePosition, getBackgroundTransition } from "Common/utils";
 
 class ProjectsMobile extends Component {
-  state = {
-    selectedProjectId: "react",
-    currentSlide: 0,
-    projectsList: []
-  };
+  constructor(props) {
+    super(props);
+    this.isFirstAnimation = true;
+    const selectedProjectId = 'react';
+    const imageAlignment = random(0, 3);
+    const imagePosition = getImagePosition(selectedProjectId, imageAlignment, true);
+    const backgroundTransition = getBackgroundTransition(
+      selectedProjectId,
+      imageAlignment,
+      this.isFirstAnimation
+    );
+
+
+    this.state = {
+      selectedProjectId,
+      currentSlide: 0,
+      projectsList: [],
+      techTransitionAnimation: {
+        react: {
+          ...backgroundTransition,
+          imagePosition
+        }
+      }
+    };
+  }
 
   componentDidMount() {
     const { selectedProjectId } = this.state;
+    this.isFirstAnimation = false;
 
     this.setState({
       projectsList: this.getProjects(selectedProjectId)
@@ -60,14 +81,34 @@ class ProjectsMobile extends Component {
 
 
   onProjectSelected = ({ selectedId }) => {
+    const { techTransitionAnimation } = this.state;
     const projectsList = this.getProjects(selectedId);
-    this.setState({ selectedProjectId: selectedId, projectsList, currentSlide: 0 }, ()=> {
+    const imageAlignment = random(0, 3);
+    const imagePosition = getImagePosition(selectedId, imageAlignment, true);
+    const backgroundTransition = getBackgroundTransition(
+      selectedId,
+      imageAlignment,
+      this.isFirstAnimation,
+    );
+
+    this.setState({
+      selectedProjectId: selectedId,
+      projectsList,
+      currentSlide: 0,
+      techTransitionAnimation: {
+        ...techTransitionAnimation,
+        [selectedId]: {
+          ...backgroundTransition,
+          imagePosition
+        }
+      }
+    }, () => {
       this.swiper.slideTo(0);
     });
   };
 
   render() {
-    const { selectedProjectId, projectsList, currentSlide } = this.state;
+    const { selectedProjectId, projectsList, currentSlide, techTransitionAnimation } = this.state;
     const tech = find(techList, techItem => (techItem.id === selectedProjectId));
     const totalItems = projectsList ? projectsList.length : 0;
 
@@ -95,8 +136,64 @@ class ProjectsMobile extends Component {
             backgroundSize: 'contain'
           }}
         >
-
         </Div>
+        <Transition
+          items={tech}
+          keys={tech => tech.id}
+          from={{ opacity: 0 }}
+          enter={{ opacity: 1 }}
+          leave={{ opacity: 0 }}
+        >
+          {tech => tech.id && (
+            value => {
+              const { imagePosition, from, enter, leave } = techTransitionAnimation[tech.id];
+              const fromAnimation = tech.id == selectedProjectId ? from : enter;
+              const toAnimation = tech.id == selectedProjectId ? enter : leave;
+              const isReactRelated =
+                tech.id == "react" ||
+                tech.id == "react-native" ||
+                tech.id == "electron";
+
+              return (
+                <Spring
+                  from={{
+                    opacity: isReactRelated ? fromAnimation.opacity : 1,
+                    transform: fromAnimation.transform,
+                  }}
+                  to={{
+                    opacity: isReactRelated ? toAnimation.opacity : 1,
+                    transform: toAnimation.transform,
+                  }}
+                >
+                  {
+                    props => (
+                      <Div
+                        style={{
+                          opacity: isReactRelated ? props.opacity : 1,
+                          transform: !isReactRelated ? props.transform : "unset"
+                        }}
+                        className={styles.background_image_container}
+                      >
+                        <img
+                          src={tech.backgroundImage}
+                          style={{
+                            left: imagePosition.left,
+                            right: imagePosition.right,
+                            top: imagePosition.top,
+                            bottom: imagePosition.bottom,
+                            opacity: tech.id == 'android' ? 0.8 : 0.4,
+                            transform: tech.id == 'android' ? imagePosition.transform : props.transform
+                          }}
+                          className={styles.background_image}
+                        ></img>
+                      </Div>
+                    )
+                  }
+                </Spring>
+              )
+            }
+          )}
+        </Transition>
 
         <Div fillParent className={styles.content_container}>
           <TimelineSelector
