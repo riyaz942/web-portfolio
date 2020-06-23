@@ -19,22 +19,22 @@ import { random, parseNewLine } from "Common/utils";
 
 class ProjectsMobile extends Component {
   state = {
-    selectedTimelineId: "react",
+    selectedProjectId: "react",
     currentSlide: 0,
     projectsList: []
   };
 
   componentDidMount() {
-    const { selectedTimelineId } = this.state;
+    const { selectedProjectId } = this.state;
 
     this.setState({
-      projectsList: this.getProjects(selectedTimelineId)
+      projectsList: this.getProjects(selectedProjectId)
     });
   }
 
   getProjects = selectedId => {
-    const tech = find(techList, timelineItem => {
-      return timelineItem.id === selectedId;
+    const tech = find(techList, techItem => {
+      return techItem.id === selectedId;
     });
 
     return tech.projects.map(project => ({
@@ -59,17 +59,20 @@ class ProjectsMobile extends Component {
   };
 
 
-  onTimelineSelected = ({ selectedId }) => {
+  onProjectSelected = ({ selectedId }) => {
     const projectsList = this.getProjects(selectedId);
-    this.setState({ selectedTimelineId: selectedId, projectsList, currentSlide: 0 });
+    this.setState({ selectedProjectId: selectedId, projectsList, currentSlide: 0 }, ()=> {
+      this.swiper.slideTo(0);
+    });
   };
 
   render() {
-    const { selectedTimelineId, projectsList, currentSlide } = this.state;
-    const tech = find(techList, techItem => {
-      return techItem.id === selectedTimelineId;
-    });
+    const { selectedProjectId, projectsList, currentSlide } = this.state;
+    const tech = find(techList, techItem => (techItem.id === selectedProjectId));
     const totalItems = projectsList ? projectsList.length : 0;
+
+    const isPreviousButtonEnabled = currentSlide != 0;
+    const isNextButtonEnabled = currentSlide < totalItems - 1;
 
     const params = {
       containerClass: "custom_container",
@@ -99,7 +102,7 @@ class ProjectsMobile extends Component {
           <TimelineSelector
             listValue={techList}
             tech
-            onItemSelected={this.onTimelineSelected}
+            onItemSelected={this.onProjectSelected}
             className={styles.timeline_selector_container}
           />
           <Div align justify className={styles.details_top_container}>
@@ -144,14 +147,12 @@ class ProjectsMobile extends Component {
           </Div>
           <Div alignSelf="center" row className={styles.pagination_button_container}>
             <PaginationButton
-              isEnabled={currentSlide != 0}
-              onClick={null}
+              isEnabled={isPreviousButtonEnabled}
               className={styles.left_button}
               onClick={() => this.swiper.slidePrev()}
             />
             <PaginationButton
-              isEnabled={currentSlide < totalItems - 1}
-              onClick={null}
+              isEnabled={isNextButtonEnabled}
               isRight
               onClick={() => this.swiper.slideNext()}
             />
