@@ -15,6 +15,7 @@ import ProjectListItem from 'Common/components/projectListItem';
 import PaginationButton from "Common/components/paginationButton";
 import { setProjectPosition } from "Redux/actions/projectActions";
 import techDoodleImage from "Images/tech-doodle-background-image.png";
+import { random, parseNewLine } from "Common/utils";
 
 class ProjectsMobile extends Component {
   state = {
@@ -117,7 +118,7 @@ class ProjectsMobile extends Component {
                   className={styles.details_container}
                 >
                   <div className={styles.title}>{tech.name}</div>
-                  <div className={styles.description}>{tech.description}</div>
+                  <div className={styles.description}>{parseNewLine(tech.description)}</div>
                 </Div>
               )}
             </Transition>
