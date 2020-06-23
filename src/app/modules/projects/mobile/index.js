@@ -144,7 +144,7 @@ class ProjectsMobile extends Component {
           enter={{ opacity: 1 }}
           leave={{ opacity: 0 }}
         >
-          {tech => tech.id && (
+          {tech => tech.id == 'android' && (
             value => {
               const { imagePosition, from, enter, leave } = techTransitionAnimation[tech.id];
               const fromAnimation = tech.id == selectedProjectId ? from : enter;
