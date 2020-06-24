@@ -231,7 +231,11 @@ class ProjectsMobile extends Component {
               }}
             >
               {map(projectsList, (project, index) => (
-                <Div align justify>
+                <Div 
+                  key={index}
+                  align 
+                  justify
+                >
                   <ProjectListItem
                     key={index}
                     slide={project}

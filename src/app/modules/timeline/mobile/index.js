@@ -39,9 +39,9 @@ class TimelineMobile extends Component {
       const { } = this.state;
 
       if (direction == 'r') {
-        // to tech
+        
       } else if (direction == 'l') {
-        // to tech
+        
       }
     });
   }
