@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Div from "Common/components/div";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import { landingPageBody } from "Constants/landingConstants";
 import TimelineSelector from "Common/containers/timelineSelector";
 import { techList } from "Constants/techConstants";
 import { projectsListValue } from "Constants/projectsConstants";
@@ -15,6 +16,7 @@ import ProjectListItem from 'Common/components/projectListItem';
 import PaginationButton from "Common/components/paginationButton";
 import { setProjectPosition } from "Redux/actions/projectActions";
 import techDoodleImage from "Images/tech-doodle-background-image.png";
+import { detectSwipe } from 'Common/utils/swipeGesture';
 import { random, parseNewLine, getImagePosition, getBackgroundTransition } from "Common/utils";
 
 class ProjectsMobile extends Component {
@@ -29,7 +31,7 @@ class ProjectsMobile extends Component {
       imageAlignment,
       this.isFirstAnimation
     );
-
+    this.containerRef = React.createRef();  
 
     this.state = {
       selectedProjectId,
@@ -51,6 +53,29 @@ class ProjectsMobile extends Component {
     this.setState({
       projectsList: this.getProjects(selectedProjectId)
     });
+
+    detectSwipe(this.containerRef.current, (direction) => {
+      const { updateBodyType } = this.props;
+      const { selectedProjectId } = this.state;
+      const index = techList.findIndex((element) => element.id === selectedProjectId);
+
+      if (direction == 'r' || direction == 'l') {
+        updateBodyType(landingPageBody.TIMELINE);
+      } else if (direction == 'u') {
+        if (index < techList.length-1) {
+          this.onProjectSelected({ selectedId: techList[index + 1].id })
+        }
+      } else if (direction == 'd') {
+        if (index != 0) {
+          this.onProjectSelected({ selectedId: techList[index - 1].id })
+        }
+      }
+    });
+  }
+
+  onSwiperMount = (swiper) => {
+    this.swiper = swiper;
+    swiper.el.addEventListener('touchstart', e => e.stopPropagation(), false);
   }
 
   getProjects = selectedId => {
@@ -127,7 +152,7 @@ class ProjectsMobile extends Component {
     };
 
     return (
-      <Div fillParent className={styles.timeline_container}>
+      <Div passRef={this.containerRef} fillParent className={styles.timeline_container}>
         {/* Background div image */}
         <Div
           className={styles.image_container}
@@ -227,9 +252,7 @@ class ProjectsMobile extends Component {
           <Div fillParent className={styles.view_pager_container}>
             <Swiper
               {...params}
-              getSwiper={swiper => {
-                this.swiper = swiper;
-              }}
+              getSwiper={this.onSwiperMount}
             >
               {map(projectsList, (project, index) => (
                 <Div

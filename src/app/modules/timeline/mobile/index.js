@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Div from "Common/components/div";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import { landingPageBody } from "Constants/landingConstants";
 import TimelineSelector from "Common/containers/timelineSelector";
 import { timelineListValue } from "Constants/timelineConstants";
 import { projectsListValue } from "Constants/projectsConstants";
@@ -37,16 +38,19 @@ class TimelineMobile extends Component {
 
     detectSwipe(this.containerRef.current, (direction) => {
       const { selectedTimelineId } = this.state;
+      const { updateBodyType } = this.props;
       const index = timelineListValue.findIndex((element) => element.id === selectedTimelineId);
 
-      if (direction == 'r') {
-        if (index != 0) {
-          this.onTimelineSelected({ selectedId: timelineListValue[index - 1].id })
-        }
-      } else if (direction == 'l') {
+      if (direction == 'r' || direction == 'l') {
+        updateBodyType(landingPageBody.PROJECT);
+      } else if (direction == 'u') {
         if (index < timelineListValue.length-1) {
           this.onTimelineSelected({ selectedId: timelineListValue[index + 1].id })
         }        
+      } else if (direction == 'd') {
+        if (index != 0) {
+          this.onTimelineSelected({ selectedId: timelineListValue[index - 1].id })
+        }
       }
     });
   }

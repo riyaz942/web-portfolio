@@ -103,8 +103,8 @@ export default class Landing extends Component {
           style={props}
           className={styles.body_content_container}
         >
-          {bodyType == landingPageBody.PROJECT && (showMobile ? <ProjectsMobile /> : <Projects />)}
-          {bodyType == landingPageBody.TIMELINE && (showMobile ? <TimelineMobile /> :  <Timeline />)}
+          {bodyType == landingPageBody.PROJECT && (showMobile ? <ProjectsMobile updateBodyType={this.updateBodyType} /> : <Projects />)}
+          {bodyType == landingPageBody.TIMELINE && (showMobile ? <TimelineMobile updateBodyType={this.updateBodyType} /> :  <Timeline />)}
         </Div>
       )
     )
