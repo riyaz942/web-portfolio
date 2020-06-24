@@ -24,9 +24,9 @@ class TimelineMobile extends Component {
       selectedTimelineId: "nykaa",
       currentSlide: 0,
       projectsList: []
-    } 
+    }
   }
-  
+
   componentDidMount() {
     const { selectedTimelineId } = this.state;
 
@@ -34,24 +34,20 @@ class TimelineMobile extends Component {
       projectsList: this.getProjects(selectedTimelineId)
     });
 
-    
-    detectSwipe(this.containerRef.current, (direction)=> {
+
+    detectSwipe(this.containerRef.current, (direction) => {
       const { } = this.state;
 
       if (direction == 'r') {
         // to tech
       } else if (direction == 'l') {
         // to tech
-      } else if (direction == 'u') {
-        // ++
-      } else if (direction = 'd') {
-        // --
       }
     });
   }
 
   onSwiperMount = (swiper) => {
-    this.swiper=swiper;
+    this.swiper = swiper;
     swiper.el.addEventListener('touchstart', e => e.stopPropagation(), false);
   }
 
@@ -84,7 +80,7 @@ class TimelineMobile extends Component {
 
   onTimelineSelected = ({ selectedId }) => {
     const projectsList = this.getProjects(selectedId);
-    this.setState({ selectedTimelineId: selectedId, projectsList, currentSlide: 0 }, ()=> {
+    this.setState({ selectedTimelineId: selectedId, projectsList, currentSlide: 0 }, () => {
       this.swiper.slideTo(0);
     });
   };
@@ -111,10 +107,11 @@ class TimelineMobile extends Component {
       <Div passRef={this.containerRef} fillParent className={styles.timeline_container}>
         {/* Background div image */}
         <Div className={styles.image_container}>
-          {timelineListValue.map(timelineValue => {
+          {timelineListValue.map((timelineValue, index) => {
             if (timelineValue.id === selectedTimelineId) {
               return (
                 <img
+                  key={index}
                   className={`${styles.image} ${styles.selected_image}`}
                   src={timelineValue.backgroundImage}
                 />
@@ -123,6 +120,7 @@ class TimelineMobile extends Component {
 
             return (
               <img
+                key={index}
                 className={styles.image}
                 src={timelineValue.backgroundImage}
               />
@@ -168,9 +166,12 @@ class TimelineMobile extends Component {
               getSwiper={this.onSwiperMount}
             >
               {map(projectsList, (project, index) => (
-                <Div align justify>
+                <Div
+                  key={index}
+                  align
+                  justify
+                >
                   <ProjectListItem
-                    key={index}
                     slide={project}
                     className={`${index == currentSlide ? styles.project_list_item__selected : ''} ${styles.project_list_item}`}
                     onClickProject={this.onClickProject}
