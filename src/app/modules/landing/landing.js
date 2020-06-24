@@ -11,10 +11,10 @@ import { Transition } from "react-spring/renderprops";
 import ProfilePic from "Modules/aboutComponents/profilePic";
 import HeaderDescription from "Modules/aboutComponents/headerDescription";
 import HeaderLinks from 'Modules/aboutComponents/headerLinks';
-import { screenSize } from 'Common/hooks/useBreakpoint';
+import responsiveBreakpoint from 'Common/hoc/responsiveBreakpoint';
 import TimelineMobile from "../timeline/mobile";
 
-export default class Landing extends Component {
+class Landing extends Component {
   state = {
     bodyType: landingPageBody.NONE,
     isFullScreen: true,
@@ -93,7 +93,7 @@ export default class Landing extends Component {
     this.setState({ bodyType });
   };
 
-  getBodyContent = (bodyType) => {
+  getBodyContent = (bodyType, screenSize) => {
     const showMobile = screenSize === 'sm' || screenSize === 'md';
 
     return (
@@ -112,6 +112,7 @@ export default class Landing extends Component {
 
   render() {
     const { bodyType, isFirstTime, isFullScreen, showDescription, clientX, clientY, allowMouseHover } = this.state;
+    const { screenSize } = this.props;
     let fromAnimation, enterAnimation, leaveAnimation;
 
     if (this.previousBodyType == landingPageBody.NONE || bodyType == landingPageBody.NONE) {
@@ -176,7 +177,7 @@ export default class Landing extends Component {
               delay: this.previousBodyType == landingPageBody.NONE ? 500 : 0
             }}
           >
-            {bodyType => this.getBodyContent(bodyType)}
+            {bodyType => this.getBodyContent(bodyType, screenSize)}
           </Transition>
         </Div>
 
@@ -217,3 +218,5 @@ export default class Landing extends Component {
     );
   }
 }
+
+export default responsiveBreakpoint(Landing);

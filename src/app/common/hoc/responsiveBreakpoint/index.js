@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router";
 import throttle from "lodash/throttle";
 
-const navigatorHoc = WrappedComponent => {
-  class navigator extends Component {
+const responsiveBreakpointHoc = WrappedComponent => {
+  class responsiveBreakpoint extends Component {
     state = {
       screenSize: ""
     };
@@ -20,14 +19,14 @@ const navigatorHoc = WrappedComponent => {
       return "xlg";
     };
 
-    calcInnerWidth = throttle(function() {
-      const screenSize = getDeviceConfig(window.innerWidth);
+    calcInnerWidth = () => {
+      const screenSize = this.getDeviceConfig(window.innerWidth);
       this.setState({ screenSize });
-    }, 200);
+    };
 
     componentDidMount() {
-      window.addEventListener("resize", this.calcInnerWidth);
-      const screenSize = getDeviceConfig(window.innerWidth);
+      window.addEventListener("resize", throttle(this.calcInnerWidth, 200));
+      const screenSize = this.getDeviceConfig(window.innerWidth);
       this.setState({ screenSize });
     }
 
@@ -36,18 +35,18 @@ const navigatorHoc = WrappedComponent => {
     }
 
     render() {
+      const { screenSize } = this.state;
+
       return (
         <WrappedComponent
-          navigateTo={this.navigateTo}
-          replaceTo={this.replaceTo}
-          pop={this.pop}
+          screenSize={screenSize}
           {...this.props}
         />
       );
     }
   }
 
-  return withRouter(navigator);
+  return responsiveBreakpoint;
 };
 
-export default navigatorHoc;
+export default responsiveBreakpointHoc;
