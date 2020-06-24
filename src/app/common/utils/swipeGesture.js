@@ -1,6 +1,6 @@
 export function detectSwipe(el, swipeCallback) {
   const swipe_det = new Object();
-  const velocityThreshhold = 0.7;
+  const velocityThreshhold = 0.6;
   swipe_det.sX = 0; swipe_det.sY = 0; swipe_det.eX = 0; swipe_det.eY = 0;
   const min_x = 30;  //min x swipe for horizontal swipe
   const max_x = 30;  //max x difference for vertical swipe

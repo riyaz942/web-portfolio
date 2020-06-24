@@ -197,6 +197,7 @@ class ProjectsMobile extends Component {
 
         <Div fillParent className={styles.content_container}>
           <TimelineSelector
+            selectedId={selectedProjectId}
             listValue={techList}
             tech
             onItemSelected={this.onProjectSelected}
@@ -231,9 +232,9 @@ class ProjectsMobile extends Component {
               }}
             >
               {map(projectsList, (project, index) => (
-                <Div 
+                <Div
                   key={index}
-                  align 
+                  align
                   justify
                 >
                   <ProjectListItem

@@ -36,12 +36,17 @@ class TimelineMobile extends Component {
 
 
     detectSwipe(this.containerRef.current, (direction) => {
-      const { } = this.state;
+      const { selectedTimelineId } = this.state;
+      const index = timelineListValue.findIndex((element) => element.id === selectedTimelineId);
 
       if (direction == 'r') {
-        
+        if (index != 0) {
+          this.onTimelineSelected({ selectedId: timelineListValue[index - 1].id })
+        }
       } else if (direction == 'l') {
-        
+        if (index < timelineListValue.length-1) {
+          this.onTimelineSelected({ selectedId: timelineListValue[index + 1].id })
+        }        
       }
     });
   }
@@ -130,6 +135,7 @@ class TimelineMobile extends Component {
 
         <Div fillParent className={styles.content_container}>
           <TimelineSelector
+            selectedId={selectedTimelineId}
             listValue={timelineListValue}
             onItemSelected={this.onTimelineSelected}
             className={styles.timeline_selector_container}
