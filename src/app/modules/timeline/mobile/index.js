@@ -14,20 +14,45 @@ import styles from "./timeline_mobile.module.scss";
 import ProjectListItem from 'Common/components/projectListItem';
 import PaginationButton from "Common/components/paginationButton";
 import { setProjectPosition } from "Redux/actions/projectActions";
+import { detectSwipe } from 'Common/utils/swipeGesture';
 
 class TimelineMobile extends Component {
-  state = {
-    selectedTimelineId: "nykaa",
-    currentSlide: 0,
-    projectsList: []
-  };
-
+  constructor(props) {
+    super(props);
+    this.containerRef = React.createRef();
+    this.state = {
+      selectedTimelineId: "nykaa",
+      currentSlide: 0,
+      projectsList: []
+    } 
+  }
+  
   componentDidMount() {
     const { selectedTimelineId } = this.state;
 
     this.setState({
       projectsList: this.getProjects(selectedTimelineId)
     });
+
+    
+    detectSwipe(this.containerRef.current, (direction)=> {
+      const { } = this.state;
+
+      if (direction == 'r') {
+        // to tech
+      } else if (direction == 'l') {
+        // to tech
+      } else if (direction == 'u') {
+        // ++
+      } else if (direction = 'd') {
+        // --
+      }
+    });
+  }
+
+  onSwiperMount = (swiper) => {
+    this.swiper=swiper;
+    swiper.el.addEventListener('touchstart', e => e.stopPropagation(), false);
   }
 
   getProjects = selectedId => {
@@ -83,7 +108,7 @@ class TimelineMobile extends Component {
     };
 
     return (
-      <Div fillParent className={styles.timeline_container}>
+      <Div passRef={this.containerRef} fillParent className={styles.timeline_container}>
         {/* Background div image */}
         <Div className={styles.image_container}>
           {timelineListValue.map(timelineValue => {
@@ -134,12 +159,13 @@ class TimelineMobile extends Component {
               )}
             </Transition>
           </Div>
-          <Div fillParent className={styles.view_pager_container}>
+          <Div
+            fillParent
+            className={styles.view_pager_container}
+          >
             <Swiper
               {...params}
-              getSwiper={swiper => {
-                this.swiper = swiper;
-              }}
+              getSwiper={this.onSwiperMount}
             >
               {map(projectsList, (project, index) => (
                 <Div align justify>

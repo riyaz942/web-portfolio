@@ -15,6 +15,7 @@ class Div extends Component {
       animate,
       flex,
       style,
+      passRef,
       ...rest
     } = this.props;
 
@@ -58,11 +59,15 @@ class Div extends Component {
     }
 
     return (
-      <div className={classNameArray.join(" ")} style={styleValue} {...rest}>
+      <div ref={passRef} className={classNameArray.join(" ")} style={styleValue} {...rest}>
         {children}
       </div>
     );
   }
+}
+
+Div.defaultProps = {
+  passRef: null,
 }
 
 export default memo(Div);
