@@ -53,7 +53,7 @@ class TimelineSelector extends Component {
                   align
                   justify
                   className={`${styles.company_logo_container} ${
-                    !item.id === selectedId ? styles.onclick_selector : ""
+                    item.id != selectedId ? styles.onclick_selector : ""
                     }`}
                   onClick={() => this.onClickitemItem(item)}
                 >

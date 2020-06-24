@@ -130,6 +130,7 @@ class Projects extends Component {
 
         <Div className={styles.left_container}>
           <TimelineSelector
+            selectedId={selectedTechId}
             listValue={techList}
             tech
             onItemSelected={this.onTechSelected}

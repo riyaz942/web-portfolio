@@ -78,6 +78,7 @@ class Timeline extends Component {
 
         <Div className={styles.left_container}>
           <TimelineSelector
+            selectedId={selectedTimelineId}
             listValue={timelineListValue}
             onItemSelected={this.onTimelineSelected}
           />
