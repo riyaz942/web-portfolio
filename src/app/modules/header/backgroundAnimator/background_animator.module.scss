@@ -1,13 +1,21 @@
+@import '~Styles/mixins.module';
 
 
-.background_gradient {
+.background_image_layer {
   position: absolute;
   left: 0;
-  right: 0;
   top: 0;
-  bottom: 0;
+  width: 100%;
+  height: 100%;
   
   background-size: cover;
   background-position: left top;
   background-repeat: no-repeat;
+}
+
+
+@include medium {
+  .background_image_layer {
+    width: 120%;
+  }
 }

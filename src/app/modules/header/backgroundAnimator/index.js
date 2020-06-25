@@ -14,11 +14,11 @@ const BackgroundAnimator = ({ clientX, clientY }) => {
   const animationProps = useSpring({ xy: calc(clientX, clientY), config: { mass: 10, tension: 550, friction: 240 } });
   return (
       <Fragment>
-        <animated.div className={styles.background_gradient} style={{ transform: animationProps.xy.interpolate(trans1), backgroundImage: `url(${backgroundDarkDoodleFixed})` }}>
+        <animated.div className={styles.background_image_layer} style={{ transform: animationProps.xy.interpolate(trans1), backgroundImage: `url(${backgroundDarkDoodleFixed})` }}>
         </animated.div>
-        <animated.div className={styles.background_gradient} style={{ transform: animationProps.xy.interpolate(trans2), backgroundImage: `url(${backgroundDarkDoodleSecond})` }}>
+        <animated.div className={styles.background_image_layer} style={{ transform: animationProps.xy.interpolate(trans2), backgroundImage: `url(${backgroundDarkDoodleSecond})` }}>
         </animated.div>
-        <animated.div className={styles.background_gradient} style={{ transform: animationProps.xy.interpolate(trans3), backgroundImage: `url(${backgroundDarkDoodleFirst})` }}>
+        <animated.div className={styles.background_image_layer} style={{ transform: animationProps.xy.interpolate(trans3), backgroundImage: `url(${backgroundDarkDoodleFirst})` }}>
         </animated.div>
       </Fragment>
   )

@@ -33,27 +33,22 @@ class Landing extends Component {
 
   componentDidMount() {
     setTimeout(() => {
+      const { screenSize } = this.props;
+      if (screenSize == 'sm' || screenSize == 'md')
+        window.addEventListener("deviceorientation", this.handleOrientation, false);
+
       this.setState({ isFirstTime: false, allowMouseHover: true });
     }, 1100);
 
-    // let gyroscope = new window.Gyroscope({ frequency: 60 });
+  }
 
-    // gyroscope.addEventListener("reading", e => {
-    //   console.log("Angular velocity along the X-axis " + gyroscope.x);
-    //   console.log("Angular velocity along the Y-axis " + gyroscope.y);
-    //   console.log("Angular velocity along the Z-axis " + gyroscope.z);
+  handleOrientation = (event) => {
+    // console.log({
+    //   a: Math.floor(event.alpha),
+    //   b: Math.floor(event.beta) * 5,
+    //   c: Math.floor(event.gamma) * 5,
     // });
-    // gyroscope.start();
-    function handleOrientation(event) {
-      console.log({
-        event,
-        a: event.alpha,
-        b: event.beta,
-        c: event.gama,
-      });      
-    }
-   //window.onorientationchange
-    window.addEventListener("deviceorientation", handleOrientation);
+    this.setState({ clientX: Math.floor(event.gamma) * 10, clientY: Math.floor(event.beta) * 10 });
   }
 
   //-------------------------------------------Header Logic-------------------------------------------
@@ -89,6 +84,10 @@ class Landing extends Component {
       });
 
       setTimeout(() => {
+        const { screenSize } = this.props;
+        if (screenSize == 'sm' || screenSize == 'md')
+          window.addEventListener("deviceorientation", this.handleOrientation, false);
+  
         this.setState({ allowMouseHover: true });
       }, 500);
     }, 500);
@@ -96,6 +95,10 @@ class Landing extends Component {
 
   //-----------------------------HideFullScreen
   hideFullScreen = () => {
+    const { screenSize } = this.props;
+    if (screenSize == 'sm' || screenSize == 'md')
+      window.removeEventListener("deviceorientation", this.handleOrientation, false);
+
     this.setState({ showDescription: false, allowMouseHover: false });
 
     setTimeout(() => {
@@ -182,8 +185,7 @@ class Landing extends Component {
         className={styles.landing_container}
         onMouseMove={
           allowMouseHover
-            ? ({ clientX: x, clientY: y }) =>
-                this.setState({ clientX: x, clientY: y })
+            ? ({ clientX: x, clientY: y }) => this.setState({ clientX: x, clientY: y })
             : null
         }
       >
