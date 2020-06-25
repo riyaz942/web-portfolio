@@ -26,4 +26,6 @@ const useBreakpoint = () => {
 
   return brkPnt;
 }
+
+export const screenSize = getDeviceConfig(window.innerWidth);
 export default useBreakpoint;

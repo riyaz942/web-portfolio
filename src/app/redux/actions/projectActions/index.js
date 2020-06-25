@@ -1,27 +1,23 @@
 import { SET_POSITION, CLEAR_POSITION, SET_DESTINATION } from 'Redux/constants/projectConstants';
 
 export function setProjectPosition(position) {
-  return dispatch => {
-    dispatch({
-      type: SET_POSITION,
-      payload: position,
-    });
+  return {
+    type: SET_POSITION,
+    payload: position,
   }
 }
 
 export function setProjectDestination(imgPosition) {
-  return dispatch => {
-    dispatch({
-      type: SET_DESTINATION,
-      payload: {
-        img: imgPosition,
-      }
-    })
+  return {
+    type: SET_DESTINATION,
+    payload: {
+      img: imgPosition,
+    }
   }
 }
 
 export function clearProjectPosition() {
-  return dispatch => {
-    dispatch({type: CLEAR_POSITION});
-  }
+  return {
+    type: CLEAR_POSITION
+  };
 }

@@ -5,13 +5,16 @@ import Timeline from "../timeline/timeline";
 import Loader from "../loader/loader";
 import { landingPageBody } from "../../constants/landingConstants";
 import Projects from "../projects/projects";
+import ProjectsMobile from '../projects/mobile';
 import Div from "Common/components/div";
 import { Transition } from "react-spring/renderprops";
 import ProfilePic from "Modules/aboutComponents/profilePic";
 import HeaderDescription from "Modules/aboutComponents/headerDescription";
-import HeaderLinks from "Modules/aboutComponents/headerLinks";
+import HeaderLinks from 'Modules/aboutComponents/headerLinks';
+import responsiveBreakpoint from 'Common/hoc/responsiveBreakpoint';
+import TimelineMobile from "../timeline/mobile";
 
-export default class Landing extends Component {
+class Landing extends Component {
   state = {
     bodyType: landingPageBody.NONE,
     isFullScreen: true,
@@ -108,25 +111,26 @@ export default class Landing extends Component {
     this.setState({ bodyType });
   };
 
-  getBodyContent = bodyType => {
-    return props => (
-      <Div fillParent style={props} className={styles.body_content_container}>
-        {bodyType == landingPageBody.PROJECT && <Projects />}
-        {bodyType == landingPageBody.TIMELINE && <Timeline />}
-      </Div>
-    );
-  };
+  getBodyContent = (bodyType, screenSize) => {
+    const showMobile = screenSize === 'sm' || screenSize === 'md';
+
+    return (
+      props => (
+        <Div
+          fillParent
+          style={props}
+          className={styles.body_content_container}
+        >
+          {bodyType == landingPageBody.PROJECT && (showMobile ? <ProjectsMobile updateBodyType={this.updateBodyType} /> : <Projects />)}
+          {bodyType == landingPageBody.TIMELINE && (showMobile ? <TimelineMobile updateBodyType={this.updateBodyType} /> :  <Timeline />)}
+        </Div>
+      )
+    )
+  }
 
   render() {
-    const {
-      bodyType,
-      isFirstTime,
-      isFullScreen,
-      showDescription,
-      clientX,
-      clientY,
-      allowMouseHover
-    } = this.state;
+    const { bodyType, isFirstTime, isFullScreen, showDescription, clientX, clientY, allowMouseHover } = this.state;
+    const { screenSize } = this.props;
     let fromAnimation, enterAnimation, leaveAnimation;
 
     if (
@@ -194,7 +198,7 @@ export default class Landing extends Component {
               delay: this.previousBodyType == landingPageBody.NONE ? 500 : 0
             }}
           >
-            {bodyType => this.getBodyContent(bodyType)}
+            {bodyType => this.getBodyContent(bodyType, screenSize)}
           </Transition>
         </Div>
 
@@ -234,9 +238,6 @@ export default class Landing extends Component {
     );
   }
 }
-
-
-
 
 
 /*
@@ -314,3 +315,4 @@ window.addEventListener('userproximity', function(event) {
    document.getElementById("UserProximity").innerHTML="UserProximity: "+event.near;
 });
 */
+export default responsiveBreakpoint(Landing);
