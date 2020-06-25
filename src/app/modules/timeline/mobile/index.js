@@ -41,7 +41,7 @@ class TimelineMobile extends Component {
       const { updateBodyType } = this.props;
       const index = timelineListValue.findIndex((element) => element.id === selectedTimelineId);
 
-      if (direction == 'r' || direction == 'l') {
+      if (direction == 'l') {
         updateBodyType(landingPageBody.PROJECT);
       } else if (direction == 'u') {
         if (index < timelineListValue.length-1) {

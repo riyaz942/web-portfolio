@@ -59,7 +59,7 @@ class ProjectsMobile extends Component {
       const { selectedProjectId } = this.state;
       const index = techList.findIndex((element) => element.id === selectedProjectId);
 
-      if (direction == 'r' || direction == 'l') {
+      if (direction == 'r') {
         updateBodyType(landingPageBody.TIMELINE);
       } else if (direction == 'u') {
         if (index < techList.length-1) {
