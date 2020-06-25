@@ -73,6 +73,7 @@
     "workbox-webpack-plugin": "4.2.0"
   },
   "scripts": {
+    "postbuild": "react-snap",
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js"
@@ -141,5 +142,8 @@
     "presets": [
       "react-app"
     ]
+  },
+  "devDependencies": {
+    "react-snap": "^1.23.0"
   }
 }

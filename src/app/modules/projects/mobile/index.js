@@ -31,7 +31,7 @@ class ProjectsMobile extends Component {
       imageAlignment,
       this.isFirstAnimation
     );
-    this.containerRef = React.createRef();  
+    this.containerRef = React.createRef();
 
     this.state = {
       selectedProjectId,
@@ -59,15 +59,17 @@ class ProjectsMobile extends Component {
       const { selectedProjectId } = this.state;
       const index = techList.findIndex((element) => element.id === selectedProjectId);
 
-      if (direction == 'r') {
-        updateBodyType(landingPageBody.TIMELINE);
-      } else if (direction == 'u') {
-        if (index < techList.length-1) {
+      if (direction == 'l') {
+        if (index < techList.length - 1) {
           this.onProjectSelected({ selectedId: techList[index + 1].id })
+        } else {
+          this.onProjectSelected({ selectedId: techList[0].id })
         }
-      } else if (direction == 'd') {
+      } else if (direction == 'r') {
         if (index != 0) {
           this.onProjectSelected({ selectedId: techList[index - 1].id })
+        } else {
+          updateBodyType(landingPageBody.TIMELINE);
         }
       }
     });

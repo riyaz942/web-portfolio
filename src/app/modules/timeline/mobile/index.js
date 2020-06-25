@@ -41,15 +41,18 @@ class TimelineMobile extends Component {
       const { updateBodyType } = this.props;
       const index = timelineListValue.findIndex((element) => element.id === selectedTimelineId);
 
+
       if (direction == 'l') {
-        updateBodyType(landingPageBody.PROJECT);
-      } else if (direction == 'u') {
         if (index < timelineListValue.length-1) {
           this.onTimelineSelected({ selectedId: timelineListValue[index + 1].id })
-        }        
-      } else if (direction == 'd') {
+        } else {
+          updateBodyType(landingPageBody.PROJECT);
+        }
+      } else if (direction == 'r') {
         if (index != 0) {
           this.onTimelineSelected({ selectedId: timelineListValue[index - 1].id })
+        } else {
+          this.onTimelineSelected({ selectedId: timelineListValue[timelineListValue.length - 1].id })
         }
       }
     });
