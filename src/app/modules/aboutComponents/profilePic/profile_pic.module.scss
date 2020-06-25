@@ -16,3 +16,11 @@
 .user_pic_clickable {
   cursor: pointer;
 }
+
+
+@include medium {
+  .user_pic {
+    width: 150px;
+    height: 150px;  
+  }
+}

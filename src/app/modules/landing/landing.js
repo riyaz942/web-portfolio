@@ -223,6 +223,7 @@ class Landing extends Component {
         />
 
         <ProfilePic
+          screenSize={screenSize}
           key="profile-pic"
           isFirstTime={isFirstTime}
           isFullScreen={isFullScreen}

@@ -3,9 +3,12 @@ import throttle from "lodash/throttle";
 
 const responsiveBreakpointHoc = WrappedComponent => {
   class responsiveBreakpoint extends Component {
-    state = {
-      screenSize: ""
-    };
+    constructor(props) {
+      super(props);
+      this.state = {
+        screenSize: this.getDeviceConfig(window.innerWidth)
+      }
+    }
 
     getDeviceConfig = width => {
       if (width <= 450) {
@@ -26,8 +29,6 @@ const responsiveBreakpointHoc = WrappedComponent => {
 
     componentDidMount() {
       window.addEventListener("resize", throttle(this.calcInnerWidth, 200));
-      const screenSize = this.getDeviceConfig(window.innerWidth);
-      this.setState({ screenSize });
     }
 
     componentWillUnmount() {

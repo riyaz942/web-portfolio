@@ -56,9 +56,17 @@
 
 @include medium {
   .user_description_container {
-    padding: 118px 20px 41px;
+    padding: 90px 16px 20px;
     border-radius: unset;
     max-width: unset;
     left: unset;
+
+    .user_button_container {
+      margin-top: 20px;
+    }
+  
+    .contact_container {
+      margin-top: 30px;
+    }
   }
 }
