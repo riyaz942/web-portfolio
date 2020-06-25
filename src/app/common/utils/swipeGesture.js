@@ -19,7 +19,7 @@ export function detectSwipe(el, swipeCallback) {
   },false);
 
   el.addEventListener('touchmove',function(e){
-    // e.preventDefault();
+    e.preventDefault();
     swipe_det.eX = e.touches[0].screenX; 
     swipe_det.eY = e.touches[0].screenY;    
   },false);
