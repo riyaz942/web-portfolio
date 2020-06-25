@@ -62,6 +62,7 @@
     "resolve": "1.10.0",
     "sass-loader": "7.1.0",
     "semver": "6.0.0",
+    "source-map-explorer": "^2.4.2",
     "style-loader": "0.23.1",
     "swiper": "^5.3.6",
     "terser-webpack-plugin": "1.2.3",
@@ -73,6 +74,7 @@
     "workbox-webpack-plugin": "4.2.0"
   },
   "scripts": {
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
     "postbuild": "react-snap",
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
