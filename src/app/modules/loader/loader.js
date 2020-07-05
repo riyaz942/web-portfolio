@@ -18,6 +18,12 @@ const assetTechnologyImages = require.context(
   /.*\.png$|jpg$/
 );
 
+const assetsBackgroundImages = require.context(
+  '../../../assets/images/background',
+  false,
+  /.*\.png$|jpg$/
+);
+
 class Loader extends Component {
   constructor(props) {
     super(props);
@@ -156,6 +162,13 @@ class Loader extends Component {
   completeLoading = showImmediately => {
     const { contentLoadedPercentage, disableIntro } = this.state;
     const introAlreadyShown = CookieService.get("INTRO_COMPLETED");
+
+    //Laoding background images in the background, without a loader tracking progress
+    const images = [];
+    this.getImagesFromContext(assetsBackgroundImages).map(image =>
+      images.push(this.preloadImage(image))
+    );
+
 
     if (showImmediately) {
       return this.setState({
