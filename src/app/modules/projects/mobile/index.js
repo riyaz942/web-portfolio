@@ -15,7 +15,7 @@ import styles from "./projects_mobile.module.scss";
 import ProjectListItem from 'Common/components/projectListItem';
 import PaginationButton from "Common/components/paginationButton";
 import { setProjectPosition } from "Redux/actions/projectActions";
-import techDoodleImage from "Images/tech-doodle-background-image.png";
+import techDoodleImage from "Images/background/tech-doodle-background-image.png";
 import { detectSwipe } from 'Common/utils/swipeGesture';
 import { random, parseNewLine, getImagePosition, getBackgroundTransition } from "Common/utils";
 

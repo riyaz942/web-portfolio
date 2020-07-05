@@ -7,9 +7,9 @@ import tailoredTechLogoRest from 'Images/tailoredtech-logo-rest.png';
 import mitLogoFirst from 'Images/mit-logo-first.png';
 import mitLogoRest from 'Images/mit-logo-rest.png';
 
-import nykaaBackgroundImage from 'Images/background-image-nykaa.jpg';
-import tailoredTechBackgroundImage from 'Images/background-image-tailoredtech.jpg';
-import collegeBackgroundImage from 'Images/background-image-college.jpg';
+import nykaaBackgroundImage from 'Images/background/background-image-nykaa.jpg';
+import tailoredTechBackgroundImage from 'Images/background/background-image-tailoredtech.jpg';
+import collegeBackgroundImage from 'Images/background/background-image-college.jpg';
 
 export const timelineListValue = [
   {

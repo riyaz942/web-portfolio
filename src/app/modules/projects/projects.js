@@ -6,7 +6,7 @@ import { techList } from "Constants/techConstants";
 import find from "lodash/find";
 import { Transition, Spring } from "react-spring/renderprops";
 import RightContainer from "Common/containers/rightContainer";
-import techDoodleImage from "Images/tech-doodle-background-image.png";
+import techDoodleImage from "Images/background/tech-doodle-background-image.png";
 import { random, parseNewLine, getImagePosition, getBackgroundTransition } from "Common/utils";
 
 class Projects extends Component {
