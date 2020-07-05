@@ -146,6 +146,7 @@
     ]
   },
   "devDependencies": {
+    "compression-webpack-plugin": "^4.0.0",
     "react-snap": "^1.23.0"
   }
 }
