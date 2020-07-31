@@ -24,7 +24,7 @@ const ContactComponent = ({ className, isWhite, hideResume }) => {
           className={styles.icon}
         />
       </a>
-      <a className={styles.icon_link} target="_blank" href="https://www.linkedin.com/in/riyaz-ahmed-72622ab9/">
+      <a className={styles.icon_link} target="_blank" href="https://www.linkedin.com/in/riyaz942/">
         <img
           src={isWhite ? iconLinkedInWhite : iconLinkedIn}
           className={styles.icon}
