@@ -43,9 +43,7 @@
       .underline {
         height: 2px;
         width: 0px;
-        transform: translateY(1px);
         background: $color-green;
-        transition: width 300ms ease-out;
       }
 
       .show_underline {
