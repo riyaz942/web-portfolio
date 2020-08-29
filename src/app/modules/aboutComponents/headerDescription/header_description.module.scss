@@ -37,22 +37,33 @@
       margin: 0px 3px;
       cursor: pointer;
       color: $color-green;
-      
+      // animation: animate-float 2s infinite;
+      transition: transform 300ms ease-out;
+
       .underline {
         height: 2px;
         width: 0px;
+        transform: translateY(1px);
         background: $color-green;
+        transition: width 300ms ease-out;
+      }
+
+      .show_underline {
         transition: width 500ms ease;
+        width: 100%;
       }
     }
 
     .user_button:hover {
+      transform: translateY(-2px);
+
       .underline {
-        width: 100%;
+        width: 0px;
       }
     }
   }
 }
+
 
 @include medium {
   .user_description_container {
@@ -68,5 +79,23 @@
     .contact_container {
       margin-top: 30px;
     }
+  }
+}
+
+@keyframes animate-float {
+  0% {
+    transform: translate(0px, 0px);
+  }
+
+  40% {
+    transform: translate(0px, 100px);
+  }
+
+  80% {
+    transform: translate(0px, -100px);
+  }
+
+  100% {
+    transform: translate(0px, 0px);
   }
 }

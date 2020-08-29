@@ -1,10 +1,17 @@
-import React, { Component, memo } from "react";
+import React, { Component, memo, useEffect, useState } from "react";
 import { Transition, config } from "react-spring/renderprops";
 import Div from 'Common/components/div';
 import styles from './header_description.module.scss';
 import ContactComponent from "Common/components/contactComponent";
 
 const HeaderDescription = ({ showDescription, onClickProject, onClickTimeline, isFirstTime }) => {
+  const [showUnderline, setUnderline] = useState(false);
+
+  useEffect(()=> {
+    setTimeout(()=> {
+      setUnderline(true)
+    }, 800)
+  }, [])
 
   return (
     <Transition
@@ -38,12 +45,12 @@ const HeaderDescription = ({ showDescription, onClickProject, onClickTimeline, i
               Checkout my
               <Div align className={styles.user_button} onClick={onClickTimeline}>
                 Timeline
-                <div className={styles.underline}></div>
+                <div className={`${styles.underline} ${showUnderline ? styles.show_underline : ''}`}></div>
               </Div>
               and
               <Div align className={styles.user_button} onClick={onClickProject}>
                 Technologies
-                <div className={styles.underline}></div>
+                <div className={`${styles.underline} ${showUnderline ? styles.show_underline : ''}`}></div>
               </Div>
               that I worked on.
             </Div>
