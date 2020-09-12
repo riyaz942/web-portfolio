@@ -34,7 +34,7 @@ export const techList = [
     name: 'React-Native',
     firstLogo: reactNativeIcon,
     backgroundImage: reactNativeBackgroundImage,
-    description: `I have created and published a React-Native app for iOS and Android so i am familiar with its lifecycle while working with React-Native CLI.<br/><br/>
+    description: `I have created and published a React-Native app for iOS and Android so i am familiar with its lifecycle, while working with React-Native CLI.<br/><br/>
     I have contributed some bug fixes to some open source React-Native libraries during my period developing on react native.
     `,
     projects: ['lighthouse', 'pulse']

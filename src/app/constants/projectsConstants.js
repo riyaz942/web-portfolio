@@ -246,7 +246,7 @@ export const projectsListValue = {
       },
       {
         type: 'text',
-        value: 'Created the whole frontend of this app and designed the ui to be responsive. Used laravels blade to templating engine to create reusable components and defined scss classes to typograph and responsive. Used Laravel Mix and webpack for versioning.<br/>Benefactory didn’t have any feature complexity other than UI, they have updated their website so these designs won’t be available.',
+        value: 'Created the whole frontend of this app and designed the UI to be responsive. Used laravels blade to templating engine to create reusable components and defined scss classes to typograph. Used Laravel Mix and webpack for versioning.<br/>Benefactory didn’t have any feature complexity other than UI, they have updated their website so these designs won’t be available.',
       },
       {
         type: 'points',
@@ -324,7 +324,11 @@ export const projectsListValue = {
       },
       {
         type: 'text',
-        value: 'I did a blunder and lost the keystore so i was not able to upload the latest build and the uploaded app is stuck with a version having a runtime permission crash so had to unpublish to maintain the rating.'
+        value: 'Created this app from its inception and screen designing in photoshop to its development and publishing, worked on this app during my college years and mostly learned Android development mostly while building this app.'
+      },
+      {
+        type: 'text',
+        value: 'I did a blunder and lost the keystore so i was not able to upload the latest build on playstore and the current uploaded app is stuck with a version that has a runtime permission crash so had to unpublish from playstore to maintain the rating, have uploaded the latest apk on google drive, link available on the download button.'
       },
       {
         type: 'points',
