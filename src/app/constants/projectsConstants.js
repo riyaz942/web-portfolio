@@ -324,7 +324,7 @@ export const projectsListValue = {
       },
       {
         type: 'text',
-        value: 'Created this app from its inception and screen designing in photoshop to its development and publishing, worked on this app during my college years and mostly learned Android development mostly while building this app.'
+        value: 'Created this app from its inception and screen designing in photoshop to its development and publishing, worked on this app during my college years and learned Android development mostly by building this app.'
       },
       {
         type: 'text',
