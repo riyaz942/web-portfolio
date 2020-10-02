@@ -118,14 +118,19 @@ class RightContainer extends Component {
     }
   };
 
-  next = () => {
+
+  // position = next | previous
+  moveTo = (position) => {
     const { projects } = this.state;
     const { item } = this.props;
 
-    const selectedIndex =
-      projects[item.id].findIndex(slide => slide.state == "CENTERED") + 1; // move to next slide
+    let selectedIndex = projects[item.id].findIndex(slide => slide.state == "CENTERED"); 
+    selectedIndex = position == 'next' ? selectedIndex + 1 : selectedIndex - 1; // move to slide either next or to previous position
 
-    if (selectedIndex < projects[item.id].length) {
+    const nextCondition = (selectedIndex < projects[item.id].length);
+    const previousCondition = (selectedIndex >= 0);
+
+    if (position == 'next'? nextCondition : previousCondition) {
       const updatedSlide = map(projects[item.id], (slide, index) => {
         if (index < selectedIndex - 1) {
           return {
@@ -157,48 +162,7 @@ class RightContainer extends Component {
         }
       });
     }
-  };
-
-  previous = () => {
-    const { projects } = this.state;
-    const { item } = this.props;
-
-    const selectedIndex =
-      projects[item.id].findIndex(slide => slide.state == "CENTERED") - 1; // move to next slide
-
-    if (selectedIndex >= 0) {
-      const updatedSlide = map(projects[item.id], (slide, index) => {
-        if (index < selectedIndex - 1) {
-          return {
-            ...slide,
-            state: "GONE"
-          };
-        } else if (index == selectedIndex - 1) {
-          return {
-            ...slide,
-            state: "BEHIND"
-          };
-        } else if (index == selectedIndex) {
-          return {
-            ...slide,
-            state: "CENTERED"
-          };
-        } else {
-          return {
-            ...slide,
-            state: "LIST"
-          };
-        }
-      });
-
-      this.setState({
-        projects: {
-          ...projects,
-          [item.id]: updatedSlide
-        }
-      });
-    }
-  };
+  }
 
   onClickProject = project => {
     const {
@@ -265,12 +229,12 @@ class RightContainer extends Component {
         <Div row>
           <PaginationButton
             isEnabled={isPrevButtonClickable}
-            onClick={this.previous}
+            onClick={()=>this.moveTo('previous')}
             className={styles.left_button_container}
           />
           <PaginationButton
             isEnabled={isNextButtonClickable}
-            onClick={this.next}
+            onClick={()=>this.moveTo('next')}
             isRight
           />
         </Div>

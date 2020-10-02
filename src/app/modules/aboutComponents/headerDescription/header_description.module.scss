@@ -37,18 +37,13 @@
       margin: 0px 3px;
       cursor: pointer;
       color: $color-green;
-      // animation: animate-float 2s infinite;
       transition: transform 300ms ease-out;
 
       .underline {
         height: 2px;
-        width: 0px;
-        background: $color-green;
-      }
-
-      .show_underline {
-        transition: width 500ms ease;
         width: 100%;
+        transition: width 500ms ease;
+        background: $color-green;
       }
     }
 
@@ -77,23 +72,5 @@
     .contact_container {
       margin-top: 30px;
     }
-  }
-}
-
-@keyframes animate-float {
-  0% {
-    transform: translate(0px, 0px);
-  }
-
-  40% {
-    transform: translate(0px, 100px);
-  }
-
-  80% {
-    transform: translate(0px, -100px);
-  }
-
-  100% {
-    transform: translate(0px, 0px);
   }
 }

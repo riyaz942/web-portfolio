@@ -43,11 +43,6 @@ class Landing extends Component {
   }
 
   handleOrientation = (event) => {
-    // console.log({
-    //   a: Math.floor(event.alpha),
-    //   b: Math.floor(event.beta) * 5,
-    //   c: Math.floor(event.gamma) * 5,
-    // });
     this.setState({ clientX: Math.floor(event.gamma) * 10, clientY: Math.floor(event.beta) * 10 });
   }
 

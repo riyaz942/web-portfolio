@@ -1,4 +1,4 @@
-import React, { Component, memo, useState } from "react";
+import React, { memo, useState } from "react";
 import { useSpring, useTransition, animated } from "react-spring";
 import styles from "./header_links.module.scss";
 import { landingPageBody } from "Constants/landingConstants";
