@@ -22,7 +22,7 @@
 //   return extractedImages;
 // }
 
-
+//TODO get the height and width of image dynamically and only mention the ratio for required image
 export const getProjectImages = (id) => {
   if (!id)
     return [];
