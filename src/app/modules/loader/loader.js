@@ -6,6 +6,7 @@ import Div from "Common/components/div";
 import { withRouter, matchPath } from "react-router";
 import { CookieService } from "Common/utils/cookieService";
 import BackgroundAnimator from "../header/backgroundAnimator";
+import { getRequestAnimationFrame, cancelAnimationFrame } from 'Common/utils';
 
 const assetsImages = require.context(
   `../../../assets/images`,
@@ -36,15 +37,6 @@ class Loader extends Component {
     };
 
     this.lastUpdated = 0;
-    this.requestAnimationFrame =
-      window.requestAnimationFrame ||
-      window.mozRequestAnimationFrame ||
-      window.webkitRequestAnimationFrame ||
-      window.msRequestAnimationFrame;
-
-    this.cancelAnimationFrame =
-      window.cancelAnimationFrame || window.mozCancelAnimationFrame;
-
     this.itemsLoaded = 0;
   }
 
@@ -52,11 +44,12 @@ class Loader extends Component {
     this.getTotalLoadingItems();
   }
 
-  //---------------------------------------- called after DomContentLoad
   getTotalLoadingItems = () => {
     const { location } = this.props;
     const images = Array.from(document.images);
 
+
+    // Todo loop once
     this.getImagesFromContext(assetsImages).map(image =>
       images.push(this.preloadImage(image))
     );
@@ -71,6 +64,7 @@ class Loader extends Component {
     this.setState({ totalItems: images.length + 3 });
     let areImagesLoaded = true;
 
+    // TODO use function and pass onto the preLoaded image function
     if (images)
       images.forEach(element => {
         element.onload = this.incrementLoading;
@@ -93,11 +87,8 @@ class Loader extends Component {
       if (match && introAlreadyShown) {
         // Todo also check if intro animation is done or not ... if not the make this condition false
         this.completeLoading(true); // immediatly load page.
-      } else {
-        this.animationFrameRequest = this.requestAnimationFrame.call(
-          window,
-          this.valuateProgress
-        );
+      } else {        
+        this.animationFrameRequest = getRequestAnimationFrame(this.valuateProgress)
       }
     }
   };
@@ -126,17 +117,15 @@ class Loader extends Component {
 
     if (this.itemsLoaded >= totalItems) {
       this.completeLoading();
-      this.cancelAnimationFrame.call(window, this.animationFrameRequest);
+      cancelAnimationFrame(this.animationFrameRequest)
       return;
     } else {
-      this.animationFrameRequest = this.requestAnimationFrame.call(
-        window,
-        this.valuateProgress
-      );
+      this.animationFrameRequest = getRequestAnimationFrame(this.valuateProgress);
     }
   };
 
   //---------------------------------------- Helper Functions
+  // TODO move to utils file and change preloadImage funciton name
   getImagesFromContext = images => {
     const extractedImages = [];
     images.keys().forEach(key => {
