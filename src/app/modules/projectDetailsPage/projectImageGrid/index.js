@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import styles from "./project_image_grid.module.scss";
 import Div from "Common/components/div";
-import { getProjectImages } from "Constants/projectImageConstants";
+import { getProjectImages, imageSpecificRatio } from "Constants/projectImageConstants";
 import map from "lodash/map";
 
 const ProjectImageGrid = ({ projectId, gridItemSelected }) => {
@@ -21,6 +21,7 @@ const ProjectImageGrid = ({ projectId, gridItemSelected }) => {
         ...projectImage,
         width: target.naturalWidth,
         height: target.naturalHeight,
+        projectId,
       })
     ];
 
@@ -70,8 +71,19 @@ const ProjectImageGrid = ({ projectId, gridItemSelected }) => {
 
 // Function to calculate the image ratio and decide the grid size of the image
 const getImageRatio = projectImage => {
-  if (projectImage.ratioWidth || projectImage.ratioHeight) {
-    return projectImage;
+  
+  const specificProjectImages  = imageSpecificRatio[projectImage.projectId];
+
+  // If project image ratio is already specified then return from the array instead of calculating
+  if (specificProjectImages) {
+    const specificProjectImage = specificProjectImages.find(image => (image.id == projectImage.id));
+    if (specificProjectImage) {
+      return {
+        ...projectImage,
+        ratioWidth: specificProjectImage.ratioWidth,
+        ratioHeight: specificProjectImage.ratioHeight
+      }
+    }
   }
 
   const height = projectImage.height;

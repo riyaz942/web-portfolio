@@ -33,6 +33,6 @@ export const imageSpecificRatio = {
   benefactory: [{ id: '1', ratioWidth: 2, ratioHeight: 1 }],
   nykaa: [
      {id: '1', ratioWidth: 3, ratioHeight: 1},
-     {id: '4', ratioWidth: 3, ratioHeight: 1},
+     {id: '5', ratioWidth: 3, ratioHeight: 1},
   ]
 };
