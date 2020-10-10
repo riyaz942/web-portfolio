@@ -7,6 +7,7 @@ import { withRouter, matchPath } from "react-router";
 import { CookieService } from "Common/utils/cookieService";
 import BackgroundAnimator from "../header/backgroundAnimator";
 import { getRequestAnimationFrame, cancelAnimationFrame } from 'Common/utils';
+import { preloadImage, getImagesFromContext } from './loaderHelper';
 
 const assetsImages = require.context(
   `../../../assets/images`,
@@ -41,38 +42,37 @@ class Loader extends Component {
   }
 
   componentDidMount() {
-    this.getTotalLoadingItems();
+    this.startLoader();
   }
 
-  getTotalLoadingItems = () => {
+  /* --------------------------------------------------Initialize Loader function------------------------------------------- */
+  startLoader = () => {
     const { location } = this.props;
     const images = Array.from(document.images);
 
+    const extractedImages = [
+      ...getImagesFromContext(assetsImages),
+      ...getImagesFromContext(assetTechnologyImages)
+    ]
+    
+    extractedImages.map(image => (
+      images.push(preloadImage(image, this.incrementLoading))
+    ));
 
-    // Todo loop once
-    this.getImagesFromContext(assetsImages).map(image =>
-      images.push(this.preloadImage(image))
-    );
-    this.getImagesFromContext(assetTechnologyImages).map(image =>
-      images.push(this.preloadImage(image))
-    );
-    import("Modules/landing/landing").then(Landing => {
-      this.incrementLoading();
-    }); // increment manually being called.
+    import("Modules/landing/landing").then(Landing => this.incrementLoading()); // increment manually being called.
     import("Modules/projectDetailsPage").then(ProjectDetailsPage => { }); // Asyncronysly complete on background. //Todo unless if its the projects page .. use routeMatch
 
     this.setState({ totalItems: images.length + 3 });
     let areImagesLoaded = true;
 
-    // TODO use function and pass onto the preLoaded image function
-    if (images)
+    // enables flag to hide loader if all the images are loaded 
+    if (images) {
       images.forEach(element => {
-        element.onload = this.incrementLoading;
-        element.onerror = this.incrementLoading;
         if (areImagesLoaded) {
           areImagesLoaded = element.complete;
         }
       });
+    }
 
     if (areImagesLoaded) {
       this.completeLoading(true); // immediatly load page.
@@ -93,6 +93,7 @@ class Loader extends Component {
     }
   };
 
+  /* --------------------------------------------------Validate function------------------------------------------- */
   // This function is called every 300 millisecond to update the progress bar
   // Because if we keep updating the progress bar on callback of items loaded then the animation suffers
   valuateProgress = timeStamp => {
@@ -124,38 +125,20 @@ class Loader extends Component {
     }
   };
 
-  //---------------------------------------- Helper Functions
-  // TODO move to utils file and change preloadImage funciton name
-  getImagesFromContext = images => {
-    const extractedImages = [];
-    images.keys().forEach(key => {
-      extractedImages.push(images(key));
-    });
-
-    return extractedImages;
-  };
-
-  preloadImage = src => {
-    // console.log('Preloading :', src);
-    const image = new Image();
-    image.src = src;
-    // image.complete;
-    return image;
-  };
-
-  /*--------------------------------------Loading Functions */
+  /* --------------------------------------------------Loader Increment function------------------------------------------- */
   incrementLoading = () => {
     this.itemsLoaded = this.itemsLoaded + 1;
   };
 
+  /* --------------------------------------------------Finish Up function------------------------------------------- */
   completeLoading = showImmediately => {
     const { contentLoadedPercentage, disableIntro } = this.state;
     const introAlreadyShown = CookieService.get("INTRO_COMPLETED");
 
-    //Laoding background images in the background, without a loader tracking progress
+    //Loading background images in the background, without a loader tracking progress
     const images = [];
-    this.getImagesFromContext(assetsBackgroundImages).map(image =>
-      images.push(this.preloadImage(image))
+    getImagesFromContext(assetsBackgroundImages).map(image =>
+      images.push(preloadImage(image))
     );
 
 
@@ -166,9 +149,10 @@ class Loader extends Component {
       });
     }
 
-    if (contentLoadedPercentage != 100)
+    if (contentLoadedPercentage != 100) {
       // if by chance its not 100 then show 100 on page
       this.setState({ contentLoadedPercentage: 100 });
+    }     
 
     this.setState({
       pageState: loaderPageStates.COMPLETED_LOADING // complete loading animation takes around 400 ms to hide
@@ -189,6 +173,7 @@ class Loader extends Component {
     }, 500);
   };
 
+/* --------------------------------------------------OnEndIntroAnimation Callback------------------------------------------- */
   onIntroAnimationEnd = () => {
     this.setState({ pageState: loaderPageStates.INTRO_COMPLETED });
 
@@ -199,7 +184,7 @@ class Loader extends Component {
       setTimeout(()=>this.setState({showBackground: false}), 400)
     }, 500);
   };
-
+  /* --------------------------------------------------Render------------------------------------------- */
   render() {
     const { children } = this.props;
     const { contentLoadedPercentage, pageState, showBackground } = this.state;

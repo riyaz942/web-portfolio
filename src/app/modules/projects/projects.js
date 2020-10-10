@@ -8,7 +8,7 @@ import { Transition, Spring } from "react-spring/renderprops";
 import RightContainer from "Common/containers/rightContainer";
 import techDoodleImage from "Images/background/tech-doodle-background-image.png";
 import { random, parseNewLine } from "Common/utils";
-import { getImagePosition, getBackgroundTransition } from './imagePlacement';
+import { getImagePosition, getBackgroundTransition } from './projectsHelper';
 
 class Projects extends Component {
   constructor(props) {

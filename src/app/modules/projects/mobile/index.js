@@ -18,7 +18,7 @@ import { setProjectPosition } from "Redux/actions/projectActions";
 import techDoodleImage from "Images/background/tech-doodle-background-image.png";
 import { detectSwipe } from 'Common/utils/swipeGesture';
 import { random, parseNewLine } from "Common/utils";
-import { getImagePosition, getBackgroundTransition } from '../imagePlacement';
+import { getImagePosition, getBackgroundTransition } from '../projectsHelper';
 
 class ProjectsMobile extends Component {
   constructor(props) {
