@@ -14,13 +14,11 @@ import {
 import { configureStore, history } from "./redux/store/store.dev";
 import { config } from "react-spring";
 import { Transition } from "react-spring/renderprops";
-import ProductListing from './examples/pageTransition/productListing';
-import ProductDescription from './examples/pageTransition/productDescription';
 
+const ListingPage = React.lazy(()=> import('./examples/pageTransition/listingPage'))
+const DescriptionPage = React.lazy(()=> import('./examples/pageTransition/descriptionPage'))
 const Landing = React.lazy(() => import("./modules/landing/landing"));
-const ProjectDetailsPage = React.lazy(() =>
-  import("./modules/projectDetailsPage")
-);
+const ProjectDetailsPage = React.lazy(() => import("./modules/projectDetailsPage"));
 
 const store = configureStore();
 
@@ -32,8 +30,9 @@ const App = () => {
           <Router>
             <Suspense fallback={null}>
               <Switch>
-                <Route exact path="/example/pagetransition/product-listing"  component={ProductListing} />
-                <Route exact path="/example/pagetransition/product-description"  component={ProductDescription}/>
+                <Route exact path="/example/pagetransition/listing"  component={ListingPage} />
+                <Route exact path="/example/pagetransition/description"  component={DescriptionPage}/>
+
                 <Route path="/">
                   <Loader>
                     <Landing />

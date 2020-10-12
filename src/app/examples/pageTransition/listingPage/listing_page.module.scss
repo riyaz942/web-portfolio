@@ -1,0 +1,80 @@
+@import '~Styles/colors.module';
+
+//material-color: 600:
+$color-blue: #1E88E5;
+$color-purple: #8E24AA;
+$color-teal: #00897B;
+$color-blue-grey: #546E7A;
+$color-cyan: #00ACC1;
+
+.page_title {
+  color: white;
+  font-size: 42px;
+  font-weight: 300;
+  margin-top: 40px;
+}
+
+.image_container {
+  height: 230px;
+  width: 230px;
+  position: relative;
+  cursor: pointer;
+
+  &::before {
+    content: ' ';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    background: $color-blue;
+
+    transition: transform 0.4s, opacity 0.4s ease-in-out;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  &:hover {
+    &::before {
+      opacity: 1;
+      transform: translateY(0px)
+    }
+  }
+
+  .tech_image {
+    width: 180px;
+    z-index: 1;
+  }
+}
+
+
+.color_1 {
+  &::before {
+    background: $color-teal;
+  }
+}
+
+.color_2 {
+  &::before {
+    background: $color-blue;
+  }
+}
+
+.color_3 {
+  &::before {
+    background: $color-purple
+  }
+}
+
+.color_4 {
+  &::before {
+    background: $color-blue-grey
+  }
+}
+
+.color_5 {
+  &::before {
+    background: $color-teal;
+  }
+}
