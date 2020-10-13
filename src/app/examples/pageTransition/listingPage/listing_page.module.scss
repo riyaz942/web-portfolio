@@ -1,16 +1,15 @@
-@import '~Styles/colors.module';
+@import '../example_colors.module';
 
-//material-color: 600:
-$color-blue: #1E88E5;
-$color-purple: #8E24AA;
-$color-teal: #00897B;
-$color-blue-grey: #546E7A;
-$color-cyan: #00ACC1;
+.page_container {
+  color: white;
+
+  h1,h3 {
+    font-weight: 300;
+  }
+}
 
 .page_title {
-  color: white;
   font-size: 42px;
-  font-weight: 300;
   margin-top: 40px;
 }
 
@@ -43,38 +42,17 @@ $color-cyan: #00ACC1;
   }
 
   .tech_image {
-    width: 180px;
+    width: 150px;
     z-index: 1;
   }
 }
 
-
-.color_1 {
-  &::before {
-    background: $color-teal;
-  }
-}
-
-.color_2 {
-  &::before {
-    background: $color-blue;
-  }
-}
-
-.color_3 {
-  &::before {
-    background: $color-purple
-  }
-}
-
-.color_4 {
-  &::before {
-    background: $color-blue-grey
-  }
-}
-
-.color_5 {
-  &::before {
-    background: $color-teal;
+// Looping through color list and creating color class with appending index to the class ex: - .class_2
+// and applying background color from the color array
+@for $index from 1 through length($color-list) {
+  .color_#{$index} {
+    &::before {
+      background: nth($color-list, $index);
+    }
   }
 }

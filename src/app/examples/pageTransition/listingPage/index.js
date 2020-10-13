@@ -15,9 +15,11 @@ const ListingPage = () => {
     laravelBackgroundImage,
     electronBackgroundImage
   ];
+
   return (
-    <Div column fillParent align>
+    <Div column fillParent align className={styles.page_container}>
       <h1 className={styles.page_title}>Page Transition Example</h1>
+      <h3> Click on any one of the below items </h3>
       <Div fillParent row align justify="space_evenly" className={styles.page_container}>
       {images.map((image, index) => (
         // Adds different color class to different items
