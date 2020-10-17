@@ -3,7 +3,6 @@ import { SET_POSITION, CLEAR_POSITION, SET_DESTINATION } from 'Redux/constants/p
 const initialState = {
   imgPosition: null,
   slidePosition: null,
-
   imgDestination: null,
 };
 
@@ -13,7 +12,7 @@ export default function projectReducer(state = initialState, { type, payload }) 
     case SET_POSITION:
       const { img, slide } = payload;
 
-      //NOTE: data coming from payload is a weird object
+      // NOTE: data coming from payload is a weird object (DOMRect)
       // So have to parse it here
       return {
         ...state,

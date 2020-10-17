@@ -1,0 +1,13 @@
+@import '../example_colors.module';
+
+.absolute_layer {
+  position: absolute;
+  left: 0;
+  top: 0;  
+}
+
+@for $index from 1 through length($color-list) {
+  .color_#{$index} {
+    background: nth($color-list, $index);
+  }
+}

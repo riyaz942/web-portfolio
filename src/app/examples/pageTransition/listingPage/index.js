@@ -7,7 +7,7 @@ import laravelBackgroundImage from "Images/technology/laravel-background-image.p
 import electronBackgroundImage from "Images/technology/electron-background-image.png";
 import styles from "./listing_page.module.scss";
 
-const ListingPage = () => {
+const ListingPage = ({ onItemSelected }) => {
   const images = [
     reactBackgroundImage,
     reactNativeBackgroundImage,
@@ -23,8 +23,16 @@ const ListingPage = () => {
       <Div fillParent row align justify="space_evenly" className={styles.page_container}>
       {images.map((image, index) => (
         // Adds different color class to different items
-        <Div align justify className={`${styles.image_container} ${styles[`color_${index+1}`]}`}>
-          <img className={styles.tech_image} src={image} />
+        <Div
+          align
+          justify
+          onClick={(event)=> onItemSelected(event, {image, index})}
+          className={`${styles.image_container} ${styles[`color_${index+1}`]}`}
+        >
+          <img
+            className={styles.tech_image}
+            src={image}
+          />
         </Div>
       ))}
     </Div>
