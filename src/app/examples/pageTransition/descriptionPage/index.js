@@ -1,15 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Div from "Common/components/div";
 import isEmpty from 'lodash/isEmpty';
+import { withRouter } from "react-router";
 import styles from './description_page.module.scss';
 import TransitionLayer from '../transitionLayer';
 
-const DescriptionPage = ({ itemPosition, selectedItemDetails }) => {
+const DescriptionPage = ({ itemPosition, selectedItemDetails,  history: { replace } }) => {
   const imageRef = useRef(null);
   const [imagePosition, setImagePosition] = useState({});
   const [showDescription, setShowDescription] = useState(false)
 
   useEffect(()=> {
+    if (isEmpty(selectedItemDetails)) {
+      replace('/example/pagetransition')
+    }
     const imageDimensions = imageRef.current.getBoundingClientRect();
 
     setImagePosition({
@@ -53,4 +57,4 @@ const DescriptionPage = ({ itemPosition, selectedItemDetails }) => {
   )
 }
  
-export default DescriptionPage;
+export default withRouter(DescriptionPage);
