@@ -9,8 +9,8 @@ Used Created-React-App for this project so to run locally
 <br/>
 
 ### Desktop/Mobile Preview :
-<img align="left" height="400" src="./desktop-preview.gif">
-<img height="400" src="./mobile-preview.gif">
+<img align="left" height="300" src="./desktop-preview.gif">
+<img height="300" src="./mobile-preview.gif">
 
 ### Inspiration taken for some of the elements implemented
 [Loader animation](https://dribbble.com/shots/5942330-AVST-Loader-and-Blog-Animation) <br />
