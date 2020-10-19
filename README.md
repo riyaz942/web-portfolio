@@ -18,18 +18,23 @@ Used Created-React-App for this project so to run locally
 [Project description page (title header animation)](https://dribbble.com/shots/8712182-Go-green-Marketing-Site) <br />
 
 
-### Seperate simple examples for some of the elements of the page
-[Page Transition Example](https://github.com/riyaz942/riyazweb.dev/tree/master/src/app/examples/pageTransition)
+### Seperate examples from the portfolio 
+**(for simple reference, to avoid mixup of other logics in the project)**
+* [Page Transition Example](https://github.com/riyaz942/riyazweb.dev/tree/master/src/app/examples/pageTransition)
+* Auto adjusting scroll elements (working on)
 
 ### Architecture and some note on the application
 ```text
   -src
     -app
-      -common      // Contains styles and custom components
+      -common      // Contains styles and custom components, hocs and utils,
       -constants   // Project constants and strings
-      -examples    // Seperate example of individual components
-      -modules     // Pages components and individual components
-    -assets
+      -examples    // Seperate animation example that is taken from the project for better readability
+      -modules     // Pages and individual components
+    -assets        // self explainatory
       -icons
       -images
 ```
+
+* Have used webpack's resolve.alias to alias some of the common paths to reduce relative imports in the project. <br />
+* Mostly Used Scss, Flexbox, Media-Queries for responsiveness and React-Spring for animations, haven't used any css framework in this
