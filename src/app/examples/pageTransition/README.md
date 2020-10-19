@@ -1,5 +1,5 @@
 # Page Transition Example
-<img height="400" src="./src/app/examples/pageTransition/page-transition.gif">
+<img height="400" src="./page-transition.gif">
 
 ### Brif explaination of the above example
 1st page - listing page in this example, <br />
