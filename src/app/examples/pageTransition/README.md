@@ -11,5 +11,3 @@ The position and dimension of both the source and destination element is taken w
 <br/>
 This animation is shown on the 2nd page's mount and initially the 2nd page's content is hidden when the transitioning element is finished animating, then the content is displayed, after everything is done animating immediatly hide the transitioning element.
 
-Also the 1st page should not have "exact" route match present in its route as the 
-
