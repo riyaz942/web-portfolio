@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "Modules/*": ["src/app/modules/*"],
+      "Common/*": ["src/app/common/*"],
+      "Styles/*": ["src/app/common/styles/*"],
+      "Redux/*": ["src/app/redux/*"],
+      "Images/*": ["src/app/images/*"],
+      "Icons/*": ["src/app/icons/*"],
+      "Constants/*": ["src/app/constants/*"]
+    }
+  },
+  "exclude": ["node_modules", "build"]
+}

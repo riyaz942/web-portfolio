@@ -8,8 +8,7 @@ import Loader from "./modules/loader/loader";
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  useRouteMatch
+  Route
 } from "react-router-dom";
 import { configureStore, history } from "./redux/store/store.dev";
 import { config } from "react-spring";

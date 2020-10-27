@@ -88,25 +88,9 @@ class ProjectsMobile extends Component {
 
     return tech.projects.map(project => ({
       ...projectsListValue[project],
-      slug: project,
-      imgRef: React.createRef(),
-      slideRef: React.createRef()
+      slug: project
     }));
   };
-
-  onClickProject = project => {
-    const {
-      setProjectPosition,
-      history: { push }
-    } = this.props;
-
-    const imgRect = project.imgRef.current.getBoundingClientRect();
-    const slideRect = project.slideRef.current.getBoundingClientRect();
-
-    setProjectPosition({ img: imgRect, slide: slideRect });
-    push(`/project/${project.slug}`);
-  };
-
 
   onProjectSelected = ({ selectedId }) => {
     const { techTransitionAnimation } = this.state;
@@ -265,9 +249,8 @@ class ProjectsMobile extends Component {
                 >
                   <ProjectListItem
                     key={index}
-                    slide={project}
+                    project={project}
                     className={`${index == currentSlide ? styles.project_list_item__selected : ''} ${styles.project_list_item}`}
-                    onClickProject={this.onClickProject}
                   />
                 </Div>
               ))}

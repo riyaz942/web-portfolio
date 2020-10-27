@@ -70,25 +70,9 @@ class TimelineMobile extends Component {
 
     return timeline.projects.map(project => ({
       ...projectsListValue[project],
-      slug: project,
-      imgRef: React.createRef(),
-      slideRef: React.createRef()
+      slug: project
     }));
   };
-
-  onClickProject = project => {
-    const {
-      setProjectPosition,
-      history: { push }
-    } = this.props;
-
-    const imgRect = project.imgRef.current.getBoundingClientRect();
-    const slideRect = project.slideRef.current.getBoundingClientRect();
-
-    setProjectPosition({ img: imgRect, slide: slideRect });
-    push(`/project/${project.slug}`);
-  };
-
 
   onTimelineSelected = ({ selectedId }) => {
     const projectsList = this.getProjects(selectedId);
@@ -185,9 +169,8 @@ class TimelineMobile extends Component {
                   justify
                 >
                   <ProjectListItem
-                    slide={project}
+                    project={project}
                     className={`${index == currentSlide ? styles.project_list_item__selected : ''} ${styles.project_list_item}`}
-                    onClickProject={this.onClickProject}
                   />
                 </Div>
               ))}

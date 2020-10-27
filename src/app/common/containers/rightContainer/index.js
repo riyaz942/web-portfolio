@@ -55,9 +55,7 @@ class RightContainer extends Component {
       return {
         ...projectsListValue[project],
         slug: project,
-        state,
-        imgRef: React.createRef(),
-        slideRef: React.createRef()
+        state
       };
     });
   };
@@ -164,19 +162,6 @@ class RightContainer extends Component {
     }
   }
 
-  onClickProject = project => {
-    const {
-      setProjectPosition,
-      history: { push }
-    } = this.props;
-
-    const imgRect = project.imgRef.current.getBoundingClientRect();
-    const slideRect = project.slideRef.current.getBoundingClientRect();
-
-    setProjectPosition({ img: imgRect, slide: slideRect });
-    push(`/project/${project.slug}`);
-  };
-
   render() {
     const { projects } = this.state;
     const { item, className } = this.props;
@@ -206,16 +191,15 @@ class RightContainer extends Component {
                 align="end"
                 className={styles.slide_inner_container}
               >
-                {map(projects[item.id], (slide, index) => (
+                {map(projects[item.id], (project, index) => (
                   <Spring
-                    key={slide.slug}
-                    to={this.getPropertyBasedOnState(slide.state)}
+                    key={project.slug}
+                    to={this.getPropertyBasedOnState(project.state)}
                   >
                     {props => (
                       <ProjectListItem
                         index={index}
-                        slide={slide}
-                        onClickProject={this.onClickProject}
+                        project={project}
                         style={props}
                       />
                     )}

@@ -1,50 +1,61 @@
-import React, { Component } from 'react';
-import styles from './project_list_item.module.scss';
-import Div from 'Common/components/div';
+import React from "react";
+import styles from "./project_list_item.module.scss";
+import Div from "Common/components/div";
+import { useHistory, Link } from "react-router-dom";
 
-const ProjectListItem = ({ index, slide, onClickProject, style, className }) => {
+const ProjectListItem = ({ index, project, style, className }) => {
+  const history = useHistory();
+
+  const onClickContainer = event => {
+    const { currentTarget } = event;
+    const itemContainer = currentTarget.querySelector("#project-container").getBoundingClientRect();
+    const itemImage = currentTarget.querySelector("#project-image").getBoundingClientRect();
+
+    history.push(`/project/${project.slug}`, { itemContainer, itemImage });
+    event.preventDefault();
+    event.stopPropagation();
+  };
 
   return (
-    <div
-      ref={slide.slideRef}
-      onClick={() => onClickProject(slide)}
-      style={{ ...style, zIndex: index }}
-      className={`${styles.slide_items} ${className} ${
-        slide.state == "CENTERED" ? styles.is_selected : ""
-        }`}
+    <Link
+      to={`/project/${project.slug}`}
+      className={styles.project_link}
+      onClick={onClickContainer}
     >
-      <Div fillParent align justify>
-        <img
-          ref={slide.imgRef}
-          src={slide.icon}
-          className={styles.image}
-        />
-      </Div>
-
-      <Div
-        alignSelf="stretch"
-        justify="start"
-        align="end"
-        className={styles.title_container}
-      >
-        <div className={styles.title}>{slide.name}</div>
-        <div className={styles.description}>
-          {slide.tech.join(" | ")}
-        </div>
-        <div className={styles.overlay_view_project}>
-          View Project
-      </div>
-      </Div>
       <div
-        className={styles.bottom_background_gradient}
-      ></div>
-    </div>
-  )
-}
+        id="project-container"
+        style={{ ...style, zIndex: index }}
+        className={`${styles.slide_items} ${className} ${
+          project.state == "CENTERED" ? styles.is_selected : ""
+        }`}
+      >
+        <Div fillParent align justify>
+          <img
+            id="project-image"
+            src={project.icon}
+            className={styles.image}
+          />
+        </Div>
 
-ProjectListItem.defaultProps ={
+        <Div
+          alignSelf="stretch"
+          justify="start"
+          align="end"
+          className={styles.title_container}
+        >
+          <div className={styles.title}>{project.name}</div>
+          <div className={styles.description}>{project.tech.join(" | ")}</div>
+          <div className={styles.overlay_view_project}>View Project</div>
+        </Div>
+        <div className={styles.bottom_background_gradient}></div>
+      </div>
+    </Link>
+  );
+};
+
+ProjectListItem.defaultProps = {
   index: 0,
-  className: ''
-}
+  className: ""
+};
 
 export default ProjectListItem;
