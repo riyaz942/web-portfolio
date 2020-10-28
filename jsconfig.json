@@ -1,14 +1,14 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "./src",
     "paths": {
-      "Modules/*": ["src/app/modules/*"],
-      "Common/*": ["src/app/common/*"],
-      "Styles/*": ["src/app/common/styles/*"],
-      "Redux/*": ["src/app/redux/*"],
-      "Images/*": ["src/app/images/*"],
-      "Icons/*": ["src/app/icons/*"],
-      "Constants/*": ["src/app/constants/*"]
+      "Modules/*": ["app/modules/*"],
+      "Common/*": ["app/common/*"],
+      "Styles/*": ["app/common/styles/*"],
+      "Redux/*": ["app/redux/*"],
+      "Images/*": ["app/images/*"],
+      "Icons/*": ["app/icons/*"],
+      "Constants/*": ["app/constants/*"]
     }
   },
   "exclude": ["node_modules", "build"]

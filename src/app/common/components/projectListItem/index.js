@@ -8,10 +8,10 @@ const ProjectListItem = ({ index, project, style, className }) => {
 
   const onClickContainer = event => {
     const { currentTarget } = event;
-    const itemContainer = currentTarget.querySelector("#project-container").getBoundingClientRect();
-    const itemImage = currentTarget.querySelector("#project-image").getBoundingClientRect();
+    const containerRect = currentTarget.querySelector("#project-container").getBoundingClientRect();
+    const imageRect = currentTarget.querySelector("#project-image").getBoundingClientRect();
 
-    history.push(`/project/${project.slug}`, { itemContainer, itemImage });
+    history.push(`/project/${project.slug}`, { containerRect, imageRect });
     event.preventDefault();
     event.stopPropagation();
   };

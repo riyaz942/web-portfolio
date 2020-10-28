@@ -1,58 +1,28 @@
 import React, { Component, Fragment } from 'react';
 import { useSpring, animated } from "react-spring";
 import isEmpty from "lodash/isEmpty";
-import { connect } from "react-redux";
+import { getBackgroundAnimation, getImageAnimation } from './helperFunctions';
 
-const getBackgroundAnimation = position => {
-  const to = {
-    height: "calc(100vh + 0px)",
-    width: "calc(100vw + 0px)",
-    transform: "translate(0px, 0px)",
-    // background: '#333333',
-    borderRadius: 0
-  };
-
-  if (position) {
-    return {
-      to,
-      from: {
-        height: `calc(0vh + ${position.height}px)`,
-        width: `calc(0vw + ${position.width}px)`,
-        transform: `translate(${position.left}px, ${position.top}px)`,
-        // background: '#ffffff',
-        borderRadius: 12
-      }
-    };
-  }
-
-  return {
-    to,
-    from: to
-  };
-};
-
-const getImageAnimation = (position) => {
-  if (!position)
-    return {};
-
-  return {
-    height: position.height,
-    width: position.width,
-    transform: `translate(${position.left}px, ${position.top}px)`
-  }
-}
-
-const ElementTransition = ({ projectReducer, hideTransitionElement, project }) => {
-  const { imgPosition, slidePosition, imgDestination } = projectReducer;
-
+const ElementTransition = ({ hideTransitionElement, project, sourceImage, sourceContainer, destinationImage }) => {
   const backgroundTransitionAnimation = useSpring({
-    to: getBackgroundAnimation(slidePosition).to,
-    from: getBackgroundAnimation(slidePosition).from
+    from: getBackgroundAnimation(sourceContainer).from,
+    to: getBackgroundAnimation(sourceImage).to
+  });
+
+  console.log({
+    anotherSomething: {
+      sourceImage,
+      destinationImage
+    },
+    something: {
+      from: getImageAnimation(sourceImage),
+      to: getImageAnimation(destinationImage),
+    }
   });
 
   const imageTransitionAnimation = useSpring({
-    to: getImageAnimation(imgDestination),
-    from: getImageAnimation(imgPosition),
+    from: getImageAnimation(sourceImage),
+    to: getImageAnimation(destinationImage),
   });
 
 
@@ -69,7 +39,7 @@ const ElementTransition = ({ projectReducer, hideTransitionElement, project }) =
         }}
       />
 
-      {!hideTransitionElement && !isEmpty(imgPosition) && (
+      {!hideTransitionElement && !isEmpty(destinationImage) && (
         <animated.img
           src={project.icon}
           style={{
@@ -86,13 +56,4 @@ const ElementTransition = ({ projectReducer, hideTransitionElement, project }) =
   )
 }
 
-const mapStateToProps = state => {
-  return {
-    projectReducer: state.projectReducer
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  null
-)(ElementTransition);
+export default ElementTransition;
