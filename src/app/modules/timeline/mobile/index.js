@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import Div from "Common/components/div";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 import { landingPageBody } from "Constants/landingConstants";
 import TimelineSelector from "Common/containers/timelineSelector";
 import { timelineListValue } from "Constants/timelineConstants";
@@ -14,7 +12,6 @@ import map from "lodash/map";
 import styles from "./timeline_mobile.module.scss";
 import ProjectListItem from 'Common/components/projectListItem';
 import PaginationButton from "Common/components/paginationButton";
-import { setProjectPosition } from "Redux/actions/projectActions";
 import { detectSwipe } from 'Common/utils/swipeGesture';
 
 class TimelineMobile extends Component {
@@ -196,13 +193,5 @@ class TimelineMobile extends Component {
   }
 }
 
-const mapDispathToProps = dispatch => {
-  return {
-    setProjectPosition: bindActionCreators(setProjectPosition, dispatch)
-  };
-};
 
-export default connect(
-  null,
-  mapDispathToProps
-)(withRouter(TimelineMobile));
+export default withRouter(TimelineMobile);

@@ -1,6 +1,4 @@
 import React, { Component, memo } from "react";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 import styles from "./right_container.module.scss";
 import Div from "Common/components/div";
 import map from "lodash/map";
@@ -10,7 +8,6 @@ import { projectsListValue } from "Constants/projectsConstants";
 import isEmpty from "lodash/isEmpty";
 import { Transition } from "react-spring/renderprops";
 import PaginationButton from "Common/components/paginationButton";
-import { setProjectPosition } from "Redux/actions/projectActions";
 import ProjectListItem from "Common/components/projectListItem";
 
 class RightContainer extends Component {
@@ -227,13 +224,5 @@ class RightContainer extends Component {
   }
 }
 
-const mapDispathToProps = dispatch => {
-  return {
-    setProjectPosition: bindActionCreators(setProjectPosition, dispatch)
-  };
-};
+export default memo(withRouter(RightContainer));
 
-export default connect(
-  null,
-  mapDispathToProps
-)(memo(withRouter(RightContainer)));

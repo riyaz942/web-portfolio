@@ -5,7 +5,6 @@
       "Modules/*": ["app/modules/*"],
       "Common/*": ["app/common/*"],
       "Styles/*": ["app/common/styles/*"],
-      "Redux/*": ["app/redux/*"],
       "Images/*": ["app/images/*"],
       "Icons/*": ["app/icons/*"],
       "Constants/*": ["app/constants/*"]

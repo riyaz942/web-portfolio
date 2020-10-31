@@ -279,7 +279,6 @@ module.exports = function(webpackEnv) {
         Modules: path.resolve(__dirname, '../src/app/modules'),
         Common: path.resolve(__dirname, '../src/app/common'),
         Styles: path.resolve(__dirname, '../src/app/common/styles'),
-        Redux: path.resolve(__dirname, '../src/app/redux'),
         Images: path.resolve(__dirname, '../src/assets/images'),
         Icons: path.resolve(__dirname, '../src/assets/icons'),
         // Icons: path.resolve(__dirname, '../src/assets/icons'),

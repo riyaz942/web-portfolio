@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React from 'react';
 import { useSpring, animated } from "react-spring";
 import { getBackgroundAnimation, getImageAnimation } from './helperFunctions';
 
@@ -15,7 +15,7 @@ const ElementTransition = ({ hideTransitionElement, project, sourceImage, source
 
 
   return (
-    <Fragment>
+    <>
       <animated.div
         style={{
           ...backgroundTransitionAnimation,
@@ -40,7 +40,7 @@ const ElementTransition = ({ hideTransitionElement, project, sourceImage, source
           }}
         />
       )}
-    </Fragment>
+    </>
   )
 }
 

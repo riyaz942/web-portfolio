@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import Div from "Common/components/div";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 import { landingPageBody } from "Constants/landingConstants";
 import TimelineSelector from "Common/containers/timelineSelector";
 import { techList } from "Constants/techConstants";
@@ -14,7 +12,6 @@ import map from "lodash/map";
 import styles from "./projects_mobile.module.scss";
 import ProjectListItem from 'Common/components/projectListItem';
 import PaginationButton from "Common/components/paginationButton";
-import { setProjectPosition } from "Redux/actions/projectActions";
 import techDoodleImage from "Images/background/tech-doodle-background-image.png";
 import { detectSwipe } from 'Common/utils/swipeGesture';
 import { random, parseNewLine } from "Common/utils";
@@ -274,13 +271,4 @@ class ProjectsMobile extends Component {
   }
 }
 
-const mapDispathToProps = dispatch => {
-  return {
-    setProjectPosition: bindActionCreators(setProjectPosition, dispatch)
-  };
-};
-
-export default connect(
-  null,
-  mapDispathToProps
-)(withRouter(ProjectsMobile));
+export default withRouter(ProjectsMobile);
