@@ -5,8 +5,7 @@ import React, {
   useState,
   useEffect,
 } from "react";
-import { useSpring, animated } from "react-spring";
-import isEmpty from 'lodash/isEmpty';
+import { animated } from "react-spring";
 import styles from './element_scroll.module.scss';
 import Div from "Common/components/div";
 import useBreakpoint from 'Common/hooks/useBreakpoint';
@@ -71,7 +70,7 @@ const ElementScroll = ({
           height: imgWidthAnim,
           left: imgLeftAnim,
           top: imgTopAnim,
-          opacity: isEmpty(imgPosition)
+          opacity: !imgPosition
             ? containerOpacityAnimation.opacity
             : showContent
               ? 1

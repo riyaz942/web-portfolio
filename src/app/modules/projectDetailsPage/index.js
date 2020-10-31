@@ -4,7 +4,6 @@ import styles from "./project_details_page.module.scss";
 import { useSpring, animated } from "react-spring";
 import { projectsListValue } from "Constants/projectsConstants";
 import isEmpty from "lodash/isEmpty";
-import get from 'lodash/get';
 import ProjectViewPager from "./projectViewPager";
 import ProjectDescription from "./projectDescription";
 import ElementTransition from "./elementTransition";
@@ -12,7 +11,6 @@ import ElementScroll from "./elementScroll";
 import ProjectImageGrid from "./projectImageGrid";
 import backIcon from "Icons/icon-left-arrow-dark.png";
 import closeIcon from 'Icons/icon-cross.png';
-
 
 const ProjectDetailsPage = ({ match, style, history, location}) => {
   const projectId = match && match.params ? match.params.projectSlug : "";
@@ -24,6 +22,7 @@ const ProjectDetailsPage = ({ match, style, history, location}) => {
 
   const { imageRect, containerRect } = location && location.state ? location.state : {};
   const imageRef = useRef(null);
+  const isPageRedirectedFromListing = !!imageRect && !!containerRect
 
   //-------------------------------------------ScrollAnimation
   const [{ st }, set] = useSpring(() => ({ st: 0 }));
@@ -45,27 +44,32 @@ const ProjectDetailsPage = ({ match, style, history, location}) => {
   const [hideTransitionElement, setHideTransitionElement] = useState(false);
   const [componentReady, setComponentReady] = useState(false);
   const [showContent, setShowContent] = useState(false);
-
-  const containerOpacityAnimation = useSpring({
-    from: { opacity: !isEmpty(imageRect) ? 0 : 1 },
-    opacity: 1,
-    delay: !isEmpty(imageRect) ? 500 : 0,
-    onStart: () => {
-      if (componentReady) {
-        setShowContent(true);
-        setHideTransitionElement(true);
-
-        // Clears the image and container rect state
-        window.history.replaceState(null, location.pathname);
-      }
-    }
-  });
+  const [containerOpacityAnimation, setContainerOpacityAnimation] = useSpring(() => ({ opacity: 0 }));
 
   // On Component Mount
   useEffect(() => {
     const destinationImageRect = imageRef.current.getBoundingClientRect();
     setDestinationImageRect(destinationImageRect);
     setComponentReady(true);
+
+    if (isPageRedirectedFromListing) {
+      // delays showing of content till page transition animation is occuring
+      setTimeout(()=> {
+        setContainerOpacityAnimation({ opacity: 1 })
+      }, 300);
+
+      setTimeout(()=> {
+        setShowContent(true);
+        setHideTransitionElement(true);  
+      }, 600);
+    } else {
+      setContainerOpacityAnimation({ opacity: 1 })
+      setShowContent(true);
+      setHideTransitionElement(true);
+    }
+
+    // Clears the image and container rect state
+    window.history.replaceState(null, location.pathname);
   }, []);
 
   return (
@@ -97,7 +101,7 @@ const ProjectDetailsPage = ({ match, style, history, location}) => {
             src={backIcon}
             className={styles.cross_img}
             onClick={()=> {
-              if (imageRect) history.goBack();
+              if (isPageRedirectedFromListing) history.goBack();
               else history.replace("/");
             }}
           />

@@ -1,23 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import { useSpring, animated } from "react-spring";
-import isEmpty from "lodash/isEmpty";
 import { getBackgroundAnimation, getImageAnimation } from './helperFunctions';
 
 const ElementTransition = ({ hideTransitionElement, project, sourceImage, sourceContainer, destinationImage }) => {
   const backgroundTransitionAnimation = useSpring({
     from: getBackgroundAnimation(sourceContainer).from,
     to: getBackgroundAnimation(sourceImage).to
-  });
-
-  console.log({
-    anotherSomething: {
-      sourceImage,
-      destinationImage
-    },
-    something: {
-      from: getImageAnimation(sourceImage),
-      to: getImageAnimation(destinationImage),
-    }
   });
 
   const imageTransitionAnimation = useSpring({
@@ -39,7 +27,7 @@ const ElementTransition = ({ hideTransitionElement, project, sourceImage, source
         }}
       />
 
-      {!hideTransitionElement && !isEmpty(destinationImage) && (
+      {!hideTransitionElement && (
         <animated.img
           src={project.icon}
           style={{

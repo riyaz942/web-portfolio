@@ -26,13 +26,13 @@ export const getBackgroundAnimation = position => {
   };
 };
 
-export const getImageAnimation = (position) => {
-  if (!position)
+export const getImageAnimation = (rect) => {
+  if (!rect)
     return {};
 
   return {
-    height: position.height,
-    width: position.width,
-    transform: `translate(${position.left}px, ${position.top}px)`
+    height: rect.height,
+    width: rect.width,
+    transform: `translate(${rect.left}px, ${rect.top}px)`
   }
 }
