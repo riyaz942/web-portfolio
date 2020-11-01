@@ -20,7 +20,7 @@ Used Created-React-App for this project so to run locally
 
 ### Seperate examples from the portfolio 
 **(for simple reference, to avoid mixup of other logics in the project)**
-* [Page Transition Example](https://github.com/riyaz942/riyazweb.dev/tree/master/src/app/examples/pageTransition)
+* [Page Transition Example](https://github.com/riyaz942/web-portfolio/tree/master/src/app/examples/pageTransition)
 * Auto adjusting scroll elements (working on)
 
 ### Architecture and some note on the application
@@ -37,4 +37,5 @@ Used Created-React-App for this project so to run locally
 ```
 
 * Have used webpack's resolve.alias to alias some of the common paths to reduce relative imports in the project. <br />
-* Mostly Used Scss, Flexbox, Media-Queries for responsiveness and React-Spring for animations, haven't used any css framework in this
+* Mostly Used Scss, Flexbox, Media-Queries for styling, layouting and responsiveness, haven't used any css framework in this
+* Used React-Spring for majority of the animations
