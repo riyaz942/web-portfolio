@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React from "react";
 import map from 'lodash/map';
 import styles from './project_description.module.scss';
 import Div from 'Common/components/div';

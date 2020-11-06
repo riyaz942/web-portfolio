@@ -1,3 +1,0 @@
-export const SET_POSITION = 'SET_POSITION';
-export const CLEAR_POSITION = 'CLEAR_POSITION';
-export const SET_DESTINATION = 'SET_DESTINATION';

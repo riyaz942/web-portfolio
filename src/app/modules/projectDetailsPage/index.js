@@ -1,16 +1,7 @@
 import React, { useCallback, useEffect, useState, useRef } from "react";
 import Div from "Common/components/div";
 import styles from "./project_details_page.module.scss";
-import map from "lodash/map";
-import { withRouter } from "react-router";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 import { useSpring, animated } from "react-spring";
-import {
-  clearProjectPosition,
-  setProjectDestination
-} from "Redux/actions/projectActions";
-// import lighthouseProjectIcon from 'Icons/project-icon-lighthouse.png';
 import { projectsListValue } from "Constants/projectsConstants";
 import isEmpty from "lodash/isEmpty";
 import ProjectViewPager from "./projectViewPager";
@@ -21,27 +12,17 @@ import ProjectImageGrid from "./projectImageGrid";
 import backIcon from "Icons/icon-left-arrow-dark.png";
 import closeIcon from 'Icons/icon-cross.png';
 
-const onClickClose = (history, position) => {
-  if (position) history.goBack();
-  else history.replace("/");
-};
-
-const ProjectDetailsPage = ({
-  match,
-  projectReducer,
-  style,
-  clearProjectPosition,
-  setProjectDestination,
-  history
-}) => {
+const ProjectDetailsPage = ({ match, style, history, location}) => {
   const projectId = match && match.params ? match.params.projectSlug : "";
   const [project] = useState(projectsListValue[projectId] || {});
   const [headerShadow, setHeaderShadow] = useState(false);
   const [showViewPagerModal, toggleViewPager] = useState(false);
+  const [destinationImageRect, setDestinationImageRect] = useState({});
   const [gridIndex, setGridIndex] = useState(0);
 
-  const { imgPosition } = projectReducer;
+  const { imageRect, containerRect } = location && location.state ? location.state : {};
   const imageRef = useRef(null);
+  const isPageRedirectedFromListing = !!imageRect && !!containerRect
 
   //-------------------------------------------ScrollAnimation
   const [{ st }, set] = useSpring(() => ({ st: 0 }));
@@ -63,28 +44,32 @@ const ProjectDetailsPage = ({
   const [hideTransitionElement, setHideTransitionElement] = useState(false);
   const [componentReady, setComponentReady] = useState(false);
   const [showContent, setShowContent] = useState(false);
-
-  const containerOpacityAnimation = useSpring({
-    from: { opacity: !isEmpty(imgPosition) ? 0 : 1 },
-    opacity: 1,
-    delay: !isEmpty(imgPosition) ? 500 : 0,
-    onStart: () => {
-      if (componentReady) {
-        setShowContent(true);
-        setHideTransitionElement(true);
-      }
-    }
-  });
+  const [containerOpacityAnimation, setContainerOpacityAnimation] = useSpring(() => ({ opacity: 0 }));
 
   // On Component Mount
   useEffect(() => {
-    const currentRect = imageRef.current.getBoundingClientRect();
-    setProjectDestination(currentRect);
+    const destinationImageRect = imageRef.current.getBoundingClientRect();
+    setDestinationImageRect(destinationImageRect);
     setComponentReady(true);
 
-    return () => {
-      clearProjectPosition();
-    };
+    if (isPageRedirectedFromListing) {
+      // delays showing of content till page transition animation is occuring
+      setTimeout(()=> {
+        setContainerOpacityAnimation({ opacity: 1 })
+      }, 300);
+
+      setTimeout(()=> {
+        setShowContent(true);
+        setHideTransitionElement(true);  
+      }, 600);
+    } else {
+      setContainerOpacityAnimation({ opacity: 1 })
+      setShowContent(true);
+      setHideTransitionElement(true);
+    }
+
+    // Clears the image and container rect state
+    window.history.replaceState(null, location.pathname);
   }, []);
 
   return (
@@ -115,7 +100,10 @@ const ProjectDetailsPage = ({
           <img
             src={backIcon}
             className={styles.cross_img}
-            onClick={() => onClickClose(history, imgPosition)}
+            onClick={()=> {
+              if (isPageRedirectedFromListing) history.goBack();
+              else history.replace("/");
+            }}
           />
 
           {project.link ? (
@@ -137,7 +125,7 @@ const ProjectDetailsPage = ({
               project={project}
               showContent={showContent}
               imageRef={imageRef}
-              imgPosition={imgPosition}
+              imgPosition={imageRect}
               containerOpacityAnimation={containerOpacityAnimation}
             />
           </Div>
@@ -163,26 +151,13 @@ const ProjectDetailsPage = ({
         <ElementTransition
           project={project}
           hideTransitionElement={hideTransitionElement}
+          sourceImage={imageRect}
+          sourceContainer={containerRect}
+          destinationImage={destinationImageRect}
         />
       )}
     </Div>
   );
 };
 
-const mapStateToProps = state => {
-  return {
-    projectReducer: state.projectReducer
-  };
-};
-
-const mapDispathToProps = dispatch => {
-  return {
-    clearProjectPosition: bindActionCreators(clearProjectPosition, dispatch),
-    setProjectDestination: bindActionCreators(setProjectDestination, dispatch)
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispathToProps
-)(withRouter(ProjectDetailsPage));
+export default ProjectDetailsPage;

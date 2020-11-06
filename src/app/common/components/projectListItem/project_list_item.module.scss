@@ -1,9 +1,14 @@
 @import '~Styles/mixins.module';
 @import '~Styles/colors.module';
 
+.project_link {
+  text-decoration: none;
+}
+
 .slide_items {
   display: flex;
   flex-direction: column;
+  text-decoration: none;
   
   width: 183px;
   min-width: 183px;

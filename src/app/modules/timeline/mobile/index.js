@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import Div from "Common/components/div";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 import { landingPageBody } from "Constants/landingConstants";
 import TimelineSelector from "Common/containers/timelineSelector";
 import { timelineListValue } from "Constants/timelineConstants";
@@ -14,7 +12,6 @@ import map from "lodash/map";
 import styles from "./timeline_mobile.module.scss";
 import ProjectListItem from 'Common/components/projectListItem';
 import PaginationButton from "Common/components/paginationButton";
-import { setProjectPosition } from "Redux/actions/projectActions";
 import { detectSwipe } from 'Common/utils/swipeGesture';
 
 class TimelineMobile extends Component {
@@ -70,25 +67,9 @@ class TimelineMobile extends Component {
 
     return timeline.projects.map(project => ({
       ...projectsListValue[project],
-      slug: project,
-      imgRef: React.createRef(),
-      slideRef: React.createRef()
+      slug: project
     }));
   };
-
-  onClickProject = project => {
-    const {
-      setProjectPosition,
-      history: { push }
-    } = this.props;
-
-    const imgRect = project.imgRef.current.getBoundingClientRect();
-    const slideRect = project.slideRef.current.getBoundingClientRect();
-
-    setProjectPosition({ img: imgRect, slide: slideRect });
-    push(`/project/${project.slug}`);
-  };
-
 
   onTimelineSelected = ({ selectedId }) => {
     const projectsList = this.getProjects(selectedId);
@@ -185,9 +166,8 @@ class TimelineMobile extends Component {
                   justify
                 >
                   <ProjectListItem
-                    slide={project}
+                    project={project}
                     className={`${index == currentSlide ? styles.project_list_item__selected : ''} ${styles.project_list_item}`}
-                    onClickProject={this.onClickProject}
                   />
                 </Div>
               ))}
@@ -213,13 +193,5 @@ class TimelineMobile extends Component {
   }
 }
 
-const mapDispathToProps = dispatch => {
-  return {
-    setProjectPosition: bindActionCreators(setProjectPosition, dispatch)
-  };
-};
 
-export default connect(
-  null,
-  mapDispathToProps
-)(withRouter(TimelineMobile));
+export default withRouter(TimelineMobile);

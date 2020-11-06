@@ -1,6 +1,4 @@
 import React, { Component, memo } from "react";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 import styles from "./right_container.module.scss";
 import Div from "Common/components/div";
 import map from "lodash/map";
@@ -10,7 +8,6 @@ import { projectsListValue } from "Constants/projectsConstants";
 import isEmpty from "lodash/isEmpty";
 import { Transition } from "react-spring/renderprops";
 import PaginationButton from "Common/components/paginationButton";
-import { setProjectPosition } from "Redux/actions/projectActions";
 import ProjectListItem from "Common/components/projectListItem";
 
 class RightContainer extends Component {
@@ -55,9 +52,7 @@ class RightContainer extends Component {
       return {
         ...projectsListValue[project],
         slug: project,
-        state,
-        imgRef: React.createRef(),
-        slideRef: React.createRef()
+        state
       };
     });
   };
@@ -164,19 +159,6 @@ class RightContainer extends Component {
     }
   }
 
-  onClickProject = project => {
-    const {
-      setProjectPosition,
-      history: { push }
-    } = this.props;
-
-    const imgRect = project.imgRef.current.getBoundingClientRect();
-    const slideRect = project.slideRef.current.getBoundingClientRect();
-
-    setProjectPosition({ img: imgRect, slide: slideRect });
-    push(`/project/${project.slug}`);
-  };
-
   render() {
     const { projects } = this.state;
     const { item, className } = this.props;
@@ -206,16 +188,15 @@ class RightContainer extends Component {
                 align="end"
                 className={styles.slide_inner_container}
               >
-                {map(projects[item.id], (slide, index) => (
+                {map(projects[item.id], (project, index) => (
                   <Spring
-                    key={slide.slug}
-                    to={this.getPropertyBasedOnState(slide.state)}
+                    key={project.slug}
+                    to={this.getPropertyBasedOnState(project.state)}
                   >
                     {props => (
                       <ProjectListItem
                         index={index}
-                        slide={slide}
-                        onClickProject={this.onClickProject}
+                        project={project}
                         style={props}
                       />
                     )}
@@ -243,13 +224,5 @@ class RightContainer extends Component {
   }
 }
 
-const mapDispathToProps = dispatch => {
-  return {
-    setProjectPosition: bindActionCreators(setProjectPosition, dispatch)
-  };
-};
+export default memo(withRouter(RightContainer));
 
-export default connect(
-  null,
-  mapDispathToProps
-)(memo(withRouter(RightContainer)));
