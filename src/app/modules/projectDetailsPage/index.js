@@ -12,7 +12,10 @@ import ProjectImageGrid from "./projectImageGrid";
 import backIcon from "Icons/icon-left-arrow-dark.png";
 import closeIcon from 'Icons/icon-cross.png';
 
-const ProjectDetailsPage = ({ match, style, history, location}) => {
+const ProjectDetailsPage = ({ match, style, history, location, startPageEndAnimation, onPageAnimationEnd, ...rest}) => {
+  console.log('projectDetailsPage',{
+    startPageEndAnimation,
+  })
   const projectId = match && match.params ? match.params.projectSlug : "";
   const [project] = useState(projectsListValue[projectId] || {});
   const [headerShadow, setHeaderShadow] = useState(false);
@@ -71,6 +74,14 @@ const ProjectDetailsPage = ({ match, style, history, location}) => {
     // Clears the image and container rect state
     window.history.replaceState(null, location.pathname);
   }, []);
+
+  //When component is about to unmount 
+  useEffect(() => {
+    if (startPageEndAnimation) {
+      // start page end animation
+      onPageAnimationEnd()
+    }
+  }, [startPageEndAnimation])
 
   return (
     <Div justify row className={styles.project_details_container} style={style}>

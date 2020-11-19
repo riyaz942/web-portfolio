@@ -3,6 +3,7 @@ import styles from "./app.scss";
 import Div from "Common/components/div";
 import Loader from "./modules/loader/loader";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import AnimationLifecycle from 'Common/containers/animationLifecycle';
 import { config } from "react-spring";
 import { Transition } from "react-spring/renderprops";
 
@@ -28,7 +29,18 @@ const App = () => {
             <Route path="/">
               <Loader>
                 <Landing />
-                <Route
+                <Route 
+                  exact
+                  path="/project/:projectSlug?"
+                  children={(props) => (
+                    <AnimationLifecycle
+                      component={ProjectDetailsPage}
+                      whenToRender={(match)=>(match && match.params && match.params.projectSlug)}
+                      {...props}
+                    />
+                  )}
+                />
+                {/* <Route
                   exact
                   path="/project/:projectSlug?"
                   children={({ match, ...rest }) => {
@@ -55,7 +67,7 @@ const App = () => {
                       </Transition>
                     );
                   }}
-                />
+                /> */}
               </Loader>
             </Route>
           </Switch>
