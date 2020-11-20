@@ -14,7 +14,6 @@ const ElementScroll = ({
   project,
   st,
   imageRef,
-  imgPosition,
   containerOpacityAnimation,
   showContent,
 }) => {
@@ -70,11 +69,12 @@ const ElementScroll = ({
           height: imgWidthAnim,
           left: imgLeftAnim,
           top: imgTopAnim,
-          opacity: !imgPosition
-            ? containerOpacityAnimation.opacity
-            : showContent
-              ? 1
-              : 0
+          opacity: showContent ? 1 : 0
+          // opacity: !imgPosition
+          //   ? containerOpacityAnimation.opacity
+          //   : showContent
+          //     ? 1
+          //     : 0
         }}
       />
 

@@ -12,20 +12,17 @@ import ProjectImageGrid from "./projectImageGrid";
 import backIcon from "Icons/icon-left-arrow-dark.png";
 import closeIcon from 'Icons/icon-cross.png';
 
-const ProjectDetailsPage = ({ match, style, history, location, startPageEndAnimation, onPageAnimationEnd, ...rest}) => {
-  console.log('projectDetailsPage',{
-    startPageEndAnimation,
-  })
+const ProjectDetailsPage = ({ match, style, history, location, startPageEndAnimation, onPageAnimationEnd}) => {
   const projectId = match && match.params ? match.params.projectSlug : "";
   const [project] = useState(projectsListValue[projectId] || {});
   const [headerShadow, setHeaderShadow] = useState(false);
   const [showViewPagerModal, toggleViewPager] = useState(false);
-  const [destinationImageRect, setDestinationImageRect] = useState({});
+  const [descriptionPageImageRect, setDescriptionPageImageRect] = useState({});
   const [gridIndex, setGridIndex] = useState(0);
 
-  const { imageRect, containerRect } = location && location.state ? location.state : {};
+  const { imageRect: listingPageImageRect, containerRect: listingPageContainerRect } = location && location.state ? location.state : {};
   const imageRef = useRef(null);
-  const isPageRedirectedFromListing = !!imageRect && !!containerRect
+  const isPageRedirectedFromListing = !!listingPageImageRect && !!listingPageContainerRect
 
   //-------------------------------------------ScrollAnimation
   const [{ st }, set] = useSpring(() => ({ st: 0 }));
@@ -44,6 +41,7 @@ const ProjectDetailsPage = ({ match, style, history, location, startPageEndAnima
   ); //Update memoized callback when headerShadow state updates
   //-------------------------------------------End
 
+  const [reverseTransitionAnimation, setReverseTransitionAnimation] = useState(false);
   const [hideTransitionElement, setHideTransitionElement] = useState(false);
   const [componentReady, setComponentReady] = useState(false);
   const [showContent, setShowContent] = useState(false);
@@ -51,12 +49,11 @@ const ProjectDetailsPage = ({ match, style, history, location, startPageEndAnima
 
   // On Component Mount
   useEffect(() => {
-    const destinationImageRect = imageRef.current.getBoundingClientRect();
-    setDestinationImageRect(destinationImageRect);
-    setComponentReady(true);
+    setDescriptionPageImageRect(imageRef.current.getBoundingClientRect());
 
     if (isPageRedirectedFromListing) {
       // delays showing of content till page transition animation is occuring
+      // TODO use request animation frame instead of setTimeout
       setTimeout(()=> {
         setContainerOpacityAnimation({ opacity: 1 })
       }, 300);
@@ -71,6 +68,7 @@ const ProjectDetailsPage = ({ match, style, history, location, startPageEndAnima
       setHideTransitionElement(true);
     }
 
+    setComponentReady(true);
     // Clears the image and container rect state
     window.history.replaceState(null, location.pathname);
   }, []);
@@ -79,7 +77,20 @@ const ProjectDetailsPage = ({ match, style, history, location, startPageEndAnima
   useEffect(() => {
     if (startPageEndAnimation) {
       // start page end animation
-      onPageAnimationEnd()
+      setDescriptionPageImageRect(imageRef.current.getBoundingClientRect());
+      setReverseTransitionAnimation(true);
+      setShowContent(false);
+      setHideTransitionElement(false);  
+      setContainerOpacityAnimation({ opacity: 0 });
+
+      // the destination object 
+      //const destinationImageRect = imageRef.current.getBoundingClientRect();
+      //setDestinationImageRect(destinationImageRect);
+        
+      setTimeout(()=> {
+        onPageAnimationEnd();
+      }, 600);
+
     }
   }, [startPageEndAnimation])
 
@@ -136,7 +147,6 @@ const ProjectDetailsPage = ({ match, style, history, location, startPageEndAnima
               project={project}
               showContent={showContent}
               imageRef={imageRef}
-              imgPosition={imageRect}
               containerOpacityAnimation={containerOpacityAnimation}
             />
           </Div>
@@ -162,9 +172,10 @@ const ProjectDetailsPage = ({ match, style, history, location, startPageEndAnima
         <ElementTransition
           project={project}
           hideTransitionElement={hideTransitionElement}
-          sourceImage={imageRect}
-          sourceContainer={containerRect}
-          destinationImage={destinationImageRect}
+          listingPageImageRect={listingPageImageRect}
+          listingPageContainerRect={listingPageContainerRect}
+          descriptionPageImageRect={descriptionPageImageRect}
+          reverseTransitionAnimation={reverseTransitionAnimation}
         />
       )}
     </Div>
