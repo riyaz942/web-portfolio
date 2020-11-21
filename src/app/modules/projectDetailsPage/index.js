@@ -48,7 +48,6 @@ const ProjectDetailsPage = ({ match, style, history, location, startPageEndAnima
   const [reverseTransitionAnimation, setReverseTransitionAnimation] = useState(false)
   const [hideTransitionElement, setHideTransitionElement] = useState(false);
   const [componentReady, setComponentReady] = useState(false);
-  const [showContent, setShowContent] = useState(false);
   const [containerOpacityAnimation, setContainerOpacityAnimation] = useSpring(() => ({ opacity: 0 }));
 
   // On Component Mount
@@ -63,12 +62,10 @@ const ProjectDetailsPage = ({ match, style, history, location, startPageEndAnima
       }, 300);
 
       setTimeout(()=> {
-        setShowContent(true);
         setHideTransitionElement(true);  
       }, 600);
     } else {
       setContainerOpacityAnimation({ opacity: 1 })
-      setShowContent(true);
       setHideTransitionElement(true);
     }
 
@@ -80,21 +77,22 @@ const ProjectDetailsPage = ({ match, style, history, location, startPageEndAnima
   //When component is about to unmount 
   useEffect(() => {
     if (startPageEndAnimation) {
-      // start page end animation
-      setDescriptionPageImageRect(imageRef.current.getBoundingClientRect());
-      setContainerOpacityAnimation({ opacity: 0 });
-      
-
-      setTimeout(()=> {
-        setReverseTransitionAnimation(true);
-        setShowContent(false);
-        setHideTransitionElement(false); 
+      if (isPageRedirectedFromListing) {
+        // start page end animation
+        setDescriptionPageImageRect(imageRef.current.getBoundingClientRect());
+        setContainerOpacityAnimation({ opacity: 0 });
 
         setTimeout(() => {
-          onPageAnimationEnd();
-        }, 700);
-      }, 300);
-      
+          setReverseTransitionAnimation(true);
+          setHideTransitionElement(false);
+
+          setTimeout(() => {
+            onPageAnimationEnd();
+          }, 700);
+        }, 200);
+      } else {
+        onPageAnimationEnd();
+      }
     }
   }, [startPageEndAnimation])
 
@@ -149,9 +147,10 @@ const ProjectDetailsPage = ({ match, style, history, location, startPageEndAnima
             <ElementScroll
               st={st}
               project={project}
-              showContent={showContent}
+              hideTransitionElement={hideTransitionElement}
               imageRef={imageRef}
               containerOpacityAnimation={containerOpacityAnimation}
+              isPageRedirectedFromListing={isPageRedirectedFromListing}
             />
           </Div>
 

@@ -15,7 +15,8 @@ const ElementScroll = ({
   st,
   imageRef,
   containerOpacityAnimation,
-  showContent,
+  hideTransitionElement,
+  isPageRedirectedFromListing
 }) => {
   const imageWidth = 150;
   const [titleWidth, setTitleWidth] = useState(100);
@@ -69,12 +70,9 @@ const ElementScroll = ({
           height: imgWidthAnim,
           left: imgLeftAnim,
           top: imgTopAnim,
-          opacity: showContent ? 1 : 0
-          // opacity: !imgPosition
-          //   ? containerOpacityAnimation.opacity
-          //   : showContent
-          //     ? 1
-          //     : 0
+          // when transition from listing page don't animate opacity just make visibilty show/hide immediatly
+          // when being navigated directly to this page .. then animate opacity
+          opacity: isPageRedirectedFromListing ? +hideTransitionElement : containerOpacityAnimation.opacity 
         }}
       />
 
@@ -83,33 +81,39 @@ const ElementScroll = ({
         className={styles.project_name}
         style={{
           transform: titleSizeAnim,
-          left: screenSize == 'sm' ? titleLeftAnimResposive : titleLeftAnim,
+          left: screenSize == "sm" ? titleLeftAnimResposive : titleLeftAnim,
           top: titleTopAnim,
-          opacity: containerOpacityAnimation.opacity
+          opacity: containerOpacityAnimation.opacity,
         }}
       >
         {project.name}
       </animated.div>
 
-      <Div
+      <animated.div
         animate
         align="end"
         style={{
           top: subDetailsTop,
-          opacity: showContent
-            ? subDetailsAlpha
-            : containerOpacityAnimation.opacity
+          opacity: subDetailsAlpha,
         }}
         className={styles.project_sub_details_container}
       >
-        <div className={styles.title}>Platform</div>
-        <div className={styles.value}>{project.tech.join(" | ")}</div>
+        <Div
+          animate
+          align="end"
+          style={{
+            opacity: containerOpacityAnimation.opacity,
+          }}
+        >
+          <div className={styles.title}>Platform</div>
+          <div className={styles.value}>{project.tech.join(" | ")}</div>
 
-        <div className={`${styles.title} ${styles.project_involvement}`}>
-          Project Involment
-        </div>
-        <div className={styles.value}>{project.involvement}</div>
-      </Div>
+          <div className={`${styles.title} ${styles.project_involvement}`}>
+            Project Involment
+          </div>
+          <div className={styles.value}>{project.involvement}</div>
+        </Div>
+      </animated.div>
     </Fragment>
   );
 };
