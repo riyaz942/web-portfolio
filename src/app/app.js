@@ -40,34 +40,6 @@ const App = () => {
                     />
                   )}
                 />
-                {/* <Route
-                  exact
-                  path="/project/:projectSlug?"
-                  children={({ match, ...rest }) => {
-                    return (
-                      <Transition
-                        items={
-                          match && match.params && match.params.projectSlug
-                        }
-                        from={{ opacity: 1 }}
-                        enter={{ opacity: 1 }}
-                        leave={{ opacity: 0 }}
-                        config={config.stiff}
-                      >
-                        {(item) =>
-                          item &&
-                          ((props) => (
-                            <ProjectDetailsPage
-                              style={props}
-                              match={match}
-                              {...rest}
-                            />
-                          ))
-                        }
-                      </Transition>
-                    );
-                  }}
-                /> */}
               </Loader>
             </Route>
           </Switch>
