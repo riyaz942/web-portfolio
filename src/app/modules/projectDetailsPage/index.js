@@ -20,7 +20,11 @@ const ProjectDetailsPage = ({ match, style, history, location, startPageEndAnima
   const [descriptionPageImageRect, setDescriptionPageImageRect] = useState({});
   const [gridIndex, setGridIndex] = useState(0);
 
-  const { imageRect: listingPageImageRect, containerRect: listingPageContainerRect } = location && location.state ? location.state : {};
+  const { imageRect, containerRect } = location && location.state ? location.state : {};
+  // Stores the listing page location onto a state
+  const [listingPageImageRect] = useState(imageRect);
+  const [listingPageContainerRect] = useState(containerRect);
+
   const imageRef = useRef(null);
   const isPageRedirectedFromListing = !!listingPageImageRect && !!listingPageContainerRect
 
@@ -41,7 +45,7 @@ const ProjectDetailsPage = ({ match, style, history, location, startPageEndAnima
   ); //Update memoized callback when headerShadow state updates
   //-------------------------------------------End
 
-  const [reverseTransitionAnimation, setReverseTransitionAnimation] = useState(false);
+  const [reverseTransitionAnimation, setReverseTransitionAnimation] = useState(false)
   const [hideTransitionElement, setHideTransitionElement] = useState(false);
   const [componentReady, setComponentReady] = useState(false);
   const [showContent, setShowContent] = useState(false);
@@ -78,19 +82,19 @@ const ProjectDetailsPage = ({ match, style, history, location, startPageEndAnima
     if (startPageEndAnimation) {
       // start page end animation
       setDescriptionPageImageRect(imageRef.current.getBoundingClientRect());
-      setReverseTransitionAnimation(true);
-      setShowContent(false);
-      setHideTransitionElement(false);  
       setContainerOpacityAnimation({ opacity: 0 });
+      
 
-      // the destination object 
-      //const destinationImageRect = imageRef.current.getBoundingClientRect();
-      //setDestinationImageRect(destinationImageRect);
-        
       setTimeout(()=> {
-        onPageAnimationEnd();
-      }, 600);
+        setReverseTransitionAnimation(true);
+        setShowContent(false);
+        setHideTransitionElement(false); 
 
+        setTimeout(() => {
+          onPageAnimationEnd();
+        }, 700);
+      }, 300);
+      
     }
   }, [startPageEndAnimation])
 

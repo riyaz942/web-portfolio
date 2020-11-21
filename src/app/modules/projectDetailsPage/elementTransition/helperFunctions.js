@@ -24,8 +24,8 @@ export const getImageAnimation = (rect) => {
     return {};
 
   return {
-    height: rect.height,
-    width: rect.width,
-    transform: `translate(${rect.left}px, ${rect.top}px)`
+    height: parseInt(rect.height),
+    width: parseInt(rect.width),
+    transform: `translate(${parseInt(rect.left)}px, ${parseInt(rect.top)}px)`
   }
 }

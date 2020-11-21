@@ -3,30 +3,16 @@ import { useSpring, animated } from "react-spring";
 import { getBackgroundAnimation, getImageAnimation, getBackgroundFullwidthPosition } from './helperFunctions';
 
 const ElementTransition = ({ hideTransitionElement, project, listingPageImageRect, listingPageContainerRect, descriptionPageImageRect, reverseTransitionAnimation }) => {
-  const [backgroundTransitionAnimation, setBackgroundTransitionAnimation] = useSpring(() => ({
-    from: getBackgroundAnimation(listingPageContainerRect),
-    to: getBackgroundFullwidthPosition()
-  }));
+  const backgroundTransitionAnimation = useSpring({
+    from: reverseTransitionAnimation? getBackgroundFullwidthPosition() : getBackgroundAnimation(listingPageContainerRect),
+    to: reverseTransitionAnimation? getBackgroundAnimation(listingPageContainerRect) : getBackgroundFullwidthPosition()
+  });
 
-  const [imageTransitionAnimation, setImageTransitionAnimation] = useSpring(() => ({
-    from: getImageAnimation(listingPageImageRect),
-    to: getImageAnimation(descriptionPageImageRect),
-  }));
-
-  useEffect(()=> {
-    if (reverseTransitionAnimation) {
-      setImageTransitionAnimation({
-        from: getImageAnimation(descriptionPageImageRect),
-        to: getImageAnimation(listingPageImageRect),        
-      });
-
-      setBackgroundTransitionAnimation({
-        from: getBackgroundFullwidthPosition(),
-        to: getBackgroundAnimation(listingPageContainerRect),        
-      })
-    }
-  }, [reverseTransitionAnimation])
-
+  const imageTransitionAnimation = useSpring({
+    from: reverseTransitionAnimation ? getImageAnimation(descriptionPageImageRect):  getImageAnimation(listingPageImageRect),
+    to: reverseTransitionAnimation ? getImageAnimation(listingPageImageRect) : getImageAnimation(descriptionPageImageRect),
+  });
+ 
   return (
     <>
       <animated.div
