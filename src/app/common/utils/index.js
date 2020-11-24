@@ -14,17 +14,32 @@ export const parseNewLine = object => {
   return reactStringReplace(object, "<br/>", newLineMatch)
 }
 
-export const getRequestAnimationFrame = (callback) => {
+export const animationFrameTimeout = (callback, millisecond) => {
   const requestAnimationFrame =
   window.requestAnimationFrame ||
   window.mozRequestAnimationFrame ||
   window.webkitRequestAnimationFrame ||
   window.msRequestAnimationFrame;
 
-  return requestAnimationFrame.call(window, callback)
+  let lastUpdated;
+  let animationFrameRequest;
+
+  const animationCallback =  (timestamp) => {
+    if (lastUpdated == undefined)
+      lastUpdated = timestamp;
+
+    if (timestamp - lastUpdated >= millisecond) {
+      callback();
+      cancelAnimationFrame(animationFrameRequest);
+    } else {
+      animationFrameRequest = requestAnimationFrame.call(window,animationCallback)
+    }
+    
+  };
+  animationFrameRequest = requestAnimationFrame.call(window,animationCallback);
 }
 
-export const cancelAnimationFrame = (animationFrameRequest) => {
+const cancelAnimationFrame = (animationFrameRequest) => {
   const cancelAnimationFrame = window.cancelAnimationFrame || window.mozCancelAnimationFrame;
 
   cancelAnimationFrame.call(window, animationFrameRequest);

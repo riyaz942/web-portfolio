@@ -6,7 +6,7 @@ import Div from "Common/components/div";
 import { withRouter, matchPath } from "react-router";
 import { CookieService } from "Common/utils/cookieService";
 import BackgroundAnimator from "../header/backgroundAnimator";
-import { getRequestAnimationFrame, cancelAnimationFrame } from 'Common/utils';
+import { animationFrameTimeout } from 'Common/utils';
 import { preloadImage, getImagesFromContext } from './loaderHelper';
 
 const assetsImages = require.context(
@@ -31,7 +31,6 @@ class Loader extends Component {
     super(props);
     this.state = {
       contentLoadedPercentage: 0,
-      totalItems: 0,
       showBackground: true,
       pageState: loaderPageStates.IS_LOADING,
       disableIntro: true
@@ -39,6 +38,7 @@ class Loader extends Component {
 
     this.lastUpdated = 0;
     this.itemsLoaded = 0;
+    this.totalItems = 0;
   }
 
   componentDidMount() {
@@ -62,7 +62,7 @@ class Loader extends Component {
     import("Modules/landing/landing").then(Landing => this.incrementLoading()); // increment manually being called.
     import("Modules/projectDetailsPage").then(ProjectDetailsPage => { }); // Asyncronysly complete on background. //Todo unless if its the projects page .. use routeMatch
 
-    this.setState({ totalItems: images.length + 3 });
+    this.totalItems = images.length + 2
     let areImagesLoaded = true;
 
     // enables flag to hide loader if all the images are loaded 
@@ -87,42 +87,35 @@ class Loader extends Component {
       if (match && introAlreadyShown) {
         // Todo also check if intro animation is done or not ... if not the make this condition false
         this.completeLoading(true); // immediatly load page.
-      } else {        
-        this.animationFrameRequest = getRequestAnimationFrame(this.valuateProgress)
+      } else {
+        this.valuateProgress();
       }
     }
   };
 
   /* --------------------------------------------------Validate function------------------------------------------- */
-  // This function is called every 300 millisecond to update the progress bar
+  // This function is called every 400 millisecond to update the progress bar
   // Because if we keep updating the progress bar on callback of items loaded then the animation suffers
-  valuateProgress = timeStamp => {
-    const { totalItems } = this.state;
-    const isLastPercentage = totalItems - this.itemsLoaded <= 2;
+  valuateProgress = () => {
+    const isLastPercentage = this.totalItems - this.itemsLoaded <= 1;
     const updateStateAfter = isLastPercentage ? 600 : 400; //600 ms for the last 2 percentage
 
-    if (timeStamp - this.lastUpdated >= updateStateAfter /*ms*/) {
-      this.lastUpdated = timeStamp;
-
+    animationFrameTimeout(()=> {
       // manually incrementing the progress for the last 2 percent to make a seemless animation.
       if (isLastPercentage) {
-        this.itemsLoaded = this.itemsLoaded + 1;
+        this.incrementLoading();
       }
-
       this.setState({
         contentLoadedPercentage: Math.trunc(
-          (this.itemsLoaded / totalItems) * 100
+          (this.itemsLoaded / this.totalItems) * 100
         )
       });
-    }
-
-    if (this.itemsLoaded >= totalItems) {
-      this.completeLoading();
-      cancelAnimationFrame(this.animationFrameRequest)
-      return;
-    } else {
-      this.animationFrameRequest = getRequestAnimationFrame(this.valuateProgress);
-    }
+      if (this.itemsLoaded >= this.totalItems) {
+        this.completeLoading();
+      } else {
+        this.valuateProgress();
+      }
+    }, updateStateAfter)
   };
 
   /* --------------------------------------------------Loader Increment function------------------------------------------- */
@@ -159,7 +152,7 @@ class Loader extends Component {
     });
 
     // so created a timeout to not show content immediately
-    setTimeout(() => {
+    animationFrameTimeout(() => {
       if (!disableIntro && !introAlreadyShown) {
         this.setState({
           pageState: loaderPageStates.SHOW_INTRO
@@ -168,7 +161,7 @@ class Loader extends Component {
         this.setState({
           pageState: loaderPageStates.SHOW_PAGE
         });
-        setTimeout(()=>this.setState({showBackground: false}), 400)
+        animationFrameTimeout(()=>this.setState({showBackground: false}), 400)
       }
     }, 500);
   };
@@ -177,11 +170,11 @@ class Loader extends Component {
   onIntroAnimationEnd = () => {
     this.setState({ pageState: loaderPageStates.INTRO_COMPLETED });
 
-    setTimeout(() => {
+    animationFrameTimeout(() => {
       this.setState({
         pageState: loaderPageStates.SHOW_PAGE
       });
-      setTimeout(()=>this.setState({showBackground: false}), 400)
+      animationFrameTimeout(()=>this.setState({showBackground: false}), 400)
     }, 500);
   };
   /* --------------------------------------------------Render------------------------------------------- */

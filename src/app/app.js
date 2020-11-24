@@ -4,16 +4,10 @@ import Div from "Common/components/div";
 import Loader from "./modules/loader/loader";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import AnimationLifecycle from 'Common/containers/animationLifecycle';
-import { config } from "react-spring";
-import { Transition } from "react-spring/renderprops";
 
-const PageTransitionExample = React.lazy(() =>
-  import("./examples/pageTransition")
-);
+const PageTransitionExample = React.lazy(() => import("./examples/pageTransition"));
 const Landing = React.lazy(() => import("./modules/landing/landing"));
-const ProjectDetailsPage = React.lazy(() =>
-  import("./modules/projectDetailsPage")
-);
+const ProjectDetailsPage = React.lazy(() =>import("./modules/projectDetailsPage"));
 
 const App = () => {
   return (

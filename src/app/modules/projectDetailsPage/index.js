@@ -11,6 +11,7 @@ import ElementScroll from "./elementScroll";
 import ProjectImageGrid from "./projectImageGrid";
 import backIcon from "Icons/icon-left-arrow-dark.png";
 import closeIcon from 'Icons/icon-cross.png';
+import { animationFrameTimeout } from 'Common/utils';
 
 const ProjectDetailsPage = ({ match, style, history, location, startPageEndAnimation, onPageAnimationEnd}) => {
   const projectId = match && match.params ? match.params.projectSlug : "";
@@ -56,13 +57,12 @@ const ProjectDetailsPage = ({ match, style, history, location, startPageEndAnima
 
     if (isPageRedirectedFromListing) {
       // delays showing of content till page transition animation is occuring
-      // TODO use request animation frame instead of setTimeout
-      setTimeout(()=> {
+      animationFrameTimeout(()=> {
         setContainerOpacityAnimation({ opacity: 1 })
-      }, 300);
+      }, 300)
 
-      setTimeout(()=> {
-        setHideTransitionElement(true);  
+      animationFrameTimeout(()=> {
+        setHideTransitionElement(true);
       }, 600);
     } else {
       setContainerOpacityAnimation({ opacity: 1 })
@@ -82,14 +82,15 @@ const ProjectDetailsPage = ({ match, style, history, location, startPageEndAnima
         setDescriptionPageImageRect(imageRef.current.getBoundingClientRect());
         setContainerOpacityAnimation({ opacity: 0 });
 
-        setTimeout(() => {
+        animationFrameTimeout(()=> {
           setReverseTransitionAnimation(true);
           setHideTransitionElement(false);
 
-          setTimeout(() => {
+          animationFrameTimeout(()=> {
             onPageAnimationEnd();
           }, 700);
-        }, 200);
+        }, 200)
+
       } else {
         onPageAnimationEnd();
       }

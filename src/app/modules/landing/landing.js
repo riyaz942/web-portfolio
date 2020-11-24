@@ -12,6 +12,7 @@ import ProfilePic from "Modules/aboutComponents/profilePic";
 import HeaderDescription from "Modules/aboutComponents/headerDescription";
 import HeaderLinks from 'Modules/aboutComponents/headerLinks';
 import responsiveBreakpoint from 'Common/hoc/responsiveBreakpoint';
+import { animationFrameTimeout } from 'Common/utils';
 import TimelineMobile from "../timeline/mobile";
 
 class Landing extends Component {
@@ -32,7 +33,7 @@ class Landing extends Component {
   }
 
   componentDidMount() {
-    setTimeout(() => {
+    animationFrameTimeout(() => {
       const { screenSize } = this.props;
       if (screenSize == 'sm' || screenSize == 'md')
         window.addEventListener("deviceorientation", this.handleOrientation, false);
@@ -73,12 +74,12 @@ class Landing extends Component {
     this.setState({ isFullScreen: true });
     this.updateBodyType(landingPageBody.NONE);
 
-    setTimeout(() => {
+    animationFrameTimeout(() => {
       this.setState({
         showDescription: true
       });
 
-      setTimeout(() => {
+      animationFrameTimeout(() => {
         const { screenSize } = this.props;
         if (screenSize == 'sm' || screenSize == 'md')
           window.addEventListener("deviceorientation", this.handleOrientation, false);
@@ -96,7 +97,7 @@ class Landing extends Component {
 
     this.setState({ showDescription: false, allowMouseHover: false });
 
-    setTimeout(() => {
+    animationFrameTimeout(() => {
       this.setState({
         isFullScreen: false
       });

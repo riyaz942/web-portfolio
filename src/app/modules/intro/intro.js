@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styles from './intro.scss';
 import Div from 'Common/components/div';
 import { CookieService } from "Common/utils/cookieService";
+import { animationFrameTimeout } from 'Common/utils';
 
 export default class Intro extends Component {
   secondDivMargin = 102; // fallback
@@ -56,7 +57,7 @@ export default class Intro extends Component {
   }
 
   componentDidMount() {
-    setTimeout(() => {
+    animationFrameTimeout(() => {
       this.animateNext(0);
       this.setState({ showAnimationContainer: true })
     }, 600)
@@ -72,11 +73,11 @@ export default class Intro extends Component {
       if(index == 3 && refObject[3].ref.current && refObject[4].ref.current) {
         this.secondDivMargin = refObject[3].ref.current.offsetWidth/2 - refObject[4].ref.current.offsetWidth/2;
       }
-      setTimeout(() => this.animateNext(index + 1), refObject[index].nextTimeoutDuration);
+      animationFrameTimeout(() => this.animateNext(index + 1), refObject[index].nextTimeoutDuration);
     } else {
       const { onAnimationEnd } = this.props;
       CookieService.set('INTRO_COMPLETED', true);
-      setTimeout(()=>onAnimationEnd(), refObject[index].nextTimeoutDuration)      
+      animationFrameTimeout(()=>onAnimationEnd(), refObject[index].nextTimeoutDuration)      
     }
   }
 
