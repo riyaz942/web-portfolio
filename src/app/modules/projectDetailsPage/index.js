@@ -98,7 +98,7 @@ const ProjectDetailsPage = ({ match, style, history, location, startPageEndAnima
   }, [startPageEndAnimation])
 
   return (
-    <Div justify row className={styles.project_details_container} style={style}>
+    <Div row className={styles.project_details_container} style={style}>
       {showViewPagerModal && (
         <Div className={styles.modal_view_pager}>
           <img 
@@ -112,67 +112,71 @@ const ProjectDetailsPage = ({ match, style, history, location, startPageEndAnima
           />
         </Div>
       )}
-      {/* -------------------------------Header-------------------------------- */}
-      <Div
-        justify
-        align
-        animate
-        style={containerOpacityAnimation}
-        className={`${styles.header_container} ${
-          headerShadow ? styles.has_shadow : ""
-        }`}
-      >
-        <Div row justify="space_between" className={styles.header_content}>
-          <img
-            src={backIcon}
-            className={styles.cross_img}
-            onClick={()=> {
-              if (isPageRedirectedFromListing) history.goBack();
-              else history.replace("/");
-            }}
-          />
-
-          {project.link ? (
-            <a
-              href={project.link.value}
-              className={styles.project_link}
-              target="_blank"
-            >
-              {project.link.type}
-            </a>
-          ) : null}
-        </Div>
+      <Div flex>
+        {/* ViewPager */}
       </Div>
-      {/* -------------------------- Container ------------------------------ */}
-      {!isEmpty(project) ? (
-        <Div animate className={styles.container}>
-          <Div className={styles.shadow_header}>
-            <ElementScroll
-              st={st}
-              project={project}
-              hideTransitionElement={hideTransitionElement}
-              imageRef={imageRef}
-              containerOpacityAnimation={containerOpacityAnimation}
-              isPageRedirectedFromListing={isPageRedirectedFromListing}
-            />
-          </Div>
-
-          <animated.div
-            className={styles.content_container}
-            onScroll={onScroll}
-            style={containerOpacityAnimation}
-          >
-            <ProjectDescription className={styles.content} project={project} />
-            <ProjectImageGrid
-              projectId={projectId}
-              gridItemSelected={(index)=> {
-                toggleViewPager(true);
-                setGridIndex(index)
+      <Div justify row className={styles.header_content_container}>
+        {/* -------------------------------Header-------------------------------- */}
+        <Div
+          justify
+          align
+          animate
+          style={containerOpacityAnimation}
+          className={`${styles.header_container} ${headerShadow ? styles.has_shadow : ""
+            }`}
+        >
+          <Div row justify="space_between" className={styles.header_content}>
+            <img
+              src={backIcon}
+              className={styles.cross_img}
+              onClick={() => {
+                if (isPageRedirectedFromListing) history.goBack();
+                else history.replace("/");
               }}
             />
-          </animated.div>
+
+            {project.link ? (
+              <a
+                href={project.link.value}
+                className={styles.project_link}
+                target="_blank"
+              >
+                {project.link.type}
+              </a>
+            ) : null}
+          </Div>
         </Div>
-      ) : null}
+        {/* -------------------------- Container ------------------------------ */}
+        {!isEmpty(project) ? (
+          <Div animate className={styles.container}>
+            <Div className={styles.shadow_header}>
+              <ElementScroll
+                st={st}
+                project={project}
+                hideTransitionElement={hideTransitionElement}
+                imageRef={imageRef}
+                containerOpacityAnimation={containerOpacityAnimation}
+                isPageRedirectedFromListing={isPageRedirectedFromListing}
+              />
+            </Div>
+
+            <animated.div
+              className={styles.content_container}
+              onScroll={onScroll}
+              style={containerOpacityAnimation}
+            >
+              <ProjectDescription className={styles.content} project={project} />
+              <ProjectImageGrid
+                projectId={projectId}
+                gridItemSelected={(index) => {
+                  toggleViewPager(true);
+                  setGridIndex(index)
+                }}
+              />
+            </animated.div>
+          </Div>
+        ) : null}
+      </Div>
 
       {/* ----------------------------Element Transition---------------------------- */}
       {componentReady && !isEmpty(project) && (
