@@ -112,6 +112,7 @@ const ProjectDetailsPage = ({ match, style, history, location, startPageEndAnima
           />
         </Div>
       )}
+      {/* -------------------------------Header-------------------------------- */}
       <Div
         justify
         align
@@ -142,6 +143,7 @@ const ProjectDetailsPage = ({ match, style, history, location, startPageEndAnima
           ) : null}
         </Div>
       </Div>
+      {/* -------------------------- Container ------------------------------ */}
       {!isEmpty(project) ? (
         <Div animate className={styles.container}>
           <Div className={styles.shadow_header}>
@@ -172,6 +174,7 @@ const ProjectDetailsPage = ({ match, style, history, location, startPageEndAnima
         </Div>
       ) : null}
 
+      {/* ----------------------------Element Transition---------------------------- */}
       {componentReady && !isEmpty(project) && (
         <ElementTransition
           project={project}

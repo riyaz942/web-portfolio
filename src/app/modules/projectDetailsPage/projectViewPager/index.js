@@ -34,8 +34,10 @@ class ProjectViewPager extends Component {
         dynamicBullets: true
       },
       on: {
-        slideChange: () =>
-          this.setState({ currentSlide: this.swiper.realIndex })
+        slideChange: () => {
+          if (this.swiper)
+            this.setState({ currentSlide: this.swiper.realIndex })
+        }
       }
     };
     const projectImages = getProjectImages(projectId);
