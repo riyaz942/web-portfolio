@@ -114,21 +114,31 @@ const ProjectDetailsPage = ({ match, style, history, location, startPageEndAnima
           />
         </Div>
       )}
-      <Div flex={2} className={styles.left_view_pager_container}>
+      <Div
+        animate
+        flex={2}
+        className={styles.left_view_pager_container} 
+        style={containerOpacityAnimation}
+      >
         <ProjectViewPager
           projectId={projectId}
           initialSlide={gridIndex}
         />
       </Div>
-      <Div justify row flex={3} className={styles.header_content_container}>
+      <Div
+        justify
+        row
+        flex={3}
+        className={styles.header_content_container}
+      >
         {/* -------------------------------Header-------------------------------- */}
         <Div
           justify
           align
           animate
-          style={containerOpacityAnimation}
           className={`${styles.header_container} ${headerShadow ? styles.has_shadow : ""
             }`}
+          style={containerOpacityAnimation}
         >
           <Div row justify="space_between" className={styles.header_content}>
             <img
