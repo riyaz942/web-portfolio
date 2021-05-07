@@ -1,17 +1,24 @@
-import React, { Component } from "react";
-import styles from "./project_view_pager.module.scss";
-import PaginationButton from "Common/components/paginationButton";
-import Div from "Common/components/div";
-import Swiper from "react-id-swiper";
-import map from "lodash/map";
-import { getProjectImages } from "Constants/projectImageConstants";
+import React, { Component, useEffect, useRef } from "react"
+import styles from "./project_view_pager.module.scss"
+import PaginationButton from "Common/components/paginationButton"
+import Div from "Common/components/div"
+import Swiper from "react-id-swiper"
+import map from "lodash/map"
+import { getProjectImages } from "Constants/projectImageConstants"
 
 class ProjectViewPager extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentSlide: props.initialSlide
+      currentSlide: props.initialSlide,
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { initialSlide } = nextProps;
+    if (this.swiper && typeof initialSlide == 'number') {
+      this.swiper.slideTo(initialSlide);
+    }
   }
 
   render() {
@@ -22,23 +29,23 @@ class ProjectViewPager extends Component {
       containerClass: "custom_container",
       initialSlide,
       zoom: {
-        maxRatio: 2
+        maxRatio: 2,
       },
       autoplay: {
         delay: 2500,
-        disableOnInteraction: true
+        disableOnInteraction: true,
       },
       pagination: {
         el: ".swiper-pagination",
         clickable: true,
-        dynamicBullets: true
+        dynamicBullets: true,
       },
       on: {
         slideChange: () => {
           if (this.swiper)
-            this.setState({ currentSlide: this.swiper.realIndex })
-        }
-      }
+            this.setState({ currentSlide: this.swiper.realIndex });
+        },
+      },
     };
     const projectImages = getProjectImages(projectId);
     const totalItems = projectImages ? projectImages.length : 0;
@@ -47,7 +54,7 @@ class ProjectViewPager extends Component {
       <Div align justify fillParent className={styles.swiper_container}>
         <Swiper
           {...params}
-          getSwiper={swiper => {
+          getSwiper={(swiper) => {
             this.swiper = swiper;
           }}
         >
@@ -75,7 +82,7 @@ class ProjectViewPager extends Component {
 }
 
 ProjectViewPager.defaultProps = {
-  initialSlide: 0
+  initialSlide: 0,
 };
 
 export default ProjectViewPager;

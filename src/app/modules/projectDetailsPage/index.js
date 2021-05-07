@@ -12,6 +12,7 @@ import ProjectImageGrid from "./projectImageGrid";
 import backIcon from "Icons/icon-left-arrow-dark.png";
 import closeIcon from 'Icons/icon-cross.png';
 import { animationFrameTimeout } from 'Common/utils';
+import useBreakpoint from "Common/hooks/useBreakpoint";
 
 const ProjectDetailsPage = ({ match, style, history, location, startPageEndAnimation, onPageAnimationEnd}) => {
   const projectId = match && match.params ? match.params.projectSlug : "";
@@ -20,6 +21,7 @@ const ProjectDetailsPage = ({ match, style, history, location, startPageEndAnima
   const [showViewPagerModal, toggleViewPager] = useState(false);
   const [descriptionPageImageRect, setDescriptionPageImageRect] = useState({});
   const [gridIndex, setGridIndex] = useState(0);
+  const screenSize = useBreakpoint();
 
   const { imageRect, containerRect } = location && location.state ? location.state : {};
   // Stores the listing page location onto a state
@@ -112,10 +114,13 @@ const ProjectDetailsPage = ({ match, style, history, location, startPageEndAnima
           />
         </Div>
       )}
-      <Div flex>
-        {/* ViewPager */}
+      <Div flex={2} className={styles.left_view_pager_container}>
+        <ProjectViewPager
+          projectId={projectId}
+          initialSlide={gridIndex}
+        />
       </Div>
-      <Div justify row className={styles.header_content_container}>
+      <Div justify row flex={3} className={styles.header_content_container}>
         {/* -------------------------------Header-------------------------------- */}
         <Div
           justify
@@ -169,7 +174,9 @@ const ProjectDetailsPage = ({ match, style, history, location, startPageEndAnima
               <ProjectImageGrid
                 projectId={projectId}
                 gridItemSelected={(index) => {
-                  toggleViewPager(true);
+                  if (screenSize == 'sm' || screenSize == 'md') {
+                    toggleViewPager(true);
+                  }
                   setGridIndex(index)
                 }}
               />
