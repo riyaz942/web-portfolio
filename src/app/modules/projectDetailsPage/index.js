@@ -13,6 +13,7 @@ import backIcon from "Icons/icon-left-arrow-dark.png";
 import closeIcon from 'Icons/icon-cross.png';
 import { animationFrameTimeout } from 'Common/utils';
 import useBreakpoint from "Common/hooks/useBreakpoint";
+import useProjectHeaderTranslate from "Common/hooks/useProjectHeaderTranslate";
 
 const ProjectDetailsPage = ({ match, style, history, location, startPageEndAnimation, onPageAnimationEnd}) => {
   const projectId = match && match.params ? match.params.projectSlug : "";
@@ -52,6 +53,20 @@ const ProjectDetailsPage = ({ match, style, history, location, startPageEndAnima
   const [hideTransitionElement, setHideTransitionElement] = useState(false);
   const [componentReady, setComponentReady] = useState(false);
   const [containerOpacityAnimation, setContainerOpacityAnimation] = useSpring(() => ({ opacity: 0 }));
+  const [headerLeftTranslate, setHeaderLeftTranslate] = useSpring(()=>({ transform: 'translateX(0px)' }))
+  const leftTranslateHeader = useProjectHeaderTranslate(headerShadow)
+
+
+  useEffect(() => {
+    if (leftTranslateHeader != 0) {
+      setHeaderLeftTranslate({
+        from: { transform: `translateX(0px)` },
+        to: { transform: `translateX(${leftTranslateHeader}px)` },
+      });
+    } else {
+      setHeaderLeftTranslate({ transform: `translateX(0px)` });
+    }
+  }, [leftTranslateHeader]);
 
   // On Component Mount
   useEffect(() => {
@@ -163,8 +178,8 @@ const ProjectDetailsPage = ({ match, style, history, location, startPageEndAnima
         </Div>
         {/* -------------------------- Container ------------------------------ */}
         {!isEmpty(project) ? (
-          <Div animate className={styles.container}>
-            <Div className={styles.shadow_header}>
+          <Div className={styles.container}>
+            <Div animate className={styles.shadow_header} style={headerLeftTranslate}>
               <ElementScroll
                 st={st}
                 project={project}
