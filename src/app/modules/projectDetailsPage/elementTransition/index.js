@@ -19,7 +19,7 @@ const ElementTransition = ({ hideTransitionElement, project, listingPageImageRec
         style={{
           ...backgroundTransitionAnimation,
           position: "absolute",
-          background: "white",
+          background: "#333333",
           left: 0,
           right: 0,
           zIndex: -3

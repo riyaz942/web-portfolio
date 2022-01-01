@@ -1,5 +1,5 @@
-@import '~Styles/colors.module';
-@import '~Styles/mixins.module';
+@import "~Styles/colors.module";
+@import "~Styles/mixins.module";
 
 .modal_view_pager {
   position: fixed;
@@ -9,7 +9,7 @@
   left: 0;
   z-index: 8;
 
-  background: rgba($color-dark, 0.9);
+  background: $color-dark;
 
   .close_icon {
     height: 24px;
@@ -26,7 +26,7 @@
 }
 
 .left_view_pager_container {
-  background: rgba($color-dark, 0.6);
+  background: $color-dark-base;
   min-width: 100px;
 }
 
@@ -40,8 +40,8 @@
 }
 
 .has_shadow {
-  box-shadow: 0px 5px 12px 3px rgba(0, 0, 0, 0.2);
-  background-color: white;
+  box-shadow: 0px 5px 12px 3px rgba(black, 0.2);
+  background-color: $color-dark;
 }
 
 .header_content_container {
@@ -75,10 +75,10 @@
     font-size: 14px;
     font-weight: 500;
     border-radius: 5px;
-    border: solid 1px $color-dark;
+    border: solid 1px white;
     padding: 2px 18px;
-    text-decoration: none; 
-    color: $color_dark;
+    text-decoration: none;
+    color: white;
 
     @include on_click_button;
   }
@@ -101,12 +101,12 @@
   //   margin-right: -8px;
   //   width: 4px !important;
   // }
-  
+
   // /* Track */
   // .content_container::-webkit-scrollbar-track {
   //   border-radius: 10px !important;
   // }
-  
+
   // /* Handle */
   // .content_container::-webkit-scrollbar-thumb {
   //   background: rgba($color-dark, 0.3) !important;
@@ -126,7 +126,6 @@
   }
 }
 
-
 @include large {
   .left_view_pager_container {
     display: none;
@@ -137,11 +136,11 @@
 
   .header_container {
     align-items: unset;
-    
+
     .header_content {
       min-width: unset;
       margin: 0px 20px;
-    }  
+    }
   }
 
   .container {
@@ -157,12 +156,11 @@
   }
 }
 
-
 @include medium {
   .header_container {
     .header_content {
       margin: 0px 20px;
-    }  
+    }
   }
 
   .container {

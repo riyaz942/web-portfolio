@@ -1,29 +1,27 @@
-@import '~Styles/colors.module';
-@import '~Styles/mixins.module';
+@import "~Styles/colors.module";
+@import "~Styles/mixins.module";
 
 .sub_info_container {
   font-size: 15px;
   font-weight: 500;
-  color: $color-dark;
+  color: white;
   line-height: 1;
   padding: 0px 10px 10px;
   display: none;
 
   .title {
-    color: $color-brown-grey;
+    color: white;
     margin-bottom: 2px;
   }
 
   .value {
     text-transform: capitalize;
   }
-
 }
-
 
 .description_container {
   font-size: 15px;
-  color: $color-dark;
+  color: white;
 
   .text {
     padding: 12px;
@@ -46,17 +44,15 @@
       margin: 6px 0px;
     }
   }
-
 }
 
 .highlight_green {
-  background-color: rgba($color-green, 0.1);
+  background-color: rgba($color-dark-base, 0.5);
 }
-  
+
 .highlight_blue {
   background-color: rgba($color-blue, 0.1);
 }
-
 
 @include small {
   .sub_info_container {

@@ -1,5 +1,5 @@
-@import '~Styles/colors.module';
-@import '~Styles/mixins.module';
+@import "~Styles/colors.module";
+@import "~Styles/mixins.module";
 
 .project_image {
   position: absolute;
@@ -9,7 +9,7 @@
 .project_name {
   position: absolute;
   font-size: 18px;
-  color: $color-dark;
+  color: white;
   line-height: 1;
   white-space: nowrap;
 }
@@ -19,7 +19,6 @@
   right: 0;
   font-size: 15px;
   font-weight: 500;
-  color: $color-dark;
   line-height: 1;
 
   .title {
@@ -28,6 +27,7 @@
   }
 
   .value {
+    color: white;
     text-transform: capitalize;
   }
 
@@ -35,7 +35,6 @@
     margin-top: 15px;
   }
 }
-
 
 @include small {
   .project_sub_details_container {
