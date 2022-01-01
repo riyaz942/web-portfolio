@@ -9,7 +9,7 @@ import ProjectDescription from "./projectDescription";
 import ElementTransition from "./elementTransition";
 import ElementScroll from "./elementScroll";
 import ProjectImageGrid from "./projectImageGrid";
-import backIcon from "Icons/icon-left-arrow-dark.png";
+import backIcon from "Icons/icon-left-arrow.png";
 import closeIcon from 'Icons/icon-cross.png';
 import { animationFrameTimeout } from 'Common/utils';
 import useBreakpoint from "Common/hooks/useBreakpoint";
