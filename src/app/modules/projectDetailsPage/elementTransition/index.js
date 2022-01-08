@@ -23,10 +23,6 @@ const ElementTransition = ({
       : getBackgroundFullwidthPosition(),
   });
 
-  const { background: backgroundDarkToLightTransition } = useSpring({
-    background: reverseTransitionAnimation ? "white" : "#333333",
-  });
-
   const imageTransitionAnimation = useSpring({
     from: reverseTransitionAnimation
       ? getImageAnimation(descriptionPageImageRect)
@@ -42,7 +38,6 @@ const ElementTransition = ({
         style={{
           ...backgroundTransitionAnimation,
           position: "absolute",
-          background: backgroundDarkToLightTransition,
           left: 0,
           right: 0,
           zIndex: -3,
