@@ -49,21 +49,21 @@ const BackgroundAnimator = ({ clientX, clientY }: BackgroundAnimatorProps) => {
   return (
     <>
       <animated.div
-        className="absolute -top-[10%] -left-[10%] w-[120%] h-[120%] bg-cover bg-center bg-no-repeat pointer-events-none will-change-transform"
+        className="absolute -top-[3%] -left-[5%] w-[110%] h-[110%] bg-contain bg-center bg-no-repeat pointer-events-none will-change-transform"
         style={{
           transform: to(animationProps.xy, trans1),
           backgroundImage: `url(/images/background-dark-doodle-fixed-layer.png)`,
         }}
       />
       <animated.div
-        className="absolute -top-[10%] -left-[10%] w-[120%] h-[120%] bg-cover bg-center bg-no-repeat pointer-events-none will-change-transform"
+        className="absolute -top-[5%] -left-[5%] w-[110%] h-[110%] bg-contain bg-center bg-no-repeat pointer-events-none will-change-transform"
         style={{
           transform: to(animationProps.xy, trans2),
           backgroundImage: `url(/images/background-dark-doodle-second-layer.png)`,
         }}
       />
       <animated.div
-        className="absolute -top-[10%] -left-[10%] w-[120%] h-[120%] bg-cover bg-center bg-no-repeat pointer-events-none will-change-transform"
+        className="absolute -top-[5%] -left-[5%] w-[110%] h-[110%] bg-contain bg-center bg-no-repeat pointer-events-none will-change-transform"
         style={{
           transform: to(animationProps.xy, trans3),
           backgroundImage: `url(/images/background-dark-doodle-first-layer.png)`,
