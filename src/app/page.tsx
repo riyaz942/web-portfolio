@@ -30,8 +30,8 @@ export default function Home() {
           clientY={mousePosition.y}
         />
         <div className="relative z-10 flex flex-col items-center text-center px-8 max-w-2xl">
-          {/* Profile Picture */}
-          <div className="relative group">
+          {/* Profile Picture - positioned above the card */}
+          <div className="relative z-20 group mb-[-72px] md:mb-[-88px]">
             <div className="absolute -inset-1 bg-gradient-to-br from-accent via-accent-secondary to-accent rounded-full opacity-75 blur-md group-hover:opacity-100 transition-opacity duration-500" />
             <div className="relative w-36 h-36 md:w-44 md:h-44 rounded-full overflow-hidden ring-4 ring-background/50 shadow-2xl">
               <Image
@@ -44,20 +44,23 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Bio Content */}
-          <p className="text-[clamp(1rem,2.5vw,1.35rem)] leading-relaxed text-foreground   px-6 py-4 rounded-2xl ">
-            Hi, <br />I am{" "}
-            <span className="font-bold bg-gradient-to-r from-accent to-accent-secondary bg-clip-text text-transparent">
-              Riyaz Ahmed
-            </span>
-            , A Software Developer with{" "}
-            <span className="font-semibold text-accent">
-              {Math.floor(getYearsFromCareerStartDate())}+
-            </span>{" "}
-            years of Software Development experience on various Platforms,
-            Passionate to build Polished, Innovative and well-detailed Apps with
-            Fluid Animations to complement the Design.
-          </p>
+          {/* White transparent card behind bio */}
+          <div className="relative bg-white/5 drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] backdrop-blur-[2px] rounded-3xl pt-24 md:pt-28 pb-8 px-8 shadow-xl">
+            {/* Bio Content */}
+            <p className="text-[clamp(1rem,2.5vw,1.35rem)] leading-relaxed text-white">
+              Hi, <br />I am{" "}
+              <span className="font-bold bg-gradient-to-r from-accent to-accent-secondary bg-clip-text text-transparent">
+                Riyaz Ahmed
+              </span>
+              , A Software Developer with{" "}
+              <span className="font-semibold text-accent">
+                {Math.floor(getYearsFromCareerStartDate())}+
+              </span>{" "}
+              years of Software Development experience on various Platforms,
+              Passionate to build Polished, Innovative and well-detailed Apps
+              with Fluid Animations to complement the Design.
+            </p>
+          </div>
         </div>
         <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 z-10">
           <span className="text-xs text-muted uppercase tracking-[0.15em]">
