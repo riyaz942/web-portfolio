@@ -35,6 +35,8 @@ export default function Home() {
           </span>
           <div className="w-px h-10 bg-gradient-to-b from-accent to-transparent animate-scroll-pulse" />
         </div>
+        {/* Bottom fade overlay */}
+        <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-background to-transparent pointer-events-none z-[5]" />
       </section>
 
       {/* About Section */}
