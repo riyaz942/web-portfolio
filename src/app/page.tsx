@@ -1,7 +1,18 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import Image from "next/image";
 import BackgroundAnimator from "@/components/BackgroundAnimator";
+
+function getYearsFromCareerStartDate() {
+  const careerStartDate = "2016-05-01T00:00:00";
+  const startDate = new Date(careerStartDate);
+  const currentDate = new Date();
+  const diffInMs = currentDate.getTime() - startDate.getTime();
+  const msPerYear = 1000 * 60 * 60 * 24 * 365.25;
+  const diffInYears = diffInMs / msPerYear;
+  return parseFloat(diffInYears.toFixed(2));
+}
 
 export default function Home() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -18,16 +29,37 @@ export default function Home() {
           clientX={mousePosition.x}
           clientY={mousePosition.y}
         />
-        <div className="relative z-10 text-center px-8">
-          <h1 className="text-[clamp(3rem,12vw,10rem)] font-extrabold leading-[0.95] tracking-tight mb-6">
-            <span className="block">Creative</span>
-            <span className="block bg-gradient-to-br from-accent to-accent-secondary bg-clip-text text-transparent">
-              Developer
-            </span>
-          </h1>
-          <p className="text-[clamp(1rem,2.5vw,1.5rem)] text-muted font-normal tracking-wider uppercase">
-            Crafting digital experiences that inspire
-          </p>
+        <div className="relative z-10 flex flex-col items-center text-center px-8 max-w-2xl">
+          {/* Profile Picture */}
+          <div className="relative mb-8 group">
+            <div className="absolute -inset-1 bg-gradient-to-br from-accent via-accent-secondary to-accent rounded-full opacity-75 blur-md group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="relative w-36 h-36 md:w-44 md:h-44 rounded-full overflow-hidden ring-4 ring-background/50 shadow-2xl">
+              <Image
+                src="/images/profile-pic.jpeg"
+                alt="Riyaz Ahmed"
+                fill
+                className="object-cover"
+                priority
+              />
+            </div>
+          </div>
+
+          {/* Bio Content */}
+          <div className="space-y-4">
+            <p className="text-[clamp(1.25rem,3vw,1.75rem)] leading-relaxed text-foreground/90">
+              Hi, <br />I am{" "}
+              <span className="font-bold bg-gradient-to-r from-accent to-accent-secondary bg-clip-text text-transparent">
+                Riyaz Ahmed
+              </span>
+              , A Software Developer with{" "}
+              <span className="font-semibold text-accent">
+                {Math.floor(getYearsFromCareerStartDate())}+
+              </span>{" "}
+              years of Software Development experience on various Platforms,
+              Passionate to build Polished, Innovative and well-detailed Apps
+              with Fluid Animations to complement the Design.
+            </p>
+          </div>
         </div>
         <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 z-10">
           <span className="text-xs text-muted uppercase tracking-[0.15em]">
