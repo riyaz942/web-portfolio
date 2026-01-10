@@ -29,11 +29,11 @@ export default function Home() {
           clientX={mousePosition.x}
           clientY={mousePosition.y}
         />
-        <div className="relative z-10 flex flex-col items-center text-center px-8 max-w-2xl">
-          {/* Profile Picture - positioned above the card */}
-          <div className="relative z-20 group mb-[-72px] md:mb-[-88px]">
-            <div className="absolute -inset-1 bg-gradient-to-br from-accent via-accent-secondary to-accent rounded-full opacity-75 blur-md group-hover:opacity-100 transition-opacity duration-500" />
-            <div className="relative w-36 h-36 md:w-44 md:h-44 rounded-full overflow-hidden ring-4 ring-background/50 shadow-2xl">
+        <div className="relative z-10 flex flex-col items-center text-center px-8">
+          {/* Profile Picture */}
+          <div className="relative group mb-8">
+            <div className="absolute -inset-2 bg-gradient-to-br from-accent via-accent-secondary to-accent rounded-full opacity-60 blur-xl group-hover:opacity-90 transition-opacity duration-500" />
+            <div className="relative w-40 h-40 md:w-52 md:h-52 rounded-full overflow-hidden ring-4 ring-white/10 shadow-2xl">
               <Image
                 src="/images/profile-pic.jpeg"
                 alt="Riyaz Ahmed"
@@ -44,23 +44,15 @@ export default function Home() {
             </div>
           </div>
 
-          {/* White transparent card behind bio */}
-          <div className="relative bg-white/5 drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] backdrop-blur-[2px] rounded-3xl pt-20 md:pt-24 pb-6 px-8 shadow-xl">
-            {/* Bio Content */}
-            <p className="text-[clamp(1rem,2.5vw,1.35rem)] leading-relaxed text-[#d1d1d1]">
-              Hi, <br />I am{" "}
-              <span className="font-bold bg-gradient-to-r from-accent to-accent-secondary bg-clip-text text-transparent">
-                Riyaz Ahmed
-              </span>
-              , A Software Developer with{" "}
-              <span className="font-semibold text-accent">
-                {Math.floor(getYearsFromCareerStartDate())}+
-              </span>{" "}
-              years of Software Development experience on various Platforms,
-              Passionate to build Polished, Innovative and well-detailed Apps
-              with Fluid Animations to complement the Design.
-            </p>
-          </div>
+          {/* Name & Title */}
+          <h1 className="text-[clamp(2.5rem,6vw,4.5rem)] font-bold tracking-tight mb-3">
+            <span className="bg-gradient-to-r from-accent to-accent-secondary bg-clip-text text-transparent">
+              Riyaz Ahmed
+            </span>
+          </h1>
+          <p className="text-[clamp(1rem,2vw,1.25rem)] text-muted uppercase tracking-[0.2em] font-medium">
+            Lead / Senior Software Developer
+          </p>
         </div>
         <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 z-10">
           <span className="text-xs text-muted uppercase tracking-[0.15em]">
@@ -74,13 +66,28 @@ export default function Home() {
 
       {/* About Section */}
       <section className="min-h-screen flex items-center justify-center py-24 px-8 relative bg-gradient-to-b from-background to-[#111111]">
-        <div className="max-w-5xl w-full text-center">
-          <h2 className="text-[clamp(2.5rem,8vw,6rem)] font-bold mb-8 tracking-tight">
+        <div className="max-w-4xl w-full flex flex-col items-center">
+          <h2 className="text-[clamp(2.5rem,8vw,5rem)] font-bold mb-12 tracking-tight text-center">
             About
           </h2>
-          <p className="text-[clamp(1.125rem,2vw,1.5rem)] text-muted max-w-xl mx-auto leading-relaxed">
-            Welcome to my portfolio. I create beautiful, performant web
-            experiences with attention to every detail.
+
+          {/* Bio Card */}
+          <div className="relative bg-white/5 drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] backdrop-blur-sm rounded-3xl py-10 px-8 md:px-12 shadow-xl max-w-2xl">
+            <p className="text-[clamp(1.1rem,2.5vw,1.4rem)] leading-relaxed text-[#d1d1d1] text-center">
+              A Software Developer with{" "}
+              <span className="font-semibold text-accent">
+                {Math.floor(getYearsFromCareerStartDate())}+
+              </span>{" "}
+              years of experience on various platforms. Passionate about
+              building polished, innovative, and well-detailed apps with fluid
+              animations to complement the design.
+            </p>
+          </div>
+
+          {/* Additional About Content */}
+          <p className="text-[clamp(1rem,2vw,1.25rem)] text-muted max-w-xl mx-auto leading-relaxed mt-10 text-center">
+            I create beautiful, performant web experiences with attention to
+            every detail.
           </p>
         </div>
       </section>
