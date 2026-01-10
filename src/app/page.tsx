@@ -45,9 +45,9 @@ export default function Home() {
           </div>
 
           {/* White transparent card behind bio */}
-          <div className="relative bg-white/5 drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] backdrop-blur-[2px] rounded-3xl pt-24 md:pt-28 pb-8 px-8 shadow-xl">
+          <div className="relative bg-white/5 drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] backdrop-blur-[2px] rounded-3xl pt-20 md:pt-24 pb-6 px-8 shadow-xl">
             {/* Bio Content */}
-            <p className="text-[clamp(1rem,2.5vw,1.35rem)] leading-relaxed text-white">
+            <p className="text-[clamp(1rem,2.5vw,1.35rem)] leading-relaxed text-[#d1d1d1]">
               Hi, <br />I am{" "}
               <span className="font-bold bg-gradient-to-r from-accent to-accent-secondary bg-clip-text text-transparent">
                 Riyaz Ahmed
