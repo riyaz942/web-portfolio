@@ -3,16 +3,7 @@
 import { useState, useCallback } from "react";
 import Image from "next/image";
 import BackgroundAnimator from "@/components/BackgroundAnimator";
-
-function getYearsFromCareerStartDate() {
-  const careerStartDate = "2016-05-01T00:00:00";
-  const startDate = new Date(careerStartDate);
-  const currentDate = new Date();
-  const diffInMs = currentDate.getTime() - startDate.getTime();
-  const msPerYear = 1000 * 60 * 60 * 24 * 365.25;
-  const diffInYears = diffInMs / msPerYear;
-  return parseFloat(diffInYears.toFixed(2));
-}
+import AboutSection from "@/components/AboutSection";
 
 export default function Home() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -65,32 +56,7 @@ export default function Home() {
       </section>
 
       {/* About Section */}
-      <section className="min-h-screen flex items-center justify-center py-24 px-8 relative bg-gradient-to-b from-background to-[#111111]">
-        <div className="max-w-4xl w-full flex flex-col items-center">
-          <h2 className="text-[clamp(2.5rem,8vw,5rem)] font-bold mb-12 tracking-tight text-center">
-            About
-          </h2>
-
-          {/* Bio Card */}
-          <div className="relative bg-white/5 drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] backdrop-blur-sm rounded-3xl py-10 px-8 md:px-12 shadow-xl max-w-2xl">
-            <p className="text-[clamp(1.1rem,2.5vw,1.4rem)] leading-relaxed text-[#d1d1d1] text-center">
-              A Software Developer with{" "}
-              <span className="font-semibold text-accent">
-                {Math.floor(getYearsFromCareerStartDate())}+
-              </span>{" "}
-              years of experience on various platforms. Passionate about
-              building polished, innovative, and well-detailed apps with fluid
-              animations to complement the design.
-            </p>
-          </div>
-
-          {/* Additional About Content */}
-          <p className="text-[clamp(1rem,2vw,1.25rem)] text-muted max-w-xl mx-auto leading-relaxed mt-10 text-center">
-            I create beautiful, performant web experiences with attention to
-            every detail.
-          </p>
-        </div>
-      </section>
+      <AboutSection />
 
       {/* Work Section */}
       <section className="min-h-screen flex items-center justify-center py-24 px-8 relative bg-[#111111]">
