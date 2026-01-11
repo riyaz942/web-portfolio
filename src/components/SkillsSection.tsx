@@ -80,6 +80,29 @@ function seededRandom(seed: number) {
   return x - Math.floor(x);
 }
 
+// Ensure colors are visible on dark background
+function ensureVisibleColor(hex: string): string {
+  // Parse hex to RGB
+  const r = parseInt(hex.slice(0, 2), 16);
+  const g = parseInt(hex.slice(2, 4), 16);
+  const b = parseInt(hex.slice(4, 6), 16);
+  
+  // Calculate luminance
+  const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+  
+  // If too dark, brighten it
+  if (luminance < 0.15) {
+    // Shift to a light gray/white version
+    const boost = 180;
+    const newR = Math.min(255, r + boost);
+    const newG = Math.min(255, g + boost);
+    const newB = Math.min(255, b + boost);
+    return `${newR.toString(16).padStart(2, '0')}${newG.toString(16).padStart(2, '0')}${newB.toString(16).padStart(2, '0')}`;
+  }
+  
+  return hex;
+}
+
 // Easing functions
 const easeOutCubic = (t: number): number => 1 - Math.pow(1 - t, 3);
 const easeOutBack = (t: number): number => {
@@ -123,7 +146,8 @@ export default function SkillsSection() {
     const padding = baseRadius * 2.5;
     const centerX = width / 2;
     const centerY = height / 2;
-    const maxRadius = Math.min(width, height) * 0.42;
+    const maxRadius = Math.min(width, height) * 0.55;
+    const minGap = baseRadius * 0.3; // Minimum gap between bubbles
 
     skillsData.forEach((skill, index) => {
       const seed = index * 1337;
@@ -151,7 +175,7 @@ export default function SkillsSection() {
         baseX: x,
         baseY: y,
         targetRadius,
-        color: `#${skill.icon.hex}`,
+        color: `#${ensureVisibleColor(skill.icon.hex)}`,
         iconPath: skill.icon.path,
         floatPhase: seededRandom(seed + 2) * Math.PI * 2,
         floatSpeedX: 0.3 + seededRandom(seed + 3) * 0.4,
@@ -160,6 +184,57 @@ export default function SkillsSection() {
         floatAmplitudeY: 6 + seededRandom(seed + 6) * 10,
       });
     });
+
+    // Collision resolution - push overlapping bubbles apart
+    const iterations = 50; // Number of iterations to resolve collisions
+    for (let iter = 0; iter < iterations; iter++) {
+      let hasCollision = false;
+
+      for (let i = 0; i < bubbles.length; i++) {
+        for (let j = i + 1; j < bubbles.length; j++) {
+          const b1 = bubbles[i];
+          const b2 = bubbles[j];
+
+          const dx = b2.baseX - b1.baseX;
+          const dy = b2.baseY - b1.baseY;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          const minDist = b1.targetRadius + b2.targetRadius + minGap;
+
+          if (dist < minDist && dist > 0) {
+            hasCollision = true;
+            const overlap = (minDist - dist) / 2;
+            const nx = dx / dist;
+            const ny = dy / dist;
+
+            // Push bubbles apart
+            b1.baseX -= nx * overlap;
+            b1.baseY -= ny * overlap;
+            b2.baseX += nx * overlap;
+            b2.baseY += ny * overlap;
+
+            // Keep within bounds
+            b1.baseX = Math.max(
+              padding + b1.targetRadius,
+              Math.min(width - padding - b1.targetRadius, b1.baseX)
+            );
+            b1.baseY = Math.max(
+              padding + b1.targetRadius,
+              Math.min(height - padding - b1.targetRadius, b1.baseY)
+            );
+            b2.baseX = Math.max(
+              padding + b2.targetRadius,
+              Math.min(width - padding - b2.targetRadius, b2.baseX)
+            );
+            b2.baseY = Math.max(
+              padding + b2.targetRadius,
+              Math.min(height - padding - b2.targetRadius, b2.baseY)
+            );
+          }
+        }
+      }
+
+      if (!hasCollision) break;
+    }
 
     bubblesDataRef.current = bubbles;
   }, []);
@@ -222,11 +297,19 @@ export default function SkillsSection() {
       // Draw bubble on canvas if visible
       if (currentRadius > 0 && opacity > 0.01) {
         const gradient = ctx.createRadialGradient(
-          x, y, currentRadius * 0.3,
-          x, y, currentRadius
+          x,
+          y,
+          currentRadius * 0.3,
+          x,
+          y,
+          currentRadius
         );
-        const alphaHex = Math.round(opacity * 180).toString(16).padStart(2, "0");
-        const alphaHex2 = Math.round(opacity * 100).toString(16).padStart(2, "0");
+        const alphaHex = Math.round(opacity * 180)
+          .toString(16)
+          .padStart(2, "0");
+        const alphaHex2 = Math.round(opacity * 100)
+          .toString(16)
+          .padStart(2, "0");
         gradient.addColorStop(0, `${bubble.color}${alphaHex}`);
         gradient.addColorStop(0.7, `${bubble.color}${alphaHex2}`);
         gradient.addColorStop(1, `${bubble.color}00`);
@@ -253,7 +336,9 @@ export default function SkillsSection() {
           const screenX = x / dpr;
           const screenY = y / dpr;
           const size = (currentRadius / dpr) * 0.55;
-          child.style.transform = `translate(${screenX - size / 2}px, ${screenY - size / 2}px)`;
+          child.style.transform = `translate(${screenX - size / 2}px, ${
+            screenY - size / 2
+          }px)`;
           child.style.width = `${size}px`;
           child.style.height = `${size}px`;
           child.style.opacity = String(opacity);
@@ -289,7 +374,7 @@ export default function SkillsSection() {
     // 1 = ready to scroll away (scrolled through the extra height)
     const scrollTop = -rect.top;
     const totalScrollable = sectionHeight - viewportHeight;
-    
+
     // Clamp between 0 and 1
     const progress = Math.max(0, Math.min(scrollTop / totalScrollable, 1));
 
@@ -375,7 +460,10 @@ export default function SkillsSection() {
                 willChange: "transform, opacity",
               }}
             >
-              <BubbleIcon iconPath={skill.icon.path} color={`#${skill.icon.hex}`} />
+              <BubbleIcon
+                iconPath={skill.icon.path}
+                color={`#${ensureVisibleColor(skill.icon.hex)}`}
+              />
             </div>
           ))}
         </div>
@@ -394,7 +482,8 @@ export default function SkillsSection() {
             <h2
               className="text-[clamp(2rem,6vw,4rem)] font-bold tracking-tight mb-6"
               style={{
-                textShadow: "0 0 60px rgba(0,0,0,0.9), 0 0 40px rgba(0,0,0,0.95)",
+                textShadow:
+                  "0 0 60px rgba(0,0,0,0.9), 0 0 40px rgba(0,0,0,0.95)",
               }}
             >
               <span className="bg-gradient-to-r from-accent via-accent-secondary to-accent bg-clip-text text-transparent">
@@ -415,7 +504,10 @@ export default function SkillsSection() {
         </div>
 
         {/* Gradient overlays */}
-        <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 0 }}>
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{ zIndex: 0 }}
+        >
           <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-[#111111] to-transparent" />
           <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#111111] to-transparent" />
         </div>
