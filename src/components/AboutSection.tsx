@@ -12,17 +12,6 @@ function getYearsFromCareerStartDate() {
   return parseFloat(diffInYears.toFixed(2));
 }
 
-const skills = [
-  { name: "React / Next.js", delay: 0 },
-  { name: "TypeScript", delay: 50 },
-  { name: "Node.js", delay: 100 },
-  { name: "Flutter", delay: 150 },
-  { name: "iOS / Swift", delay: 200 },
-  { name: "Android / Kotlin", delay: 250 },
-  { name: "UI/UX Design", delay: 300 },
-  { name: "Animation", delay: 350 },
-];
-
 const stats = [
   {
     value: `${Math.floor(getYearsFromCareerStartDate())}+`,
@@ -104,36 +93,6 @@ function StatCard({ value, label, delay }: StatCardProps) {
         </span>
       </div>
     </div>
-  );
-}
-
-interface SkillTagProps {
-  name: string;
-  delay: number;
-}
-
-function SkillTag({ name, delay }: SkillTagProps) {
-  const { ref, isVisible } = useScrollAnimation({ threshold: 0.5 });
-
-  return (
-    <span
-      ref={ref}
-      className="relative inline-block px-4 py-2 md:px-5 md:py-2.5 rounded-full text-sm md:text-base font-medium
-        bg-gradient-to-r from-white/[0.08] to-white/[0.04] border border-white/10
-        hover:border-accent/50 hover:from-accent/10 hover:to-accent-secondary/10
-        transition-all duration-300 cursor-default group overflow-hidden"
-      style={{
-        transform: isVisible
-          ? "translateY(0) scale(1)"
-          : "translateY(20px) scale(0.8)",
-        opacity: isVisible ? 1 : 0,
-        transition: `all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) ${delay}ms`,
-      }}
-    >
-      {/* Hover shine effect */}
-      <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-      <span className="relative">{name}</span>
-    </span>
   );
 }
 
@@ -268,20 +227,6 @@ export default function AboutSection() {
                   experiences that leave lasting impressions.
                 </p>
               </div>
-            </div>
-          </div>
-        </AnimatedCard>
-
-        {/* Skills Section */}
-        <AnimatedCard delay={200}>
-          <div className="text-center">
-            <h3 className="text-xl md:text-2xl font-semibold mb-8 text-muted">
-              Technologies & Expertise
-            </h3>
-            <div className="flex flex-wrap justify-center gap-3 md:gap-4">
-              {skills.map((skill) => (
-                <SkillTag key={skill.name} {...skill} />
-              ))}
             </div>
           </div>
         </AnimatedCard>
