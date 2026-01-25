@@ -52,7 +52,7 @@ const BackgroundAnimator = ({ clientX, clientY }: BackgroundAnimatorProps) => {
         className="absolute -top-[5%] -left-[5%] w-[110%] h-[110%] bg-contain bg-center bg-no-repeat pointer-events-none will-change-transform"
         style={{
           transform: to(animationProps.xy, trans1),
-          backgroundImage: `url(/images/background-dark-doodle-fixed-layer.png)`,
+          backgroundImage: `url(/images/background-dark-doodle-line-layer.png)`,
         }}
       />
       <animated.div
