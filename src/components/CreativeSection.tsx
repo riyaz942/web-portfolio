@@ -47,9 +47,13 @@ export default function CreativeSection() {
       const sectionHeight = rect.height;
       const viewportHeight = window.innerHeight;
 
+      // Delay start: animation begins when section top is at 20% from top of viewport
+      // (i.e., after 80% of the previous section has scrolled)
+      const delayThreshold = viewportHeight * 0.2;
+
       // Calculate scroll progress through the section
-      // Animation starts when section enters viewport and ends when section leaves
-      const scrollStart = viewportHeight; // When section top reaches bottom of viewport
+      // Animation starts when section top reaches 20% from top of viewport
+      const scrollStart = delayThreshold; // When section top reaches 20% from top
       const scrollEnd = -sectionHeight; // When section bottom leaves top of viewport
 
       // Progress from 0 to 1 as we scroll through the section
