@@ -154,8 +154,8 @@ export default function CreativeSection() {
         <div className="relative z-10 h-full flex items-center">
           {/* Content container - right side, vertically centered with flex */}
           <div
-            className="absolute right-8 md:right-16 lg:right-24 flex flex-col justify-center gap-12"
-            style={{ maxWidth: "min(45%, 500px)" }}
+            className="absolute right-8 md:right-16 lg:right-24 flex flex-col justify-center gap-14"
+            style={{ maxWidth: "min(50%, 600px)" }}
           >
             {/* Main Headline */}
             <div
@@ -166,7 +166,7 @@ export default function CreativeSection() {
                 transition: "filter 0.1s ease-out",
               }}
             >
-              <h2 className="text-[clamp(1.5rem,3.5vw,2.5rem)] font-bold leading-[1.1] tracking-tight text-right">
+              <h2 className="text-[clamp(1.75rem,4vw,3rem)] font-bold leading-[1.1] tracking-tight text-right">
                 <span className="text-foreground">I turn complex problems</span>
                 <br />
                 <span className="bg-gradient-to-r from-accent to-accent-secondary bg-clip-text text-transparent">
@@ -174,7 +174,7 @@ export default function CreativeSection() {
                 </span>
               </h2>
               <p
-                className="mt-3 text-[clamp(0.8rem,1.3vw,1rem)] text-muted text-right leading-relaxed"
+                className="mt-4 text-[clamp(0.9rem,1.5vw,1.15rem)] text-muted text-right leading-relaxed"
                 style={{
                   opacity: Math.max(0, (headlineProgress - 0.3) / 0.7),
                   transform: `translateY(${Math.max(0, (1 - headlineProgress) * 20)}px)`,
@@ -188,7 +188,7 @@ export default function CreativeSection() {
 
             {/* Micro-Highlights Grid */}
             <div>
-              <div className="grid grid-cols-2 gap-3 md:gap-4">
+              <div className="grid grid-cols-2 gap-4 md:gap-5">
                 {microHighlights.map((highlight, index) => {
                   const progress = getHighlightProgress(index);
                   return (
@@ -205,20 +205,20 @@ export default function CreativeSection() {
                       {/* Subtle glow on hover */}
                       <div className="absolute -inset-2 bg-gradient-to-br from-accent/10 to-accent-secondary/10 rounded-xl opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500" />
 
-                      <div className="relative p-3 md:p-4 rounded-xl bg-white/[0.03] backdrop-blur-sm border border-white/[0.06] hover:border-white/[0.12] transition-colors duration-300">
+                      <div className="relative p-4 md:p-5 rounded-xl bg-white/[0.03] backdrop-blur-sm border border-white/[0.06] hover:border-white/[0.12] transition-colors duration-300">
                         {/* Animated line accent */}
                         <div
-                          className="absolute top-0 left-3 right-3 h-px bg-gradient-to-r from-transparent via-accent/50 to-transparent"
+                          className="absolute top-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-accent/50 to-transparent"
                           style={{
                             transform: `scaleX(${progress})`,
                             transformOrigin: "left",
                           }}
                         />
 
-                        <h3 className="text-[clamp(0.7rem,1.1vw,0.85rem)] font-semibold text-foreground mb-1 tracking-wide">
+                        <h3 className="text-[clamp(0.8rem,1.2vw,0.95rem)] font-semibold text-foreground mb-1.5 tracking-wide">
                           {highlight.title}
                         </h3>
-                        <p className="text-[clamp(0.6rem,0.9vw,0.75rem)] text-muted leading-relaxed">
+                        <p className="text-[clamp(0.7rem,1vw,0.85rem)] text-muted leading-relaxed">
                           {highlight.description}
                         </p>
                       </div>
