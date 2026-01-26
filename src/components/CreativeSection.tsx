@@ -6,20 +6,20 @@ import { DotLottieReact, DotLottie } from "@lottiefiles/dotlottie-react";
 // Micro-highlights data
 const microHighlights = [
   {
-    title: "Scroll-Driven Storytelling",
-    description: "Apple-like minimalism with purposeful motion",
+    title: "Complexity Enthusiast",
+    description: "The harder the problem, the more interesting it gets",
   },
   {
-    title: "Micro-Interactions",
-    description: "Thoughtful easing & responsive feedback systems",
+    title: "Craft Over Shortcuts",
+    description: "Quality code that future-me would thank present-me for",
   },
   {
-    title: "Depth & Motion",
-    description: "Parallax layering that breathes life into interfaces",
+    title: "Always Learning",
+    description: "First to explore new tech, last to leave the docs",
   },
   {
-    title: "3D Exploration",
-    description: "Three.js experiments pushing creative boundaries",
+    title: "Ownership Mentality",
+    description: "If it's in my codebase, it's my responsibility",
   },
 ];
 
