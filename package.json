@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@lottiefiles/dotlottie-react": "^0.17.13",
     "@react-spring/web": "^10.0.3",
     "next": "15.4.6",
     "react": "19.1.0",
