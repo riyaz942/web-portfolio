@@ -44,7 +44,7 @@ export default function Home() {
             <div className="absolute -inset-2 bg-gradient-to-br from-accent via-accent-secondary to-accent rounded-full opacity-60 blur-xl group-hover:opacity-90 transition-opacity duration-500" />
             <div className="relative w-40 h-40 md:w-52 md:h-52 rounded-full overflow-hidden ring-4 ring-white/10 shadow-2xl">
               <Image
-                src="/images/profile-pic.jpeg"
+                src="/images/Landing-section/profile-pic.jpeg"
                 alt="Riyaz Ahmed"
                 fill
                 className="object-cover"

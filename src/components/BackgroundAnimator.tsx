@@ -52,21 +52,21 @@ const BackgroundAnimator = ({ clientX, clientY }: BackgroundAnimatorProps) => {
         className="absolute -top-[5%] -left-[5%] w-[110%] h-[110%] bg-contain bg-center bg-no-repeat pointer-events-none will-change-transform"
         style={{
           transform: to(animationProps.xy, trans1),
-          backgroundImage: `url(/images/background-dark-doodle-line-layer.png)`,
+          backgroundImage: `url(/images/Landing-section/background-dark-doodle-line-layer.png)`,
         }}
       />
       <animated.div
         className="absolute -top-[5%] -left-[5%] w-[110%] h-[110%] bg-contain bg-center bg-no-repeat pointer-events-none will-change-transform"
         style={{
           transform: to(animationProps.xy, trans2),
-          backgroundImage: `url(/images/background-dark-doodle-second-layer.png)`,
+          backgroundImage: `url(/images/Landing-section/background-dark-doodle-second-layer.png)`,
         }}
       />
       <animated.div
         className="absolute -top-[5%] -left-[5%] w-[110%] h-[110%] bg-contain bg-center bg-no-repeat pointer-events-none will-change-transform"
         style={{
           transform: to(animationProps.xy, trans3),
-          backgroundImage: `url(/images/background-dark-doodle-first-layer.png)`,
+          backgroundImage: `url(/images/Landing-section/background-dark-doodle-first-layer.png)`,
         }}
       />
     </>
