@@ -2,6 +2,7 @@
 
 import { useRef, useEffect, useState, useCallback } from "react";
 import { DotLottieReact, DotLottie } from "@lottiefiles/dotlottie-react";
+import FloatingDoodles from "./FloatingDoodles";
 
 // Micro-highlights data
 const microHighlights = [
@@ -149,6 +150,9 @@ export default function CreativeSection() {
             />
           </div>
         </div>
+
+        {/* Floating Doodles - appear after Lottie animation completes */}
+        <FloatingDoodles scrollProgress={scrollProgress} />
 
         {/* Content Layer - positioned to avoid animation overlap */}
         <div className="relative z-10 h-full flex items-center">
