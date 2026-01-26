@@ -49,17 +49,21 @@ export default function CreativeSection() {
 
       // Delay start: animation begins when section top is at 20% from top of viewport
       // (i.e., after 80% of the previous section has scrolled)
-      const delayThreshold = viewportHeight * 0.2;
+      const delayThreshold = viewportHeight * 0.5;
+
+      // Animation scroll range: use only 300vh of the 400vh section for the animation
+      // This ensures the full animation plays within the scroll distance
+      const animationScrollDistance = viewportHeight * 3; // 300vh for animation playback
 
       // Calculate scroll progress through the section
       // Animation starts when section top reaches 20% from top of viewport
       const scrollStart = delayThreshold; // When section top reaches 20% from top
-      const scrollEnd = -sectionHeight; // When section bottom leaves top of viewport
 
-      // Progress from 0 to 1 as we scroll through the section
+      // Progress from 0 to 1 based on animation scroll distance
+      const scrolled = scrollStart - sectionTop;
       const progress = Math.max(
         0,
-        Math.min(1, (scrollStart - sectionTop) / (scrollStart - scrollEnd)),
+        Math.min(1, scrolled / animationScrollDistance),
       );
 
       // Map progress to frame number
@@ -79,14 +83,14 @@ export default function CreativeSection() {
     <section
       ref={sectionRef}
       className="relative w-full"
-      style={{ height: "200vh" }} // Extra height for scroll-through animation
+      style={{ height: "400vh" }} // Extra height for scroll-through animation
     >
       {/* Sticky container for the animation */}
       <div className="sticky top-0 w-full overflow-hidden">
         {/* Lottie Background Animation */}
         <div
-          className="w-[70%] origin-top-left"
-          style={{ transform: "scale(1.5) translateX(-22%)" }}
+          className="w-[90%] origin-top-left"
+          style={{ transform: "scale(1.2) translateX(-24%)" }}
         >
           <DotLottieReact
             src="/images/Creative-section/Creative-section-background-animation.lottie"
@@ -102,18 +106,6 @@ export default function CreativeSection() {
               height: "auto",
             }}
           />
-        </div>
-
-        {/* Content overlay */}
-        <div className="relative z-10 flex items-center justify-center w-full h-full">
-          <div className="max-w-5xl w-full text-center px-8">
-            <h2 className="text-[clamp(2.5rem,8vw,6rem)] font-bold mb-8 tracking-tight">
-              Creative
-            </h2>
-            <p className="text-[clamp(1.125rem,2vw,1.5rem)] text-muted max-w-xl mx-auto leading-relaxed">
-              Coming soon...
-            </p>
-          </div>
         </div>
       </div>
     </section>
