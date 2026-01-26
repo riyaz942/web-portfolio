@@ -103,14 +103,14 @@ export default function CreativeSection() {
   }, [dotLottie, totalFrames]);
 
   // Calculate content animation states based on scroll progress
-  // Headline appears at 35% progress (when lightbulb is forming)
+  // Headline appears at 20% progress (earlier reveal)
   const headlineProgress = Math.max(
     0,
-    Math.min(1, (scrollProgress - 0.35) / 0.15),
+    Math.min(1, (scrollProgress - 0.2) / 0.15),
   );
-  // Highlights stagger in from 50% to 80%
+  // Highlights stagger in from 35% to 65% (earlier reveal)
   const getHighlightProgress = (index: number) => {
-    const startOffset = 0.5 + index * 0.075;
+    const startOffset = 0.35 + index * 0.075;
     return Math.max(0, Math.min(1, (scrollProgress - startOffset) / 0.1));
   };
 
@@ -151,11 +151,11 @@ export default function CreativeSection() {
         </div>
 
         {/* Content Layer - positioned to avoid animation overlap */}
-        <div className="relative z-10 h-full">
+        <div className="relative z-10 h-full flex items-center">
           {/* Content container - right side, vertically centered with flex */}
           <div
-            className="absolute right-8 md:right-16 lg:right-24 flex flex-col justify-between"
-            style={{ maxWidth: "min(45%, 500px)", top: "55vh", bottom: "10vh" }}
+            className="absolute right-8 md:right-16 lg:right-24 flex flex-col justify-center gap-12"
+            style={{ maxWidth: "min(45%, 500px)" }}
           >
             {/* Main Headline */}
             <div
@@ -187,7 +187,7 @@ export default function CreativeSection() {
             </div>
 
             {/* Micro-Highlights Grid */}
-            <div className="pb-8 md:pb-12">
+            <div>
               <div className="grid grid-cols-2 gap-3 md:gap-4">
                 {microHighlights.map((highlight, index) => {
                   const progress = getHighlightProgress(index);
