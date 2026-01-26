@@ -227,40 +227,9 @@ export default function CreativeSection() {
                 })}
               </div>
 
-              {/* Decorative element - subtle animated dots */}
-              <div
-                className="flex justify-end gap-1.5 mt-4"
-                style={{
-                  opacity: Math.max(0, scrollProgress - 0.8) / 0.2,
-                }}
-              >
-                {[0, 1, 2].map((i) => (
-                  <div
-                    key={i}
-                    className="w-1.5 h-1.5 rounded-full bg-accent/60"
-                    style={{
-                      animation: `pulse 2s ease-in-out ${i * 0.3}s infinite`,
-                      transform: `scale(${0.8 + Math.sin(scrollProgress * 10 + i) * 0.2})`,
-                    }}
-                  />
-                ))}
-              </div>
             </div>
           </div>
 
-          {/* Scroll indicator - fades out as content appears */}
-          <div
-            className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-            style={{
-              opacity: Math.max(0, 1 - scrollProgress * 3),
-              pointerEvents: scrollProgress > 0.3 ? "none" : "auto",
-            }}
-          >
-            <span className="text-[0.65rem] text-muted uppercase tracking-[0.2em]">
-              Keep scrolling
-            </span>
-            <div className="w-px h-8 bg-gradient-to-b from-accent/60 to-transparent animate-scroll-pulse" />
-          </div>
         </div>
       </div>
     </section>
