@@ -90,7 +90,7 @@ export default function CreativeSection() {
         {/* Lottie Background Animation */}
         <div
           className="w-[90%] origin-top-left"
-          style={{ transform: "scale(1.2) translateX(-24%)" }}
+          style={{ transform: "scale(1) translateX(-20%)" }}
         >
           <DotLottieReact
             src="/images/Creative-section/Creative-section-background-animation.lottie"
