@@ -104,6 +104,11 @@ export default function CreativeSection() {
   }, [dotLottie, totalFrames]);
 
   // Calculate content animation states based on scroll progress
+  // Container appears slightly before content (at 15% progress)
+  const containerProgress = Math.max(
+    0,
+    Math.min(1, (scrollProgress - 0.15) / 0.15),
+  );
   // Headline appears at 20% progress (earlier reveal)
   const headlineProgress = Math.max(
     0,
@@ -173,11 +178,13 @@ export default function CreativeSection() {
         <div className="relative z-10 h-full flex items-center">
           {/* Content container - right side, vertically centered with flex */}
           <div
-            className="absolute right-8 md:right-16 lg:right-24 flex flex-col justify-center gap-14 p-6 md:p-8 rounded-2xl backdrop-blur-md"
+            className="absolute right-8 md:right-16 lg:right-24 flex flex-col justify-center gap-14 p-6 md:p-8 rounded-2xl"
             style={{
               maxWidth: "min(50%, 600px)",
-              background: "color-mix(in srgb, var(--color-background) 50%, transparent)",
-              border: "1px solid rgba(255, 255, 255, 0.08)",
+              background: `color-mix(in srgb, var(--color-background) ${50 * containerProgress}%, transparent)`,
+              border: `1px solid rgba(255, 255, 255, ${0.08 * containerProgress})`,
+              backdropFilter: `blur(${12 * containerProgress}px)`,
+              WebkitBackdropFilter: `blur(${12 * containerProgress}px)`,
             }}
           >
             {/* Main Headline */}
