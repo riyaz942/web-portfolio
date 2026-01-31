@@ -1,6 +1,6 @@
 <svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3168 1344" width="3168" height="1344">
 	<style>
-		.s0 { fill: none;stroke: #ffffff;stroke-miterlimit:100;stroke-width: 2 } 
+		.s0 { fill: none;stroke: #c4c4c4;stroke-miterlimit:100;stroke-width: 2 }
 	</style>
 	<g id="Folder 1">
 		<path id="Shape 1" fill-rule="evenodd" class="s0" d="m2.44 146.01c4.57 0 10.26-1.57 15.05-2.09 11.12-1.21 22.49-1.77 33.65-2.45 17-1.02 33.96-0.34 50.94-0.34"/>
