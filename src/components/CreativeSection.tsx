@@ -174,6 +174,9 @@ export default function CreativeSection() {
           </div>
         </div>
 
+        {/* Bottom fade overlay - matches landing section */}
+        <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-background to-transparent pointer-events-none z-[5]" />
+
         {/* Content Layer - positioned to avoid animation overlap */}
         <div className="relative z-10 h-full flex items-center">
           {/* Content container - right side, vertically centered with flex */}
