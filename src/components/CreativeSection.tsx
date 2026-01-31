@@ -178,9 +178,8 @@ export default function CreativeSection() {
         <div className="relative z-10 h-full flex items-center">
           {/* Content container - right side, vertically centered with flex */}
           <div
-            className="absolute right-8 md:right-16 lg:right-24 flex flex-col justify-center gap-14 p-6 md:p-8 rounded-2xl"
+            className="absolute right-8 md:right-16 lg:right-24 max-w-[min(50%,600px)] flex flex-col justify-center gap-14 p-6 md:p-8 rounded-2xl"
             style={{
-              maxWidth: "min(50%, 600px)",
               background: `color-mix(in srgb, var(--color-background) ${50 * containerProgress}%, transparent)`,
               border: `1px solid rgba(255, 255, 255, ${0.08 * containerProgress})`,
               backdropFilter: `blur(${12 * containerProgress}px)`,
