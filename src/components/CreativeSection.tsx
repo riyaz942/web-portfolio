@@ -2,7 +2,6 @@
 
 import { useRef, useEffect, useState, useCallback } from "react";
 import { DotLottieReact, DotLottie } from "@lottiefiles/dotlottie-react";
-import FloatingDoodles from "./FloatingDoodles";
 import Image from "next/image";
 
 // Micro-highlights data
@@ -167,15 +166,8 @@ export default function CreativeSection() {
                 height: "auto",
               }}
             />
-            {/* Watermark cover - hides Lottie watermark in bottom-right */}
-            <div
-              className="absolute bottom-0 right-0 z-10 bg-background"
-              style={{ width: "200px", height: "60px" }}
-            />
           </div>
         </div>
-
-        {/* Floating Doodles - appear after Lottie animation completes */}
 
         {/* Content Layer - positioned to avoid animation overlap */}
         <div className="relative z-10 h-full flex items-center">
@@ -186,6 +178,7 @@ export default function CreativeSection() {
           >
             {/* Main Headline */}
             <div
+              className="relative"
               style={{
                 transform: `translateY(${(1 - headlineProgress) * 40}px)`,
                 opacity: headlineProgress,
@@ -193,6 +186,14 @@ export default function CreativeSection() {
                 transition: "filter 0.1s ease-out",
               }}
             >
+              {/* Faded background for headline readability */}
+              <div
+                className="absolute -inset-6 md:-inset-8 -z-10 pointer-events-none rounded-2xl"
+                style={{
+                  // background: "radial-gradient(ellipse at center, var(--color-background) 0%, var(--color-background) 70%, transparent 95%)",
+                  background: "var(--color-background)",
+                }}
+              />
               <h2 className="text-[clamp(1.75rem,4vw,3rem)] font-bold leading-[1.1] tracking-tight text-right">
                 <span className="text-foreground">I turn complex problems</span>
                 <br />
@@ -214,7 +215,15 @@ export default function CreativeSection() {
             </div>
 
             {/* Micro-Highlights Grid */}
-            <div>
+            <div className="relative">
+              {/* Faded background for highlights readability */}
+              <div
+                className="absolute -inset-6 md:-inset-8 -z-10 pointer-events-none rounded-2xl"
+                style={{
+                  // background: "radial-gradient(ellipse at center, var(--color-background) 0%, var(--color-background) 70%, transparent 95%)",
+                  background: "var(--color-background)",
+                }}
+              />
               <div className="grid grid-cols-2 gap-4 md:gap-5">
                 {microHighlights.map((highlight, index) => {
                   const progress = getHighlightProgress(index);
