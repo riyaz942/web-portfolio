@@ -138,8 +138,8 @@ export default function CreativeSection() {
         <div
           className="absolute inset-0 w-full h-full z-0"
           style={{
-            // Circular reveal expanding from light bulb position (approximately 35% from left, 40% from top)
-            clipPath: `circle(${backgroundRevealProgress * 150}% at 35% 40%)`,
+            // Circular reveal expanding from light bulb position (approximately 15% from left, 60% from top)
+            clipPath: `circle(${backgroundRevealProgress * 150}% at 15% 60%)`,
             opacity: backgroundRevealProgress > 0 ? 1 : 0,
           }}
         >
