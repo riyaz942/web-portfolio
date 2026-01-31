@@ -134,12 +134,13 @@ export default function CreativeSection() {
     >
       {/* Sticky container for the animation and content */}
       <div className="sticky top-0 w-full h-screen overflow-hidden">
-        {/* Background Doodle Image - reveals when Lottie animation is about to end */}
+        {/* Background Doodle Image - circular reveal from light bulb position */}
         <div
           className="absolute inset-0 w-full h-full z-0"
           style={{
-            opacity: backgroundRevealProgress,
-            transition: "opacity 0.3s ease-out",
+            // Circular reveal expanding from light bulb position (approximately 35% from left, 40% from top)
+            clipPath: `circle(${backgroundRevealProgress * 150}% at 35% 40%)`,
+            opacity: backgroundRevealProgress > 0 ? 1 : 0,
           }}
         >
           <Image
