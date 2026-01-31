@@ -173,8 +173,12 @@ export default function CreativeSection() {
         <div className="relative z-10 h-full flex items-center">
           {/* Content container - right side, vertically centered with flex */}
           <div
-            className="absolute right-8 md:right-16 lg:right-24 flex flex-col justify-center gap-14"
-            style={{ maxWidth: "min(50%, 600px)" }}
+            className="absolute right-8 md:right-16 lg:right-24 flex flex-col justify-center gap-14 p-6 md:p-8 rounded-2xl backdrop-blur-md"
+            style={{
+              maxWidth: "min(50%, 600px)",
+              background: "color-mix(in srgb, var(--color-background) 50%, transparent)",
+              border: "1px solid rgba(255, 255, 255, 0.08)",
+            }}
           >
             {/* Main Headline */}
             <div
@@ -186,14 +190,6 @@ export default function CreativeSection() {
                 transition: "filter 0.1s ease-out",
               }}
             >
-              {/* Faded background for headline readability */}
-              <div
-                className="absolute -inset-6 md:-inset-8 -z-10 pointer-events-none rounded-2xl"
-                style={{
-                  // background: "radial-gradient(ellipse at center, var(--color-background) 0%, var(--color-background) 70%, transparent 95%)",
-                  background: "var(--color-background)",
-                }}
-              />
               <h2 className="text-[clamp(1.75rem,4vw,3rem)] font-bold leading-[1.1] tracking-tight text-right">
                 <span className="text-foreground">I turn complex problems</span>
                 <br />
@@ -216,14 +212,6 @@ export default function CreativeSection() {
 
             {/* Micro-Highlights Grid */}
             <div className="relative">
-              {/* Faded background for highlights readability */}
-              <div
-                className="absolute -inset-6 md:-inset-8 -z-10 pointer-events-none rounded-2xl"
-                style={{
-                  // background: "radial-gradient(ellipse at center, var(--color-background) 0%, var(--color-background) 70%, transparent 95%)",
-                  background: "var(--color-background)",
-                }}
-              />
               <div className="grid grid-cols-2 gap-4 md:gap-5">
                 {microHighlights.map((highlight, index) => {
                   const progress = getHighlightProgress(index);
