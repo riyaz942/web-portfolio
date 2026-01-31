@@ -3,7 +3,7 @@
 import { useState, useCallback, useEffect } from "react";
 import Image from "next/image";
 import BackgroundAnimator from "@/components/BackgroundAnimator";
-import AboutSection from "@/components/AboutSection";
+import CreativeSection from "@/components/CreativeSection";
 import SkillsSection from "@/components/SkillsSection";
 
 export default function Home() {
@@ -98,8 +98,8 @@ export default function Home() {
         <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-background to-transparent pointer-events-none z-[5]" />
       </section>
 
-      {/* About Section */}
-      <AboutSection />
+      {/* Creative Section */}
+      <CreativeSection />
 
       {/* Skills Section */}
       <SkillsSection />
