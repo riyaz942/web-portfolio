@@ -3,6 +3,7 @@
 import { useRef, useEffect, useState, useCallback } from "react";
 import { DotLottieReact, DotLottie } from "@lottiefiles/dotlottie-react";
 import FloatingDoodles from "./FloatingDoodles";
+import Image from "next/image";
 
 // Micro-highlights data
 const microHighlights = [
@@ -115,6 +116,12 @@ export default function CreativeSection() {
     return Math.max(0, Math.min(1, (scrollProgress - startOffset) / 0.1));
   };
 
+  // Background doodle image reveals when Lottie animation is about to end (85% progress)
+  const backgroundRevealProgress = Math.max(
+    0,
+    Math.min(1, (scrollProgress - 0.85) / 0.15),
+  );
+
   return (
     <section
       ref={sectionRef}
@@ -123,9 +130,26 @@ export default function CreativeSection() {
     >
       {/* Sticky container for the animation and content */}
       <div className="sticky top-0 w-full h-screen overflow-hidden">
+        {/* Background Doodle Image - reveals when Lottie animation is about to end */}
+        <div
+          className="absolute inset-0 w-full h-full z-0"
+          style={{
+            opacity: backgroundRevealProgress,
+            transition: "opacity 0.3s ease-out",
+          }}
+        >
+          <Image
+            src="/images/Creative-section/Creative-section-background-doodle-image.svg"
+            alt=""
+            fill
+            className="object-cover object-center"
+            priority={false}
+          />
+        </div>
+
         {/* Lottie Background Animation */}
         <div
-          className="absolute w-[90%] origin-top-left z-0"
+          className="absolute w-[90%] origin-top-left z-[1]"
           style={{ transform: "translateX(-20%)" }}
         >
           <div className="relative">
@@ -152,7 +176,6 @@ export default function CreativeSection() {
         </div>
 
         {/* Floating Doodles - appear after Lottie animation completes */}
-        <FloatingDoodles scrollProgress={scrollProgress} />
 
         {/* Content Layer - positioned to avoid animation overlap */}
         <div className="relative z-10 h-full flex items-center">
@@ -230,10 +253,8 @@ export default function CreativeSection() {
                   );
                 })}
               </div>
-
             </div>
           </div>
-
         </div>
       </div>
     </section>
