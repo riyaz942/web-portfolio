@@ -4,7 +4,8 @@ import { useState, useCallback, useEffect } from "react";
 import Image from "next/image";
 import BackgroundAnimator from "@/components/BackgroundAnimator";
 import CreativeSection from "@/components/CreativeSection";
-import SkillsSection from "@/components/SkillsSection";
+import ExperienceSection from "@/components/ExperienceSection";
+// import SkillsSection from "@/components/SkillsSection";
 
 export default function Home() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -101,8 +102,11 @@ export default function Home() {
       {/* Creative Section */}
       <CreativeSection />
 
-      {/* Skills Section */}
-      <SkillsSection />
+      {/* Experience Section */}
+      <ExperienceSection />
+
+      {/* Skills Section
+      <SkillsSection /> */}
 
       {/* Work Section */}
       <section className="min-h-screen flex items-center justify-center py-24 px-8 relative bg-[#111111]">

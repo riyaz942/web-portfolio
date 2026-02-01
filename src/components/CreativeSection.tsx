@@ -166,7 +166,7 @@ export default function CreativeSection() {
               renderConfig={{
                 fit: "contain",
                 align: ["0", "0"], // Align to top-left
-              }}
+              } as unknown as typeof undefined}
               style={{
                 width: "100%",
                 height: "auto",

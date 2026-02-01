@@ -1,0 +1,67 @@
+Here is the blueprint for the "Self-Drawing Sketch" (Recommendation #4), including the visual breakdown and the actual code logic to implement it in your Next.js portfolio.1. The Visual Concept: "The Live Sketch"Imagine the user scrolling down to your "Experience" section. The page is dark (matching your screenshot).The Storyboard (0.0s - 1.2s):PhaseVisual StateDescription0.0s (Trigger)Blank CanvasThe card area is empty. The "Paper" background is visible (Dark Charcoal #1A1A1A).0.2s (The Stroke)The "Ghost" HandA bright white line (simulating chalk/marker) begins to trace the border of the card. It moves quickly, slightly imperfectly (organic feel).0.6s (The Icon)The DoodleAs the border finishes, the line "jumps" to the center and rapidly scribbles the domain icon (e.g., a Brain for AI or a Stethoscope for Health).0.8s (The Fill)The RevealThe "Glass" background of the card fades in at 30% opacity, and the text (Title, Tech Stack) slides up into place.2. The Implementation (Framer Motion + SVG)Since you are using Next.js and Tailwind, the best way to achieve this "Apple-meets-Doodle" effect is using framer-motion with SVG pathLength.Here is the component code for the "Self-Drawing Card":TypeScript"use client";
+import { motion } from "framer-motion";
+
+// The "Doodle" SVG path for a border with a hand-drawn feel
+// You can create these paths in Figma using the Pencil tool
+const borderPath = "M10 10 H 290 Q 300 10 300 20 V 180 Q 300 190 290 190 H 20 Q 10 190 10 180 V 20 Z";
+
+// The transition config to make it feel like a "sketch"
+const drawTransition = {
+  duration: 1.5,
+  ease: "easeInOut", // or a custom bezier for "pencil" feel
+};
+
+export default function ExperienceCard({ title, iconPath, description }) {
+  return (
+    <div className="relative w-[320px] h-[220px] m-10 group cursor-pointer">
+      
+      {/* 1. The Drawing Layer (SVG) */}
+      <svg className="absolute inset-0 w-full h-full pointer-events-none overflow-visible">
+        {/* The Card Border */}
+        <motion.path
+          d={borderPath}
+          fill="transparent"
+          stroke="#FFFFFF"
+          strokeWidth="3"
+          strokeLinecap="round"
+          initial={{ pathLength: 0, opacity: 0 }}
+          whileInView={{ pathLength: 1, opacity: 1 }} // Triggers on Scroll
+          viewport={{ once: true, margin: "-100px" }}
+          transition={drawTransition}
+          className="drop-shadow-[0_0_5px_rgba(255,255,255,0.5)]" // Neon chalk glow
+        />
+        
+        {/* The Domain Icon (e.g., Brain for AI) */}
+        <motion.path
+          d={iconPath} 
+          fill="transparent"
+          stroke="#A78BFA" // Lavender color for the icon
+          strokeWidth="2"
+          initial={{ pathLength: 0, opacity: 0 }}
+          whileInView={{ pathLength: 1, opacity: 1 }}
+          transition={{ ...drawTransition, delay: 0.5 }} // Starts after border
+        />
+      </svg>
+
+      {/* 2. The Content Layer (Fades in) */}
+      <motion.div 
+        className="absolute inset-0 p-6 flex flex-col justify-end"
+        initial={{ opacity: 0, y: 10 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.2, duration: 0.5 }}
+      >
+        {/* Glassmorphism Background (Optional fill after drawing) */}
+        <div className="absolute inset-0 bg-white/5 rounded-2xl -z-10 backdrop-blur-sm" />
+        
+        <h3 className="text-2xl font-bold text-white mb-2">{title}</h3>
+        <p className="text-sm text-gray-300 font-light">{description}</p>
+        
+        {/* Apple-style 'View Project' Arrow */}
+        <div className="mt-4 flex items-center text-xs font-semibold text-purple-300 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
+          View Case Study <span className="ml-2">→</span>
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+3. Layout Strategy: "The Thread" (Concept 3)To tie the "4th recommendation" into a full layout, use the Continuous Line strategy.Visual Layout:Instead of independent cards, imagine a single SVG line that snakes down the center of your screen.Top: The line starts from your "About" section.Middle: As you scroll, the line "draws" itself downwards.Nodes: At specific intervals (years or domains), the line loops around to form the Card Border (using the code above), then continues downwards to the next card.Why this fits your Resume:The "Velotio" Node: The line draws a complex card. Inside, you list AI, Health, GovTech.The "Nykaa" Node: The line continues down, loops into a card. Inside: E-commerce, AR.The "Tailored Tech" Node: The line ends here with an IoT chip doodle.

@@ -11,6 +11,7 @@
   "dependencies": {
     "@lottiefiles/dotlottie-react": "^0.17.13",
     "@react-spring/web": "^10.0.3",
+    "framer-motion": "^12.29.2",
     "next": "15.4.6",
     "react": "19.1.0",
     "react-dom": "19.1.0",
