@@ -1,7 +1,8 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { motion } from "framer-motion";
+import { useRef, useEffect, useState, useCallback } from "react";
+import { DotLottieReact, DotLottie } from "@lottiefiles/dotlottie-react";
 
 // Experience data based on resume
 const experiences = [
@@ -66,30 +67,34 @@ const createBorderPath = (width: number, height: number) => {
     Q18 ${h * 0.25}, 15 15 Z`;
 };
 
-// The draw transition config for "sketch" feel
-const drawTransition = {
-  duration: 1.2,
-  ease: [0.43, 0.13, 0.23, 0.96] as const, // Custom bezier for pencil feel
-};
-
-// Single Experience Card with self-drawing effect
+// Single Experience Card with scroll-driven reveal
 function ExperienceCard({
   experience,
   index,
+  revealProgress,
 }: {
   experience: (typeof experiences)[0];
   index: number;
+  revealProgress: number;
 }) {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(cardRef, { once: true, margin: "-100px" });
-
   const borderPath = createBorderPath(320, 280);
   const isEven = index % 2 === 0;
 
+  // Clamp progress between 0 and 1
+  const progress = Math.max(0, Math.min(1, revealProgress));
+
+  // Stagger different elements
+  const borderProgress = Math.max(0, Math.min(1, progress * 2)); // Border draws faster
+  const iconProgress = Math.max(0, Math.min(1, (progress - 0.3) * 2)); // Icon starts after border
+  const contentProgress = Math.max(0, Math.min(1, (progress - 0.5) * 2)); // Content fades in last
+  const nodeProgress = Math.max(0, Math.min(1, (progress - 0.2) * 2.5)); // Node appears mid-way
+
   return (
     <div
-      ref={cardRef}
       className={`relative flex items-center gap-8 ${isEven ? "flex-row" : "flex-row-reverse"}`}
+      style={{
+        opacity: progress > 0 ? 1 : 0,
+      }}
     >
       {/* The Card */}
       <div className="relative w-[320px] h-[280px] group cursor-pointer flex-shrink-0">
@@ -106,9 +111,10 @@ function ExperienceCard({
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            initial={{ pathLength: 0, opacity: 0 }}
-            animate={isInView ? { pathLength: 1, opacity: 1 } : {}}
-            transition={drawTransition}
+            style={{
+              pathLength: borderProgress,
+              opacity: borderProgress,
+            }}
             className="drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]"
           />
 
@@ -116,20 +122,21 @@ function ExperienceCard({
           <motion.path
             d={experience.iconPath}
             fill="transparent"
-            stroke="url(#iconGradient)"
+            stroke={`url(#iconGradient-${experience.id})`}
             strokeWidth="2.5"
             strokeLinecap="round"
             strokeLinejoin="round"
-            initial={{ pathLength: 0, opacity: 0 }}
-            animate={isInView ? { pathLength: 1, opacity: 1 } : {}}
-            transition={{ ...drawTransition, delay: 0.5 }}
+            style={{
+              pathLength: iconProgress,
+              opacity: iconProgress,
+            }}
             transform="translate(205, 15)"
             className="drop-shadow-[0_0_6px_rgba(167,139,250,0.5)]"
           />
 
-          {/* Gradient definition for icon */}
+          {/* Gradient definition for icon - unique ID per card */}
           <defs>
-            <linearGradient id="iconGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <linearGradient id={`iconGradient-${experience.id}`} x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stopColor="#A78BFA" />
               <stop offset="100%" stopColor="#C4B5FD" />
             </linearGradient>
@@ -137,11 +144,12 @@ function ExperienceCard({
         </svg>
 
         {/* 2. The Content Layer (Fades in) */}
-        <motion.div
+        <div
           className="absolute inset-0 p-6 flex flex-col justify-between"
-          initial={{ opacity: 0, y: 15 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 1, duration: 0.6, ease: "easeOut" }}
+          style={{
+            opacity: contentProgress,
+            transform: `translateY(${(1 - contentProgress) * 15}px)`,
+          }}
         >
           {/* Glassmorphism Background */}
           <div className="absolute inset-[10px] bg-white/[0.03] rounded-2xl -z-10 backdrop-blur-sm" />
@@ -184,49 +192,168 @@ function ExperienceCard({
               View Details <span className="ml-2">→</span>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Timeline Node */}
       <div className="relative flex-shrink-0">
-        <motion.div
+        <div
           className="w-4 h-4 rounded-full bg-accent border-2 border-background"
-          initial={{ scale: 0 }}
-          animate={isInView ? { scale: 1 } : {}}
-          transition={{ delay: 0.3, duration: 0.4, type: "spring" }}
+          style={{
+            transform: `scale(${nodeProgress})`,
+          }}
         />
-        <motion.div
+        <div
           className="absolute inset-0 w-4 h-4 rounded-full bg-accent/50"
-          initial={{ scale: 0 }}
-          animate={isInView ? { scale: [1, 1.8, 1] } : {}}
-          transition={{ delay: 0.3, duration: 0.8, repeat: 0 }}
+          style={{
+            transform: `scale(${nodeProgress > 0.5 ? 1 + (nodeProgress - 0.5) * 1.6 : nodeProgress * 2})`,
+            opacity: nodeProgress > 0.8 ? 1 - (nodeProgress - 0.8) * 5 : 1,
+          }}
         />
       </div>
 
       {/* Year Label */}
-      <motion.div
+      <div
         className={`text-sm text-muted font-medium ${isEven ? "text-left" : "text-right"}`}
-        initial={{ opacity: 0, x: isEven ? -20 : 20 }}
-        animate={isInView ? { opacity: 1, x: 0 } : {}}
-        transition={{ delay: 0.6, duration: 0.5 }}
+        style={{
+          opacity: contentProgress,
+          transform: `translateX(${(1 - contentProgress) * (isEven ? -20 : 20)}px)`,
+        }}
       >
         {experience.period.split(" - ")[0]}
-      </motion.div>
+      </div>
     </div>
   );
 }
 
 export default function ExperienceSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const headerInView = useInView(sectionRef, { once: true, margin: "-100px" });
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [dotLottie, setDotLottie] = useState<DotLottie | null>(null);
+  const [totalFrames, setTotalFrames] = useState(0);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [contentHeight, setContentHeight] = useState(0);
+
+  const dotLottieRefCallback = useCallback((instance: DotLottie | null) => {
+    setDotLottie(instance);
+  }, []);
+
+  // Measure content height for dynamic animation sizing
+  useEffect(() => {
+    if (!contentRef.current) return;
+
+    const updateHeight = () => {
+      if (contentRef.current) {
+        setContentHeight(contentRef.current.offsetHeight);
+      }
+    };
+
+    updateHeight();
+    window.addEventListener("resize", updateHeight);
+
+    return () => window.removeEventListener("resize", updateHeight);
+  }, []);
+
+  // Get total frames when animation loads
+  useEffect(() => {
+    if (!dotLottie) return;
+
+    const handleLoad = () => {
+      setTotalFrames(dotLottie.totalFrames);
+      dotLottie.pause();
+      dotLottie.setFrame(0);
+    };
+
+    dotLottie.addEventListener("load", handleLoad);
+
+    if (dotLottie.isLoaded) {
+      handleLoad();
+    }
+
+    return () => {
+      dotLottie.removeEventListener("load", handleLoad);
+    };
+  }, [dotLottie]);
+
+  // Handle scroll-based animation control
+  useEffect(() => {
+    if (!dotLottie || totalFrames === 0 || !sectionRef.current) return;
+
+    const handleScroll = () => {
+      const section = sectionRef.current;
+      if (!section) return;
+
+      const rect = section.getBoundingClientRect();
+      const sectionTop = rect.top;
+      const sectionHeight = rect.height;
+      const viewportHeight = window.innerHeight;
+
+      // Animation starts when section comes into view
+      // Progress from 0 to 1 as user scrolls through the section
+      const scrollStart = viewportHeight * 0.3; // Start when section is 30% into viewport
+      const scrollEnd = -sectionHeight + viewportHeight * 0.7; // End when 70% of section has scrolled
+
+      const scrolled = scrollStart - sectionTop;
+      const scrollRange = scrollStart - scrollEnd;
+      const progress = Math.max(0, Math.min(1, scrolled / scrollRange));
+
+      setScrollProgress(progress);
+
+      // Map progress to frame number
+      const frame = Math.floor(progress * (totalFrames - 1));
+      dotLottie.setFrame(frame);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [dotLottie, totalFrames]);
+
+  // Calculate reveal progress for each experience card
+  // Cards reveal progressively as scroll progresses
+  const getCardRevealProgress = (index: number) => {
+    const totalCards = experiences.length;
+    // Stagger card reveals across 80% of the scroll (leave 20% for final reveal)
+    const cardStartOffset = 0.1 + (index / totalCards) * 0.6;
+    const cardEndOffset = cardStartOffset + 0.2;
+    return Math.max(0, Math.min(1, (scrollProgress - cardStartOffset) / (cardEndOffset - cardStartOffset)));
+  };
+
+  // Header reveal progress (early in scroll)
+  const headerProgress = Math.max(0, Math.min(1, scrollProgress / 0.15));
 
   return (
     <section
       ref={sectionRef}
       className="relative min-h-screen py-24 px-8 bg-background overflow-hidden"
     >
+      {/* Background Lottie Animation - same width logic as CreativeSection */}
+      <div
+        className="absolute w-[90%] origin-top-left z-0 pointer-events-none"
+        style={{
+          transform: "translateX(-20%)",
+          height: contentHeight > 0 ? `${contentHeight + 200}px` : "100%",
+        }}
+      >
+        <DotLottieReact
+          src="/images/Experience-section/experience-section-background-animation.lottie"
+          autoplay={false}
+          loop={false}
+          dotLottieRefCallback={dotLottieRefCallback}
+          renderConfig={{
+            fit: "contain",
+            align: ["0", "0"],
+          } as unknown as typeof undefined}
+          style={{
+            width: "100%",
+            height: "100%",
+          }}
+        />
+      </div>
+
       {/* Background subtle pattern */}
-      <div className="absolute inset-0 opacity-[0.02]">
+      <div className="absolute inset-0 opacity-[0.02] z-0">
         <div
           className="w-full h-full"
           style={{
@@ -236,49 +363,46 @@ export default function ExperienceSection() {
         />
       </div>
 
-      {/* Section Header */}
-      <div className="max-w-5xl mx-auto mb-20">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={headerInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-center"
-        >
-          <h2 className="text-[clamp(2.5rem,8vw,5rem)] font-bold tracking-tight mb-4">
-            <span className="bg-gradient-to-r from-foreground via-accent to-accent-secondary bg-clip-text text-transparent">
-              Experience
-            </span>
-          </h2>
-          <p className="text-[clamp(1rem,2vw,1.25rem)] text-muted max-w-xl mx-auto leading-relaxed">
-            A journey through building products that scale
-          </p>
-        </motion.div>
-      </div>
-
-      {/* Timeline Container */}
-      <div className="relative max-w-4xl mx-auto">
-        {/* The Continuous Thread Line */}
-        <div className="absolute left-1/2 top-0 bottom-0 w-px -translate-x-1/2">
-          <motion.div
-            className="w-full h-full bg-gradient-to-b from-transparent via-white/20 to-transparent"
-            initial={{ scaleY: 0 }}
-            whileInView={{ scaleY: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.5, ease: "easeOut" }}
-            style={{ transformOrigin: "top" }}
-          />
+      {/* Content container for measuring height */}
+      <div ref={contentRef} className="relative z-10">
+        {/* Section Header */}
+        <div className="max-w-5xl mx-auto mb-20">
+          <div
+            className="text-center"
+            style={{
+              opacity: headerProgress,
+              transform: `translateY(${(1 - headerProgress) * 30}px)`,
+            }}
+          >
+            <h2 className="text-[clamp(2.5rem,8vw,5rem)] font-bold tracking-tight mb-4">
+              <span className="bg-gradient-to-r from-foreground via-accent to-accent-secondary bg-clip-text text-transparent">
+                Experience
+              </span>
+            </h2>
+            <p className="text-[clamp(1rem,2vw,1.25rem)] text-muted max-w-xl mx-auto leading-relaxed">
+              A journey through building products that scale
+            </p>
+          </div>
         </div>
 
-        {/* Experience Cards */}
-        <div className="relative flex flex-col gap-16">
-          {experiences.map((exp, index) => (
-            <ExperienceCard key={exp.id} experience={exp} index={index} />
-          ))}
+        {/* Timeline Container */}
+        <div className="relative max-w-4xl mx-auto">
+          {/* Experience Cards */}
+          <div className="relative flex flex-col gap-16">
+            {experiences.map((exp, index) => (
+              <ExperienceCard
+                key={exp.id}
+                experience={exp}
+                index={index}
+                revealProgress={getCardRevealProgress(index)}
+              />
+            ))}
+          </div>
         </div>
       </div>
 
       {/* Bottom fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none" />
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none z-20" />
     </section>
   );
 }
