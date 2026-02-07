@@ -25,8 +25,7 @@ const experiences = [
     domains: ["Data Analytics", "Pharma"],
     description:
       "Built interactive data visualization dashboards with D3.js, processing 100K+ data points with real-time filtering.",
-    iconPath:
-      "M30 70 L30 40 L45 50 L45 30 L60 45 L60 25 L75 35 M25 70 L80 70",
+    iconPath: "M30 70 L30 40 L45 50 L45 30 L60 45 L60 25 L75 35 M25 70 L80 70",
   },
   {
     id: 3,
@@ -136,7 +135,13 @@ function ExperienceCard({
 
           {/* Gradient definition for icon - unique ID per card */}
           <defs>
-            <linearGradient id={`iconGradient-${experience.id}`} x1="0%" y1="0%" x2="100%" y2="100%">
+            <linearGradient
+              id={`iconGradient-${experience.id}`}
+              x1="0%"
+              y1="0%"
+              x2="100%"
+              y2="100%"
+            >
               <stop offset="0%" stopColor="#A78BFA" />
               <stop offset="100%" stopColor="#C4B5FD" />
             </linearGradient>
@@ -165,7 +170,9 @@ function ExperienceCard({
             <h3 className="text-xl font-bold text-foreground mt-2 leading-tight">
               {experience.company}
             </h3>
-            <p className="text-sm text-accent font-medium mt-1">{experience.role}</p>
+            <p className="text-sm text-accent font-medium mt-1">
+              {experience.role}
+            </p>
 
             {/* Description */}
             <p className="text-sm text-muted mt-3 leading-relaxed line-clamp-3">
@@ -290,7 +297,7 @@ export default function ExperienceSection() {
 
       // Animation starts when section comes into view
       // Progress from 0 to 1 as user scrolls through the section
-      const scrollStart = viewportHeight * 0.3; // Start when section is 30% into viewport
+      const scrollStart = viewportHeight * 0.7; // Start early, when section bottom edge enters viewport
       const scrollEnd = -sectionHeight + viewportHeight * 0.7; // End when 70% of section has scrolled
 
       const scrolled = scrollStart - sectionTop;
@@ -317,7 +324,13 @@ export default function ExperienceSection() {
     // Stagger card reveals across 80% of the scroll (leave 20% for final reveal)
     const cardStartOffset = 0.1 + (index / totalCards) * 0.6;
     const cardEndOffset = cardStartOffset + 0.2;
-    return Math.max(0, Math.min(1, (scrollProgress - cardStartOffset) / (cardEndOffset - cardStartOffset)));
+    return Math.max(
+      0,
+      Math.min(
+        1,
+        (scrollProgress - cardStartOffset) / (cardEndOffset - cardStartOffset),
+      ),
+    );
   };
 
   // Header reveal progress (early in scroll)
@@ -326,13 +339,13 @@ export default function ExperienceSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen py-24 px-8 bg-background overflow-hidden"
+      className="relative min-h-screen py-24 px-8 bg-background"
     >
       {/* Background Lottie Animation - same width logic as CreativeSection */}
       <div
         className="absolute w-[90%] origin-top-left z-0 pointer-events-none"
         style={{
-          transform: "translateX(-20%)",
+          transform: "translate(-23.9%, -12.9%)",
           height: contentHeight > 0 ? `${contentHeight + 200}px` : "100%",
         }}
       >
@@ -341,10 +354,12 @@ export default function ExperienceSection() {
           autoplay={false}
           loop={false}
           dotLottieRefCallback={dotLottieRefCallback}
-          renderConfig={{
-            fit: "contain",
-            align: ["0", "0"],
-          } as unknown as typeof undefined}
+          renderConfig={
+            {
+              fit: "contain",
+              align: ["0", "0"],
+            } as unknown as typeof undefined
+          }
           style={{
             width: "100%",
             height: "100%",
