@@ -235,30 +235,12 @@ function ExperienceCard({
 
 export default function ExperienceSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
   const [dotLottie, setDotLottie] = useState<DotLottie | null>(null);
   const [totalFrames, setTotalFrames] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [contentHeight, setContentHeight] = useState(0);
 
   const dotLottieRefCallback = useCallback((instance: DotLottie | null) => {
     setDotLottie(instance);
-  }, []);
-
-  // Measure content height for dynamic animation sizing
-  useEffect(() => {
-    if (!contentRef.current) return;
-
-    const updateHeight = () => {
-      if (contentRef.current) {
-        setContentHeight(contentRef.current.offsetHeight);
-      }
-    };
-
-    updateHeight();
-    window.addEventListener("resize", updateHeight);
-
-    return () => window.removeEventListener("resize", updateHeight);
   }, []);
 
   // Get total frames when animation loads
@@ -339,14 +321,17 @@ export default function ExperienceSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen py-24 px-8 bg-background"
+      className="relative min-h-screen py-24 bg-background"
     >
-      {/* Background Lottie Animation - same width logic as CreativeSection */}
+      {/* Background Lottie Animation - aligned with Creative section for seamless line connection.
+           Width and horizontal transform match CreativeSection exactly (w-[90%], translateX(-20%)).
+           This Lottie's intrinsic size is 851×2163; height is derived automatically from width (90vw).
+           Top offset positions this canvas so it starts where the Creative animation canvas ends:
+           Creative canvas height = 90vw * (721/851), minus 100vh for the section boundary. */}
       <div
-        className="absolute w-[90%] origin-top-left z-0 pointer-events-none"
+        className="absolute w-[53%] origin-top-left z-[1]"
         style={{
-          transform: "translate(-23.9%, -12.9%)",
-          height: contentHeight > 0 ? `${contentHeight + 200}px` : "100%",
+          aspectRatio: "851 / 2163",
         }}
       >
         <DotLottieReact
@@ -356,14 +341,11 @@ export default function ExperienceSection() {
           dotLottieRefCallback={dotLottieRefCallback}
           renderConfig={
             {
+              autoResize: true,
               fit: "contain",
               align: ["0", "0"],
             } as unknown as typeof undefined
           }
-          style={{
-            width: "100%",
-            height: "100%",
-          }}
         />
       </div>
 
@@ -378,8 +360,8 @@ export default function ExperienceSection() {
         />
       </div>
 
-      {/* Content container for measuring height */}
-      <div ref={contentRef} className="relative z-10">
+      {/* Content */}
+      <div className="relative z-10">
         {/* Section Header */}
         <div className="max-w-5xl mx-auto mb-20">
           <div

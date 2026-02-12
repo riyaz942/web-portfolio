@@ -154,25 +154,22 @@ export default function CreativeSection() {
 
         {/* Lottie Background Animation */}
         <div
-          className="absolute w-[90%] origin-top-left z-[1]"
-          style={{ transform: "translateX(-20%)" }}
+          className="absolute w-[53%] origin-top-left z-[1]"
+          style={{ aspectRatio: "851 / 721" }}
         >
-          <div className="relative">
-            <DotLottieReact
-              src="/images/Creative-section/Creative-section-background-animation.lottie"
-              autoplay={false}
-              loop={false}
-              dotLottieRefCallback={dotLottieRefCallback}
-              renderConfig={{
+          <DotLottieReact
+            src="/images/Creative-section/Creative-section-background-animation.lottie"
+            autoplay={false}
+            loop={false}
+            dotLottieRefCallback={dotLottieRefCallback}
+            renderConfig={
+              {
+                autoResize: true,
                 fit: "contain",
                 align: ["0", "0"], // Align to top-left
-              } as unknown as typeof undefined}
-              style={{
-                width: "100%",
-                height: "auto",
-              }}
-            />
-          </div>
+              } as unknown as typeof undefined
+            }
+          />
         </div>
 
         {/* Bottom fade overlay - matches landing section */}
