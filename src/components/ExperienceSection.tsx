@@ -238,9 +238,41 @@ export default function ExperienceSection() {
   const [dotLottie, setDotLottie] = useState<DotLottie | null>(null);
   const [totalFrames, setTotalFrames] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
-
+  const [lottieGap, setLottieGap] = useState(0);
+  console.log("something", lottieGap);
   const dotLottieRefCallback = useCallback((instance: DotLottie | null) => {
     setDotLottie(instance);
+  }, []);
+
+  // Watch the gap between the Creative section Lottie bottom and ExperienceSection top on resize
+  useEffect(() => {
+    const measureGap = () => {
+      const creativeLottie = document.querySelector<HTMLElement>(
+        '[data-id="creative-lottie"]',
+      );
+      const experienceContainer = sectionRef.current;
+      if (!creativeLottie || !experienceContainer) return;
+
+      const creativeLottieRect = creativeLottie.getBoundingClientRect();
+      const experienceRect = experienceContainer.getBoundingClientRect();
+
+      // py-24 = 6rem = 96px padding-top on the experience section
+      const sectionPaddingTop = parseFloat(
+        getComputedStyle(experienceContainer).paddingTop,
+      );
+
+      // Gap = distance from creative lottie bottom to experience section content area top (in page coordinates)
+      const gap =
+        experienceRect.top +
+        sectionPaddingTop +
+        window.scrollY -
+        (creativeLottieRect.bottom + window.scrollY);
+      setLottieGap(gap);
+    };
+
+    measureGap();
+    window.addEventListener("resize", measureGap);
+    return () => window.removeEventListener("resize", measureGap);
   }, []);
 
   // Get total frames when animation loads
@@ -331,6 +363,7 @@ export default function ExperienceSection() {
       <div
         className="absolute w-[53%] origin-top-left z-[1]"
         style={{
+          transform: `translateY(-${lottieGap}px)`,
           aspectRatio: "851 / 2163",
         }}
       >

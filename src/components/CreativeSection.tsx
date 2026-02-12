@@ -154,6 +154,7 @@ export default function CreativeSection() {
 
         {/* Lottie Background Animation */}
         <div
+          data-id="creative-lottie"
           className="absolute w-[53%] origin-top-left z-[1]"
           style={{ aspectRatio: "851 / 721" }}
         >
