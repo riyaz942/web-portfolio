@@ -6,6 +6,7 @@ import ExperienceCard, { experiences } from "./ExperienceCard";
 
 export default function ExperienceSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
   const [dotLottie, setDotLottie] = useState<DotLottie | null>(null);
   const [totalFrames, setTotalFrames] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -16,8 +17,10 @@ export default function ExperienceSection() {
   }, []);
 
   // Watch the gap between the Creative section Lottie bottom and ExperienceSection top on resize
+  // and when the section is about to enter the viewport
   useEffect(() => {
     const measureGap = () => {
+      console.log("something: measureGap");
       const creativeLottie = document.querySelector<HTMLElement>(
         '[data-id="creative-lottie"]',
       );
@@ -41,9 +44,29 @@ export default function ExperienceSection() {
       setLottieGap(gap);
     };
 
-    measureGap();
+    // Use IntersectionObserver to trigger measureGap when the title becomes visible
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            measureGap();
+          }
+        });
+      },
+      {
+        threshold: 0,
+      },
+    );
+
+    if (titleRef.current) {
+      observer.observe(titleRef.current);
+    }
+
     window.addEventListener("resize", measureGap);
-    return () => window.removeEventListener("resize", measureGap);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", measureGap);
+    };
   }, []);
 
   // Get total frames when animation loads
@@ -175,7 +198,10 @@ export default function ExperienceSection() {
               transform: `translateY(${(1 - headerProgress) * 30}px)`,
             }}
           >
-            <h2 className="text-[clamp(2.5rem,8vw,5rem)] font-bold tracking-tight mb-4">
+            <h2
+              ref={titleRef}
+              className="text-[clamp(2.5rem,8vw,5rem)] font-bold tracking-tight mb-4"
+            >
               <span className="bg-gradient-to-r from-foreground via-accent to-accent-secondary bg-clip-text text-transparent">
                 Experience
               </span>
