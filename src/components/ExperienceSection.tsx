@@ -148,6 +148,7 @@ export default function ExperienceSection() {
     <section
       ref={sectionRef}
       className="relative min-h-screen py-24 bg-background"
+      style={{ clipPath: "inset(-9999px 0 0 0)" }}
     >
       {/* Background Lottie Animation - aligned with Creative section for seamless line connection.
            Width and horizontal transform match CreativeSection exactly (w-[90%], translateX(-20%)).
