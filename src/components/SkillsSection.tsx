@@ -2,7 +2,29 @@
 
 import { useRef, useEffect, useState, useCallback } from "react";
 import { DotLottieReact, DotLottie } from "@lottiefiles/dotlottie-react";
-import SkillCard, { skillCategories } from "./SkillCard";
+
+const skillHighlights = [
+  {
+    title: "The Frontend Canvas",
+    description:
+      "Crafting pixel-perfect, highly animated UI with modern JavaScript",
+  },
+  {
+    title: "Intelligent Systems",
+    description:
+      "Weaving conversational AI into apps to make them think and speak",
+  },
+  {
+    title: "Full-Stack Foundation",
+    description:
+      "Node.js and cloud infrastructure that doesn't buckle under pressure",
+  },
+  {
+    title: "Tech Leadership",
+    description:
+      "Guiding teams, architecting solutions, and shipping what matters",
+  },
+];
 
 export default function SkillsSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -123,8 +145,8 @@ export default function SkillsSection() {
     0,
     Math.min(1, (scrollProgress - 0.2) / 0.15),
   );
-  // Cards stagger in from 35% to 65%
-  const getCardRevealProgress = (index: number) => {
+  // Highlights stagger in from 35% to 65%
+  const getHighlightProgress = (index: number) => {
     const startOffset = 0.35 + index * 0.075;
     return Math.max(0, Math.min(1, (scrollProgress - startOffset) / 0.1));
   };
@@ -194,8 +216,9 @@ export default function SkillsSection() {
               WebkitBackdropFilter: `blur(${12 * containerProgress}px)`,
             }}
           >
-            {/* Section Header */}
+            {/* Main Headline */}
             <div
+              className="relative"
               style={{
                 transform: `translateY(${(1 - headerProgress) * 40}px)`,
                 opacity: headerProgress,
@@ -204,10 +227,10 @@ export default function SkillsSection() {
               }}
             >
               <h2 className="text-[clamp(1.75rem,4vw,3rem)] font-bold leading-[1.1] tracking-tight">
-                <span className="text-foreground">Skills &</span>
+                <span className="text-foreground">I speak fluently in code,</span>
                 <br />
                 <span className="bg-gradient-to-r from-accent to-accent-secondary bg-clip-text text-transparent">
-                  Expertise
+                  but I build for humans.
                 </span>
               </h2>
               <p
@@ -217,21 +240,45 @@ export default function SkillsSection() {
                   transform: `translateY(${Math.max(0, (1 - headerProgress) * 20)}px)`,
                 }}
               >
-                Technologies and tools I use
+                Bridging the gap between cutting-edge AI
                 <br />
-                to bring ideas to life
+                and seamless user experiences.
               </p>
             </div>
 
-            {/* Skills Grid — 2 columns within the left-aligned container */}
-            <div className="grid grid-cols-2 gap-4 md:gap-5">
-              {skillCategories.map((category, index) => (
-                <SkillCard
-                  key={category.id}
-                  category={category}
-                  revealProgress={getCardRevealProgress(index)}
-                />
-              ))}
+            {/* Skill Highlights — vertical stack with left accent */}
+            <div className="flex flex-col gap-5">
+              {skillHighlights.map((highlight, index) => {
+                const progress = getHighlightProgress(index);
+                return (
+                  <div
+                    key={highlight.title}
+                    className="group relative pl-5"
+                    style={{
+                      transform: `translateX(${(1 - progress) * -20}px)`,
+                      opacity: progress,
+                      filter: `blur(${(1 - progress) * 4}px)`,
+                      transition: "filter 0.1s ease-out",
+                    }}
+                  >
+                    {/* Left accent bar */}
+                    <div
+                      className="absolute left-0 top-0 w-[2px] bg-gradient-to-b from-accent to-accent-secondary rounded-full"
+                      style={{
+                        height: `${progress * 100}%`,
+                        opacity: 0.5 + progress * 0.5,
+                      }}
+                    />
+
+                    <h3 className="text-[clamp(0.8rem,1.2vw,0.95rem)] font-semibold text-foreground tracking-wide">
+                      {highlight.title}
+                    </h3>
+                    <p className="text-[clamp(0.7rem,1vw,0.85rem)] text-muted leading-relaxed mt-1">
+                      {highlight.description}
+                    </p>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
