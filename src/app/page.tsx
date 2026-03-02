@@ -5,7 +5,7 @@ import Image from "next/image";
 import BackgroundAnimator from "@/components/BackgroundAnimator";
 import CreativeSection from "@/components/CreativeSection";
 import ExperienceSection from "@/components/ExperienceSection";
-// import SkillsSection from "@/components/SkillsSection";
+import SkillsSection from "@/components/SkillsSection";
 
 export default function Home() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -105,21 +105,8 @@ export default function Home() {
       {/* Experience Section */}
       <ExperienceSection />
 
-      {/* Skills Section
-      <SkillsSection /> */}
-
-      {/* Work Section */}
-      <section className="min-h-screen flex items-center justify-center py-24 px-8 relative bg-[#111111]">
-        <div className="max-w-5xl w-full text-center">
-          <h2 className="text-[clamp(2.5rem,8vw,6rem)] font-bold mb-8 tracking-tight">
-            Work
-          </h2>
-          <p className="text-[clamp(1.125rem,2vw,1.5rem)] text-muted max-w-xl mx-auto leading-relaxed">
-            A collection of projects that showcase my skills and passion for
-            development.
-          </p>
-        </div>
-      </section>
+      {/* Skills Section */}
+      <SkillsSection />
 
       {/* Contact Section */}
       <section className="min-h-screen flex items-center justify-center py-24 px-8 relative bg-gradient-to-b from-[#111111] to-background">

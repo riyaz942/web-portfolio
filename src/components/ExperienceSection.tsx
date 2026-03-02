@@ -105,8 +105,8 @@ export default function ExperienceSection() {
 
       // Animation starts when section comes into view
       // Progress from 0 to 1 as user scrolls through the section
-      const scrollStart = viewportHeight * 0.7; // Start early, when section bottom edge enters viewport
-      const scrollEnd = -sectionHeight + viewportHeight * 0.7; // End when 70% of section has scrolled
+      const scrollStart = viewportHeight * 0.7; // Start when section enters viewport at 70% from top
+      const scrollEnd = -sectionHeight + viewportHeight; // End when section bottom reaches viewport bottom
 
       const scrolled = scrollStart - sectionTop;
       const scrollRange = scrollStart - scrollEnd;
@@ -228,9 +228,6 @@ export default function ExperienceSection() {
           </div>
         </div>
       </div>
-
-      {/* Bottom fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none z-20" />
     </section>
   );
 }
