@@ -8,11 +8,21 @@ export default function SkillsSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [dotLottie, setDotLottie] = useState<DotLottie | null>(null);
   const [totalFrames, setTotalFrames] = useState(0);
+  const [treeDotLottie, setTreeDotLottie] = useState<DotLottie | null>(null);
+  const [treeTotalFrames, setTreeTotalFrames] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [treeProgress, setTreeProgress] = useState(0);
 
   const dotLottieRefCallback = useCallback((instance: DotLottie | null) => {
     setDotLottie(instance);
   }, []);
+
+  const treeDotLottieRefCallback = useCallback(
+    (instance: DotLottie | null) => {
+      setTreeDotLottie(instance);
+    },
+    [],
+  );
 
   useEffect(() => {
     if (!dotLottie) return;
@@ -35,7 +45,27 @@ export default function SkillsSection() {
   }, [dotLottie]);
 
   useEffect(() => {
-    if (!dotLottie || totalFrames === 0 || !sectionRef.current) return;
+    if (!treeDotLottie) return;
+
+    const handleLoad = () => {
+      setTreeTotalFrames(treeDotLottie.totalFrames);
+      treeDotLottie.pause();
+      treeDotLottie.setFrame(0);
+    };
+
+    treeDotLottie.addEventListener("load", handleLoad);
+
+    if (treeDotLottie.isLoaded) {
+      handleLoad();
+    }
+
+    return () => {
+      treeDotLottie.removeEventListener("load", handleLoad);
+    };
+  }, [treeDotLottie]);
+
+  useEffect(() => {
+    if (!sectionRef.current) return;
 
     const handleScroll = () => {
       const section = sectionRef.current;
@@ -46,18 +76,33 @@ export default function SkillsSection() {
       const viewportHeight = window.innerHeight;
 
       const delayThreshold = viewportHeight * 0.5;
-      const animationScrollDistance = viewportHeight * 3;
+      const lineAnimScrollDist = viewportHeight * 3;
+      const treeAnimScrollDist = viewportHeight * 1.5;
 
       const scrolled = delayThreshold - sectionTop;
-      const progress = Math.max(
+
+      const lineProg = Math.max(
         0,
-        Math.min(1, scrolled / animationScrollDistance),
+        Math.min(1, scrolled / lineAnimScrollDist),
       );
+      setScrollProgress(lineProg);
 
-      setScrollProgress(progress);
+      if (dotLottie && totalFrames > 0) {
+        dotLottie.setFrame(Math.floor(lineProg * (totalFrames - 1)));
+      }
 
-      const frame = Math.floor(progress * (totalFrames - 1));
-      dotLottie.setFrame(frame);
+      const treeScrolled = scrolled - lineAnimScrollDist;
+      const treeProg = Math.max(
+        0,
+        Math.min(1, treeScrolled / treeAnimScrollDist),
+      );
+      setTreeProgress(treeProg);
+
+      if (treeDotLottie && treeTotalFrames > 0) {
+        treeDotLottie.setFrame(
+          Math.floor(treeProg * (treeTotalFrames - 1)),
+        );
+      }
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -66,7 +111,7 @@ export default function SkillsSection() {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [dotLottie, totalFrames]);
+  }, [dotLottie, totalFrames, treeDotLottie, treeTotalFrames]);
 
   // Container glass appears slightly before content (at 15% progress)
   const containerProgress = Math.max(
@@ -88,13 +133,13 @@ export default function SkillsSection() {
     <section
       ref={sectionRef}
       className="relative w-full"
-      style={{ height: "400vh" }}
+      style={{ height: "600vh" }}
     >
       <div className="sticky top-0 w-full h-screen overflow-hidden">
         {/* Center-line-to-right Lottie — positioned on the right, mirroring CreativeSection */}
         <div
           data-id="skills-lottie"
-          className="absolute right-0 top-0 w-[52.8%] origin-top-right z-[1]"
+          className="absolute right-0 top-0 w-[52.7%] origin-top-right z-[1]"
           style={{ aspectRatio: "851 / 721" }}
         >
           <DotLottieReact
@@ -107,6 +152,29 @@ export default function SkillsSection() {
                 autoResize: true,
                 fit: "contain",
                 align: ["1", "0"], // Align to top-right
+              } as unknown as typeof undefined
+            }
+          />
+        </div>
+
+        {/* Tree Lottie — same position, plays after center-line-to-right finishes */}
+        <div
+          className="absolute right-0 top-0 w-[52.7%] origin-top-right z-[2]"
+          style={{
+            aspectRatio: "851 / 721",
+            opacity: treeProgress > 0 ? 1 : 0,
+          }}
+        >
+          <DotLottieReact
+            src="/images/Skill-section/tree-animation.lottie"
+            autoplay={false}
+            loop={false}
+            dotLottieRefCallback={treeDotLottieRefCallback}
+            renderConfig={
+              {
+                autoResize: true,
+                fit: "contain",
+                align: ["1", "0"],
               } as unknown as typeof undefined
             }
           />
