@@ -123,7 +123,7 @@ export default function CreativeSection() {
     <section
       ref={sectionRef}
       className="relative w-full"
-      style={{ height: "280vh" }}
+      style={{ height: "260vh" }}
     >
       {/* Sticky container for the animation and content */}
       <div className="sticky top-0 w-full h-screen overflow-hidden">
