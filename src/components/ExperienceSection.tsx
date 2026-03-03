@@ -105,8 +105,8 @@ export default function ExperienceSection() {
 
       // Animation starts when section comes into view
       // Progress from 0 to 1 as user scrolls through the section
-      const scrollStart = viewportHeight * 0.7; // Start when section enters viewport at 70% from top
-      const scrollEnd = -sectionHeight + viewportHeight; // End when section bottom reaches viewport bottom
+      const scrollStart = viewportHeight * 0.9; // Start earlier when section first enters viewport
+      const scrollEnd = -sectionHeight * 0.8; // End later, well after section has scrolled past
 
       const scrolled = scrollStart - sectionTop;
       const scrollRange = scrollStart - scrollEnd;
