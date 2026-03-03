@@ -72,9 +72,7 @@ export default function CreativeSection() {
       // (i.e., after 80% of the previous section has scrolled)
       const delayThreshold = viewportHeight * 0.5;
 
-      // Animation scroll range: use only 300vh of the 400vh section for the animation
-      // This ensures the full animation plays within the scroll distance
-      const animationScrollDistance = viewportHeight * 3; // 300vh for animation playback
+      const animationScrollDistance = viewportHeight * 2;
 
       // Calculate scroll progress through the section
       // Animation starts when section top reaches 20% from top of viewport
@@ -103,34 +101,29 @@ export default function CreativeSection() {
     };
   }, [dotLottie, totalFrames]);
 
-  // Calculate content animation states based on scroll progress
-  // Container appears slightly before content (at 15% progress)
   const containerProgress = Math.max(
     0,
-    Math.min(1, (scrollProgress - 0.15) / 0.15),
+    Math.min(1, (scrollProgress - 0.1) / 0.12),
   );
-  // Headline appears at 20% progress (earlier reveal)
   const headlineProgress = Math.max(
     0,
-    Math.min(1, (scrollProgress - 0.2) / 0.15),
+    Math.min(1, (scrollProgress - 0.14) / 0.12),
   );
-  // Highlights stagger in from 35% to 65% (earlier reveal)
   const getHighlightProgress = (index: number) => {
-    const startOffset = 0.35 + index * 0.075;
-    return Math.max(0, Math.min(1, (scrollProgress - startOffset) / 0.1));
+    const startOffset = 0.25 + index * 0.06;
+    return Math.max(0, Math.min(1, (scrollProgress - startOffset) / 0.08));
   };
 
-  // Background doodle image reveals when Lottie animation is about to end (85% progress)
   const backgroundRevealProgress = Math.max(
     0,
-    Math.min(1, (scrollProgress - 0.85) / 0.15),
+    Math.min(1, (scrollProgress - 0.8) / 0.2),
   );
 
   return (
     <section
       ref={sectionRef}
       className="relative w-full"
-      style={{ height: "400vh" }} // Extra height for scroll-through animation
+      style={{ height: "280vh" }}
     >
       {/* Sticky container for the animation and content */}
       <div className="sticky top-0 w-full h-screen overflow-hidden">
