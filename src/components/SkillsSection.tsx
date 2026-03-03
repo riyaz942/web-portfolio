@@ -39,12 +39,9 @@ export default function SkillsSection() {
     setDotLottie(instance);
   }, []);
 
-  const treeDotLottieRefCallback = useCallback(
-    (instance: DotLottie | null) => {
-      setTreeDotLottie(instance);
-    },
-    [],
-  );
+  const treeDotLottieRefCallback = useCallback((instance: DotLottie | null) => {
+    setTreeDotLottie(instance);
+  }, []);
 
   useEffect(() => {
     if (!dotLottie) return;
@@ -98,15 +95,12 @@ export default function SkillsSection() {
       const viewportHeight = window.innerHeight;
 
       const delayThreshold = viewportHeight * 0.5;
-      const lineAnimScrollDist = viewportHeight * 3;
-      const treeAnimScrollDist = viewportHeight * 1.5;
+      const lineAnimScrollDist = viewportHeight * 1.4;
+      const treeAnimScrollDist = viewportHeight * 0.8;
 
       const scrolled = delayThreshold - sectionTop;
 
-      const lineProg = Math.max(
-        0,
-        Math.min(1, scrolled / lineAnimScrollDist),
-      );
+      const lineProg = Math.max(0, Math.min(1, scrolled / lineAnimScrollDist));
       setScrollProgress(lineProg);
 
       if (dotLottie && totalFrames > 0) {
@@ -121,9 +115,7 @@ export default function SkillsSection() {
       setTreeProgress(treeProg);
 
       if (treeDotLottie && treeTotalFrames > 0) {
-        treeDotLottie.setFrame(
-          Math.floor(treeProg * (treeTotalFrames - 1)),
-        );
+        treeDotLottie.setFrame(Math.floor(treeProg * (treeTotalFrames - 1)));
       }
     };
 
@@ -155,14 +147,17 @@ export default function SkillsSection() {
     <section
       ref={sectionRef}
       className="relative w-full"
-      style={{ height: "600vh" }}
+      style={{ height: "300vh" }}
     >
       <div className="sticky top-0 w-full h-screen overflow-hidden">
         {/* Center-line-to-right Lottie — positioned on the right, mirroring CreativeSection */}
         <div
           data-id="skills-lottie"
           className="absolute right-0 top-0 w-[52.7%] origin-top-right z-[1]"
-          style={{ aspectRatio: "851 / 721" }}
+          style={{
+            aspectRatio: "851 / 721",
+            opacity: scrollProgress >= 1 ? 0 : 1,
+          }}
         >
           <DotLottieReact
             src="/images/Skill-section/center-line-to-right-animation.lottie"
@@ -227,7 +222,9 @@ export default function SkillsSection() {
               }}
             >
               <h2 className="text-[clamp(1.75rem,4vw,3rem)] font-bold leading-[1.1] tracking-tight">
-                <span className="text-foreground">I speak fluently in code,</span>
+                <span className="text-foreground">
+                  I speak fluently in code,
+                </span>
                 <br />
                 <span className="bg-gradient-to-r from-accent to-accent-secondary bg-clip-text text-transparent">
                   but I build for humans.
