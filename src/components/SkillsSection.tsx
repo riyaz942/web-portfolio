@@ -28,14 +28,11 @@ const skillHighlights = [
 
 type AnimPhase =
   | "scroll_driven"
-  | "auto_forward_line"
   | "auto_forward_tree"
   | "auto_complete"
-  | "auto_reverse_tree"
-  | "auto_reverse_line";
+  | "auto_reverse_tree";
 
-const MIDPOINT = 0.5;
-const AUTO_PLAY_SPEED = 1 / 1400; // progress per ms (~1.4s for full range)
+const AUTO_PLAY_SPEED = 1 / 1400;
 
 export default function SkillsSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -140,13 +137,7 @@ export default function SkillsSection() {
       const delta = dt * AUTO_PLAY_SPEED;
       const phase = phaseRef.current;
 
-      if (phase === "auto_forward_line") {
-        lineProgressRef.current = Math.min(1, lineProgressRef.current + delta);
-        syncFrames(lineProgressRef.current, treeProgressRef.current);
-        if (lineProgressRef.current >= 1) {
-          phaseRef.current = "auto_forward_tree";
-        }
-      } else if (phase === "auto_forward_tree") {
+      if (phase === "auto_forward_tree") {
         treeProgressRef.current = Math.min(1, treeProgressRef.current + delta);
         syncFrames(lineProgressRef.current, treeProgressRef.current);
         if (treeProgressRef.current >= 1) {
@@ -158,15 +149,6 @@ export default function SkillsSection() {
         treeProgressRef.current = Math.max(0, treeProgressRef.current - delta);
         syncFrames(lineProgressRef.current, treeProgressRef.current);
         if (treeProgressRef.current <= 0) {
-          phaseRef.current = "auto_reverse_line";
-        }
-      } else if (phase === "auto_reverse_line") {
-        lineProgressRef.current = Math.max(
-          MIDPOINT,
-          lineProgressRef.current - delta,
-        );
-        syncFrames(lineProgressRef.current, treeProgressRef.current);
-        if (lineProgressRef.current <= MIDPOINT) {
           phaseRef.current = "scroll_driven";
           stopAutoPlay();
           return;
@@ -191,7 +173,7 @@ export default function SkillsSection() {
       const viewportHeight = window.innerHeight;
 
       const delayThreshold = viewportHeight * 0.5;
-      const lineAnimScrollDist = viewportHeight * 1.4;
+      const lineAnimScrollDist = viewportHeight * 1.0;
 
       const scrolled = delayThreshold - sectionTop;
       const rawLineProg = Math.max(
@@ -201,31 +183,32 @@ export default function SkillsSection() {
       const phase = phaseRef.current;
 
       if (phase === "scroll_driven") {
-        const clampedProg = Math.min(rawLineProg, MIDPOINT);
-        lineProgressRef.current = clampedProg;
+        lineProgressRef.current = rawLineProg;
         treeProgressRef.current = 0;
-        syncFrames(clampedProg, 0);
+        syncFrames(rawLineProg, 0);
 
-        if (rawLineProg >= MIDPOINT) {
-          phaseRef.current = "auto_forward_line";
+        if (rawLineProg >= 1) {
+          phaseRef.current = "auto_forward_tree";
           startAutoPlay();
         }
       } else if (
         phase === "auto_complete" ||
-        phase === "auto_forward_line" ||
         phase === "auto_forward_tree"
       ) {
-        if (rawLineProg < MIDPOINT) {
+        lineProgressRef.current = rawLineProg;
+        syncFrames(rawLineProg, treeProgressRef.current);
+
+        if (rawLineProg < 1) {
           phaseRef.current = "auto_reverse_tree";
           lastTimeRef.current = null;
           startAutoPlay();
         }
-      } else if (
-        phase === "auto_reverse_tree" ||
-        phase === "auto_reverse_line"
-      ) {
-        if (rawLineProg >= MIDPOINT) {
-          phaseRef.current = "auto_forward_line";
+      } else if (phase === "auto_reverse_tree") {
+        lineProgressRef.current = rawLineProg;
+        syncFrames(rawLineProg, treeProgressRef.current);
+
+        if (rawLineProg >= 1) {
+          phaseRef.current = "auto_forward_tree";
           lastTimeRef.current = null;
           startAutoPlay();
         }
@@ -258,7 +241,7 @@ export default function SkillsSection() {
     <section
       ref={sectionRef}
       className="relative w-full"
-      style={{ height: "300vh" }}
+      style={{ height: "250vh" }}
     >
       <div className="sticky top-0 w-full h-screen overflow-hidden">
         {/* Center-line-to-right Lottie — positioned on the right, mirroring CreativeSection */}
