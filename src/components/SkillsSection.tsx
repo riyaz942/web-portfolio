@@ -26,12 +26,29 @@ const skillHighlights = [
   },
 ];
 
+type AnimPhase =
+  | "scroll_driven"
+  | "auto_forward_line"
+  | "auto_forward_tree"
+  | "auto_complete"
+  | "auto_reverse_tree"
+  | "auto_reverse_line";
+
+const MIDPOINT = 0.5;
+const AUTO_PLAY_SPEED = 1 / 800; // progress per ms (~0.8s for full range)
+
 export default function SkillsSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [dotLottie, setDotLottie] = useState<DotLottie | null>(null);
   const [totalFrames, setTotalFrames] = useState(0);
   const [treeDotLottie, setTreeDotLottie] = useState<DotLottie | null>(null);
   const [treeTotalFrames, setTreeTotalFrames] = useState(0);
+
+  const phaseRef = useRef<AnimPhase>("scroll_driven");
+  const lineProgressRef = useRef(0);
+  const treeProgressRef = useRef(0);
+  const rafRef = useRef<number | null>(null);
+  const lastTimeRef = useRef<number | null>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [treeProgress, setTreeProgress] = useState(0);
 
@@ -39,9 +56,12 @@ export default function SkillsSection() {
     setDotLottie(instance);
   }, []);
 
-  const treeDotLottieRefCallback = useCallback((instance: DotLottie | null) => {
-    setTreeDotLottie(instance);
-  }, []);
+  const treeDotLottieRefCallback = useCallback(
+    (instance: DotLottie | null) => {
+      setTreeDotLottie(instance);
+    },
+    [],
+  );
 
   useEffect(() => {
     if (!dotLottie) return;
@@ -83,6 +103,82 @@ export default function SkillsSection() {
     };
   }, [treeDotLottie]);
 
+  const syncFrames = useCallback(
+    (lineProg: number, treeProg: number) => {
+      if (dotLottie && totalFrames > 0) {
+        dotLottie.setFrame(Math.floor(lineProg * (totalFrames - 1)));
+      }
+      if (treeDotLottie && treeTotalFrames > 0) {
+        treeDotLottie.setFrame(Math.floor(treeProg * (treeTotalFrames - 1)));
+      }
+      setScrollProgress(lineProg);
+      setTreeProgress(treeProg);
+    },
+    [dotLottie, totalFrames, treeDotLottie, treeTotalFrames],
+  );
+
+  const stopAutoPlay = useCallback(() => {
+    if (rafRef.current !== null) {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = null;
+    }
+    lastTimeRef.current = null;
+  }, []);
+
+  const startAutoPlay = useCallback(() => {
+    stopAutoPlay();
+
+    const tick = (now: number) => {
+      if (lastTimeRef.current === null) {
+        lastTimeRef.current = now;
+        rafRef.current = requestAnimationFrame(tick);
+        return;
+      }
+
+      const dt = Math.min(now - lastTimeRef.current, 50);
+      lastTimeRef.current = now;
+      const delta = dt * AUTO_PLAY_SPEED;
+      const phase = phaseRef.current;
+
+      if (phase === "auto_forward_line") {
+        lineProgressRef.current = Math.min(1, lineProgressRef.current + delta);
+        syncFrames(lineProgressRef.current, treeProgressRef.current);
+        if (lineProgressRef.current >= 1) {
+          phaseRef.current = "auto_forward_tree";
+        }
+      } else if (phase === "auto_forward_tree") {
+        treeProgressRef.current = Math.min(1, treeProgressRef.current + delta);
+        syncFrames(lineProgressRef.current, treeProgressRef.current);
+        if (treeProgressRef.current >= 1) {
+          phaseRef.current = "auto_complete";
+          stopAutoPlay();
+          return;
+        }
+      } else if (phase === "auto_reverse_tree") {
+        treeProgressRef.current = Math.max(0, treeProgressRef.current - delta);
+        syncFrames(lineProgressRef.current, treeProgressRef.current);
+        if (treeProgressRef.current <= 0) {
+          phaseRef.current = "auto_reverse_line";
+        }
+      } else if (phase === "auto_reverse_line") {
+        lineProgressRef.current = Math.max(
+          MIDPOINT,
+          lineProgressRef.current - delta,
+        );
+        syncFrames(lineProgressRef.current, treeProgressRef.current);
+        if (lineProgressRef.current <= MIDPOINT) {
+          phaseRef.current = "scroll_driven";
+          stopAutoPlay();
+          return;
+        }
+      }
+
+      rafRef.current = requestAnimationFrame(tick);
+    };
+
+    rafRef.current = requestAnimationFrame(tick);
+  }, [syncFrames, stopAutoPlay]);
+
   useEffect(() => {
     if (!sectionRef.current) return;
 
@@ -96,26 +192,43 @@ export default function SkillsSection() {
 
       const delayThreshold = viewportHeight * 0.5;
       const lineAnimScrollDist = viewportHeight * 1.4;
-      const treeAnimScrollDist = viewportHeight * 0.8;
 
       const scrolled = delayThreshold - sectionTop;
-
-      const lineProg = Math.max(0, Math.min(1, scrolled / lineAnimScrollDist));
-      setScrollProgress(lineProg);
-
-      if (dotLottie && totalFrames > 0) {
-        dotLottie.setFrame(Math.floor(lineProg * (totalFrames - 1)));
-      }
-
-      const treeScrolled = scrolled - lineAnimScrollDist;
-      const treeProg = Math.max(
+      const rawLineProg = Math.max(
         0,
-        Math.min(1, treeScrolled / treeAnimScrollDist),
+        Math.min(1, scrolled / lineAnimScrollDist),
       );
-      setTreeProgress(treeProg);
+      const phase = phaseRef.current;
 
-      if (treeDotLottie && treeTotalFrames > 0) {
-        treeDotLottie.setFrame(Math.floor(treeProg * (treeTotalFrames - 1)));
+      if (phase === "scroll_driven") {
+        const clampedProg = Math.min(rawLineProg, MIDPOINT);
+        lineProgressRef.current = clampedProg;
+        treeProgressRef.current = 0;
+        syncFrames(clampedProg, 0);
+
+        if (rawLineProg >= MIDPOINT) {
+          phaseRef.current = "auto_forward_line";
+          startAutoPlay();
+        }
+      } else if (
+        phase === "auto_complete" ||
+        phase === "auto_forward_line" ||
+        phase === "auto_forward_tree"
+      ) {
+        if (rawLineProg < MIDPOINT) {
+          phaseRef.current = "auto_reverse_tree";
+          lastTimeRef.current = null;
+          startAutoPlay();
+        }
+      } else if (
+        phase === "auto_reverse_tree" ||
+        phase === "auto_reverse_line"
+      ) {
+        if (rawLineProg >= MIDPOINT) {
+          phaseRef.current = "auto_forward_line";
+          lastTimeRef.current = null;
+          startAutoPlay();
+        }
       }
     };
 
@@ -124,20 +237,18 @@ export default function SkillsSection() {
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      stopAutoPlay();
     };
-  }, [dotLottie, totalFrames, treeDotLottie, treeTotalFrames]);
+  }, [syncFrames, startAutoPlay, stopAutoPlay]);
 
-  // Container glass appears slightly before content (at 15% progress)
   const containerProgress = Math.max(
     0,
     Math.min(1, (scrollProgress - 0.15) / 0.15),
   );
-  // Header appears at 20% progress
   const headerProgress = Math.max(
     0,
     Math.min(1, (scrollProgress - 0.2) / 0.15),
   );
-  // Highlights stagger in from 35% to 65%
   const getHighlightProgress = (index: number) => {
     const startOffset = 0.35 + index * 0.075;
     return Math.max(0, Math.min(1, (scrollProgress - startOffset) / 0.1));
