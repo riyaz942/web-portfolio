@@ -35,7 +35,7 @@ type AnimPhase =
   | "auto_reverse_line";
 
 const MIDPOINT = 0.5;
-const AUTO_PLAY_SPEED = 1 / 800; // progress per ms (~0.8s for full range)
+const AUTO_PLAY_SPEED = 1 / 1400; // progress per ms (~1.4s for full range)
 
 export default function SkillsSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
