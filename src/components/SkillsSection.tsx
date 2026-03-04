@@ -53,12 +53,9 @@ export default function SkillsSection() {
     setDotLottie(instance);
   }, []);
 
-  const treeDotLottieRefCallback = useCallback(
-    (instance: DotLottie | null) => {
-      setTreeDotLottie(instance);
-    },
-    [],
-  );
+  const treeDotLottieRefCallback = useCallback((instance: DotLottie | null) => {
+    setTreeDotLottie(instance);
+  }, []);
 
   useEffect(() => {
     if (!dotLottie) return;
@@ -191,10 +188,7 @@ export default function SkillsSection() {
           phaseRef.current = "auto_forward_tree";
           startAutoPlay();
         }
-      } else if (
-        phase === "auto_complete" ||
-        phase === "auto_forward_tree"
-      ) {
+      } else if (phase === "auto_complete" || phase === "auto_forward_tree") {
         lineProgressRef.current = rawLineProg;
         syncFrames(rawLineProg, treeProgressRef.current);
 
@@ -241,7 +235,7 @@ export default function SkillsSection() {
     <section
       ref={sectionRef}
       className="relative w-full"
-      style={{ height: "250vh" }}
+      style={{ height: "170vh" }}
     >
       <div className="sticky top-0 w-full h-screen overflow-hidden">
         {/* Center-line-to-right Lottie — positioned on the right, mirroring CreativeSection */}
