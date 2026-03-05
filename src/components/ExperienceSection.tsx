@@ -216,7 +216,7 @@ export default function ExperienceSection() {
         {/* Timeline Container */}
         <div className="relative max-w-4xl mx-auto">
           {/* Experience Cards */}
-          <div className="relative flex flex-col gap-16">
+          <div className="relative flex flex-col -space-y-15">
             {experiences.map((exp, index) => (
               <ExperienceCard
                 key={exp.id}
