@@ -1,55 +1,64 @@
-Riyaz Ahmed
-ahmed.riyaz94@email.com | +91-8530562574
-riyaz-ahmed.com | github.com/riyaz942 | linkedin.com/in/riyaz942
-SKILLS
-Languages: Javascript (ES+6), Typescript, HTML, CSS, Java, PHP, SQL
-Frontend: React.js, Next.js, Tailwind, SCSS, Redux, Tanstack Query, Zod, React-Spring, D3.js, Chart.js
-Backend: Node.js, Laravel, RESTful APIs
-Mobile: React Native, Android (Java)
-Databases: MySQL, PostgreSQL
-AI & LLMs: Conversational/Voice AI, OpenAI APIs, Streaming LLMs, Agentic UI Systems
-Cloud/DevOps: AWS, CI/CD, Layer0, Vercel, Auth0, Split.io/Harness.io
-Tools/Testing: Git, Docker, Jira, Figma, Jest, Enzyme, React Testing Library, Datadog, Cursor
-EXPERIENCE
-VELOTIO TECHNOLOGIES (acquired by RSYSTEMS) – Tech Lead                                                    Jan 2021 – Present
-Product engineering firm building scalable web and mobile applications, cloud-native systems, SaaS platforms, and AI/ML solutions. Projects: Thriveworks, Appify, Jobs22
-Core contributor to the development of the Thriveworks online booking platform UI using Next.js, serving 50+ states across the US with 500K+ monthly active users; currently leading a pod responsible for key areas of the platform, contributing to a 40% increase in booking conversions.
-Coordinated an internal hackathon and individually built a voice-first AI assistant, implementing push-to-talk, hands-free voice interaction, streaming LLM responses, and agentic UI updates using OpenAI Realtime APIs.
-Lead UI team initiatives to integrate AI-powered development tools into the SDLC, resulting in a 30% reduction in development time.
-Architected and delivered a government project UI for Hudson & Hayes (UK), implementing AI integrations that enhanced workflow efficiency.
-Worked on Appify, a low-code/no-code platform (React/jQuery hybrid), enabling non-technical users to create enterprise applications.
-ZS ASSOCIATES (via COLLABERA) – Frontend Developer             				     Jul 2020 – Jan 2021
-Enterprise technology company developing data-driven web platforms, analytics systems, and internal tools at scale.
-Developed an interactive data visualization dashboard (React, D3.js) for pharmaceutical drug complaint analysis, processing 100K+ data points with real-time filtering.
-Engineered custom chart components with features including image export and CSV data download, improving data accessibility for stakeholders
-Implemented responsive design patterns and performance optimizations, achieving 95+ Lighthouse scores across metrics.
-NYKAA – Frontend Developer 									    Jan 2019 – Sep 2019
-Large-scale omnichannel e-commerce platform for beauty, fashion, and wellness, serving millions of users via high-traffic web and mobile applications.
-Implemented responsive design patterns and performance optimizations, achieving 95+ Lighthouse scores across metrics.
-Redesigned and developed the new mobile sign-in/sign-up flow using React Context API and state machine patterns, serving 3M+ monthly active users.
-Implemented AR makeup try-on feature using Modi-face SDK, integrated into iOS app via WebView with Firebase-based staged rollout, increasing user engagement
+**Riyaz Ahmed**
 
+Email: ahmed.riyaz94@email.com
+Phone: +91-8530562574
+Portfolio: riyaz-ahmed.com
+GitHub: [github.com/riyaz942](https://github.com/riyaz942)
+LinkedIn: [linkedin.com/in/riyaz942](https://linkedin.com/in/riyaz942)
 
+**SKILLS**
 
-TAILORED TECH SOLUTIONS – Fullstack Developer 						   May 2016 – Jan 2019
-Software consultancy delivering custom web and mobile applications and end-to-end product development.
-Developed the Bijli collaboration platform (React, Electron) featuring real-time messaging, file sharing, and task management; showcased at TechCrunch 2018.
-Created an IoT-enabled Android health app ("Measure") with BLE integration for smart weighing scales, providing BMI tracking and progress visualization for 5K+ users.
-Built 2 production React Native applications (food delivery and NGO management) with cross-platform compatibility
+  * **Languages:** Javascript (ES+6), Typescript, HTML, CSS, Java, PHP, SQL
+  * **Frontend:** React.js, Next.js, Tailwind, SCSS, Redux, Tanstack Query, Zod, React-Spring, D3.js, Chart.js
+  * **Backend:** Node.js, Laravel, RESTful APIs
+  * **Mobile:** React Native, Android (Java)
+  * **Databases:** MySQL, PostgreSQL
+  * **AI & LLMs:** Conversational/Voice AI, OpenAI APIs, Streaming LLMs, Agentic UI Systems
+  * **Cloud/DevOps:** AWS, CI/CD, Layer0, Vercel, Auth0, Split.io/Harness.io
+  * **Tools/Testing:** Git, Docker, Jira, Figma, Jest, Enzyme, React Testing Library, Datadog, Cursor
 
-PROJECTS & AWARDS
-Outstanding Leadership award (company wide) for Q4 2024
-Web Portfolio riyaz-ahmed.com 
-Open-source personal portfolio with 348+ GitHub stars and 57 forks, demonstrating advanced animations and modern web development practices
-VC Music Player (Android) Link
-Feature-rich music application with voice control and automatic album art detection, achieved 9K+ downloads before voluntary removal from PlayStore
+**EXPERIENCE**
 
-EDUCATION
-Bachelor of Computer Applications (BCA), Pune University (2013 – 2016)
-Higher Secondary Education | CBSE Board | 2012 – 2013
+**VELOTIO TECHNOLOGIES** (acquired by RSYSTEMS) – Tech Lead | Jan 2021 – Present
 
-LANGUAGES
-English - Business Level
-Japanese JLPT- N5
-Hindi - Native
-Bengali - Native
+  * Core contributor to the development of the Thriveworks online booking platform UI using Next.js, serving 50+ states across the US with 500K+ monthly active users; currently leading a pod responsible for key areas of the platform, contributing to a 40% increase in booking conversions.
+  * Coordinated an internal hackathon and individually built a voice-first AI assistant, implementing push-to-talk, hands-free voice interaction, streaming LLM responses, and agentic UI updates using OpenAI Realtime APIs.
+  * Lead UI team initiatives to integrate AI-powered development tools into the SDLC, resulting in a 30% reduction in development time.
+  * Architected and delivered a government project UI for Hudson & Hayes (UK), implementing AI integrations that enhanced workflow efficiency.
+  * Worked on Appify, a low-code/no-code platform (React/jQuery hybrid), enabling non-technical users to create enterprise applications.
+
+**ZS ASSOCIATES** (via COLLABERA) – Frontend Developer | Jul 2020 – Jan 2021
+
+  * Developed an interactive data visualization dashboard (React, D3.js) for pharmaceutical drug complaint analysis, processing 100K+ data points with real-time filtering.
+  * Engineered custom chart components with features including image export and CSV data download, improving data accessibility for stakeholders.
+  * Implemented responsive design patterns and performance optimizations, achieving 95+ Lighthouse scores across metrics.
+
+**NYKAA** – Frontend Developer | Jan 2019 – Sep 2019
+
+  * Implemented responsive design patterns and performance optimizations, achieving 95+ Lighthouse scores across metrics.
+  * Redesigned and developed the new mobile sign-in/sign-up flow using React Context API and state machine patterns, serving 3M+ monthly active users.
+  * Implemented AR makeup try-on feature using Modi-face SDK, integrated into iOS app via WebView with Firebase-based staged rollout, increasing user engagement.
+
+**TAILORED TECH SOLUTIONS** – Fullstack Developer | May 2016 – Jan 2019
+
+  * Developed the Bijli collaboration platform (React, Electron) featuring real-time messaging, file sharing, and task management; showcased at TechCrunch 2018.
+  * Created an IoT-enabled Android health app ("Measure") with BLE integration for smart weighing scales, providing BMI tracking and progress visualization for 5K+ users.
+  * Built 2 production React Native applications (food delivery and NGO management) with cross-platform compatibility.
+
+**PROJECTS & AWARDS**
+
+  * Outstanding Leadership award (company wide) for Q4 2024.
+  * **Web Portfolio** (riyaz-ahmed.com): Open-source personal portfolio with 348+ GitHub stars and 57 forks, demonstrating advanced animations and modern web development practices.
+  * **VC Music Player** (Android): Feature-rich music application with voice control and automatic album art detection, achieved 9K+ downloads before voluntary removal from PlayStore.
+
+**EDUCATION**
+
+  * Bachelor of Computer Applications (BCA), Pune University (2013 – 2016)
+  * Higher Secondary Education | CBSE Board | 2012 – 2013
+
+**LANGUAGES**
+
+  * English - Business Level
+  * Japanese JLPT- N5
+  * Hindi - Native
+  * Bengali - Native

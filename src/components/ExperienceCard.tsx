@@ -11,7 +11,12 @@ export const experiences = [
     period: "2021 - Present",
     domains: ["AI/Voice", "Healthcare", "GovTech"],
     description:
-      "Leading development of healthcare booking platform serving 500K+ monthly users. Built voice-first AI assistant with streaming LLMs.",
+      "Core contributor and pod lead on Thriveworks, a healthcare booking platform built with Next.js, serving 500K+ monthly users across 50+ US states.",
+    highlights: [
+      "Drove 40% increase in booking conversions through platform optimizations",
+      "Built voice-first AI assistant with streaming LLMs & OpenAI Realtime APIs",
+      "Led AI tool integration into SDLC, cutting development time by 30%",
+    ],
     iconPath:
       "M60 30 C60 25, 55 20, 50 20 C45 20, 40 25, 40 30 C40 35, 45 40, 50 45 C55 40, 60 35, 60 30 M50 45 L50 70 M40 55 L60 55 M45 70 L55 70",
   },
@@ -20,9 +25,13 @@ export const experiences = [
     company: "ZS Associates",
     role: "Frontend Developer",
     period: "2020 - 2021",
-    domains: ["Data Analytics", "Pharma"],
+    domains: ["Data Viz", "Pharma"],
     description:
-      "Built interactive data visualization dashboards with D3.js, processing 100K+ data points with real-time filtering.",
+      "Built interactive data visualization dashboards for pharmaceutical drug complaint analysis, processing 100K+ data points with real-time filtering.",
+    highlights: [
+      "Engineered custom D3.js chart components with image export & CSV download",
+      "Achieved 95+ Lighthouse scores through responsive design & perf optimizations",
+    ],
     iconPath: "M30 70 L30 40 L45 50 L45 30 L60 45 L60 25 L75 35 M25 70 L80 70",
   },
   {
@@ -32,7 +41,11 @@ export const experiences = [
     period: "2019",
     domains: ["E-commerce", "AR/VR"],
     description:
-      "Redesigned mobile sign-in flow for 3M+ users. Implemented AR makeup try-on feature using Modi-face SDK.",
+      "Contributed to India's leading beauty e-commerce platform serving 3M+ monthly active users with performance-optimized experiences.",
+    highlights: [
+      "Redesigned mobile sign-in/sign-up flow using React Context API & state machines",
+      "Implemented AR makeup try-on via Modi-face SDK with Firebase-based staged rollout",
+    ],
     iconPath:
       "M50 25 L70 45 L70 75 L30 75 L30 45 Z M40 55 L40 75 M60 55 L60 75 M45 45 L55 45",
   },
@@ -43,7 +56,12 @@ export const experiences = [
     period: "2016 - 2019",
     domains: ["IoT", "Mobile", "Desktop"],
     description:
-      "Built IoT health app with BLE integration. Developed Bijli collaboration platform showcased at TechCrunch 2018.",
+      "Built cross-platform products spanning desktop, mobile, and IoT — from concept to production and live showcases.",
+    highlights: [
+      "Developed Bijli collaboration platform (React, Electron) — showcased at TechCrunch 2018",
+      "Created IoT health app with BLE smart-scale integration, serving 5K+ users",
+      "Shipped 2 React Native apps to production — food delivery & NGO management",
+    ],
     iconPath:
       "M50 20 L50 35 M40 27 L60 27 M35 40 L65 40 L60 55 L65 55 L50 80 L50 60 L40 60 L50 80 L35 55 L40 55 Z",
   },
@@ -76,7 +94,7 @@ export default function ExperienceCard({
   index: number;
   revealProgress: number;
 }) {
-  const borderPath = createBorderPath(320, 280);
+  const borderPath = createBorderPath(380, 420);
   const isEven = index % 2 === 0;
 
   // Clamp progress between 0 and 1
@@ -96,11 +114,11 @@ export default function ExperienceCard({
       }}
     >
       {/* The Card */}
-      <div className="relative w-[320px] h-[280px] group cursor-pointer flex-shrink-0">
+      <div className="relative w-[380px] h-[420px] group cursor-pointer flex-shrink-0">
         {/* 1. The Drawing Layer (SVG) */}
         <svg
           className="absolute inset-0 w-full h-full pointer-events-none overflow-visible"
-          viewBox="0 0 320 280"
+          viewBox="0 0 380 420"
         >
           {/* The Card Border */}
           <motion.path
@@ -129,7 +147,7 @@ export default function ExperienceCard({
               pathLength: iconProgress,
               opacity: iconProgress,
             }}
-            transform="translate(205, 15)"
+            transform="translate(265, 15)"
             className="drop-shadow-[0_0_6px_rgba(167,139,250,0.5)]"
           />
 
@@ -175,29 +193,38 @@ export default function ExperienceCard({
             </p>
 
             {/* Description */}
-            <p className="text-sm text-muted mt-3 leading-relaxed line-clamp-3">
+            <p className="text-sm text-muted mt-3 leading-relaxed line-clamp-2">
               {experience.description}
             </p>
+
+            {/* Highlights */}
+            {experience.highlights && (
+              <ul className="mt-3 space-y-1.5">
+                {experience.highlights.map((highlight, i) => (
+                  <li
+                    key={i}
+                    className="text-xs text-muted/80 leading-relaxed flex items-start gap-2"
+                  >
+                    <span className="text-accent mt-0.5 text-[6px] shrink-0">
+                      ●
+                    </span>
+                    <span>{highlight}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
 
-          {/* Bottom Content */}
-          <div>
-            {/* Domain Tags */}
-            <div className="flex flex-wrap gap-2">
-              {experience.domains.map((domain) => (
-                <span
-                  key={domain}
-                  className="px-2.5 py-1 text-xs font-medium text-accent-secondary bg-accent/10 rounded-full border border-accent/20"
-                >
-                  {domain}
-                </span>
-              ))}
-            </div>
-
-            {/* Apple-style hover reveal */}
-            <div className="mt-4 flex items-center text-xs font-semibold text-purple-300 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              View Details <span className="ml-2">→</span>
-            </div>
+          {/* Domain Tags */}
+          <div className="flex flex-wrap gap-2">
+            {experience.domains.map((domain) => (
+              <span
+                key={domain}
+                className="px-2.5 py-1 text-xs font-medium text-accent-secondary bg-accent/10 rounded-full border border-accent/20"
+              >
+                {domain}
+              </span>
+            ))}
           </div>
         </div>
       </div>
