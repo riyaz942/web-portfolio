@@ -114,11 +114,12 @@ export default function ExperienceCard({
       }}
     >
       {/* The Card */}
-      <div className="relative w-[380px] h-[420px] group cursor-pointer flex-shrink-0">
+      <div className="relative w-[380px] group cursor-pointer flex-shrink-0">
         {/* 1. The Drawing Layer (SVG) */}
         <svg
           className="absolute inset-0 w-full h-full pointer-events-none overflow-visible"
           viewBox="0 0 380 420"
+          preserveAspectRatio="none"
         >
           {/* The Card Border */}
           <motion.path
@@ -168,7 +169,7 @@ export default function ExperienceCard({
 
         {/* 2. The Content Layer (Fades in) */}
         <div
-          className="absolute inset-0 p-6 flex flex-col justify-between"
+          className="relative p-6 flex flex-col gap-4"
           style={{
             opacity: contentProgress,
             transform: `translateY(${(1 - contentProgress) * 15}px)`,
