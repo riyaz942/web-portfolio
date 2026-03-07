@@ -137,10 +137,10 @@ export default function CreativeSection() {
           }}
         >
           <Image
-            src="/images/Creative-section/Creative-section-background-doodle-image.svg"
+            src="/images/Creative-section/Creative-section-background-doodle-image-2.png"
             alt=""
             fill
-            className="object-cover object-center"
+            className="object-cover object-center opacity-20"
             priority={false}
           />
         </div>
