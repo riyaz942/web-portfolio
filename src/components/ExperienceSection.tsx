@@ -2,6 +2,7 @@
 
 import { useRef, useEffect, useState, useCallback } from "react";
 import { DotLottieReact, DotLottie } from "@lottiefiles/dotlottie-react";
+import Image from "next/image";
 import ExperienceCard, { experiences } from "./ExperienceCard";
 
 export default function ExperienceSection() {
@@ -10,6 +11,7 @@ export default function ExperienceSection() {
   const [dotLottie, setDotLottie] = useState<DotLottie | null>(null);
   const [totalFrames, setTotalFrames] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [bgRevealProgress, setBgRevealProgress] = useState(0);
   const [lottieGap, setLottieGap] = useState(0);
   console.log("something", lottieGap);
   const dotLottieRefCallback = useCallback((instance: DotLottie | null) => {
@@ -125,6 +127,25 @@ export default function ExperienceSection() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [dotLottie, totalFrames]);
 
+  // Background image reveal: starts when section top hits viewport top,
+  // completes over 400px of additional scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      const section = sectionRef.current;
+      if (!section) return;
+
+      const rect = section.getBoundingClientRect();
+      const revealDistance = 400;
+      const progress = Math.max(0, Math.min(1, -rect.top / revealDistance));
+      setBgRevealProgress(progress);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   // Calculate reveal progress for each experience card
   // Cards reveal progressively as scroll progresses
   const getCardRevealProgress = (index: number) => {
@@ -177,17 +198,6 @@ export default function ExperienceSection() {
         />
       </div>
 
-      {/* Background subtle pattern */}
-      <div className="absolute inset-0 opacity-[0.02] z-0">
-        <div
-          className="w-full h-full"
-          style={{
-            backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`,
-            backgroundSize: "40px 40px",
-          }}
-        />
-      </div>
-
       {/* Content */}
       <div className="relative z-10">
         {/* Section Header */}
@@ -212,20 +222,43 @@ export default function ExperienceSection() {
             </p>
           </div>
         </div>
+      </div>
 
-        {/* Timeline Container */}
-        <div className="relative max-w-4xl mx-auto">
-          {/* Experience Cards */}
-          <div className="relative flex flex-col -space-y-15">
-            {experiences.map((exp, index) => (
-              <ExperienceCard
-                key={exp.id}
-                experience={exp}
-                index={index}
-                revealProgress={getCardRevealProgress(index)}
-              />
-            ))}
-          </div>
+      {/* Background image below title with top/bottom fade, covering the rest of the section */}
+      <div
+        className="absolute left-0 right-0 bottom-0 z-0 overflow-hidden"
+        style={{
+          top: "20rem",
+          opacity: bgRevealProgress,
+          transform: `scale(${1 + 0.05 * (1 - bgRevealProgress)})`,
+          maskImage:
+            "linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%)",
+          WebkitMaskImage:
+            "linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%)",
+        }}
+      >
+        <Image
+          src="/images/Experience-section/experience-section-background-image.png"
+          alt=""
+          fill
+          className="object-cover opacity-40"
+          sizes="100vw"
+          priority={false}
+        />
+      </div>
+
+      {/* Timeline Container */}
+      <div className="relative z-10 max-w-4xl mx-auto">
+        {/* Experience Cards */}
+        <div className="relative flex flex-col -space-y-15">
+          {experiences.map((exp, index) => (
+            <ExperienceCard
+              key={exp.id}
+              experience={exp}
+              index={index}
+              revealProgress={getCardRevealProgress(index)}
+            />
+          ))}
         </div>
       </div>
     </section>
