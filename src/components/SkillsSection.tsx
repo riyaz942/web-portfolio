@@ -36,6 +36,7 @@ const AUTO_PLAY_SPEED = 1 / 1400;
 
 export default function SkillsSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const innerContainerRef = useRef<HTMLDivElement>(null);
   const [dotLottie, setDotLottie] = useState<DotLottie | null>(null);
   const [totalFrames, setTotalFrames] = useState(0);
   const [treeDotLottie, setTreeDotLottie] = useState<DotLottie | null>(null);
@@ -177,6 +178,26 @@ export default function SkillsSection() {
         0,
         Math.min(1, scrolled / lineAnimScrollDist),
       );
+
+      // --- Stacked / Layered Scroll Sections Effect ---
+      // The Contact section has a negative top margin of 100vh.
+      // It starts overlapping this section when sectionTop reaches -1.2 * viewportHeight,
+      // and completely covers it when sectionTop reaches -2.2 * viewportHeight.
+      const overlapStart = -1.2 * viewportHeight;
+      let rawOverlap = 0;
+      if (sectionTop <= overlapStart) {
+        rawOverlap = (overlapStart - sectionTop) / viewportHeight;
+      }
+      const clampedOverlap = Math.max(0, Math.min(1, rawOverlap));
+
+      if (innerContainerRef.current) {
+        // Push the section back slightly, dim it, and blur it to create a depth effect
+        innerContainerRef.current.style.transform = `scale(${1 - clampedOverlap * 0.05}) translateY(${clampedOverlap * 3}vh)`;
+        innerContainerRef.current.style.opacity = `${1 - clampedOverlap * 0.6}`;
+        innerContainerRef.current.style.filter = `blur(${clampedOverlap * 10}px)`;
+      }
+      // ------------------------------------------------
+
       const phase = phaseRef.current;
 
       if (phase === "scroll_driven") {
@@ -235,135 +256,141 @@ export default function SkillsSection() {
     <section
       ref={sectionRef}
       className="relative w-full"
-      style={{ height: "170vh" }}
+      style={{ height: "300vh" }}
     >
       <div className="sticky top-0 w-full h-screen overflow-hidden">
-        {/* Center-line-to-right Lottie — positioned on the right, mirroring CreativeSection */}
         <div
-          data-id="skills-lottie"
-          className="absolute right-0 top-0 w-[52.7%] origin-top-right z-[1]"
-          style={{
-            aspectRatio: "851 / 721",
-            opacity: scrollProgress >= 1 ? 0 : 1,
-          }}
+          ref={innerContainerRef}
+          className="w-full h-full will-change-transform"
+          style={{ transformOrigin: "top center" }}
         >
-          <DotLottieReact
-            src="/images/Skill-section/center-line-to-right-animation.lottie"
-            autoplay={false}
-            loop={false}
-            dotLottieRefCallback={dotLottieRefCallback}
-            renderConfig={
-              {
-                autoResize: true,
-                fit: "contain",
-                align: ["1", "0"], // Align to top-right
-              } as unknown as typeof undefined
-            }
-          />
-        </div>
-
-        {/* Tree Lottie — same position, plays after center-line-to-right finishes */}
-        <div
-          className="absolute right-0 top-0 w-[52.7%] origin-top-right z-[2]"
-          style={{
-            aspectRatio: "851 / 721",
-            opacity: treeProgress > 0 ? 1 : 0,
-          }}
-        >
-          <DotLottieReact
-            src="/images/Skill-section/tree-animation.lottie"
-            autoplay={false}
-            loop={false}
-            dotLottieRefCallback={treeDotLottieRefCallback}
-            renderConfig={
-              {
-                autoResize: true,
-                fit: "contain",
-                align: ["1", "0"],
-              } as unknown as typeof undefined
-            }
-          />
-        </div>
-
-        {/* Bottom fade overlay */}
-        <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-background to-transparent pointer-events-none z-[5]" />
-
-        {/* Content Layer — left side, opposite of CreativeSection */}
-        <div className="relative z-10 h-full flex items-center">
+          {/* Center-line-to-right Lottie — positioned on the right, mirroring CreativeSection */}
           <div
-            className="absolute left-8 md:left-16 lg:left-24 max-w-[min(50%,600px)] flex flex-col justify-center gap-14 p-6 md:p-8 rounded-2xl"
+            data-id="skills-lottie"
+            className="absolute right-0 top-0 w-[52.7%] origin-top-right z-[1]"
             style={{
-              background: `color-mix(in srgb, var(--color-background) ${50 * containerProgress}%, transparent)`,
-              border: `1px solid rgba(255, 255, 255, ${0.08 * containerProgress})`,
-              backdropFilter: `blur(${12 * containerProgress}px)`,
-              WebkitBackdropFilter: `blur(${12 * containerProgress}px)`,
+              aspectRatio: "851 / 721",
+              opacity: scrollProgress >= 1 ? 0 : 1,
             }}
           >
-            {/* Main Headline */}
+            <DotLottieReact
+              src="/images/Skill-section/center-line-to-right-animation.lottie"
+              autoplay={false}
+              loop={false}
+              dotLottieRefCallback={dotLottieRefCallback}
+              renderConfig={
+                {
+                  autoResize: true,
+                  fit: "contain",
+                  align: ["1", "0"], // Align to top-right
+                } as unknown as typeof undefined
+              }
+            />
+          </div>
+
+          {/* Tree Lottie — same position, plays after center-line-to-right finishes */}
+          <div
+            className="absolute right-0 top-0 w-[52.7%] origin-top-right z-[2]"
+            style={{
+              aspectRatio: "851 / 721",
+              opacity: treeProgress > 0 ? 1 : 0,
+            }}
+          >
+            <DotLottieReact
+              src="/images/Skill-section/tree-animation.lottie"
+              autoplay={false}
+              loop={false}
+              dotLottieRefCallback={treeDotLottieRefCallback}
+              renderConfig={
+                {
+                  autoResize: true,
+                  fit: "contain",
+                  align: ["1", "0"],
+                } as unknown as typeof undefined
+              }
+            />
+          </div>
+
+          {/* Bottom fade overlay */}
+          <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-background to-transparent pointer-events-none z-[5]" />
+
+          {/* Content Layer — left side, opposite of CreativeSection */}
+          <div className="relative z-10 h-full flex items-center">
             <div
-              className="relative"
+              className="absolute left-8 md:left-16 lg:left-24 max-w-[min(50%,600px)] flex flex-col justify-center gap-14 p-6 md:p-8 rounded-2xl"
               style={{
-                transform: `translateY(${(1 - headerProgress) * 40}px)`,
-                opacity: headerProgress,
-                filter: `blur(${(1 - headerProgress) * 8}px)`,
-                transition: "filter 0.1s ease-out",
+                background: `color-mix(in srgb, var(--color-background) ${50 * containerProgress}%, transparent)`,
+                border: `1px solid rgba(255, 255, 255, ${0.08 * containerProgress})`,
+                backdropFilter: `blur(${12 * containerProgress}px)`,
+                WebkitBackdropFilter: `blur(${12 * containerProgress}px)`,
               }}
             >
-              <h2 className="text-[clamp(1.75rem,4vw,3rem)] font-bold leading-[1.1] tracking-tight">
-                <span className="text-foreground">
-                  I speak fluently in code,
-                </span>
-                <br />
-                <span className="bg-gradient-to-r from-accent to-accent-secondary bg-clip-text text-transparent">
-                  but I build for humans.
-                </span>
-              </h2>
-              <p
-                className="mt-4 text-[clamp(0.9rem,1.5vw,1.15rem)] text-muted leading-relaxed"
+              {/* Main Headline */}
+              <div
+                className="relative"
                 style={{
-                  opacity: Math.max(0, (headerProgress - 0.3) / 0.7),
-                  transform: `translateY(${Math.max(0, (1 - headerProgress) * 20)}px)`,
+                  transform: `translateY(${(1 - headerProgress) * 40}px)`,
+                  opacity: headerProgress,
+                  filter: `blur(${(1 - headerProgress) * 8}px)`,
+                  transition: "filter 0.1s ease-out",
                 }}
               >
-                Bridging the gap between cutting-edge AI
-                <br />
-                and seamless user experiences.
-              </p>
-            </div>
+                <h2 className="text-[clamp(1.75rem,4vw,3rem)] font-bold leading-[1.1] tracking-tight">
+                  <span className="text-foreground">
+                    I speak fluently in code,
+                  </span>
+                  <br />
+                  <span className="bg-gradient-to-r from-accent to-accent-secondary bg-clip-text text-transparent">
+                    but I build for humans.
+                  </span>
+                </h2>
+                <p
+                  className="mt-4 text-[clamp(0.9rem,1.5vw,1.15rem)] text-muted leading-relaxed"
+                  style={{
+                    opacity: Math.max(0, (headerProgress - 0.3) / 0.7),
+                    transform: `translateY(${Math.max(0, (1 - headerProgress) * 20)}px)`,
+                  }}
+                >
+                  Bridging the gap between cutting-edge AI
+                  <br />
+                  and seamless user experiences.
+                </p>
+              </div>
 
-            {/* Skill Highlights — vertical stack with left accent */}
-            <div className="flex flex-col gap-5">
-              {skillHighlights.map((highlight, index) => {
-                const progress = getHighlightProgress(index);
-                return (
-                  <div
-                    key={highlight.title}
-                    className="group relative pl-5"
-                    style={{
-                      transform: `translateX(${(1 - progress) * -20}px)`,
-                      opacity: progress,
-                      filter: `blur(${(1 - progress) * 4}px)`,
-                      transition: "filter 0.1s ease-out",
-                    }}
-                  >
-                    {/* Left accent bar */}
+              {/* Skill Highlights — vertical stack with left accent */}
+              <div className="flex flex-col gap-5">
+                {skillHighlights.map((highlight, index) => {
+                  const progress = getHighlightProgress(index);
+                  return (
                     <div
-                      className="absolute left-0 top-0 w-[2px] bg-gradient-to-b from-accent to-accent-secondary rounded-full"
+                      key={highlight.title}
+                      className="group relative pl-5"
                       style={{
-                        height: `${progress * 100}%`,
-                        opacity: 0.5 + progress * 0.5,
+                        transform: `translateX(${(1 - progress) * -20}px)`,
+                        opacity: progress,
+                        filter: `blur(${(1 - progress) * 4}px)`,
+                        transition: "filter 0.1s ease-out",
                       }}
-                    />
+                    >
+                      {/* Left accent bar */}
+                      <div
+                        className="absolute left-0 top-0 w-[2px] bg-gradient-to-b from-accent to-accent-secondary rounded-full"
+                        style={{
+                          height: `${progress * 100}%`,
+                          opacity: 0.5 + progress * 0.5,
+                        }}
+                      />
 
-                    <h3 className="text-[clamp(0.8rem,1.2vw,0.95rem)] font-semibold text-foreground tracking-wide">
-                      {highlight.title}
-                    </h3>
-                    <p className="text-[clamp(0.7rem,1vw,0.85rem)] text-muted leading-relaxed mt-1">
-                      {highlight.description}
-                    </p>
-                  </div>
-                );
-              })}
+                      <h3 className="text-[clamp(0.8rem,1.2vw,0.95rem)] font-semibold text-foreground tracking-wide">
+                        {highlight.title}
+                      </h3>
+                      <p className="text-[clamp(0.7rem,1vw,0.85rem)] text-muted leading-relaxed mt-1">
+                        {highlight.description}
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>
