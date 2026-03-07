@@ -1,8 +1,5 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
-
 // Experience data based on resume
 export const experiences = [
   {
@@ -72,9 +69,6 @@ export default function ExperienceCard({
   index: number;
   revealProgress: number;
 }) {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(cardRef, { once: true, margin: "-80px" });
-
   const isEven = index % 2 === 0;
 
   const progress = Math.max(0, Math.min(1, revealProgress));
@@ -82,22 +76,14 @@ export default function ExperienceCard({
   const contentProgress = Math.max(0, Math.min(1, (progress - 0.3) * 1.5));
   const nodeProgress = Math.max(0, Math.min(1, (progress - 0.2) * 2.5));
 
-  const entranceDelay = index * 0.15;
-
   return (
-    <motion.div
-      ref={cardRef}
+    <div
       className={`relative flex items-center gap-8 ${isEven ? "flex-row" : "flex-row-reverse"}`}
-      initial={{ opacity: 0, y: 60, x: isEven ? -40 : 40 }}
-      animate={
-        isInView
-          ? { opacity: progress > 0 ? 1 : 0, y: 0, x: 0 }
-          : { opacity: 0, y: 60, x: isEven ? -40 : 40 }
-      }
-      transition={{
-        duration: 0.7,
-        delay: entranceDelay,
-        ease: [0.25, 0.46, 0.45, 0.94],
+      style={{
+        opacity: progress,
+        transform: `translateY(${(1 - progress) * 60}px) translateX(${(1 - progress) * (isEven ? -40 : 40)}px)`,
+        filter: `blur(${(1 - progress) * 6}px)`,
+        transition: "filter 0.1s ease-out",
       }}
     >
       {/* The Card */}
@@ -106,6 +92,8 @@ export default function ExperienceCard({
         style={{
           opacity: contentProgress,
           transform: `translateY(${(1 - contentProgress) * 15}px)`,
+          filter: `blur(${(1 - contentProgress) * 4}px)`,
+          transition: "filter 0.1s ease-out",
         }}
       >
         <div>
@@ -176,10 +164,12 @@ export default function ExperienceCard({
         style={{
           opacity: contentProgress,
           transform: `translateX(${(1 - contentProgress) * (isEven ? -20 : 20)}px)`,
+          filter: `blur(${(1 - contentProgress) * 4}px)`,
+          transition: "filter 0.1s ease-out",
         }}
       >
         {experience.period.split(" - ")[0]}
       </div>
-    </motion.div>
+    </div>
   );
 }

@@ -105,20 +105,31 @@ export default function ExperienceSection() {
       const sectionHeight = rect.height;
       const viewportHeight = window.innerHeight;
 
-      // Animation starts when section comes into view
-      // Progress from 0 to 1 as user scrolls through the section
-      const scrollStart = viewportHeight * 1; // Start earlier when section first enters viewport
-      const scrollEnd = -sectionHeight + viewportHeight; // End later, well after section has scrolled past
+      // Lottie animation starts earlier (when section first enters viewport)
+      const lottieScrollStart = viewportHeight * 0.7;
+      const lottieScrollEnd = -sectionHeight + viewportHeight;
+      const lottieScrolled = lottieScrollStart - sectionTop;
+      const lottieScrollRange = lottieScrollStart - lottieScrollEnd;
+      const lottieProgress = Math.max(
+        0,
+        Math.min(1, lottieScrolled / lottieScrollRange),
+      );
 
-      const scrolled = scrollStart - sectionTop;
-      const scrollRange = scrollStart - scrollEnd;
-      const progress = Math.max(0, Math.min(1, scrolled / scrollRange));
-
-      setScrollProgress(progress);
-
-      // Map progress to frame number
-      const frame = Math.floor(progress * (totalFrames - 1));
+      // Map lottie progress to frame number
+      const frame = Math.floor(lottieProgress * (totalFrames - 1));
       dotLottie.setFrame(frame);
+
+      // Content animations start later (when section is more visible)
+      const contentScrollStart = viewportHeight * 0.4;
+      const contentScrollEnd = -sectionHeight + viewportHeight;
+      const contentScrolled = contentScrollStart - sectionTop;
+      const contentScrollRange = contentScrollStart - contentScrollEnd;
+      const contentProgress = Math.max(
+        0,
+        Math.min(1, contentScrolled / contentScrollRange),
+      );
+
+      setScrollProgress(contentProgress);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -150,9 +161,9 @@ export default function ExperienceSection() {
   // Cards reveal progressively as scroll progresses
   const getCardRevealProgress = (index: number) => {
     const totalCards = experiences.length;
-    // Stagger card reveals across 80% of the scroll (leave 20% for final reveal)
-    const cardStartOffset = 0.1 + (index / totalCards) * 0.6;
-    const cardEndOffset = cardStartOffset + 0.2;
+    // Stagger card reveals - start later so cards are visible when animating
+    const cardStartOffset = 0.15 + (index / totalCards) * 0.5;
+    const cardEndOffset = cardStartOffset + 0.15;
     return Math.max(
       0,
       Math.min(
@@ -162,8 +173,11 @@ export default function ExperienceSection() {
     );
   };
 
-  // Header reveal progress (early in scroll)
-  const headerProgress = Math.max(0, Math.min(1, scrollProgress / 0.15));
+  // Header reveal progress - starts at 5% scroll, completes at 20%
+  const headerProgress = Math.max(
+    0,
+    Math.min(1, (scrollProgress - 0.05) / 0.15),
+  );
 
   return (
     <section
@@ -207,6 +221,8 @@ export default function ExperienceSection() {
             style={{
               opacity: headerProgress,
               transform: `translateY(${(1 - headerProgress) * 30}px)`,
+              filter: `blur(${(1 - headerProgress) * 8}px)`,
+              transition: "filter 0.1s ease-out",
             }}
           >
             <h2
