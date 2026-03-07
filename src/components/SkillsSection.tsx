@@ -317,7 +317,7 @@ export default function SkillsSection() {
           {/* Content Layer — left side, opposite of CreativeSection */}
           <div className="relative z-10 h-full flex items-center">
             <div
-              className="absolute left-8 md:left-16 lg:left-24 max-w-[min(50%,600px)] flex flex-col justify-center gap-14 p-6 md:p-8 rounded-2xl"
+              className="absolute left-8 md:left-16 lg:left-24 max-w-[min(55%,700px)] flex flex-col justify-center gap-14 p-6 md:p-8 rounded-2xl"
               style={{
                 background: `color-mix(in srgb, var(--color-background) ${50 * containerProgress}%, transparent)`,
                 border: `1px solid rgba(255, 255, 255, ${0.08 * containerProgress})`,
@@ -335,13 +335,13 @@ export default function SkillsSection() {
                   transition: "filter 0.1s ease-out",
                 }}
               >
-                <h2 className="text-[clamp(1.75rem,4vw,3rem)] font-bold leading-[1.1] tracking-tight">
-                  <span className="text-foreground">
-                    I speak fluently in code,
+                <h2 className="text-[clamp(1.25rem,3vw,2.25rem)] font-bold leading-[1.2] tracking-tight">
+                  <span className="text-foreground whitespace-nowrap">
+                    Turning complex requirements
                   </span>
                   <br />
-                  <span className="bg-gradient-to-r from-accent to-accent-secondary bg-clip-text text-transparent">
-                    but I build for humans.
+                  <span className="bg-gradient-to-r from-accent to-accent-secondary bg-clip-text text-transparent whitespace-nowrap">
+                    into high-performance software.
                   </span>
                 </h2>
                 <p
@@ -351,9 +351,9 @@ export default function SkillsSection() {
                     transform: `translateY(${Math.max(0, (1 - headerProgress) * 20)}px)`,
                   }}
                 >
-                  Bridging the gap between cutting-edge AI
+                  Building seamless web experiences
                   <br />
-                  and seamless user experiences.
+                  from the database to the DOM.
                 </p>
               </div>
 
