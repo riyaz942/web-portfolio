@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@icons-pack/react-simple-icons": "^13.11.1",
     "@lottiefiles/dotlottie-react": "^0.17.13",
     "@react-spring/web": "^10.0.3",
     "framer-motion": "^12.29.2",
