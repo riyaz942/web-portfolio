@@ -141,7 +141,7 @@ export default function CreativeSection() {
           }}
         >
           <Image
-            src="/images/Creative-section/Creative-section-background-doodle-image-2.png"
+            src="/images/Creative-section/Creative-section-background-doodle-image.png"
             alt=""
             fill
             className="object-cover object-center opacity-20"
