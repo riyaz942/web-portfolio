@@ -30,8 +30,7 @@ export default function Home() {
           clientX={mousePosition.x}
           clientY={mousePosition.y}
         />
-        {/* Radial dark vignette behind text for contrast */}
-        <div className="absolute inset-0 z-[1] pointer-events-none bg-[radial-gradient(ellipse_60%_50%_at_50%_50%,rgba(30,30,30,0.85)_0%,transparent_100%)]" />
+        <div className="absolute inset-0 z-[1] bg-black/20 pointer-events-none" />
         <div className="relative z-10 flex flex-col items-center text-center px-8">
           {/* Profile Picture */}
           <div
@@ -59,7 +58,7 @@ export default function Home() {
 
           {/* Name & Title */}
           <h1
-            className="text-[clamp(2.5rem,6vw,4.5rem)] font-bold tracking-tight mb-3 drop-shadow-[0_0_24px_rgba(100,255,218,0.3)]"
+            className="text-[clamp(2.5rem,6vw,4.5rem)] font-bold tracking-tight mb-3"
             style={{
               transform: mounted ? "translateY(0)" : "translateY(30px)",
               opacity: mounted ? 1 : 0,
@@ -72,7 +71,7 @@ export default function Home() {
             </span>
           </h1>
           <p
-            className="text-[clamp(1rem,2vw,1.25rem)] text-foreground/80 uppercase tracking-[0.2em] font-medium drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]"
+            className="text-[clamp(1rem,2vw,1.25rem)] text-foreground/90 uppercase tracking-[0.2em] font-medium"
             style={{
               transform: mounted ? "translateY(0)" : "translateY(25px)",
               opacity: mounted ? 1 : 0,
@@ -93,7 +92,7 @@ export default function Home() {
             transition: "all 0.9s cubic-bezier(0.16, 1, 0.3, 1) 700ms",
           }}
         >
-          <span className="text-xs text-foreground/60 uppercase tracking-[0.15em] drop-shadow-[0_1px_4px_rgba(0,0,0,0.5)]">
+          <span className="text-xs text-foreground/60 uppercase tracking-[0.15em]">
             Scroll to explore
           </span>
           <div className="w-px h-10 bg-gradient-to-b from-accent to-transparent animate-scroll-pulse" />
