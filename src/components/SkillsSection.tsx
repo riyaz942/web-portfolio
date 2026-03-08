@@ -285,7 +285,7 @@ export default function SkillsSection() {
             }}
           >
             <Image
-              src="/images/Skill-section/Skill-section-background%20image-1.png"
+              src="/images/Skill-section/Skill-section-background-image.png"
               alt=""
               fill
               className="object-cover object-center"
