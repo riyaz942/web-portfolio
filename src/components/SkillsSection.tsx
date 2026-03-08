@@ -268,7 +268,7 @@ export default function SkillsSection() {
     return Math.max(0, Math.min(1, (scrollProgress - startOffset) / 0.1));
   };
 
-  const sectionHeight = isMobile ? "250vh" : "300vh";
+  const sectionHeight = isMobile ? "250vh" : "350vh";
 
   return (
     <section
