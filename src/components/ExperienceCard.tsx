@@ -64,10 +64,12 @@ export default function ExperienceCard({
   experience,
   index,
   revealProgress,
+  isMobile = false,
 }: {
   experience: Experience;
   index: number;
   revealProgress: number;
+  isMobile?: boolean;
 }) {
   const isEven = index % 2 === 0;
 
@@ -76,19 +78,29 @@ export default function ExperienceCard({
   const contentProgress = Math.max(0, Math.min(1, (progress - 0.3) * 1.5));
   const nodeProgress = Math.max(0, Math.min(1, (progress - 0.2) * 2.5));
 
+  // On mobile, only use vertical animation (no horizontal slide)
+  const translateX = isMobile ? 0 : (1 - progress) * (isEven ? -40 : 40);
+
+  // Build flex direction classes: column on mobile, row/row-reverse on desktop
+  const flexDirection = isMobile
+    ? "flex-col"
+    : isEven
+      ? "flex-row"
+      : "flex-row-reverse";
+
   return (
     <div
-      className={`relative flex items-center gap-8 ${isEven ? "flex-row" : "flex-row-reverse"}`}
+      className={`relative flex items-center gap-4 md:gap-8 ${flexDirection}`}
       style={{
         opacity: progress,
-        transform: `translateY(${(1 - progress) * 60}px) translateX(${(1 - progress) * (isEven ? -40 : 40)}px)`,
+        transform: `translateY(${(1 - progress) * 60}px) translateX(${translateX}px)`,
         filter: `blur(${(1 - progress) * 6}px)`,
         transition: "filter 0.1s ease-out",
       }}
     >
       {/* The Card */}
       <div
-        className="relative w-[380px] group cursor-pointer flex-shrink-0 rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm p-6 flex flex-col gap-4"
+        className="relative w-full md:w-[380px] group cursor-pointer flex-shrink-0 rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm p-5 md:p-6 flex flex-col gap-4"
         style={{
           opacity: contentProgress,
           transform: `translateY(${(1 - contentProgress) * 15}px)`,
@@ -141,8 +153,8 @@ export default function ExperienceCard({
         </div>
       </div>
 
-      {/* Timeline Node */}
-      <div className="relative flex-shrink-0">
+      {/* Timeline Node - hidden on mobile */}
+      <div className="hidden md:block relative flex-shrink-0">
         <div
           className="w-4 h-4 rounded-full bg-accent border-2 border-background"
           style={{
@@ -158,9 +170,9 @@ export default function ExperienceCard({
         />
       </div>
 
-      {/* Year Label */}
+      {/* Year Label - hidden on mobile since period is shown in card */}
       <div
-        className={`text-sm text-muted font-medium ${isEven ? "text-left" : "text-right"}`}
+        className={`hidden md:block text-sm text-muted font-medium ${isEven ? "text-left" : "text-right"}`}
         style={{
           opacity: contentProgress,
           transform: `translateX(${(1 - contentProgress) * (isEven ? -20 : 20)}px)`,

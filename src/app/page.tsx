@@ -82,7 +82,7 @@ export default function Home() {
           </p>
         </div>
         <div
-          className="absolute bottom-12 left-1/2 flex flex-col items-center gap-3 z-10"
+          className="absolute bottom-8 md:bottom-12 left-1/2 flex flex-col items-center gap-3 z-10"
           style={{
             transform: mounted
               ? "translateX(-50%) translateY(0)"

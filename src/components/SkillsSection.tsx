@@ -3,6 +3,7 @@
 import { useRef, useEffect, useState, useCallback } from "react";
 import { DotLottieReact, DotLottie } from "@lottiefiles/dotlottie-react";
 import Image from "next/image";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 const skillHighlights = [
   {
@@ -42,6 +43,7 @@ export default function SkillsSection() {
   const [totalFrames, setTotalFrames] = useState(0);
   const [treeDotLottie, setTreeDotLottie] = useState<DotLottie | null>(null);
   const [treeTotalFrames, setTreeTotalFrames] = useState(0);
+  const isMobile = useIsMobile();
 
   const phaseRef = useRef<AnimPhase>("scroll_driven");
   const lineProgressRef = useRef(0);
@@ -172,8 +174,9 @@ export default function SkillsSection() {
       const sectionTop = rect.top;
       const viewportHeight = window.innerHeight;
 
-      const delayThreshold = viewportHeight * 0.5;
-      const lineAnimScrollDist = viewportHeight * 1.0;
+      // Scale thresholds based on mobile vs desktop section height
+      const delayThreshold = viewportHeight * (isMobile ? 0.3 : 0.5);
+      const lineAnimScrollDist = viewportHeight * (isMobile ? 0.7 : 1.0);
 
       const scrolled = delayThreshold - sectionTop;
       const rawLineProg = Math.max(
@@ -201,6 +204,14 @@ export default function SkillsSection() {
       // ------------------------------------------------
 
       const phase = phaseRef.current;
+
+      // On mobile, skip Lottie tree auto-play phases since Lotties are hidden.
+      // Reveal the background when the section is fully in view (top <= 0).
+      if (isMobile) {
+        setScrollProgress(rawLineProg);
+        setBgRevealed(sectionTop <= 0);
+        return;
+      }
 
       if (phase === "scroll_driven") {
         lineProgressRef.current = rawLineProg;
@@ -242,7 +253,7 @@ export default function SkillsSection() {
       window.removeEventListener("scroll", handleScroll);
       stopAutoPlay();
     };
-  }, [syncFrames, startAutoPlay, stopAutoPlay]);
+  }, [syncFrames, startAutoPlay, stopAutoPlay, isMobile]);
 
   const containerProgress = Math.max(
     0,
@@ -257,11 +268,13 @@ export default function SkillsSection() {
     return Math.max(0, Math.min(1, (scrollProgress - startOffset) / 0.1));
   };
 
+  const sectionHeight = isMobile ? "250vh" : "300vh";
+
   return (
     <section
       ref={sectionRef}
       className="relative w-full"
-      style={{ height: "300vh" }}
+      style={{ height: sectionHeight }}
     >
       <div className="sticky top-0 w-full h-screen overflow-hidden">
         <div
@@ -296,7 +309,7 @@ export default function SkillsSection() {
           {/* Center-line-to-right Lottie — positioned on the right, mirroring CreativeSection */}
           <div
             data-id="skills-lottie"
-            className="absolute right-0 top-0 w-[52.7%] origin-top-right z-[1]"
+            className="hidden md:block absolute right-0 top-0 w-[52.7%] origin-top-right z-[1]"
             style={{
               aspectRatio: "851 / 721",
               opacity: scrollProgress >= 1 ? 0 : 1,
@@ -319,7 +332,7 @@ export default function SkillsSection() {
 
           {/* Tree Lottie — same position, plays after center-line-to-right finishes */}
           <div
-            className="absolute right-0 top-0 w-[52.7%] origin-top-right z-[2]"
+            className="hidden md:block absolute right-0 top-0 w-[52.7%] origin-top-right z-[2]"
             style={{
               aspectRatio: "851 / 721",
               opacity: treeProgress > 0 ? 1 : 0,
@@ -344,9 +357,9 @@ export default function SkillsSection() {
           <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-background to-transparent pointer-events-none z-[5]" />
 
           {/* Content Layer — left side, opposite of CreativeSection */}
-          <div className="relative z-10 h-full flex items-center">
+          <div className="relative z-10 h-full flex items-center justify-center md:justify-start">
             <div
-              className="absolute left-8 md:left-16 lg:left-24 max-w-[min(55%,700px)] flex flex-col justify-center gap-14 p-6 md:p-8 rounded-2xl"
+              className="relative w-full max-w-lg mx-6 md:mx-0 md:w-auto md:absolute md:left-16 lg:left-24 md:max-w-[min(55%,700px)] flex flex-col justify-center gap-10 md:gap-14 p-6 md:p-8 rounded-2xl"
               style={{
                 background: `color-mix(in srgb, var(--color-background) ${50 * containerProgress}%, transparent)`,
                 border: `1px solid rgba(255, 255, 255, ${0.08 * containerProgress})`,
@@ -365,11 +378,11 @@ export default function SkillsSection() {
                 }}
               >
                 <h2 className="text-[clamp(1.25rem,3vw,2.25rem)] font-bold leading-[1.2] tracking-tight">
-                  <span className="text-foreground whitespace-nowrap">
+                  <span className="text-foreground md:whitespace-nowrap">
                     Turning complex requirements
                   </span>
                   <br />
-                  <span className="bg-gradient-to-r from-accent to-accent-secondary bg-clip-text text-transparent whitespace-nowrap">
+                  <span className="bg-gradient-to-r from-accent to-accent-secondary bg-clip-text text-transparent md:whitespace-nowrap">
                     into high-performance software.
                   </span>
                 </h2>

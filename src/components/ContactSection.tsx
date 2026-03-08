@@ -86,13 +86,13 @@ export default function ContactSection() {
 
   return (
     <section
-      className="min-h-screen flex flex-col items-center justify-center py-24 px-8 relative z-20 rounded-t-[2.5rem] md:rounded-t-[4rem] border-t border-white/5 shadow-[0_-8px_30px_rgba(0,0,0,0.5)] overflow-hidden"
+      className="min-h-screen flex flex-col items-center justify-center py-16 px-5 md:py-24 md:px-8 relative z-20 rounded-t-[2.5rem] md:rounded-t-[4rem] border-t border-white/5 shadow-[0_-8px_30px_rgba(0,0,0,0.5)] overflow-hidden"
       style={{ marginTop: "-100vh" }}
     >
       <div className="absolute inset-0 bg-gradient-to-b from-[#141414] to-background -z-10" />
 
       {/* Decorative ambient glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/[0.03] rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-accent/[0.03] rounded-full blur-[120px] pointer-events-none" />
 
       <motion.div
         ref={contentRef}

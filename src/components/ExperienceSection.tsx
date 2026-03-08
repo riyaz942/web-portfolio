@@ -4,6 +4,7 @@ import { useRef, useEffect, useState, useCallback } from "react";
 import { DotLottieReact, DotLottie } from "@lottiefiles/dotlottie-react";
 import Image from "next/image";
 import ExperienceCard, { experiences } from "./ExperienceCard";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 export default function ExperienceSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -13,14 +14,17 @@ export default function ExperienceSection() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [bgRevealProgress, setBgRevealProgress] = useState(0);
   const [lottieGap, setLottieGap] = useState(0);
+  const isMobile = useIsMobile();
   console.log("something", lottieGap);
   const dotLottieRefCallback = useCallback((instance: DotLottie | null) => {
     setDotLottie(instance);
   }, []);
 
   // Watch the gap between the Creative section Lottie bottom and ExperienceSection top on resize
-  // and when the section is about to enter the viewport
+  // and when the section is about to enter the viewport (desktop only)
   useEffect(() => {
+    if (isMobile) return;
+
     const measureGap = () => {
       console.log("something: measureGap");
       const creativeLottie = document.querySelector<HTMLElement>(
@@ -69,7 +73,7 @@ export default function ExperienceSection() {
       observer.disconnect();
       window.removeEventListener("resize", measureGap);
     };
-  }, []);
+  }, [isMobile]);
 
   // Get total frames when animation loads
   useEffect(() => {
@@ -182,7 +186,7 @@ export default function ExperienceSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen py-24 bg-background"
+      className="relative min-h-screen py-12 md:py-24 bg-background"
       style={{ clipPath: "inset(-9999px 0 0 0)" }}
     >
       {/* Background Lottie Animation - aligned with Creative section for seamless line connection.
@@ -191,7 +195,7 @@ export default function ExperienceSection() {
            Top offset positions this canvas so it starts where the Creative animation canvas ends:
            Creative canvas height = 90vw * (721/851), minus 100vh for the section boundary. */}
       <div
-        className="absolute w-[53%] origin-top-left z-[1]"
+        className="hidden md:block absolute w-[53%] origin-top-left z-[1]"
         style={{
           transform: `translateY(-${lottieGap}px)`,
           aspectRatio: "851 / 2163",
@@ -244,7 +248,7 @@ export default function ExperienceSection() {
       <div
         className="absolute left-0 right-0 bottom-0 z-0 overflow-hidden"
         style={{
-          top: "20rem",
+          top: isMobile ? "10rem" : "20rem",
           opacity: bgRevealProgress,
           transform: `scale(${1 + 0.05 * (1 - bgRevealProgress)})`,
           maskImage:
@@ -264,15 +268,16 @@ export default function ExperienceSection() {
       </div>
 
       {/* Timeline Container */}
-      <div className="relative z-10 max-w-4xl mx-auto">
+      <div className="relative z-10 max-w-4xl mx-auto px-4 md:px-0">
         {/* Experience Cards */}
-        <div className="relative flex flex-col -space-y-15">
+        <div className="relative flex flex-col gap-6 md:gap-0 md:-space-y-15">
           {experiences.map((exp, index) => (
             <ExperienceCard
               key={exp.id}
               experience={exp}
               index={index}
               revealProgress={getCardRevealProgress(index)}
+              isMobile={isMobile}
             />
           ))}
         </div>

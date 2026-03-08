@@ -3,6 +3,7 @@
 import { useRef, useEffect, useState, useCallback } from "react";
 import { DotLottieReact, DotLottie } from "@lottiefiles/dotlottie-react";
 import Image from "next/image";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 // Micro-highlights data
 const microHighlights = [
@@ -29,6 +30,7 @@ export default function CreativeSection() {
   const [dotLottie, setDotLottie] = useState<DotLottie | null>(null);
   const [totalFrames, setTotalFrames] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const isMobile = useIsMobile();
 
   const dotLottieRefCallback = useCallback((instance: DotLottie | null) => {
     setDotLottie(instance);
@@ -58,7 +60,8 @@ export default function CreativeSection() {
 
   // Handle scroll-based animation control
   useEffect(() => {
-    if (!dotLottie || totalFrames === 0 || !sectionRef.current) return;
+    if (!sectionRef.current) return;
+    if (!isMobile && (!dotLottie || totalFrames === 0)) return;
 
     const handleScroll = () => {
       const section = sectionRef.current;
@@ -68,15 +71,12 @@ export default function CreativeSection() {
       const sectionTop = rect.top;
       const viewportHeight = window.innerHeight;
 
-      // Delay start: animation begins when section top is at 20% from top of viewport
-      // (i.e., after 80% of the previous section has scrolled)
-      const delayThreshold = viewportHeight * 0.5;
-
-      const animationScrollDistance = viewportHeight * 2;
+      // Scale thresholds based on mobile vs desktop section height
+      const delayThreshold = viewportHeight * (isMobile ? 0.3 : 0.5);
+      const animationScrollDistance = viewportHeight * (isMobile ? 1.2 : 2);
 
       // Calculate scroll progress through the section
-      // Animation starts when section top reaches 20% from top of viewport
-      const scrollStart = delayThreshold; // When section top reaches 20% from top
+      const scrollStart = delayThreshold;
 
       // Progress from 0 to 1 based on animation scroll distance
       const scrolled = scrollStart - sectionTop;
@@ -88,9 +88,11 @@ export default function CreativeSection() {
       // Update scroll progress for content animations
       setScrollProgress(progress);
 
-      // Map progress to frame number
-      const frame = Math.floor(progress * (totalFrames - 1));
-      dotLottie.setFrame(frame);
+      // Map progress to frame number (only on desktop)
+      if (!isMobile && dotLottie && totalFrames > 0) {
+        const frame = Math.floor(progress * (totalFrames - 1));
+        dotLottie.setFrame(frame);
+      }
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -99,7 +101,7 @@ export default function CreativeSection() {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [dotLottie, totalFrames]);
+  }, [dotLottie, totalFrames, isMobile]);
 
   const containerProgress = Math.max(
     0,
@@ -119,11 +121,14 @@ export default function CreativeSection() {
     Math.min(1, (scrollProgress - 0.8) / 0.2),
   );
 
+  const sectionHeight = isMobile ? "180vh" : "260vh";
+  const clipPathOrigin = isMobile ? "50% 50%" : "15% 60%";
+
   return (
     <section
       ref={sectionRef}
       className="relative w-full"
-      style={{ height: "260vh" }}
+      style={{ height: sectionHeight }}
     >
       {/* Sticky container for the animation and content */}
       <div className="sticky top-0 w-full h-screen overflow-hidden">
@@ -131,8 +136,7 @@ export default function CreativeSection() {
         <div
           className="absolute inset-0 w-full h-full z-0"
           style={{
-            // Circular reveal expanding from light bulb position (approximately 15% from left, 60% from top)
-            clipPath: `circle(${backgroundRevealProgress * 150}% at 15% 60%)`,
+            clipPath: `circle(${backgroundRevealProgress * 150}% at ${clipPathOrigin})`,
             opacity: backgroundRevealProgress > 0 ? 1 : 0,
           }}
         >
@@ -148,7 +152,7 @@ export default function CreativeSection() {
         {/* Lottie Background Animation */}
         <div
           data-id="creative-lottie"
-          className="absolute w-[53%] origin-top-left z-[1]"
+          className="hidden md:block absolute w-[53%] origin-top-left z-[1]"
           style={{ aspectRatio: "851 / 721" }}
         >
           <DotLottieReact
@@ -170,10 +174,10 @@ export default function CreativeSection() {
         <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-background to-transparent pointer-events-none z-[5]" />
 
         {/* Content Layer - positioned to avoid animation overlap */}
-        <div className="relative z-10 h-full flex items-center">
-          {/* Content container - right side, vertically centered with flex */}
+        <div className="relative z-10 h-full flex items-center justify-center md:justify-end">
+          {/* Content container - centered on mobile, right side on desktop */}
           <div
-            className="absolute right-8 md:right-16 lg:right-24 max-w-[min(50%,600px)] flex flex-col justify-center gap-14 p-6 md:p-8 rounded-2xl"
+            className="relative w-full max-w-lg mx-6 md:mx-0 md:w-auto md:absolute md:right-16 lg:right-24 md:max-w-[min(50%,600px)] flex flex-col justify-center gap-10 md:gap-14 p-6 md:p-8 rounded-2xl"
             style={{
               background: `color-mix(in srgb, var(--color-background) ${50 * containerProgress}%, transparent)`,
               border: `1px solid rgba(255, 255, 255, ${0.08 * containerProgress})`,
@@ -191,7 +195,7 @@ export default function CreativeSection() {
                 transition: "filter 0.1s ease-out",
               }}
             >
-              <h2 className="text-[clamp(1.75rem,4vw,3rem)] font-bold leading-[1.1] tracking-tight text-right">
+              <h2 className="text-[clamp(1.75rem,4vw,3rem)] font-bold leading-[1.1] tracking-tight text-center md:text-right">
                 <span className="text-foreground">I turn complex problems</span>
                 <br />
                 <span className="bg-gradient-to-r from-accent to-accent-secondary bg-clip-text text-transparent">
@@ -199,7 +203,7 @@ export default function CreativeSection() {
                 </span>
               </h2>
               <p
-                className="mt-4 text-[clamp(0.9rem,1.5vw,1.15rem)] text-muted text-right leading-relaxed"
+                className="mt-4 text-[clamp(0.9rem,1.5vw,1.15rem)] text-muted text-center md:text-right leading-relaxed"
                 style={{
                   opacity: Math.max(0, (headlineProgress - 0.3) / 0.7),
                   transform: `translateY(${Math.max(0, (1 - headlineProgress) * 20)}px)`,
