@@ -50,6 +50,7 @@ export default function SkillsSection() {
   const lastTimeRef = useRef<number | null>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [treeProgress, setTreeProgress] = useState(0);
+  const [bgRevealed, setBgRevealed] = useState(false);
 
   const dotLottieRefCallback = useCallback((instance: DotLottie | null) => {
     setDotLottie(instance);
@@ -208,6 +209,7 @@ export default function SkillsSection() {
 
         if (rawLineProg >= 1) {
           phaseRef.current = "auto_forward_tree";
+          setBgRevealed(true);
           startAutoPlay();
         }
       } else if (phase === "auto_complete" || phase === "auto_forward_tree") {
@@ -216,6 +218,7 @@ export default function SkillsSection() {
 
         if (rawLineProg < 1) {
           phaseRef.current = "auto_reverse_tree";
+          setBgRevealed(false);
           lastTimeRef.current = null;
           startAutoPlay();
         }
@@ -225,6 +228,7 @@ export default function SkillsSection() {
 
         if (rawLineProg >= 1) {
           phaseRef.current = "auto_forward_tree";
+          setBgRevealed(true);
           lastTimeRef.current = null;
           startAutoPlay();
         }
@@ -253,8 +257,6 @@ export default function SkillsSection() {
     return Math.max(0, Math.min(1, (scrollProgress - startOffset) / 0.1));
   };
 
-  const bgRevealProgress = Math.max(0, Math.min(1, (scrollProgress - 0.6) / 0.4));
-
   return (
     <section
       ref={sectionRef}
@@ -267,12 +269,19 @@ export default function SkillsSection() {
           className="w-full h-full will-change-transform"
           style={{ transformOrigin: "top center" }}
         >
-          {/* Background doodle image — fades in as center line animation progresses */}
+          {/* Background doodle image — wipes in from right to left when center line animation completes */}
           <div
             className="absolute inset-0 w-full h-full z-0"
             style={{
-              opacity: bgRevealProgress * 0.2,
-              transition: "opacity 0.15s ease-out",
+              opacity: 0.2,
+              maskImage: `linear-gradient(to left, black 0%, black 50%, transparent 50%, transparent 100%)`,
+              WebkitMaskImage: `linear-gradient(to left, black 0%, black 50%, transparent 50%, transparent 100%)`,
+              maskSize: "200% 100%",
+              WebkitMaskSize: "200% 100%",
+              maskPosition: bgRevealed ? "100% 0%" : "0% 0%",
+              WebkitMaskPosition: bgRevealed ? "100% 0%" : "0% 0%",
+              transition:
+                "mask-position 0.8s linear, -webkit-mask-position 0.8s linear",
             }}
           >
             <Image
