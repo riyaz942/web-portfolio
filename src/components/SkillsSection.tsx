@@ -196,10 +196,15 @@ export default function SkillsSection() {
       const clampedOverlap = Math.max(0, Math.min(1, rawOverlap));
 
       if (innerContainerRef.current) {
-        // Push the section back slightly, dim it, and blur it to create a depth effect
-        innerContainerRef.current.style.transform = `scale(${1 - clampedOverlap * 0.05}) translateY(${clampedOverlap * 3}vh)`;
-        innerContainerRef.current.style.opacity = `${1 - clampedOverlap * 0.6}`;
-        innerContainerRef.current.style.filter = `blur(${clampedOverlap * 10}px)`;
+        if (clampedOverlap > 0) {
+          innerContainerRef.current.style.transform = `scale(${1 - clampedOverlap * 0.05}) translateY(${clampedOverlap * 3}vh)`;
+          innerContainerRef.current.style.opacity = `${1 - clampedOverlap * 0.6}`;
+          innerContainerRef.current.style.filter = `blur(${clampedOverlap * 10}px)`;
+        } else {
+          innerContainerRef.current.style.transform = "";
+          innerContainerRef.current.style.opacity = "";
+          innerContainerRef.current.style.filter = "";
+        }
       }
       // ------------------------------------------------
 
@@ -279,7 +284,7 @@ export default function SkillsSection() {
       <div className="sticky top-0 w-full h-screen overflow-hidden">
         <div
           ref={innerContainerRef}
-          className="w-full h-full will-change-transform"
+          className="w-full h-full"
           style={{ transformOrigin: "top center" }}
         >
           {/* Background doodle image — wipes in from right to left when center line animation completes */}

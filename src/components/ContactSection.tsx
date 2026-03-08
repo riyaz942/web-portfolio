@@ -125,7 +125,13 @@ export default function ContactSection() {
               href={item.href}
               target={item.label !== "Email" ? "_blank" : undefined}
               rel={item.label !== "Email" ? "noopener noreferrer" : undefined}
-              className="group relative flex items-center gap-4 p-5 md:p-6 rounded-xl bg-white/[0.03] backdrop-blur-sm border border-white/[0.06] hover:border-accent/30 transition-all duration-300"
+              className="group relative flex items-center gap-4 p-5 md:p-6 rounded-xl hover:border-accent/30 transition-all duration-300"
+              style={{
+                background: "color-mix(in srgb, var(--color-background) 50%, transparent)",
+                border: "1px solid rgba(255, 255, 255, 0.08)",
+                backdropFilter: "blur(12px)",
+                WebkitBackdropFilter: "blur(12px)",
+              }}
               variants={itemVariants}
               whileHover={{ y: -2 }}
             >

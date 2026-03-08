@@ -94,18 +94,18 @@ export default function ExperienceCard({
       style={{
         opacity: progress,
         transform: `translateY(${(1 - progress) * 60}px) translateX(${translateX}px)`,
-        filter: `blur(${(1 - progress) * 6}px)`,
-        transition: "filter 0.1s ease-out",
       }}
     >
       {/* The Card */}
       <div
-        className="relative w-full md:w-[380px] group cursor-pointer flex-shrink-0 rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm p-5 md:p-6 flex flex-col gap-4"
+        className="relative w-full md:w-[380px] group cursor-pointer flex-shrink-0 rounded-2xl p-5 md:p-6 flex flex-col gap-4"
         style={{
+          background: `color-mix(in srgb, var(--color-background) ${50 * contentProgress}%, transparent)`,
+          border: `1px solid rgba(255, 255, 255, ${0.08 * contentProgress})`,
+          backdropFilter: `blur(${12 * contentProgress}px)`,
+          WebkitBackdropFilter: `blur(${12 * contentProgress}px)`,
           opacity: contentProgress,
           transform: `translateY(${(1 - contentProgress) * 15}px)`,
-          filter: `blur(${(1 - contentProgress) * 4}px)`,
-          transition: "filter 0.1s ease-out",
         }}
       >
         <div>

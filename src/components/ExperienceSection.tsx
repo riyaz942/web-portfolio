@@ -187,33 +187,38 @@ export default function ExperienceSection() {
     <section
       ref={sectionRef}
       className="relative min-h-screen py-12 md:py-24 bg-background"
-      style={{ clipPath: "inset(-9999px 0 0 0)" }}
     >
-      {/* Background Lottie Animation - aligned with Creative section for seamless line connection.
-           Width and horizontal transform match CreativeSection exactly (w-[90%], translateX(-20%)).
-           This Lottie's intrinsic size is 851×2163; height is derived automatically from width (90vw).
-           Top offset positions this canvas so it starts where the Creative animation canvas ends:
-           Creative canvas height = 90vw * (721/851), minus 100vh for the section boundary. */}
+      {/* Lottie clip wrapper — isolates clip-path so it doesn't break backdrop-filter on cards */}
       <div
-        className="hidden md:block absolute w-[53%] origin-top-left z-[1]"
-        style={{
-          transform: `translateY(-${lottieGap}px)`,
-          aspectRatio: "851 / 2163",
-        }}
+        className="absolute inset-0 z-[1] pointer-events-none"
+        style={{ clipPath: "inset(-9999px 0 0 0)" }}
       >
-        <DotLottieReact
-          src="/images/Experience-section/experience-section-background-animation.lottie"
-          autoplay={false}
-          loop={false}
-          dotLottieRefCallback={dotLottieRefCallback}
-          renderConfig={
-            {
-              autoResize: true,
-              fit: "contain",
-              align: ["0", "0"],
-            } as unknown as typeof undefined
-          }
-        />
+        {/* Background Lottie Animation - aligned with Creative section for seamless line connection.
+             Width and horizontal transform match CreativeSection exactly (w-[90%], translateX(-20%)).
+             This Lottie's intrinsic size is 851×2163; height is derived automatically from width (90vw).
+             Top offset positions this canvas so it starts where the Creative animation canvas ends:
+             Creative canvas height = 90vw * (721/851), minus 100vh for the section boundary. */}
+        <div
+          className="hidden md:block absolute w-[53%] origin-top-left"
+          style={{
+            transform: `translateY(-${lottieGap}px)`,
+            aspectRatio: "851 / 2163",
+          }}
+        >
+          <DotLottieReact
+            src="/images/Experience-section/experience-section-background-animation.lottie"
+            autoplay={false}
+            loop={false}
+            dotLottieRefCallback={dotLottieRefCallback}
+            renderConfig={
+              {
+                autoResize: true,
+                fit: "contain",
+                align: ["0", "0"],
+              } as unknown as typeof undefined
+            }
+          />
+        </div>
       </div>
 
       {/* Content */}
