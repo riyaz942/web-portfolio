@@ -281,7 +281,7 @@ export default function SkillsSection() {
               maskPosition: bgRevealed ? "100% 0%" : "0% 0%",
               WebkitMaskPosition: bgRevealed ? "100% 0%" : "0% 0%",
               transition:
-                "mask-position 0.8s linear, -webkit-mask-position 0.8s linear",
+                "mask-position 0.8s cubic-bezier(0.0, 0.0, 0.2, 1), -webkit-mask-position 0.8s cubic-bezier(0.0, 0.0, 0.2, 1)",
             }}
           >
             <Image
