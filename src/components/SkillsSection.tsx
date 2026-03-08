@@ -2,6 +2,7 @@
 
 import { useRef, useEffect, useState, useCallback } from "react";
 import { DotLottieReact, DotLottie } from "@lottiefiles/dotlottie-react";
+import Image from "next/image";
 
 const skillHighlights = [
   {
@@ -252,6 +253,8 @@ export default function SkillsSection() {
     return Math.max(0, Math.min(1, (scrollProgress - startOffset) / 0.1));
   };
 
+  const bgRevealProgress = Math.max(0, Math.min(1, (scrollProgress - 0.6) / 0.4));
+
   return (
     <section
       ref={sectionRef}
@@ -264,6 +267,23 @@ export default function SkillsSection() {
           className="w-full h-full will-change-transform"
           style={{ transformOrigin: "top center" }}
         >
+          {/* Background doodle image — fades in as center line animation progresses */}
+          <div
+            className="absolute inset-0 w-full h-full z-0"
+            style={{
+              opacity: bgRevealProgress * 0.2,
+              transition: "opacity 0.15s ease-out",
+            }}
+          >
+            <Image
+              src="/images/Skill-section/Skill-section-background%20image-1.png"
+              alt=""
+              fill
+              className="object-cover object-center"
+              priority={false}
+            />
+          </div>
+
           {/* Center-line-to-right Lottie — positioned on the right, mirroring CreativeSection */}
           <div
             data-id="skills-lottie"
