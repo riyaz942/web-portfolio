@@ -314,7 +314,7 @@ export default function SkillsSection() {
           {/* Center-line-to-right Lottie — positioned on the right, mirroring CreativeSection */}
           <div
             data-id="skills-lottie"
-            className="hidden md:block absolute right-0 top-0 w-[52.7%] origin-top-right z-[1]"
+            className="hidden md:block absolute right-0 top-0 w-[52.74%] origin-top-right z-[1]"
             style={{
               aspectRatio: "851 / 721",
               opacity: scrollProgress >= 1 ? 0 : 1,
