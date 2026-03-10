@@ -6,7 +6,6 @@
   --color-accent: #64ffda;
   --color-accent-secondary: #7b61ff;
   --color-muted: #8892b0;
-  --color-doodle-line: #c4c4c4;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
@@ -23,74 +22,6 @@
     opacity: 1;
     transform: scaleY(1);
   }
-}
-
-@keyframes shine {
-  0% {
-    transform: translateX(-100%) rotate(45deg);
-  }
-  50%,
-  100% {
-    transform: translateX(100%) rotate(45deg);
-  }
-}
-
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 0.6;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.2);
-  }
-}
-
-/* Floating doodle animations */
-@keyframes float-doodle-0 {
-  0%,
-  100% {
-    transform: translateY(0px) rotate(0deg);
-  }
-  50% {
-    transform: translateY(-15px) rotate(5deg);
-  }
-}
-
-@keyframes float-doodle-1 {
-  0%,
-  100% {
-    transform: translateY(0px) rotate(0deg);
-  }
-  33% {
-    transform: translateY(-10px) rotate(-3deg);
-  }
-  66% {
-    transform: translateY(-5px) rotate(3deg);
-  }
-}
-
-@keyframes float-doodle-2 {
-  0%,
-  100% {
-    transform: translateY(0px) scale(1);
-  }
-  50% {
-    transform: translateY(-12px) scale(1.05);
-  }
-}
-
-.animate-float-0 {
-  animation: float-doodle-0 6s ease-in-out infinite;
-}
-
-.animate-float-1 {
-  animation: float-doodle-1 7s ease-in-out infinite;
-}
-
-.animate-float-2 {
-  animation: float-doodle-2 8s ease-in-out infinite;
 }
 
 html {

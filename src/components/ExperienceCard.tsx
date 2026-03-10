@@ -58,7 +58,7 @@ export const experiences = [
   },
 ];
 
-export type Experience = (typeof experiences)[0];
+type Experience = (typeof experiences)[0];
 
 const clamp01 = (v: number) => Math.max(0, Math.min(1, v));
 
