@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect, useState, useCallback } from "react";
+import { useRef, useEffect, useState } from "react";
 import { DotLottieReact, DotLottie } from "@lottiefiles/dotlottie-react";
 import Image from "next/image";
 import { useIsMobile } from "@/hooks/useIsMobile";
@@ -25,6 +25,15 @@ const microHighlights = [
   },
 ];
 
+const clamp01 = (v: number) => Math.max(0, Math.min(1, v));
+
+function initLottie(lottie: DotLottie, setFrames: (n: number) => void) {
+  const onLoad = () => { setFrames(lottie.totalFrames); lottie.pause(); lottie.setFrame(0); };
+  lottie.addEventListener("load", onLoad);
+  if (lottie.isLoaded) onLoad();
+  return () => lottie.removeEventListener("load", onLoad);
+}
+
 export default function CreativeSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [dotLottie, setDotLottie] = useState<DotLottie | null>(null);
@@ -32,31 +41,7 @@ export default function CreativeSection() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const isMobile = useIsMobile();
 
-  const dotLottieRefCallback = useCallback((instance: DotLottie | null) => {
-    setDotLottie(instance);
-  }, []);
-
-  // Get total frames when animation loads
-  useEffect(() => {
-    if (!dotLottie) return;
-
-    const handleLoad = () => {
-      setTotalFrames(dotLottie.totalFrames);
-      dotLottie.pause();
-      dotLottie.setFrame(0);
-    };
-
-    dotLottie.addEventListener("load", handleLoad);
-
-    // If already loaded
-    if (dotLottie.isLoaded) {
-      handleLoad();
-    }
-
-    return () => {
-      dotLottie.removeEventListener("load", handleLoad);
-    };
-  }, [dotLottie]);
+  useEffect(() => (dotLottie ? initLottie(dotLottie, setTotalFrames) : undefined), [dotLottie]);
 
   // Handle scroll-based animation control
   useEffect(() => {
@@ -69,66 +54,41 @@ export default function CreativeSection() {
 
       const rect = section.getBoundingClientRect();
       const sectionTop = rect.top;
-      const viewportHeight = window.innerHeight;
+      const vh = window.innerHeight;
 
       // Scale thresholds based on mobile vs desktop section height
-      const delayThreshold = viewportHeight * (isMobile ? 0.3 : 0.5);
-      const animationScrollDistance = viewportHeight * (isMobile ? 1.2 : 2);
+      const delayThreshold = vh * (isMobile ? 0.3 : 0.5);
+      const animationScrollDistance = vh * (isMobile ? 1.2 : 2);
 
-      // Calculate scroll progress through the section
-      const scrollStart = delayThreshold;
+      const progress = clamp01((delayThreshold - sectionTop) / animationScrollDistance);
 
-      // Progress from 0 to 1 based on animation scroll distance
-      const scrolled = scrollStart - sectionTop;
-      const progress = Math.max(
-        0,
-        Math.min(1, scrolled / animationScrollDistance),
-      );
-
-      // Update scroll progress for content animations
       setScrollProgress(progress);
 
-      // Map progress to frame number (only on desktop)
       if (!isMobile && dotLottie && totalFrames > 0) {
-        const frame = Math.floor(progress * (totalFrames - 1));
-        dotLottie.setFrame(frame);
+        dotLottie.setFrame(Math.floor(progress * (totalFrames - 1)));
       }
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll(); // Initial call
+    handleScroll();
 
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [dotLottie, totalFrames, isMobile]);
 
-  const containerProgress = Math.max(
-    0,
-    Math.min(1, (scrollProgress - 0.1) / 0.12),
-  );
-  const headlineProgress = Math.max(
-    0,
-    Math.min(1, (scrollProgress - 0.14) / 0.12),
-  );
+  const containerProgress = clamp01((scrollProgress - 0.1) / 0.12);
+  const headlineProgress = clamp01((scrollProgress - 0.14) / 0.12);
   const getHighlightProgress = (index: number) => {
     const startOffset = 0.25 + index * 0.06;
-    return Math.max(0, Math.min(1, (scrollProgress - startOffset) / 0.08));
+    return clamp01((scrollProgress - startOffset) / 0.08);
   };
 
-  const backgroundRevealProgress = Math.max(
-    0,
-    Math.min(1, (scrollProgress - 0.8) / 0.2),
-  );
-
-  const sectionHeight = isMobile ? "180vh" : "260vh";
-  const clipPathOrigin = isMobile ? "50% 50%" : "15% 60%";
+  const backgroundRevealProgress = clamp01((scrollProgress - 0.8) / 0.2);
 
   return (
     <section
       ref={sectionRef}
       className="relative w-full"
-      style={{ height: sectionHeight }}
+      style={{ height: isMobile ? "180vh" : "260vh" }}
     >
       {/* Sticky container for the animation and content */}
       <div className="sticky top-0 w-full h-screen overflow-hidden">
@@ -136,7 +96,7 @@ export default function CreativeSection() {
         <div
           className="absolute inset-0 w-full h-full z-0"
           style={{
-            clipPath: `circle(${backgroundRevealProgress * 150}% at ${clipPathOrigin})`,
+            clipPath: `circle(${backgroundRevealProgress * 150}% at ${isMobile ? "50% 50%" : "15% 60%"})`,
             opacity: backgroundRevealProgress > 0 ? 1 : 0,
           }}
         >
@@ -159,12 +119,12 @@ export default function CreativeSection() {
             src="/images/Creative-section/Creative-section-background-animation.lottie"
             autoplay={false}
             loop={false}
-            dotLottieRefCallback={dotLottieRefCallback}
+            dotLottieRefCallback={setDotLottie}
             renderConfig={
               {
                 autoResize: true,
                 fit: "contain",
-                align: ["0", "0"], // Align to top-left
+                align: ["0", "0"],
               } as unknown as typeof undefined
             }
           />

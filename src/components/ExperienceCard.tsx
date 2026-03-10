@@ -60,6 +60,8 @@ export const experiences = [
 
 export type Experience = (typeof experiences)[0];
 
+const clamp01 = (v: number) => Math.max(0, Math.min(1, v));
+
 export default function ExperienceCard({
   experience,
   index,
@@ -72,25 +74,16 @@ export default function ExperienceCard({
   isMobile?: boolean;
 }) {
   const isEven = index % 2 === 0;
-
-  const progress = Math.max(0, Math.min(1, revealProgress));
-
-  const contentProgress = Math.max(0, Math.min(1, (progress - 0.3) * 1.5));
-  const nodeProgress = Math.max(0, Math.min(1, (progress - 0.2) * 2.5));
+  const progress = clamp01(revealProgress);
+  const contentProgress = clamp01((progress - 0.3) * 1.5);
+  const nodeProgress = clamp01((progress - 0.2) * 2.5);
 
   // On mobile, only use vertical animation (no horizontal slide)
   const translateX = isMobile ? 0 : (1 - progress) * (isEven ? -40 : 40);
 
-  // Build flex direction classes: column on mobile, row/row-reverse on desktop
-  const flexDirection = isMobile
-    ? "flex-col"
-    : isEven
-      ? "flex-row"
-      : "flex-row-reverse";
-
   return (
     <div
-      className={`relative flex items-center gap-4 md:gap-8 ${flexDirection}`}
+      className={`relative flex items-center gap-4 md:gap-8 ${isMobile ? "flex-col" : isEven ? "flex-row" : "flex-row-reverse"}`}
       style={{
         opacity: progress,
         transform: `translateY(${(1 - progress) * 60}px) translateX(${translateX}px)`,
@@ -157,9 +150,7 @@ export default function ExperienceCard({
       <div className="hidden md:block relative flex-shrink-0">
         <div
           className="w-4 h-4 rounded-full bg-accent border-2 border-background"
-          style={{
-            transform: `scale(${nodeProgress})`,
-          }}
+          style={{ transform: `scale(${nodeProgress})` }}
         />
         <div
           className="absolute inset-0 w-4 h-4 rounded-full bg-accent/50"

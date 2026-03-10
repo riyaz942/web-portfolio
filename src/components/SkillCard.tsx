@@ -61,6 +61,8 @@ export const skillCategories = [
 
 export type SkillCategory = (typeof skillCategories)[0];
 
+const clamp01 = (v: number) => Math.max(0, Math.min(1, v));
+
 export default function SkillCard({
   category,
   revealProgress,
@@ -68,11 +70,10 @@ export default function SkillCard({
   category: SkillCategory;
   revealProgress: number;
 }) {
-  const progress = Math.max(0, Math.min(1, revealProgress));
-
-  const iconProgress = Math.max(0, Math.min(1, progress * 2));
-  const contentProgress = Math.max(0, Math.min(1, (progress - 0.3) * 1.8));
-  const tagProgress = Math.max(0, Math.min(1, (progress - 0.5) * 2));
+  const progress = clamp01(revealProgress);
+  const iconProgress = clamp01(progress * 2);
+  const contentProgress = clamp01((progress - 0.3) * 1.8);
+  const tagProgress = clamp01((progress - 0.5) * 2);
 
   return (
     <div

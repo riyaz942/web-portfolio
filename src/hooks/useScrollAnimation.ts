@@ -18,21 +18,9 @@ export function useScrollAnimation<T extends HTMLElement = HTMLDivElement>(
 
   const calculateProgress = useCallback(() => {
     if (!ref.current) return;
-
-    const rect = ref.current.getBoundingClientRect();
-    const windowHeight = window.innerHeight;
-
-    // Calculate how far into the viewport the element is
-    const elementTop = rect.top;
-    const elementHeight = rect.height;
-
-    // Progress: 0 when element enters viewport, 1 when it's fully visible
-    const progress = Math.min(
-      Math.max((windowHeight - elementTop) / (windowHeight + elementHeight), 0),
-      1
-    );
-
-    setScrollProgress(progress);
+    const { top, height } = ref.current.getBoundingClientRect();
+    const wh = window.innerHeight;
+    setScrollProgress(Math.min(Math.max((wh - top) / (wh + height), 0), 1));
   }, []);
 
   useEffect(() => {
@@ -41,12 +29,9 @@ export function useScrollAnimation<T extends HTMLElement = HTMLDivElement>(
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        const visible = entry.isIntersecting;
-        if (visible) {
+        if (entry.isIntersecting) {
           setIsVisible(true);
-          if (triggerOnce) {
-            observer.unobserve(element);
-          }
+          if (triggerOnce) observer.unobserve(element);
         } else if (!triggerOnce) {
           setIsVisible(false);
         }
@@ -56,13 +41,9 @@ export function useScrollAnimation<T extends HTMLElement = HTMLDivElement>(
 
     observer.observe(element);
 
-    // Add scroll listener for progress tracking
-    const handleScroll = () => {
-      requestAnimationFrame(calculateProgress);
-    };
-
+    const handleScroll = () => requestAnimationFrame(calculateProgress);
     window.addEventListener("scroll", handleScroll, { passive: true });
-    calculateProgress(); // Initial calculation
+    calculateProgress();
 
     return () => {
       observer.disconnect();
@@ -80,14 +61,8 @@ export function useParallax(speed: number = 0.5) {
   useEffect(() => {
     const handleScroll = () => {
       if (!ref.current) return;
-
-      const rect = ref.current.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-      const elementCenter = rect.top + rect.height / 2;
-      const viewportCenter = windowHeight / 2;
-
-      const distance = elementCenter - viewportCenter;
-      setOffset(distance * speed * -1);
+      const { top, height } = ref.current.getBoundingClientRect();
+      setOffset((top + height / 2 - window.innerHeight / 2) * speed * -1);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });

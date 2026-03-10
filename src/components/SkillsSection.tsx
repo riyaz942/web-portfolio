@@ -36,6 +36,15 @@ type AnimPhase =
 
 const AUTO_PLAY_SPEED = 1 / 1400;
 
+const clamp01 = (v: number) => Math.max(0, Math.min(1, v));
+
+function initLottie(lottie: DotLottie, setFrames: (n: number) => void) {
+  const onLoad = () => { setFrames(lottie.totalFrames); lottie.pause(); lottie.setFrame(0); };
+  lottie.addEventListener("load", onLoad);
+  if (lottie.isLoaded) onLoad();
+  return () => lottie.removeEventListener("load", onLoad);
+}
+
 export default function SkillsSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const innerContainerRef = useRef<HTMLDivElement>(null);
@@ -54,53 +63,8 @@ export default function SkillsSection() {
   const [treeProgress, setTreeProgress] = useState(0);
   const [bgRevealed, setBgRevealed] = useState(false);
 
-  const dotLottieRefCallback = useCallback((instance: DotLottie | null) => {
-    setDotLottie(instance);
-  }, []);
-
-  const treeDotLottieRefCallback = useCallback((instance: DotLottie | null) => {
-    setTreeDotLottie(instance);
-  }, []);
-
-  useEffect(() => {
-    if (!dotLottie) return;
-
-    const handleLoad = () => {
-      setTotalFrames(dotLottie.totalFrames);
-      dotLottie.pause();
-      dotLottie.setFrame(0);
-    };
-
-    dotLottie.addEventListener("load", handleLoad);
-
-    if (dotLottie.isLoaded) {
-      handleLoad();
-    }
-
-    return () => {
-      dotLottie.removeEventListener("load", handleLoad);
-    };
-  }, [dotLottie]);
-
-  useEffect(() => {
-    if (!treeDotLottie) return;
-
-    const handleLoad = () => {
-      setTreeTotalFrames(treeDotLottie.totalFrames);
-      treeDotLottie.pause();
-      treeDotLottie.setFrame(0);
-    };
-
-    treeDotLottie.addEventListener("load", handleLoad);
-
-    if (treeDotLottie.isLoaded) {
-      handleLoad();
-    }
-
-    return () => {
-      treeDotLottie.removeEventListener("load", handleLoad);
-    };
-  }, [treeDotLottie]);
+  useEffect(() => (dotLottie ? initLottie(dotLottie, setTotalFrames) : undefined), [dotLottie]);
+  useEffect(() => (treeDotLottie ? initLottie(treeDotLottie, setTreeTotalFrames) : undefined), [treeDotLottie]);
 
   const syncFrames = useCallback(
     (lineProg: number, treeProg: number) => {
@@ -172,28 +136,22 @@ export default function SkillsSection() {
 
       const rect = section.getBoundingClientRect();
       const sectionTop = rect.top;
-      const viewportHeight = window.innerHeight;
+      const vh = window.innerHeight;
 
       // Scale thresholds based on mobile vs desktop section height
-      const delayThreshold = viewportHeight * (isMobile ? 0.3 : 0.5);
-      const lineAnimScrollDist = viewportHeight * (isMobile ? 0.7 : 1.0);
+      const delayThreshold = vh * (isMobile ? 0.3 : 0.5);
+      const lineAnimScrollDist = vh * (isMobile ? 0.7 : 1.0);
 
-      const scrolled = delayThreshold - sectionTop;
-      const rawLineProg = Math.max(
-        0,
-        Math.min(1, scrolled / lineAnimScrollDist),
-      );
+      const rawLineProg = clamp01((delayThreshold - sectionTop) / lineAnimScrollDist);
 
       // --- Stacked / Layered Scroll Sections Effect ---
       // The Contact section has a negative top margin of 100vh.
-      // It starts overlapping this section when sectionTop reaches -1.2 * viewportHeight,
-      // and completely covers it when sectionTop reaches -2.2 * viewportHeight.
-      const overlapStart = -1.2 * viewportHeight;
-      let rawOverlap = 0;
-      if (sectionTop <= overlapStart) {
-        rawOverlap = (overlapStart - sectionTop) / viewportHeight;
-      }
-      const clampedOverlap = Math.max(0, Math.min(1, rawOverlap));
+      // It starts overlapping this section when sectionTop reaches -1.2 * vh,
+      // and completely covers it when sectionTop reaches -2.2 * vh.
+      const overlapStart = -1.2 * vh;
+      const clampedOverlap = sectionTop <= overlapStart
+        ? clamp01((overlapStart - sectionTop) / vh)
+        : 0;
 
       if (innerContainerRef.current) {
         if (clampedOverlap > 0) {
@@ -206,12 +164,10 @@ export default function SkillsSection() {
           innerContainerRef.current.style.filter = "";
         }
       }
-      // ------------------------------------------------
 
       const phase = phaseRef.current;
 
       // On mobile, skip Lottie tree auto-play phases since Lotties are hidden.
-      // Reveal the background when the section is fully in view (top <= 0).
       if (isMobile) {
         setScrollProgress(rawLineProg);
         setBgRevealed(sectionTop <= 0);
@@ -260,26 +216,18 @@ export default function SkillsSection() {
     };
   }, [syncFrames, startAutoPlay, stopAutoPlay, isMobile]);
 
-  const containerProgress = Math.max(
-    0,
-    Math.min(1, (scrollProgress - 0.15) / 0.15),
-  );
-  const headerProgress = Math.max(
-    0,
-    Math.min(1, (scrollProgress - 0.2) / 0.15),
-  );
+  const containerProgress = clamp01((scrollProgress - 0.15) / 0.15);
+  const headerProgress = clamp01((scrollProgress - 0.2) / 0.15);
   const getHighlightProgress = (index: number) => {
     const startOffset = 0.35 + index * 0.075;
-    return Math.max(0, Math.min(1, (scrollProgress - startOffset) / 0.1));
+    return clamp01((scrollProgress - startOffset) / 0.1);
   };
-
-  const sectionHeight = isMobile ? "250vh" : "350vh";
 
   return (
     <section
       ref={sectionRef}
       className="relative w-full"
-      style={{ height: sectionHeight }}
+      style={{ height: isMobile ? "250vh" : "350vh" }}
     >
       <div className="sticky top-0 w-full h-screen overflow-hidden">
         <div
@@ -324,12 +272,12 @@ export default function SkillsSection() {
               src="/images/Skill-section/center-line-to-right-animation.lottie"
               autoplay={false}
               loop={false}
-              dotLottieRefCallback={dotLottieRefCallback}
+              dotLottieRefCallback={setDotLottie}
               renderConfig={
                 {
                   autoResize: true,
                   fit: "contain",
-                  align: ["1", "0"], // Align to top-right
+                  align: ["1", "0"],
                 } as unknown as typeof undefined
               }
             />
@@ -347,7 +295,7 @@ export default function SkillsSection() {
               src="/images/Skill-section/tree-animation.lottie"
               autoplay={false}
               loop={false}
-              dotLottieRefCallback={treeDotLottieRefCallback}
+              dotLottieRefCallback={setTreeDotLottie}
               renderConfig={
                 {
                   autoResize: true,

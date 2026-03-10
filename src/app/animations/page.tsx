@@ -1,42 +1,30 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { DotLottieReact, DotLottie } from "@lottiefiles/dotlottie-react";
 
 function CompletedLottie({
   src,
-  label,
   aspectRatio,
 }: {
   src: string;
-  label: string;
   aspectRatio: string;
 }) {
   const [dotLottie, setDotLottie] = useState<DotLottie | null>(null);
-
-  const dotLottieRefCallback = useCallback((instance: DotLottie | null) => {
-    setDotLottie(instance);
-  }, []);
 
   // Set animation to its last frame once loaded
   useEffect(() => {
     if (!dotLottie) return;
 
-    const handleLoad = () => {
-      const lastFrame = dotLottie.totalFrames - 1;
+    const onLoad = () => {
       dotLottie.pause();
-      dotLottie.setFrame(lastFrame);
+      dotLottie.setFrame(dotLottie.totalFrames - 1);
     };
 
-    dotLottie.addEventListener("load", handleLoad);
+    dotLottie.addEventListener("load", onLoad);
+    if (dotLottie.isLoaded) onLoad();
 
-    if (dotLottie.isLoaded) {
-      handleLoad();
-    }
-
-    return () => {
-      dotLottie.removeEventListener("load", handleLoad);
-    };
+    return () => dotLottie.removeEventListener("load", onLoad);
   }, [dotLottie]);
 
   return (
@@ -45,7 +33,7 @@ function CompletedLottie({
         src={src}
         autoplay={false}
         loop={false}
-        dotLottieRefCallback={dotLottieRefCallback}
+        dotLottieRefCallback={setDotLottie}
         renderConfig={
           {
             autoResize: true,
@@ -72,12 +60,10 @@ export default function AnimationsPage() {
       <div className="max-w-[851px] mx-auto flex flex-col">
         <CompletedLottie
           src="/images/Creative-section/Creative-section-background-animation.lottie"
-          label="Creative Section"
           aspectRatio="851 / 721"
         />
         <CompletedLottie
           src="/images/Experience-section/experience-section-background-animation.lottie"
-          label="Experience Section"
           aspectRatio="851 / 2163"
         />
       </div>

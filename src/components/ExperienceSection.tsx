@@ -1,10 +1,19 @@
 "use client";
 
-import { useRef, useEffect, useState, useCallback } from "react";
+import { useRef, useEffect, useState } from "react";
 import { DotLottieReact, DotLottie } from "@lottiefiles/dotlottie-react";
 import Image from "next/image";
 import ExperienceCard, { experiences } from "./ExperienceCard";
 import { useIsMobile } from "@/hooks/useIsMobile";
+
+const clamp01 = (v: number) => Math.max(0, Math.min(1, v));
+
+function initLottie(lottie: DotLottie, setFrames: (n: number) => void) {
+  const onLoad = () => { setFrames(lottie.totalFrames); lottie.pause(); lottie.setFrame(0); };
+  lottie.addEventListener("load", onLoad);
+  if (lottie.isLoaded) onLoad();
+  return () => lottie.removeEventListener("load", onLoad);
+}
 
 export default function ExperienceSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -15,10 +24,6 @@ export default function ExperienceSection() {
   const [bgRevealProgress, setBgRevealProgress] = useState(0);
   const [lottieGap, setLottieGap] = useState(0);
   const isMobile = useIsMobile();
-  console.log("something", lottieGap);
-  const dotLottieRefCallback = useCallback((instance: DotLottie | null) => {
-    setDotLottie(instance);
-  }, []);
 
   // Watch the gap between the Creative section Lottie bottom and ExperienceSection top on resize
   // and when the section is about to enter the viewport (desktop only)
@@ -26,47 +31,30 @@ export default function ExperienceSection() {
     if (isMobile) return;
 
     const measureGap = () => {
-      console.log("something: measureGap");
       const creativeLottie = document.querySelector<HTMLElement>(
         '[data-id="creative-lottie"]',
       );
       const experienceContainer = sectionRef.current;
       if (!creativeLottie || !experienceContainer) return;
 
-      const creativeLottieRect = creativeLottie.getBoundingClientRect();
-      const experienceRect = experienceContainer.getBoundingClientRect();
-
-      // py-24 = 6rem = 96px padding-top on the experience section
       const sectionPaddingTop = parseFloat(
         getComputedStyle(experienceContainer).paddingTop,
       );
 
-      // Gap = distance from creative lottie bottom to experience section content area top (in page coordinates)
-      const gap =
-        experienceRect.top +
-        sectionPaddingTop +
-        window.scrollY -
-        (creativeLottieRect.bottom + window.scrollY);
-      setLottieGap(gap);
+      // window.scrollY cancels on both sides of the subtraction
+      setLottieGap(
+        experienceContainer.getBoundingClientRect().top +
+        sectionPaddingTop -
+        creativeLottie.getBoundingClientRect().bottom,
+      );
     };
 
-    // Use IntersectionObserver to trigger measureGap when the title becomes visible
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            measureGap();
-          }
-        });
-      },
-      {
-        threshold: 0,
-      },
+      ([entry]) => { if (entry.isIntersecting) measureGap(); },
+      { threshold: 0 },
     );
 
-    if (titleRef.current) {
-      observer.observe(titleRef.current);
-    }
+    if (titleRef.current) observer.observe(titleRef.current);
 
     window.addEventListener("resize", measureGap);
     return () => {
@@ -75,30 +63,11 @@ export default function ExperienceSection() {
     };
   }, [isMobile]);
 
-  // Get total frames when animation loads
+  useEffect(() => (dotLottie ? initLottie(dotLottie, setTotalFrames) : undefined), [dotLottie]);
+
+  // Merged scroll handler: lottie + content progress AND background reveal
   useEffect(() => {
-    if (!dotLottie) return;
-
-    const handleLoad = () => {
-      setTotalFrames(dotLottie.totalFrames);
-      dotLottie.pause();
-      dotLottie.setFrame(0);
-    };
-
-    dotLottie.addEventListener("load", handleLoad);
-
-    if (dotLottie.isLoaded) {
-      handleLoad();
-    }
-
-    return () => {
-      dotLottie.removeEventListener("load", handleLoad);
-    };
-  }, [dotLottie]);
-
-  // Handle scroll-based animation control
-  useEffect(() => {
-    if (!dotLottie || totalFrames === 0 || !sectionRef.current) return;
+    if (!sectionRef.current) return;
 
     const handleScroll = () => {
       const section = sectionRef.current;
@@ -107,33 +76,26 @@ export default function ExperienceSection() {
       const rect = section.getBoundingClientRect();
       const sectionTop = rect.top;
       const sectionHeight = rect.height;
-      const viewportHeight = window.innerHeight;
+      const vh = window.innerHeight;
 
-      // Lottie animation starts earlier (when section first enters viewport)
-      const lottieScrollStart = viewportHeight * 0.7;
-      const lottieScrollEnd = -sectionHeight + viewportHeight;
-      const lottieScrolled = lottieScrollStart - sectionTop;
-      const lottieScrollRange = lottieScrollStart - lottieScrollEnd;
-      const lottieProgress = Math.max(
-        0,
-        Math.min(1, lottieScrolled / lottieScrollRange),
-      );
+      // Background reveal: starts when section top hits viewport top, completes over 400px
+      setBgRevealProgress(clamp01(-sectionTop / 400));
 
-      // Map lottie progress to frame number
-      const frame = Math.floor(lottieProgress * (totalFrames - 1));
-      dotLottie.setFrame(frame);
+      // Lottie + content animations require loaded animation
+      if (dotLottie && totalFrames > 0) {
+        const lottieScrollStart = vh * 0.7;
+        const lottieScrollEnd = -sectionHeight + vh;
+        const lottieProgress = clamp01(
+          (lottieScrollStart - sectionTop) / (lottieScrollStart - lottieScrollEnd),
+        );
+        dotLottie.setFrame(Math.floor(lottieProgress * (totalFrames - 1)));
 
-      // Content animations start later (when section is more visible)
-      const contentScrollStart = viewportHeight * 0.4;
-      const contentScrollEnd = -sectionHeight + viewportHeight;
-      const contentScrolled = contentScrollStart - sectionTop;
-      const contentScrollRange = contentScrollStart - contentScrollEnd;
-      const contentProgress = Math.max(
-        0,
-        Math.min(1, contentScrolled / contentScrollRange),
-      );
-
-      setScrollProgress(contentProgress);
+        const contentScrollStart = vh * 0.4;
+        const contentScrollEnd = -sectionHeight + vh;
+        setScrollProgress(
+          clamp01((contentScrollStart - sectionTop) / (contentScrollStart - contentScrollEnd)),
+        );
+      }
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -142,46 +104,14 @@ export default function ExperienceSection() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [dotLottie, totalFrames]);
 
-  // Background image reveal: starts when section top hits viewport top,
-  // completes over 400px of additional scroll
-  useEffect(() => {
-    const handleScroll = () => {
-      const section = sectionRef.current;
-      if (!section) return;
-
-      const rect = section.getBoundingClientRect();
-      const revealDistance = 400;
-      const progress = Math.max(0, Math.min(1, -rect.top / revealDistance));
-      setBgRevealProgress(progress);
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  // Calculate reveal progress for each experience card
-  // Cards reveal progressively as scroll progresses
   const getCardRevealProgress = (index: number) => {
     const totalCards = experiences.length;
-    // Stagger card reveals - start later so cards are visible when animating
     const cardStartOffset = 0.15 + (index / totalCards) * 0.5;
     const cardEndOffset = cardStartOffset + 0.15;
-    return Math.max(
-      0,
-      Math.min(
-        1,
-        (scrollProgress - cardStartOffset) / (cardEndOffset - cardStartOffset),
-      ),
-    );
+    return clamp01((scrollProgress - cardStartOffset) / (cardEndOffset - cardStartOffset));
   };
 
-  // Header reveal progress - starts at 5% scroll, completes at 20%
-  const headerProgress = Math.max(
-    0,
-    Math.min(1, (scrollProgress - 0.05) / 0.15),
-  );
+  const headerProgress = clamp01((scrollProgress - 0.05) / 0.15);
 
   return (
     <section
@@ -205,7 +135,7 @@ export default function ExperienceSection() {
           src="/images/Experience-section/experience-section-background-animation.lottie"
           autoplay={false}
           loop={false}
-          dotLottieRefCallback={dotLottieRefCallback}
+          dotLottieRefCallback={setDotLottie}
           renderConfig={
             {
               autoResize: true,
