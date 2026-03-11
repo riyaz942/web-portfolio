@@ -5,15 +5,8 @@ import { DotLottieReact, DotLottie } from "@lottiefiles/dotlottie-react";
 import Image from "next/image";
 import ExperienceCard, { experiences } from "./ExperienceCard";
 import { useIsMobile } from "@/hooks/useIsMobile";
-
-const clamp01 = (v: number) => Math.max(0, Math.min(1, v));
-
-function initLottie(lottie: DotLottie, setFrames: (n: number) => void) {
-  const onLoad = () => { setFrames(lottie.totalFrames); lottie.pause(); lottie.setFrame(0); };
-  lottie.addEventListener("load", onLoad);
-  if (lottie.isLoaded) onLoad();
-  return () => lottie.removeEventListener("load", onLoad);
-}
+import { clamp01 } from "@/utils/clamp";
+import { initLottie } from "@/utils/lottie";
 
 export default function ExperienceSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -132,7 +125,7 @@ export default function ExperienceSection() {
         }}
       >
         <DotLottieReact
-          src="/images/Experience-section/experience-section-background-animation.lottie"
+          src="/images/experience-section/background-animation.lottie"
           autoplay={false}
           loop={false}
           dotLottieRefCallback={setDotLottie}
@@ -188,7 +181,7 @@ export default function ExperienceSection() {
         }}
       >
         <Image
-          src="/images/Experience-section/experience-section-background-image.png"
+          src="/images/experience-section/background.png"
           alt=""
           fill
           className="object-cover opacity-20"

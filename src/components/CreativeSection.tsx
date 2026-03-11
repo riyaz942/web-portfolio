@@ -4,35 +4,9 @@ import { useRef, useEffect, useState } from "react";
 import { DotLottieReact, DotLottie } from "@lottiefiles/dotlottie-react";
 import Image from "next/image";
 import { useIsMobile } from "@/hooks/useIsMobile";
-
-// Micro-highlights data
-const microHighlights = [
-  {
-    title: "Complexity Enthusiast",
-    description: "The harder the problem, the more interesting it gets",
-  },
-  {
-    title: "Craft Over Shortcuts",
-    description: "Quality code that future-me would thank present-me for",
-  },
-  {
-    title: "Always Learning",
-    description: "First to explore new tech, last to leave the docs",
-  },
-  {
-    title: "Ownership Mentality",
-    description: "If it's in my codebase, it's my responsibility",
-  },
-];
-
-const clamp01 = (v: number) => Math.max(0, Math.min(1, v));
-
-function initLottie(lottie: DotLottie, setFrames: (n: number) => void) {
-  const onLoad = () => { setFrames(lottie.totalFrames); lottie.pause(); lottie.setFrame(0); };
-  lottie.addEventListener("load", onLoad);
-  if (lottie.isLoaded) onLoad();
-  return () => lottie.removeEventListener("load", onLoad);
-}
+import { clamp01 } from "@/utils/clamp";
+import { initLottie } from "@/utils/lottie";
+import { creativeHighlights } from "@/data/creativeHighlights";
 
 export default function CreativeSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -101,7 +75,7 @@ export default function CreativeSection() {
           }}
         >
           <Image
-            src="/images/Creative-section/Creative-section-background-doodle-image.png"
+            src="/images/creative-section/background-doodle.png"
             alt=""
             fill
             className="object-cover object-center opacity-20"
@@ -116,7 +90,7 @@ export default function CreativeSection() {
           style={{ aspectRatio: "851 / 721" }}
         >
           <DotLottieReact
-            src="/images/Creative-section/Creative-section-background-animation.lottie"
+            src="/images/creative-section/background-animation.lottie"
             autoplay={false}
             loop={false}
             dotLottieRefCallback={setDotLottie}
@@ -178,7 +152,7 @@ export default function CreativeSection() {
             {/* Micro-Highlights Grid */}
             <div className="relative">
               <div className="grid grid-cols-2 gap-4 md:gap-5">
-                {microHighlights.map((highlight, index) => {
+                {creativeHighlights.map((highlight, index) => {
                   const progress = getHighlightProgress(index);
                   return (
                     <div

@@ -4,29 +4,9 @@ import { useRef, useEffect, useState, useCallback } from "react";
 import { DotLottieReact, DotLottie } from "@lottiefiles/dotlottie-react";
 import Image from "next/image";
 import { useIsMobile } from "@/hooks/useIsMobile";
-
-const skillHighlights = [
-  {
-    title: "The Frontend Canvas",
-    description:
-      "Crafting pixel-perfect, highly animated UI with modern JavaScript",
-  },
-  {
-    title: "Intelligent Systems",
-    description:
-      "Weaving conversational AI into apps to make them think and speak",
-  },
-  {
-    title: "Full-Stack Foundation",
-    description:
-      "Node.js and cloud infrastructure that doesn't buckle under pressure",
-  },
-  {
-    title: "Tech Leadership",
-    description:
-      "Guiding teams, architecting solutions, and shipping what matters",
-  },
-];
+import { clamp01 } from "@/utils/clamp";
+import { initLottie } from "@/utils/lottie";
+import { skillHighlights } from "@/data/skillHighlights";
 
 type AnimPhase =
   | "scroll_driven"
@@ -35,15 +15,6 @@ type AnimPhase =
   | "auto_reverse_tree";
 
 const AUTO_PLAY_SPEED = 1 / 1400;
-
-const clamp01 = (v: number) => Math.max(0, Math.min(1, v));
-
-function initLottie(lottie: DotLottie, setFrames: (n: number) => void) {
-  const onLoad = () => { setFrames(lottie.totalFrames); lottie.pause(); lottie.setFrame(0); };
-  lottie.addEventListener("load", onLoad);
-  if (lottie.isLoaded) onLoad();
-  return () => lottie.removeEventListener("load", onLoad);
-}
 
 export default function SkillsSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -251,7 +222,7 @@ export default function SkillsSection() {
             }}
           >
             <Image
-              src="/images/Skill-section/Skill-section-background-image.png"
+              src="/images/skills-section/background.png"
               alt=""
               fill
               className="object-cover object-center"
@@ -269,7 +240,7 @@ export default function SkillsSection() {
             }}
           >
             <DotLottieReact
-              src="/images/Skill-section/center-line-to-right-animation.lottie"
+              src="/images/skills-section/center-line-animation.lottie"
               autoplay={false}
               loop={false}
               dotLottieRefCallback={setDotLottie}
@@ -292,7 +263,7 @@ export default function SkillsSection() {
             }}
           >
             <DotLottieReact
-              src="/images/Skill-section/tree-animation.lottie"
+              src="/images/skills-section/tree-animation.lottie"
               autoplay={false}
               loop={false}
               dotLottieRefCallback={setTreeDotLottie}

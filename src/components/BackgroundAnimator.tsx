@@ -9,9 +9,9 @@ interface BackgroundAnimatorProps {
 }
 
 const layers = [
-  { d: 20, img: "background-dark-doodle-line-layer.png" },
-  { d: 15, img: "background-dark-doodle-second-layer.png" },
-  { d: 10, img: "background-dark-doodle-first-layer.png" },
+  { d: 20, img: "doodle-line-layer.png" },
+  { d: 15, img: "doodle-second-layer.png" },
+  { d: 10, img: "doodle-first-layer.png" },
 ] as const;
 
 const BackgroundAnimator = ({ clientX, clientY }: BackgroundAnimatorProps) => {
@@ -43,7 +43,7 @@ const BackgroundAnimator = ({ clientX, clientY }: BackgroundAnimatorProps) => {
           className="absolute -top-[5%] -left-[5%] w-[110%] h-[110%] bg-cover bg-center bg-no-repeat pointer-events-none will-change-transform"
           style={{
             transform: to(animationProps.xy, (x, y) => `translate(${x / d}px,${y / d}px)`),
-            backgroundImage: `url(/images/Landing-section/${img})`,
+            backgroundImage: `url(/images/landing-section/${img})`,
           }}
         />
       ))}
