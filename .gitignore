@@ -42,3 +42,5 @@ next-env.d.ts
 
 _bmad
 .cursor
+.claude
+_bmad-output
