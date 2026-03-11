@@ -13,8 +13,17 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Portfolio | Creative Developer",
-  description: "Crafting digital experiences that inspire",
+  title: "Riyaz Ahmed | Portfolio",
+  description:
+    "Hi, I'm Riyaz Ahmed — a Lead/Senior Software Developer who loves turning complex problems into elegant, performant solutions. Take a look around.",
+  icons: {
+    icon: [
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+    ],
+    apple: "/apple-touch-icon.png",
+  },
+  manifest: "/site.webmanifest",
 };
 
 export default function RootLayout({
