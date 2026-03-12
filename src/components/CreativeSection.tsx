@@ -75,7 +75,7 @@ export default function CreativeSection() {
           }}
         >
           <Image
-            src="/images/creative-section/background-doodle.png"
+            src="/images/creative-section/background-doodle.webp"
             alt=""
             fill
             className="object-cover object-center opacity-20"

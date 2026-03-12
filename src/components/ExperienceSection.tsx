@@ -181,7 +181,7 @@ export default function ExperienceSection() {
         }}
       >
         <Image
-          src="/images/experience-section/background.png"
+          src="/images/experience-section/background.webp"
           alt=""
           fill
           className="object-cover opacity-20"

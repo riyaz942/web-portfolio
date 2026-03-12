@@ -222,7 +222,7 @@ export default function SkillsSection() {
             }}
           >
             <Image
-              src="/images/skills-section/background.png"
+              src="/images/skills-section/background.webp"
               alt=""
               fill
               className="object-cover object-center"
