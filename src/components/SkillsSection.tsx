@@ -98,10 +98,13 @@ export default function SkillsSection() {
     rafRef.current = requestAnimationFrame(tick);
   }, [syncFrames, stopAutoPlay]);
 
+  const scrollRafRef = useRef<number | null>(null);
+  const lastScrollProgressRef = useRef(0);
+
   useEffect(() => {
     if (!sectionRef.current) return;
 
-    const handleScroll = () => {
+    const computeAndApply = () => {
       const section = sectionRef.current;
       if (!section) return;
 
@@ -109,16 +112,11 @@ export default function SkillsSection() {
       const sectionTop = rect.top;
       const vh = window.innerHeight;
 
-      // Scale thresholds based on mobile vs desktop section height
       const delayThreshold = vh * (isMobile ? 0.3 : 0.5);
       const lineAnimScrollDist = vh * (isMobile ? 0.7 : 1.0);
 
       const rawLineProg = clamp01((delayThreshold - sectionTop) / lineAnimScrollDist);
 
-      // --- Stacked / Layered Scroll Sections Effect ---
-      // The Contact section has a negative top margin of 100vh.
-      // It starts overlapping this section when sectionTop reaches -1.2 * vh,
-      // and completely covers it when sectionTop reaches -2.2 * vh.
       const overlapStart = -1.2 * vh;
       const clampedOverlap = sectionTop <= overlapStart
         ? clamp01((overlapStart - sectionTop) / vh)
@@ -138,9 +136,11 @@ export default function SkillsSection() {
 
       const phase = phaseRef.current;
 
-      // On mobile, skip Lottie tree auto-play phases since Lotties are hidden.
       if (isMobile) {
-        setScrollProgress(rawLineProg);
+        if (Math.abs(rawLineProg - lastScrollProgressRef.current) > 0.001) {
+          lastScrollProgressRef.current = rawLineProg;
+          setScrollProgress(rawLineProg);
+        }
         setBgRevealed(sectionTop <= 0);
         return;
       }
@@ -178,11 +178,20 @@ export default function SkillsSection() {
       }
     };
 
+    const handleScroll = () => {
+      if (scrollRafRef.current !== null) return;
+      scrollRafRef.current = requestAnimationFrame(() => {
+        scrollRafRef.current = null;
+        computeAndApply();
+      });
+    };
+
     window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
+    computeAndApply();
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      if (scrollRafRef.current !== null) cancelAnimationFrame(scrollRafRef.current);
       stopAutoPlay();
     };
   }, [syncFrames, startAutoPlay, stopAutoPlay, isMobile]);
@@ -226,6 +235,7 @@ export default function SkillsSection() {
               alt=""
               fill
               className="object-cover object-center"
+              sizes="100vw"
               priority={false}
             />
           </div>

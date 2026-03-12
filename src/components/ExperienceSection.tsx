@@ -58,11 +58,14 @@ export default function ExperienceSection() {
 
   useEffect(() => (dotLottie ? initLottie(dotLottie, setTotalFrames) : undefined), [dotLottie]);
 
-  // Merged scroll handler: lottie + content progress AND background reveal
+  const scrollRafRef = useRef<number | null>(null);
+  const lastScrollProgressRef = useRef(0);
+  const lastBgRevealRef = useRef(0);
+
   useEffect(() => {
     if (!sectionRef.current) return;
 
-    const handleScroll = () => {
+    const computeAndApply = () => {
       const section = sectionRef.current;
       if (!section) return;
 
@@ -71,10 +74,12 @@ export default function ExperienceSection() {
       const sectionHeight = rect.height;
       const vh = window.innerHeight;
 
-      // Background reveal: starts when section top hits viewport top, completes over 400px
-      setBgRevealProgress(clamp01(-sectionTop / 400));
+      const newBgReveal = clamp01(-sectionTop / 400);
+      if (Math.abs(newBgReveal - lastBgRevealRef.current) > 0.001) {
+        lastBgRevealRef.current = newBgReveal;
+        setBgRevealProgress(newBgReveal);
+      }
 
-      // Lottie + content animations require loaded animation
       if (dotLottie && totalFrames > 0) {
         const lottieScrollStart = vh * 0.7;
         const lottieScrollEnd = -sectionHeight + vh;
@@ -85,16 +90,31 @@ export default function ExperienceSection() {
 
         const contentScrollStart = vh * 0.4;
         const contentScrollEnd = -sectionHeight + vh;
-        setScrollProgress(
-          clamp01((contentScrollStart - sectionTop) / (contentScrollStart - contentScrollEnd)),
+        const newScrollProgress = clamp01(
+          (contentScrollStart - sectionTop) / (contentScrollStart - contentScrollEnd),
         );
+        if (Math.abs(newScrollProgress - lastScrollProgressRef.current) > 0.001) {
+          lastScrollProgressRef.current = newScrollProgress;
+          setScrollProgress(newScrollProgress);
+        }
       }
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
+    const handleScroll = () => {
+      if (scrollRafRef.current !== null) return;
+      scrollRafRef.current = requestAnimationFrame(() => {
+        scrollRafRef.current = null;
+        computeAndApply();
+      });
+    };
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    computeAndApply();
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (scrollRafRef.current !== null) cancelAnimationFrame(scrollRafRef.current);
+    };
   }, [dotLottie, totalFrames]);
 
   const getCardRevealProgress = (index: number) => {

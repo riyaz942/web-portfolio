@@ -17,12 +17,14 @@ export default function CreativeSection() {
 
   useEffect(() => (dotLottie ? initLottie(dotLottie, setTotalFrames) : undefined), [dotLottie]);
 
-  // Handle scroll-based animation control
+  const scrollRafRef = useRef<number | null>(null);
+  const lastProgressRef = useRef(0);
+
   useEffect(() => {
     if (!sectionRef.current) return;
     if (!isMobile && (!dotLottie || totalFrames === 0)) return;
 
-    const handleScroll = () => {
+    const computeAndApply = () => {
       const section = sectionRef.current;
       if (!section) return;
 
@@ -30,23 +32,36 @@ export default function CreativeSection() {
       const sectionTop = rect.top;
       const vh = window.innerHeight;
 
-      // Scale thresholds based on mobile vs desktop section height
       const delayThreshold = vh * (isMobile ? 0.3 : 0.5);
       const animationScrollDistance = vh * (isMobile ? 1.2 : 2);
 
       const progress = clamp01((delayThreshold - sectionTop) / animationScrollDistance);
 
-      setScrollProgress(progress);
-
       if (!isMobile && dotLottie && totalFrames > 0) {
         dotLottie.setFrame(Math.floor(progress * (totalFrames - 1)));
       }
+
+      if (Math.abs(progress - lastProgressRef.current) > 0.001) {
+        lastProgressRef.current = progress;
+        setScrollProgress(progress);
+      }
+    };
+
+    const handleScroll = () => {
+      if (scrollRafRef.current !== null) return;
+      scrollRafRef.current = requestAnimationFrame(() => {
+        scrollRafRef.current = null;
+        computeAndApply();
+      });
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
+    computeAndApply();
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (scrollRafRef.current !== null) cancelAnimationFrame(scrollRafRef.current);
+    };
   }, [dotLottie, totalFrames, isMobile]);
 
   const containerProgress = clamp01((scrollProgress - 0.1) / 0.12);
@@ -79,6 +94,7 @@ export default function CreativeSection() {
             alt=""
             fill
             className="object-cover object-center opacity-20"
+            sizes="100vw"
             priority={false}
           />
         </div>
