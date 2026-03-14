@@ -4,6 +4,7 @@ import { useRef, useEffect, useState } from "react";
 import { DotLottieReact, DotLottie } from "@lottiefiles/dotlottie-react";
 import Image from "next/image";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { useViewTransitionRouter } from "@/hooks/useViewTransition";
 import { clamp01 } from "@/utils/clamp";
 import { initLottie } from "@/utils/lottie";
 import { creativeHighlights } from "@/data/creativeHighlights";
@@ -14,6 +15,7 @@ export default function CreativeSection() {
   const [totalFrames, setTotalFrames] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
   const isMobile = useIsMobile();
+  const { push } = useViewTransitionRouter();
 
   useEffect(() => (dotLottie ? initLottie(dotLottie, setTotalFrames) : undefined), [dotLottie]);
 
@@ -71,6 +73,7 @@ export default function CreativeSection() {
     return clamp01((scrollProgress - startOffset) / 0.08);
   };
 
+  const buttonProgress = clamp01((scrollProgress - 0.52) / 0.08);
   const backgroundRevealProgress = clamp01((scrollProgress - 0.8) / 0.2);
 
   return (
@@ -205,6 +208,26 @@ export default function CreativeSection() {
                   );
                 })}
               </div>
+            </div>
+
+            {/* Check out my projects button */}
+            <div
+              className="flex justify-center md:justify-end"
+              style={{
+                transform: `translateY(${(1 - buttonProgress) * 30}px)`,
+                opacity: buttonProgress,
+                filter: `blur(${(1 - buttonProgress) * 4}px)`,
+                transition: "filter 0.1s ease-out",
+              }}
+            >
+              <button
+                onClick={() => push("/projects")}
+                className="group relative cursor-pointer overflow-hidden rounded-xl px-7 py-3.5 text-[clamp(0.85rem,1.2vw,1rem)] font-semibold text-background transition-all duration-300 hover:scale-[1.03] active:scale-[0.98]"
+              >
+                <span className="absolute inset-0 bg-gradient-to-r from-accent to-accent-secondary transition-opacity duration-300" />
+                <span className="absolute inset-0 bg-gradient-to-r from-accent-secondary to-accent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <span className="relative">Check out my projects</span>
+              </button>
             </div>
           </div>
         </div>

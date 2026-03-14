@@ -3,10 +3,12 @@ import CreativeSection from "@/components/CreativeSection";
 import ExperienceSection from "@/components/ExperienceSection";
 import SkillsSection from "@/components/SkillsSection";
 import ContactSection from "@/components/ContactSection";
+import ScrollRestore from "@/components/ScrollRestore";
 
 export default function Home() {
   return (
     <div className="w-full">
+      <ScrollRestore />
       <HeroSection />
       <CreativeSection />
       <ExperienceSection />

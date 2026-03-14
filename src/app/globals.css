@@ -28,6 +28,40 @@ html {
   scroll-behavior: smooth;
 }
 
+::view-transition-old(root) {
+  animation: vt-fade-out 0.25s ease-in forwards,
+    vt-slide-out 0.3s ease-in forwards;
+}
+
+::view-transition-new(root) {
+  animation: vt-fade-in 0.3s ease-out 0.1s both,
+    vt-slide-in 0.3s ease-out 0.1s both;
+}
+
+@keyframes vt-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes vt-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes vt-slide-out {
+  to {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes vt-slide-in {
+  from {
+    transform: translateY(12px);
+  }
+}
+
 body {
   background: var(--color-background);
   color: var(--color-foreground);
