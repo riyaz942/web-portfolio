@@ -66,15 +66,15 @@ export default function CreativeSection() {
     };
   }, [dotLottie, totalFrames, isMobile]);
 
-  const containerProgress = clamp01((scrollProgress - 0.1) / 0.12);
-  const headlineProgress = clamp01((scrollProgress - 0.14) / 0.12);
+  const containerProgress = clamp01((scrollProgress - 0.4) / 0.12);
+  const headlineProgress = clamp01((scrollProgress - 0.44) / 0.12);
   const getHighlightProgress = (index: number) => {
-    const startOffset = 0.25 + index * 0.06;
+    const startOffset = 0.55 + index * 0.06;
     return clamp01((scrollProgress - startOffset) / 0.08);
   };
 
-  const buttonProgress = clamp01((scrollProgress - 0.52) / 0.08);
-  const backgroundRevealProgress = clamp01((scrollProgress - 0.8) / 0.2);
+  const buttonProgress = clamp01((scrollProgress - 0.82) / 0.08);
+  const backgroundRevealTriggered = scrollProgress >= 0.92;
 
   return (
     <section
@@ -88,8 +88,9 @@ export default function CreativeSection() {
         <div
           className="absolute inset-0 w-full h-full z-0"
           style={{
-            clipPath: `circle(${backgroundRevealProgress * 150}% at ${isMobile ? "50% 50%" : "15% 60%"})`,
-            opacity: backgroundRevealProgress > 0 ? 1 : 0,
+            clipPath: `circle(${backgroundRevealTriggered ? 150 : 0}% at ${isMobile ? "50% 50%" : "15% 60%"})`,
+            opacity: backgroundRevealTriggered ? 1 : 0,
+            transition: "clip-path 1.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease-out",
           }}
         >
           <Image
@@ -210,11 +211,11 @@ export default function CreativeSection() {
               </div>
             </div>
 
-            {/* Check out my projects button */}
+            {/* Check out my projects link */}
             <div
-              className="flex justify-center md:justify-end"
+              className="flex justify-center md:justify-end -mt-2 md:-mt-4"
               style={{
-                transform: `translateY(${(1 - buttonProgress) * 30}px)`,
+                transform: `translateY(${(1 - buttonProgress) * 20}px)`,
                 opacity: buttonProgress,
                 filter: `blur(${(1 - buttonProgress) * 4}px)`,
                 transition: "filter 0.1s ease-out",
@@ -222,11 +223,26 @@ export default function CreativeSection() {
             >
               <button
                 onClick={() => push("/projects")}
-                className="group relative cursor-pointer overflow-hidden rounded-xl px-7 py-3.5 text-[clamp(0.85rem,1.2vw,1rem)] font-semibold text-background transition-all duration-300 hover:scale-[1.03] active:scale-[0.98]"
+                className="group flex items-center gap-1.5 cursor-pointer bg-transparent text-[clamp(0.8rem,1.1vw,0.95rem)] font-medium transition-opacity duration-300 hover:opacity-80 active:opacity-60"
               >
-                <span className="absolute inset-0 bg-gradient-to-r from-accent to-accent-secondary transition-opacity duration-300" />
-                <span className="absolute inset-0 bg-gradient-to-r from-accent-secondary to-accent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <span className="relative">Check out my projects</span>
+                <span className="bg-gradient-to-r from-accent to-accent-secondary bg-clip-text text-transparent">
+                  Check out my projects
+                </span>
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  className="text-accent transition-transform duration-200 group-hover:translate-x-0.5"
+                >
+                  <path
+                    d="M6 3.5L10.5 8L6 12.5"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
               </button>
             </div>
           </div>
