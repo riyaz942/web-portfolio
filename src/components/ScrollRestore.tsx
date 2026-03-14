@@ -2,23 +2,24 @@
 
 import { useEffect } from "react";
 
-const STORAGE_KEY = "home-scroll-y";
+const STORAGE_PREFIX = "scroll-y:";
 
-export function saveScrollPosition() {
-  sessionStorage.setItem(STORAGE_KEY, String(window.scrollY));
+export function saveScrollPosition(path = "/") {
+  sessionStorage.setItem(STORAGE_PREFIX + path, String(window.scrollY));
 }
 
-export default function ScrollRestore() {
+export default function ScrollRestore({ path = "/" }: { path?: string }) {
   useEffect(() => {
-    const saved = sessionStorage.getItem(STORAGE_KEY);
+    const key = STORAGE_PREFIX + path;
+    const saved = sessionStorage.getItem(key);
     if (saved) {
       const y = parseInt(saved, 10);
-      sessionStorage.removeItem(STORAGE_KEY);
+      sessionStorage.removeItem(key);
       requestAnimationFrame(() => {
         window.scrollTo({ top: y, behavior: "instant" });
       });
     }
-  }, []);
+  }, [path]);
 
   return null;
 }

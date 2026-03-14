@@ -38,6 +38,17 @@ html {
     vt-slide-in 0.3s ease-out 0.1s both;
 }
 
+::view-transition-group(project-icon) {
+  animation-duration: 0.35s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+::view-transition-old(project-icon),
+::view-transition-new(project-icon) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
 @keyframes vt-fade-out {
   to {
     opacity: 0;

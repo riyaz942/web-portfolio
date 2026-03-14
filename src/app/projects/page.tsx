@@ -1,9 +1,11 @@
 "use client";
 
 import Image from "next/image";
+import { useCallback } from "react";
 import { projectList, type Project } from "@/data/projects";
 import { technologies } from "@/data/technologies";
 import { useViewTransitionRouter } from "@/hooks/useViewTransition";
+import ScrollRestore from "@/components/ScrollRestore";
 
 const techNameMap = Object.fromEntries(technologies.map((t) => [t.id, t.name]));
 
@@ -17,16 +19,48 @@ function getShortDescription(project: Project): string {
 
 const displayProjects = projectList.filter((p) => p.icon && p.description.length > 0);
 
+function clearAllIconVTNames() {
+  document
+    .querySelectorAll<HTMLElement>("[data-project-icon]")
+    .forEach((el) => {
+      el.style.viewTransitionName = "";
+    });
+}
+
+function setIconVTName(projectId: string) {
+  clearAllIconVTNames();
+  const el = document.querySelector(
+    `[data-project-icon="${projectId}"]`,
+  ) as HTMLElement | null;
+  if (el) el.style.viewTransitionName = "project-icon";
+}
+
 export default function ProjectsPage() {
   const { push } = useViewTransitionRouter();
 
+  const navigateToProject = useCallback(
+    (projectId: string) => {
+      push(`/projects/${projectId}`, {
+        beforeSnapshot: () => setIconVTName(projectId),
+      });
+    },
+    [push],
+  );
+
+  const navigateHome = useCallback(() => {
+    push("/", {
+      beforeSnapshot: clearAllIconVTNames,
+    });
+  }, [push]);
+
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <ScrollRestore path="/projects" />
       {/* Header */}
       <header className="sticky top-0 z-50 backdrop-blur-xl bg-background/70 border-b border-white/[0.06]">
         <div className="mx-auto max-w-6xl px-6 py-4 flex items-center gap-4">
           <button
-            onClick={() => push("/")}
+            onClick={navigateHome}
             className="group flex items-center gap-2 text-muted hover:text-foreground transition-colors duration-200 cursor-pointer"
           >
             <svg
@@ -74,7 +108,8 @@ export default function ProjectsPage() {
           {displayProjects.map((project, index) => (
             <article
               key={project.id}
-              className="group relative rounded-2xl bg-white/[0.03] backdrop-blur-sm border border-white/[0.06] hover:border-white/[0.14] transition-all duration-300 overflow-hidden"
+              onClick={() => navigateToProject(project.id)}
+              className="group relative rounded-2xl bg-white/[0.03] backdrop-blur-sm border border-white/[0.06] hover:border-white/[0.14] transition-all duration-300 overflow-hidden cursor-pointer"
               style={{ animationDelay: `${index * 60}ms` }}
             >
               {/* Hover glow */}
@@ -83,7 +118,10 @@ export default function ProjectsPage() {
               <div className="relative p-5 md:p-6 flex flex-col gap-4">
                 {/* Icon + Title row */}
                 <div className="flex items-center gap-3.5">
-                  <div className="relative w-11 h-11 rounded-xl overflow-hidden bg-white/[0.05] border border-white/[0.06] flex-shrink-0">
+                  <div
+                    data-project-icon={project.id}
+                    className="relative w-11 h-11 rounded-xl overflow-hidden bg-white/[0.05] border border-white/[0.06] flex-shrink-0"
+                  >
                     <Image
                       src={project.icon}
                       alt={`${project.name} icon`}
