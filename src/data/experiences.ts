@@ -73,19 +73,6 @@ export const experiences = [
     ],
     projects: ["snapteam", "pulse", "measure", "wakency", "benefactory", "lighthouse"],
   },
-  {
-    id: 5,
-    companyId: "mit",
-    company: "College",
-    role: "Android & Web",
-    period: "2015 - 2016",
-    location: "Pune",
-    domains: [],
-    description: "",
-    companyDetail: "",
-    highlights: [],
-    projects: ["vc_music_player"],
-  },
 ];
 
 export type Experience = (typeof experiences)[number];
