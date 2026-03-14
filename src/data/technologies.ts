@@ -10,35 +10,35 @@ export const technologies: Technology[] = [
     id: "react",
     name: "React",
     description:
-      "I have the most as well as recent experience in React compared to other technologies in my list. I have created and architected web projects from scratch as well as jumped on ongoing projects. I am familiar with recent techniques and libraries used in react like code-splitting, Hooks, React-Router, Final-Form, Redux, Redux-api-middleware, css in js, etc.",
+      "React is my strongest and most recent technology. I have architected web projects from scratch and contributed to ongoing ones. I am familiar with modern techniques and libraries like code-splitting, Hooks, React-Router, Final-Form, Redux, Redux-api-middleware, CSS-in-JS, etc.",
     projects: ["snapteam", "nykaa", "wakency"],
   },
   {
     id: "android",
     name: "Android",
     description:
-      "I started my development journey with Android and have the most experience in it along with React. I have complete lifecycle experience on Android app development from creating to publishing and managing, and have experience with needed android libraries which includes: Retrofit, Dagger, Picasso, ActiveAndroid, etc.",
+      "I started my development journey with Android and it remains one of my strongest skills alongside React. I have end-to-end experience with Android app development \u2014 from building to publishing and maintaining \u2014 and have worked with essential libraries including Retrofit, Dagger, Picasso, ActiveAndroid, etc.",
     projects: ["vc_music_player", "measure"],
   },
   {
     id: "react-native",
     name: "React-Native",
     description:
-      "I have created and published a React-Native app for iOS and Android so I am familiar with its lifecycle, while working with React-Native CLI. I have contributed some bug fixes to some open source React-Native libraries while developing with React Native.",
+      "I have built and published a React Native app for both iOS and Android using the React Native CLI, so I am familiar with the full development lifecycle. I have also contributed bug fixes to open-source React Native libraries.",
     projects: ["lighthouse", "pulse"],
   },
   {
     id: "laravel",
     name: "Laravel",
     description:
-      "I have a bit of experience in Laravel and backend development although I have not created any project from scratch but have worked on separate modules and features. I am familiar with backend development and the frameworks features like: MVC architecture, HTML template engine (blade), Eloquent ORM, Artisan and Seeders.",
+      "I have some experience with Laravel and backend development. While I haven't built a project from scratch in it, I have worked on individual modules and features. I am familiar with the framework's core features like MVC architecture, Blade templating, Eloquent ORM, Artisan, and Seeders.",
     projects: ["benefactory", "snapteam"],
   },
   {
     id: "electron",
     name: "Electron",
     description:
-      "I have experience in creating an electron app with the help of React while also considering platform specific technicalities during development like, Desktop/Web notifications, screen routing, storage. Wrote configurations to bundle Web app and Electron app separately for both.",
+      "I have experience building an Electron app with React, handling platform-specific concerns such as Desktop/Web notifications, screen routing, and storage. Wrote build configurations to bundle the Web and Electron apps separately.",
     projects: ["snapteam"],
   },
 ];

@@ -34,13 +34,13 @@ export const projects: Record<string, Project> = {
         type: "text",
         highlight: "green",
         value:
-          "Bijli is a Project management and communication App which helps reduce communication noise within teams, and provide useful metrics to make real time decisions.",
+          "Bijli is a project management and communication app that helps reduce communication noise within teams and provides useful metrics for real-time decision making.",
       },
       {
         type: "points",
         highlight: "green",
         title:
-          "The intention for Bijli was to have a cross-platform product working on Web, Desktop, Android, iOS, Slack platforms having these core features:",
+          "Bijli was intended to be a cross-platform product across Web, Desktop, Android, iOS, and Slack with the following core features:",
         value: [
           "Check-in Mechanism",
           "To-Do management",
@@ -53,23 +53,23 @@ export const projects: Record<string, Project> = {
       {
         type: "text",
         highlight: "green",
-        value: "This Project was also displayed on TechCrunch 2018.",
+        value: "This project was also showcased at TechCrunch 2018.",
       },
       { type: "header", value: "My Contribution:" },
       {
         type: "text",
         value:
-          "In Bijli I mostly worked on React and Electron, and worked with Laravel for one feature. Architected Home page components to connect with other tabs which communicate with each other and handle realtime data updates.",
+          "I mostly worked on React and Electron in Bijli, and contributed to one feature in Laravel. Architected the Home page components to communicate across tabs and handle real-time data updates.",
       },
       {
         type: "points",
         title: "These are some technical challenges and technologies used:",
         value: [
           "Electron and Web build process with webpack",
-          "A custom made Compose flow (Drafting messages, tagging, file attachments, etc)",
+          "A custom-built Compose flow (drafting messages, tagging, file attachments, etc.)",
           "Pusher implementation for real time data updates",
           "Css in js implementation with aphrodite",
-          "Worked with string replace to add functionality to a part of a string",
+          "Used string replacement to add interactive functionality to inline text segments",
           "Redux-api-middleware",
           "React-Router-v4",
           "React-redux-form",
@@ -98,7 +98,7 @@ export const projects: Record<string, Project> = {
         type: "text",
         highlight: "green",
         value:
-          "Wakency has been built to address the changing work culture of our times, to be India\u2019s first on-demand flexible work platform that uses proprietary technology to automate making the perfect match between temporary workers and employers.",
+          "Wakency was built to address the changing work culture of our times \u2014 India\u2019s first on-demand flexible work platform that uses proprietary technology to automatically match temporary workers with employers.",
       },
       { type: "header", value: "My Contribution:" },
       {
@@ -134,13 +134,13 @@ export const projects: Record<string, Project> = {
         type: "text",
         highlight: "green",
         value:
-          "Nykaa is an e-commerce website offering beauty and wellness products from more than 500 leading brands. Nykaa follows an inventory-based model with warehouses in Mumbai, New Delhi, and Chennai as its offline presence is in 60 stores and expanding.",
+          "Nykaa is an e-commerce website offering beauty and wellness products from more than 500 leading brands. Nykaa follows an inventory-based model with warehouses in Mumbai, New Delhi, and Chennai, along with an offline presence across 60+ stores and expanding.",
       },
       { type: "header", value: "My Contribution:" },
       {
         type: "text",
         value:
-          "I was actively involved in building new features like new signup/signin flow, had introduced an AR makeup try-on using Modi-face for the iOS webview with stage releases. Also maintained entire Nykaa Pro module while working on these new features.",
+          "I was actively involved in building new features such as the signup/signin flow and introduced an AR makeup try-on using Modi-face for the iOS webview with staged releases. I also maintained the entire Nykaa Pro module alongside these new features.",
       },
       {
         type: "points",
@@ -168,19 +168,19 @@ export const projects: Record<string, Project> = {
         type: "text",
         highlight: "green",
         value:
-          "Sprout is a delivery kitchen that aims to serve delicious meals, while cutting the long wait associated with them. It is a subscription based service with a clear detail of ingredients that is customizable and changes daily.",
+          "Sprout is a delivery kitchen that aims to serve delicious meals while cutting the long wait typically associated with them. It is a subscription-based service with detailed ingredient information, a customizable menu, and a daily-changing selection.",
       },
       {
         type: "text",
         highlight: "green",
         value:
-          "The purpose of the Sprout app users is to quickly and conveniently book meals from Sprout. It was not published due to some business operation issue on the client's end.",
+          "The Sprout app allowed users to quickly and conveniently book meals. It was not published due to business operation issues on the client's end.",
       },
       { type: "header", value: "My Contribution:" },
       {
         type: "text",
         value:
-          "Created this app's component architecture and API calls system with Redux middleware and Axios so that it would automatically handle common responses and make API implementation simple and easy on each screen. Also worked on the Apps flows and screens which include Login flow, Meal selection flow and Home flow.",
+          "Designed the app's component architecture and API layer using Redux middleware and Axios to automatically handle common responses and simplify API integration across screens. Also worked on the app's core flows including Login, Meal selection, and Home.",
       },
       {
         type: "points",
@@ -220,13 +220,13 @@ export const projects: Record<string, Project> = {
       {
         type: "text",
         value:
-          "The app helps to schedule a time and a place to meet with a mentee and has check-in and check-out features to track hours spent for a meeting and providing prior notifications for meetings.",
+          "The app helps schedule meetings with mentees and includes check-in and check-out features to track hours spent, along with prior notifications for upcoming meetings.",
       },
       { type: "header", value: "My Contribution:" },
       {
         type: "text",
         value:
-          "Jumped on this project during the middle stages and worked on Home Screen, Create meeting flow, View meetings flow and Notifications.",
+          "Joined this project mid-development and worked on the Home Screen, Create Meeting flow, View Meetings flow, and Notifications.",
       },
       {
         type: "points",
@@ -254,13 +254,13 @@ export const projects: Record<string, Project> = {
         type: "text",
         highlight: "green",
         value:
-          "Benefactory envisions a future where everyday people have the power to seamlessly act on urgent issues while they\u2019re on the go. Benefactory partner with your frequently visited websites \u2014 from shopping to booking a ride \u2014 to place our micro-donation ACT widget, that responds to crises dominating the headlines, so you can add a donation to your cart at checkout.",
+          "Benefactory envisions a future where everyday people can seamlessly act on urgent issues while on the go. They partner with frequently visited websites \u2014 from shopping to booking a ride \u2014 to place a micro-donation ACT widget that responds to crises in the headlines, letting users add a donation to their cart at checkout.",
       },
       { type: "header", value: "My Contribution:" },
       {
         type: "text",
         value:
-          "Created the whole frontend of this app and designed the UI to be responsive. Used Laravel\u2019s blade templating engine to create reusable components and defined scss classes for typography. Used Laravel Mix and webpack for versioning. Benefactory didn\u2019t have any feature complexity other than UI.",
+          "Built the entire frontend and designed a responsive UI. Used Laravel\u2019s Blade templating engine to create reusable components and defined SCSS classes for typography. Used Laravel Mix and Webpack for asset versioning. The project was primarily UI-focused with no complex backend features.",
       },
       {
         type: "points",
@@ -293,13 +293,13 @@ export const projects: Record<string, Project> = {
         type: "text",
         highlight: "green",
         value:
-          "Measure is a fitness app which helps track habit and weight to provide detailed information about your health so that the user can make informed decisions about their health. The app is integrated with their weighing scale device so the weight data is directly taken from the device.",
+          "Measure is a fitness app that helps users track habits and weight, providing detailed health insights to support informed decisions. The app integrates with a smart weighing scale device to capture weight data directly.",
       },
       { type: "header", value: "My Contribution:" },
       {
         type: "text",
         value:
-          "Created this app's BLE pairing system to connect with the client's smart Weighing scale device using Android's BluetoothGatt class along with the Charts and rest of the flow except onboarding flow.",
+          "Built the app's BLE pairing system to connect with the client's smart weighing scale using Android's BluetoothGatt class. Also developed the charts and remaining app flows, excluding the onboarding flow.",
       },
       {
         type: "text",
@@ -339,12 +339,12 @@ export const projects: Record<string, Project> = {
         type: "text",
         highlight: "green",
         value:
-          "The intention for this app was to reduce navigation and make the music library management seamless and simple while also having unique features to play video with only music within a playlist and switch between music and video mode. It also has voice recognition implementation to play/pause, search, switch playlist, shuffle, etc.",
+          "This app was designed to simplify navigation and make music library management seamless. It features the ability to play videos as audio-only within a playlist and switch between music and video modes. It also includes voice recognition to play/pause, search, switch playlists, shuffle, and more.",
       },
       {
         type: "text",
         value:
-          "Created this app from its inception and screen design in Photoshop to its development and publishing, worked on this app during my college years and learned Android development mostly by building this app.",
+          "Built this app end-to-end \u2014 from screen design in Photoshop to development and publishing. Worked on it during my college years and learned Android development largely through building it.",
       },
       {
         type: "points",

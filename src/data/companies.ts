@@ -38,7 +38,7 @@ export const companies: Company[] = [
     roleDetail:
       "Built interactive data visualization dashboards for pharmaceutical drug complaint analysis, processing 100K+ data points with real-time filtering. Engineered custom D3.js chart components with image export & CSV download. Achieved 95+ Lighthouse scores through responsive design & perf optimizations.",
     companyDetail:
-      "ZS Associates is a management consulting and technology firm focused on helping companies in the healthcare and beyond improve performance through analytics and technology.",
+      "ZS Associates is a management consulting and technology firm focused on helping companies in healthcare and other industries improve performance through analytics and technology.",
     backgroundImage: "",
     projects: [],
   },
@@ -50,9 +50,9 @@ export const companies: Company[] = [
     duration: "Feb 2019 - Sep 2019 (8 months)",
     location: "Gurugram",
     roleDetail:
-      "In Nykaa I got to work as a React frontend developer, worked on production bugs and features like Mobile Signup flow implementation, Nykaa Pro, Recent search and search history and their AR makeup implementation with Modiface.",
+      "At Nykaa I worked as a React frontend developer, handling production bugs and building features including the Mobile Signup flow, Nykaa Pro, Recent Search and Search History, and an AR makeup try-on with Modiface.",
     companyDetail:
-      "Nykaa is an e-commerce website offering beauty and wellness products from more than 500 leading brands. Nykaa follows an inventory-based model with warehouses in Mumbai, New Delhi, and Chennai as its offline presence is in 60 stores and expanding. It claims to have over 1000+ curated brands and 85,000 products.",
+      "Nykaa is an e-commerce website offering beauty and wellness products from more than 500 leading brands. Nykaa follows an inventory-based model with warehouses in Mumbai, New Delhi, and Chennai, along with an offline presence across 60+ stores and expanding. It offers over 1,000 curated brands and 85,000 products.",
     backgroundImage: `${imgBase}/background/background-image-nykaa.jpg`,
     projects: ["nykaa"],
   },
@@ -64,9 +64,9 @@ export const companies: Company[] = [
     duration: "May 2016 - Jan 2019 (2 years & 8 months)",
     location: "Pune",
     roleDetail:
-      "In TailoredTech I got to experience many roles. I was initially working as an Android developer for a year then jumped on to these tech stacks: Laravel, React-Native and React.",
+      "At TailoredTech I took on multiple roles. I started as an Android developer for a year before transitioning to Laravel, React Native, and React.",
     companyDetail:
-      "Tailored Tech was a service based startup specialised in web and mobile development, and had clients like Nykaa, Ezone, Sportobuddy, healthcode, hippily, wok express, etc. TailoredTech later got acqui-hired by Nykaa.",
+      "Tailored Tech was a service-based startup specializing in web and mobile development, with clients including Nykaa, Ezone, Sportobuddy, Healthcode, Hippily, Wok Express, and more. TailoredTech was later acqui-hired by Nykaa.",
     backgroundImage: `${imgBase}/background/background-image-tailoredtech.jpg`,
     projects: ["snapteam", "pulse", "measure", "wakency", "benefactory", "lighthouse"],
   },
