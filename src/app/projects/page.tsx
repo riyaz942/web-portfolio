@@ -4,7 +4,10 @@ import Image from "next/image";
 import { useCallback } from "react";
 import { projectList, type Project } from "@/data/projects";
 import { technologies } from "@/data/technologies";
-import { useViewTransitionRouter } from "@/hooks/useViewTransition";
+import {
+  useViewTransitionRouter,
+  waitForElement,
+} from "@/hooks/useViewTransition";
 import ScrollRestore from "@/components/ScrollRestore";
 
 const techNameMap = Object.fromEntries(technologies.map((t) => [t.id, t.name]));
@@ -42,6 +45,9 @@ export default function ProjectsPage() {
     (projectId: string) => {
       push(`/projects/${projectId}`, {
         beforeSnapshot: () => setIconVTName(projectId),
+        afterDomUpdate: async () => {
+          await waitForElement("[data-project-detail-icon]");
+        },
       });
     },
     [push],

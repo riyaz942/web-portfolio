@@ -4,7 +4,10 @@ import Image from "next/image";
 import { useCallback, useState } from "react";
 import { projects, type DescriptionBlock } from "@/data/projects";
 import { technologies } from "@/data/technologies";
-import { useViewTransitionRouter } from "@/hooks/useViewTransition";
+import {
+  useViewTransitionRouter,
+  waitForElement,
+} from "@/hooks/useViewTransition";
 import { AnimatePresence, motion } from "framer-motion";
 
 const techNameMap = Object.fromEntries(technologies.map((t) => [t.id, t.name]));
@@ -130,7 +133,8 @@ export default function ProjectDetail({ id }: { id: string }) {
 
   const navigateBack = useCallback(() => {
     push("/projects", {
-      afterDomUpdate: () => {
+      afterDomUpdate: async () => {
+        await waitForElement(`[data-project-icon="${id}"]`);
         document
           .querySelectorAll<HTMLElement>("[data-project-icon]")
           .forEach((el) => {
@@ -201,6 +205,7 @@ export default function ProjectDetail({ id }: { id: string }) {
         {/* Hero section */}
         <div className="flex flex-col sm:flex-row items-start gap-5 mb-10 md:mb-14">
           <div
+            data-project-detail-icon
             className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden bg-white/[0.05] border border-white/[0.06] flex-shrink-0"
             style={{ viewTransitionName: "project-icon" }}
           >
