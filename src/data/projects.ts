@@ -34,13 +34,13 @@ export const projects: Record<string, Project> = {
         type: "text",
         highlight: "green",
         value:
-          "Bijli is a Project management and communication App which helps reduce communication noise within teams, and provide useful metric to make real time decisions.",
+          "Bijli is a Project management and communication App which helps reduce communication noise within teams, and provide useful metrics to make real time decisions.",
       },
       {
         type: "points",
         highlight: "green",
         title:
-          "The intention for bijli was to have a cross-platform product working on Web, Desktop, Android, iOS, Slack platforms having these core features:",
+          "The intention for Bijli was to have a cross-platform product working on Web, Desktop, Android, iOS, Slack platforms having these core features:",
         value: [
           "Check-in Mechanism",
           "To-Do management",
@@ -53,17 +53,17 @@ export const projects: Record<string, Project> = {
       {
         type: "text",
         highlight: "green",
-        value: "This Project was also displayed on tech crunch 2018.",
+        value: "This Project was also displayed on TechCrunch 2018.",
       },
       { type: "header", value: "My Contribution:" },
       {
         type: "text",
         value:
-          "In Bijli I mostly worked on React and Electron, and worked with Laravel for one feature. Have Architectured Home page components to connect with other tabs which communicate with each other and handle realtime data updates.",
+          "In Bijli I mostly worked on React and Electron, and worked with Laravel for one feature. Architected Home page components to connect with other tabs which communicate with each other and handle realtime data updates.",
       },
       {
         type: "points",
-        title: "These are some feature complexity faced and technology used:",
+        title: "These are some technical challenges and technologies used:",
         value: [
           "Electron and Web build process with webpack",
           "A custom made Compose flow (Drafting messages, tagging, file attachments, etc)",
@@ -104,7 +104,7 @@ export const projects: Record<string, Project> = {
       {
         type: "text",
         value:
-          "I worked on the front-end web and developed the landing pages and few features within the app.",
+          "I worked on the front-end web and developed the landing pages and a few features within the app.",
       },
       {
         type: "points",
@@ -140,7 +140,7 @@ export const projects: Record<string, Project> = {
       {
         type: "text",
         value:
-          "I was actively involved in building new features like new signup/signin flow, had introduced a AR makeup try-on using Modi-face for the iOS webview with stage releases. Also maintained entire Nykaa Pro module while working on these new features.",
+          "I was actively involved in building new features like new signup/signin flow, had introduced an AR makeup try-on using Modi-face for the iOS webview with stage releases. Also maintained entire Nykaa Pro module while working on these new features.",
       },
       {
         type: "points",
@@ -148,7 +148,7 @@ export const projects: Record<string, Project> = {
           "New mobile signup/signin flow",
           "Trending Search and Search history",
           "Nykaa Pro",
-          "Worked on a AR makeup try-on with modiface",
+          "Worked on an AR makeup try-on with modiface",
           "Unit test cases with jest",
         ],
       },
@@ -174,13 +174,13 @@ export const projects: Record<string, Project> = {
         type: "text",
         highlight: "green",
         value:
-          "The purpose of the Sprout app users is to quickly and conveniently book meals from Sprout. It was not published due to some business operation issue on the clients end.",
+          "The purpose of the Sprout app users is to quickly and conveniently book meals from Sprout. It was not published due to some business operation issue on the client's end.",
       },
       { type: "header", value: "My Contribution:" },
       {
         type: "text",
         value:
-          "Created this apps component architecture and Api calls system with Redux middleware and Axios so that it would automatically handle common responses and make api implementation simple and easy on each screen. Also worked on the Apps flows and screens which include Login flow, Meal selection flow and Home flow.",
+          "Created this app's component architecture and API calls system with Redux middleware and Axios so that it would automatically handle common responses and make API implementation simple and easy on each screen. Also worked on the Apps flows and screens which include Login flow, Meal selection flow and Home flow.",
       },
       {
         type: "points",
@@ -215,12 +215,12 @@ export const projects: Record<string, Project> = {
         type: "text",
         highlight: "green",
         value:
-          "The Lighthouse Project is a not-for-profit organisation in Mumbai that connects working professionals and college students with children from under resourced communities, through one-on-one mentoring in a safe environment.",
+          "The Lighthouse Project is a not-for-profit organisation in Mumbai that connects working professionals and college students with children from under-resourced communities, through one-on-one mentoring in a safe environment.",
       },
       {
         type: "text",
         value:
-          "The app helps to schedule a time and a place to meet with a mentee and has checkin and checkout features to track hours spent for a meeting and providing prior notifications for meetings.",
+          "The app helps to schedule a time and a place to meet with a mentee and has check-in and check-out features to track hours spent for a meeting and providing prior notifications for meetings.",
       },
       { type: "header", value: "My Contribution:" },
       {
@@ -260,7 +260,7 @@ export const projects: Record<string, Project> = {
       {
         type: "text",
         value:
-          "Created the whole frontend of this app and designed the UI to be responsive. Used Laravel\u2019s blade templating engine to create reusable components and defined scss classes to typograph. Used Laravel Mix and webpack for versioning. Benefactory didn\u2019t have any feature complexity other than UI.",
+          "Created the whole frontend of this app and designed the UI to be responsive. Used Laravel\u2019s blade templating engine to create reusable components and defined scss classes for typography. Used Laravel Mix and webpack for versioning. Benefactory didn\u2019t have any feature complexity other than UI.",
       },
       {
         type: "points",
@@ -299,7 +299,7 @@ export const projects: Record<string, Project> = {
       {
         type: "text",
         value:
-          "Created this apps BLE pairing system to connect with the clients smart Weighing scale device using Androids BluetoothGatt Class along with the Charts and rest of the flow except onboarding flow.",
+          "Created this app's BLE pairing system to connect with the client's smart Weighing scale device using Android's BluetoothGatt class along with the Charts and rest of the flow except onboarding flow.",
       },
       {
         type: "text",
@@ -339,12 +339,12 @@ export const projects: Record<string, Project> = {
         type: "text",
         highlight: "green",
         value:
-          "The intention for this app was to reduce navigation and make the music library management seamless and simple while also having a unique features to play video with only music within a playlist and switch between music and video mode. It also has voice recognition implementation to play/pause, search, switch playlist, shuffle, etc.",
+          "The intention for this app was to reduce navigation and make the music library management seamless and simple while also having unique features to play video with only music within a playlist and switch between music and video mode. It also has voice recognition implementation to play/pause, search, switch playlist, shuffle, etc.",
       },
       {
         type: "text",
         value:
-          "Created this app from its inception and screen designing in photoshop to its development and publishing, worked on this app during my college years and learned Android development mostly by building this app.",
+          "Created this app from its inception and screen design in Photoshop to its development and publishing, worked on this app during my college years and learned Android development mostly by building this app.",
       },
       {
         type: "points",
