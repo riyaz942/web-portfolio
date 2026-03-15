@@ -38,7 +38,7 @@ export const projects: Record<string, Project> = {
     involvement: "Major",
     icon: "/assets/icons/project-icon-thriveworks.svg",
     iconShape: "wide",
-    timeframe: "2020 – 2025",
+    timeframe: "2021 – 2026",
     link: { type: "visit", value: "https://www.thriveworks.com/" },
     description: [
       {
@@ -51,65 +51,66 @@ export const projects: Record<string, Project> = {
       {
         type: "text",
         value:
-          "I was one of the earliest engineers on this project and contributed to it for over five years. I started out fully focused on the Next.js frontend \u2014 building the core patient-facing features like provider search, booking flows, and insurance handling \u2014 and gradually grew into a full-stack role, taking on backend work on the NestJS API where I architected the AI module, real-time voice processing, and provider data services. I also set up CI/CD pipelines and test infrastructure along the way.",
+          "One of the earliest engineers on this project, contributing for ~5 years as a full-stack engineer. Built core patient-facing features on the Next.js frontend (provider search, booking flows, insurance handling) and grew into backend work on the NestJS API — architecting the AI module, real-time voice processing, and provider data services. Also set up CI/CD pipelines and test infrastructure.",
       },
       { type: "header", value: "Provider Search & Discovery" },
       {
         type: "text",
         value:
-          "Built and iterated on the provider search engine \u2014 the primary patient-facing feature for finding therapists. Also prototyped an AI-powered natural language search and ChatBot during an internal hackathon, which is now on the product roadmap.",
+          "Built and iterated on the provider search engine — the primary patient-facing feature for finding therapists.",
       },
       {
         type: "points",
         value: [
           "Advanced filtering: location, insurance, specialty, counseling type, availability",
+          "Sort/filter UI with mobile-responsive filter modals",
           "Provider profile pages with SEO-friendly structured data (JSON-LD)",
-          "Provider testimonials module end-to-end: backend CRUD, CSV bulk upload, featured testimonials, rating validation, service/specialty filters",
-          "Hackathon prototype: AI-powered natural language search with OpenAI, ChatBot with real-time SSE, and MCP tools for location/provider search (on the product roadmap)",
         ],
       },
-      { type: "header", value: "Booking & Appointment System" },
+      { type: "header", value: "Booking & Appointment System (Project Lead)" },
       {
         type: "text",
         value:
-          "Built the multi-step booking flow \u2014 one of the most complex user journeys in the app. Implemented Redux Persist for state management to survive page refreshes, slot grid components, date pagination, and timezone handling.",
+          "Led the booking flow project end-to-end (excluding insurance verification). Built the multi-step booking flow — one of the most complex user journeys in the app — with slot grid components, date pagination, and timezone handling.",
       },
       {
         type: "points",
         value: [
-          "Multi-step booking flow with consent management and billing integration",
+          "New booking flow layout with consent management, billing integration, and patient form handling",
           "Support for individual, couples, family, and medication management counseling types",
           "Cross-state booking handling with blocker components",
           "Cancellation policy reminders and session-within-48-hours hooks",
-          "Booking success toast and redirect flows",
         ],
       },
-      { type: "header", value: "AI & Voice Integration (Hackathon \u2192 Roadmap)" },
+      { type: "header", value: "AI & Voice Integration" },
       {
         type: "text",
         value:
-          "Built as part of an internal hackathon and now on the product roadmap. Architected the AI module on the NestJS backend with real-time voice processing via WebSocket gateway, dual-agent architecture for AI response generation, and SSE streaming endpoints.",
+          "Implemented AI-powered natural language search using OpenAI, enabling patients to describe their needs conversationally. Built an AI ChatBot connected to the backend agent via Socket.io — dynamically updating the UI (filters, search results, URLs) in real time based on chat context. Architected the AI module on the NestJS backend with real-time voice processing.",
       },
       {
         type: "points",
         value: [
+          "MCP (Model Context Protocol) tools for location and provider search",
           "Real-time voice processing with WebSocket (Socket.io) gateway",
           "Dual-agent architecture with asynchronous tool execution",
           "SSE streaming for real-time transcription and text generation",
-          "Vercel AI SDK integration for enhanced text generation and streaming",
-          "Text-to-speech streaming endpoints with progressive audio playback",
-          "Modular ToolsService for AI and RealtimeVoice modules",
+          "Vercel AI SDK integration for streaming and text-to-speech with progressive audio playback",
         ],
       },
-      { type: "header", value: "Patient Management & Insurance" },
+      { type: "header", value: "Internal Testimonials Tool" },
+      {
+        type: "text",
+        value:
+          "Built an internal testimonials management tool from scratch — a dashboard for operations teams to bulk upload, update, and manage user testimonials across the platform. Implemented CSV bulk upload, CRUD interfaces with rating validation, and service/specialty filters.",
+      },
+      { type: "header", value: "Other Contributions" },
       {
         type: "points",
         value: [
-          "Patient information forms for multiple counseling types (self, family, couples)",
-          "AdvancedMD (AMD) onboarding flow: consent screens, card details, success pages",
-          "Insurance verification UI with PVerify integration and auth caching",
-          "SSO login UI and Auth0 integration with protected route handling",
-          "Red Alert internal operations dashboard for appointment and enrollment management",
+          "Auth0 integration with protected route handling in the useApi hook",
+          "Provider agenda optimization: batched fetching to resolve N+1 query issues across license keys",
+          "Coordinated and individually built a feature for the company hackathon",
         ],
       },
       { type: "header", value: "Technologies & Infrastructure" },
@@ -117,23 +118,20 @@ export const projects: Record<string, Project> = {
         type: "points",
         title: "Frontend:",
         value: [
-          "Next.js 13+ (App Router, SSR/SSG, API routes)",
-          "TypeScript, React (hooks, context, Redux, Redux Persist)",
-          "Radix UI, React Hook Form + Zod validation",
-          "SCSS/Sass theming, Framer Motion animations",
-          "Storybook, Jest + React Testing Library (188 test files)",
-          "RudderStack analytics, Datadog RUM monitoring",
-          "Vercel deployment with Edgio/Layer0 CDN, Split.io feature flags",
+          "Next.js 13+ (App Router, SSR/SSG), TypeScript, React (hooks, context, Redux)",
+          "Radix UI, React Hook Form + Zod, SCSS/Sass, Framer Motion",
+          "Storybook, Jest + React Testing Library",
+          "RudderStack analytics, Datadog RUM, Split.io feature flags",
+          "Vercel deployment with Edgio/Layer0 CDN",
         ],
       },
       {
         type: "points",
         title: "Backend:",
         value: [
-          "NestJS with TypeORM and PostgreSQL",
-          "OpenAI API (GPT models, text-to-speech, transcription)",
-          "WebSocket (Socket.io) and Server-Sent Events (SSE)",
-          "Bull job queues with Redis",
+          "NestJS with TypeORM and PostgreSQL, Bull queues with Redis",
+          "OpenAI API (GPT, TTS, transcription), Vercel AI SDK",
+          "WebSocket (Socket.io), Server-Sent Events (SSE)",
           "PVerify API, AdvancedMD EHR integration",
           "Docker + Docker Compose, GitHub Actions CI/CD",
         ],
