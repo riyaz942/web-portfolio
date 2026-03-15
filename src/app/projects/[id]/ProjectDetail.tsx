@@ -297,6 +297,40 @@ export default function ProjectDetail({ id }: { id: string }) {
           <DescriptionRenderer blocks={project.description} />
         </section>
 
+        {/* Videos */}
+        {project.videos && project.videos.length > 0 && (
+          <section className="mb-14 md:mb-18">
+            <h3 className="text-lg font-semibold text-foreground mb-6">
+              Videos
+            </h3>
+            <div className="space-y-4">
+              {project.videos.map((video) => (
+                <a
+                  key={video.url}
+                  href={video.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center gap-4 p-4 rounded-xl bg-white/[0.03] border border-white/[0.06] hover:border-white/[0.14] hover:bg-white/[0.05] transition-all duration-300"
+                >
+                  <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-accent/10 border border-accent/20 flex items-center justify-center">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="text-accent ml-0.5">
+                      <path d="M5 4l14 8-14 8V4z" fill="currentColor" />
+                    </svg>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-[0.95rem] font-medium text-foreground/90 group-hover:text-accent transition-colors truncate">
+                      {video.title}
+                    </p>
+                  </div>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="text-muted group-hover:text-accent transition-colors flex-shrink-0">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </a>
+              ))}
+            </div>
+          </section>
+        )}
+
         {/* Image gallery */}
         {project.images.length > 0 && (
           <section>

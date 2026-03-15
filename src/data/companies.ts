@@ -26,7 +26,7 @@ export const companies: Company[] = [
     companyDetail:
       "Velotio Technologies is a product engineering company that partners with startups and enterprises to build world-class software products across web, mobile, cloud, and data platforms.",
     backgroundImage: "",
-    projects: [],
+    projects: ["thriveworks"],
   },
   {
     id: "zs",
