@@ -204,19 +204,35 @@ export default function ProjectDetail({ id }: { id: string }) {
       <main className="mx-auto max-w-4xl px-6 py-12 md:py-16">
         {/* Hero section */}
         <div className="flex flex-col sm:flex-row items-start gap-5 mb-10 md:mb-14">
-          <div
-            data-project-detail-icon
-            className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden bg-white/[0.05] border border-white/[0.06] flex-shrink-0"
-            style={{ viewTransitionName: "project-icon" }}
-          >
-            <Image
-              src={project.icon}
-              alt={`${project.name} icon`}
-              fill
-              className="object-cover"
-              sizes="80px"
-            />
-          </div>
+          {project.iconShape === "wide" ? (
+            <div
+              data-project-detail-icon
+              className="flex-shrink-0 h-16 sm:h-20 px-4 sm:px-5 rounded-2xl bg-white/[0.05] border border-white/[0.06] flex items-center justify-center"
+              style={{ viewTransitionName: "project-icon" }}
+            >
+              <Image
+                src={project.icon}
+                alt={`${project.name} icon`}
+                width={160}
+                height={44}
+                className="h-7 sm:h-9 w-auto"
+              />
+            </div>
+          ) : (
+            <div
+              data-project-detail-icon
+              className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden bg-white/[0.05] border border-white/[0.06] flex-shrink-0"
+              style={{ viewTransitionName: "project-icon" }}
+            >
+              <Image
+                src={project.icon}
+                alt={`${project.name} icon`}
+                fill
+                className="object-cover"
+                sizes="80px"
+              />
+            </div>
+          )}
 
           <div className="flex-1 min-w-0 space-y-3">
             <div>

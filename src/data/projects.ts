@@ -14,6 +14,7 @@ export interface Project {
   tech: string[];
   involvement: "Major" | "Intermittent" | "Owned";
   icon: string;
+  iconShape?: "square" | "wide";
   link?: { type: "visit" | "download"; value: string };
   description: DescriptionBlock[];
   images: string[];
@@ -35,6 +36,7 @@ export const projects: Record<string, Project> = {
     tech: ["nextjs", "nestjs", "typescript", "react", "scss"],
     involvement: "Major",
     icon: "/assets/icons/project-icon-thriveworks.svg",
+    iconShape: "wide",
     link: { type: "visit", value: "https://www.thriveworks.com/" },
     description: [
       {
@@ -213,6 +215,7 @@ export const projects: Record<string, Project> = {
     tech: ["react"],
     involvement: "Intermittent",
     icon: "/assets/icons/project-icon-wakency.png",
+    iconShape: "wide",
     link: { type: "visit", value: "https://www.wakency.com/" },
     description: [
       {
@@ -249,6 +252,7 @@ export const projects: Record<string, Project> = {
     tech: ["react"],
     involvement: "Intermittent",
     icon: "/assets/icons/project-icon-nykaa.png",
+    iconShape: "wide",
     link: { type: "visit", value: "https://www.nykaa.com/" },
     description: [
       {
@@ -369,6 +373,7 @@ export const projects: Record<string, Project> = {
     tech: ["laravel", "vanilla-js", "scss"],
     involvement: "Major",
     icon: "/assets/icons/project-icon-benefactory.png",
+    iconShape: "wide",
     link: { type: "visit", value: "http://benefactory.live/" },
     description: [
       {

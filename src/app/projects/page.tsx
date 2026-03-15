@@ -124,18 +124,33 @@ export default function ProjectsPage() {
               <div className="relative p-5 md:p-6 flex flex-col gap-4">
                 {/* Icon + Title row */}
                 <div className="flex items-center gap-3.5">
-                  <div
-                    data-project-icon={project.id}
-                    className="relative w-11 h-11 rounded-xl overflow-hidden bg-white/[0.05] border border-white/[0.06] flex-shrink-0"
-                  >
-                    <Image
-                      src={project.icon}
-                      alt={`${project.name} icon`}
-                      fill
-                      className="object-cover"
-                      sizes="44px"
-                    />
-                  </div>
+                  {project.iconShape === "wide" ? (
+                    <div
+                      data-project-icon={project.id}
+                      className="flex-shrink-0 h-11 px-3 rounded-xl bg-white/[0.05] border border-white/[0.06] flex items-center justify-center"
+                    >
+                      <Image
+                        src={project.icon}
+                        alt={`${project.name} icon`}
+                        width={80}
+                        height={28}
+                        className="h-5 w-auto"
+                      />
+                    </div>
+                  ) : (
+                    <div
+                      data-project-icon={project.id}
+                      className="relative w-11 h-11 rounded-xl overflow-hidden bg-white/[0.05] border border-white/[0.06] flex-shrink-0"
+                    >
+                      <Image
+                        src={project.icon}
+                        alt={`${project.name} icon`}
+                        fill
+                        className="object-cover"
+                        sizes="44px"
+                      />
+                    </div>
+                  )}
                   <div className="min-w-0">
                     <h3 className="text-[clamp(0.95rem,1.3vw,1.1rem)] font-semibold text-foreground truncate">
                       {project.name}
