@@ -502,12 +502,49 @@ export const projects: Record<string, Project> = {
   tt_interview: {
     id: "tt_interview",
     name: "TT Interview",
-    tech: [],
+    tech: ["android", "laravel"],
     involvement: "Major",
-    icon: "",
-    description: [],
+    icon: "/assets/icons/project-icon-tt-interview.png",
+    iconShape: "wide",
+    timeframe: "2017",
+    description: [
+      {
+        type: "text",
+        highlight: "green",
+        value:
+          "TT Interview is an internal application used for conducting interviews at Tailored Tech. It features dynamic field types for each question, allowing interviewers to use text inputs, ratings, dropdowns, and more depending on the question. The question sets can be fully customized for each role the interview is conducted for.",
+      },
+      { type: "header", value: "My Contribution:" },
+      {
+        type: "text",
+        value:
+          "Built the native Android app end-to-end with SQLite for local storage, syncing question templates from the server. The backend was built on Laravel to manage roles, question configurations, and interview submissions.",
+      },
+      {
+        type: "points",
+        value: [
+          "Dynamic field types per question (text, rating, dropdown, etc.)",
+          "Role-based question customization",
+          "SQLite local storage with server sync",
+          "Laravel backend for role and question management",
+        ],
+      },
+    ],
     images: imageRange("tt_interview", 8),
   },
 };
 
-export const projectList = Object.values(projects);
+const projectOrder = [
+  "thriveworks",
+  "nykaa",
+  "snapteam",
+  "wakency",
+  "benefactory",
+  "pulse",
+  "lighthouse",
+  "measure",
+  "tt_interview",
+  "vc_music_player",
+];
+
+export const projectList = projectOrder.map((id) => projects[id]);
