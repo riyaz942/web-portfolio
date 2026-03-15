@@ -26,21 +26,29 @@
 
 html {
   scroll-behavior: smooth;
+  --ease-page-transition: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  /* 
+ cubic-bezier(0.0, 0, 0.2, 1);
+ cubic-bezier(0.25, 0.1, 0.25, 1.0); */
 }
 
 ::view-transition-old(root) {
-  animation: vt-fade-out 0.25s ease-in forwards,
-    vt-slide-out 0.3s ease-in forwards;
+  animation:
+    vt-fade-out 0.3s forwards,
+    vt-slide-out 0.35s forwards;
+  animation-timing-function: var(--ease-page-transition);
 }
 
 ::view-transition-new(root) {
-  animation: vt-fade-in 0.3s ease-out 0.1s both,
-    vt-slide-in 0.3s ease-out 0.1s both;
+  animation:
+    vt-fade-in 0.35s 0.15s both,
+    vt-slide-in 0.35s 0.15s both;
+  animation-timing-function: var(--ease-page-transition);
 }
 
 ::view-transition-group(project-icon) {
-  animation-duration: 0.35s;
-  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  animation-duration: 0.3s;
+  animation-timing-function: var(--ease-page-transition);
 }
 
 ::view-transition-old(project-icon),
@@ -76,6 +84,10 @@ html {
 body {
   background: var(--color-background);
   color: var(--color-foreground);
-  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  font-family:
+    var(--font-sans),
+    system-ui,
+    -apple-system,
+    sans-serif;
   overflow-x: hidden;
 }
