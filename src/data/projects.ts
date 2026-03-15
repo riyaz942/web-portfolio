@@ -15,6 +15,7 @@ export interface Project {
   involvement: "Major" | "Intermittent" | "Owned";
   icon: string;
   iconShape?: "square" | "wide";
+  timeframe?: string;
   link?: { type: "visit" | "download"; value: string };
   description: DescriptionBlock[];
   images: string[];
@@ -37,6 +38,7 @@ export const projects: Record<string, Project> = {
     involvement: "Major",
     icon: "/assets/icons/project-icon-thriveworks.svg",
     iconShape: "wide",
+    timeframe: "2020 – 2025",
     link: { type: "visit", value: "https://www.thriveworks.com/" },
     description: [
       {
@@ -152,6 +154,7 @@ export const projects: Record<string, Project> = {
     tech: ["react", "electron", "laravel"],
     involvement: "Major",
     icon: "/assets/icons/project-icon-bijli.png",
+    timeframe: "2018 – 2019",
     description: [
       {
         type: "text",
@@ -216,6 +219,7 @@ export const projects: Record<string, Project> = {
     involvement: "Intermittent",
     icon: "/assets/icons/project-icon-wakency.png",
     iconShape: "wide",
+    timeframe: "2018",
     link: { type: "visit", value: "https://www.wakency.com/" },
     description: [
       {
@@ -253,6 +257,7 @@ export const projects: Record<string, Project> = {
     involvement: "Intermittent",
     icon: "/assets/icons/project-icon-nykaa.png",
     iconShape: "wide",
+    timeframe: "2019",
     link: { type: "visit", value: "https://www.nykaa.com/" },
     description: [
       {
@@ -287,6 +292,7 @@ export const projects: Record<string, Project> = {
     tech: ["react-native"],
     involvement: "Major",
     icon: "/assets/icons/project-icon-pulse.png",
+    timeframe: "2018",
     link: { type: "visit", value: "https://www.youtube.com/watch?v=wOsy7b2Q-J4" },
     description: [
       {
@@ -331,6 +337,7 @@ export const projects: Record<string, Project> = {
     tech: ["react-native"],
     involvement: "Major",
     icon: "/assets/icons/project-icon-lighthouse.png",
+    timeframe: "2018",
     link: {
       type: "download",
       value: "https://play.google.com/store/apps/details?id=com.tailoredtech.lighthouse",
@@ -374,6 +381,7 @@ export const projects: Record<string, Project> = {
     involvement: "Major",
     icon: "/assets/icons/project-icon-benefactory.png",
     iconShape: "wide",
+    timeframe: "2017",
     link: { type: "visit", value: "http://benefactory.live/" },
     description: [
       {
@@ -410,6 +418,7 @@ export const projects: Record<string, Project> = {
     tech: ["android"],
     involvement: "Major",
     icon: "/assets/icons/project-icon-measure.png",
+    timeframe: "2017",
     link: {
       type: "download",
       value: "https://play.google.com/store/apps/details?id=com.informedtech.measure.app",
@@ -456,6 +465,7 @@ export const projects: Record<string, Project> = {
     tech: ["android"],
     involvement: "Owned",
     icon: "/assets/icons/project-icon-vc-music-player.png",
+    timeframe: "2015 – 2016",
     link: {
       type: "download",
       value: "https://drive.google.com/open?id=1Fo3FSfu7NHTJ60Y0uQcWYpv6mX1Tetqe",

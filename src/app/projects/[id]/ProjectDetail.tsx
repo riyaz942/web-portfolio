@@ -235,13 +235,20 @@ export default function ProjectDetail({ id }: { id: string }) {
           )}
 
           <div className="flex-1 min-w-0 space-y-3">
-            <div>
-              <h2 className="text-[clamp(1.5rem,3vw,2.25rem)] font-bold leading-tight tracking-tight text-foreground">
-                {project.name}
-              </h2>
-              <span className="inline-block mt-1 px-2.5 py-0.5 text-xs font-medium rounded-full bg-accent/10 text-accent border border-accent/20">
-                {project.involvement} contributor
-              </span>
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <h2 className="text-[clamp(1.5rem,3vw,2.25rem)] font-bold leading-tight tracking-tight text-foreground">
+                  {project.name}
+                </h2>
+                <span className="inline-block mt-1 px-2.5 py-0.5 text-xs font-medium rounded-full bg-accent/10 text-accent border border-accent/20">
+                  {project.involvement} contributor
+                </span>
+              </div>
+              {project.timeframe && (
+                <span className="flex-shrink-0 mt-1.5 text-sm text-muted whitespace-nowrap">
+                  {project.timeframe}
+                </span>
+              )}
             </div>
 
             <div className="flex flex-wrap items-center gap-2">
