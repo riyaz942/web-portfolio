@@ -360,18 +360,19 @@ export default function ProjectDetail({ id }: { id: string }) {
             <h3 className="text-lg font-semibold text-foreground mb-6">
               Screenshots
             </h3>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+            <div className="columns-2 sm:columns-3 md:columns-4 gap-3">
               {project.images.map((img, i) => (
                 <button
-                  key={img}
-                  onClick={() => setLightboxImage(img)}
-                  className="group/img relative aspect-[9/16] rounded-xl overflow-hidden bg-white/[0.03] border border-white/[0.06] hover:border-white/[0.14] transition-all duration-300 cursor-pointer"
+                  key={img.src}
+                  onClick={() => setLightboxImage(img.src)}
+                  className="group/img relative mb-3 rounded-xl overflow-hidden bg-white/[0.03] border border-white/[0.06] hover:border-white/[0.14] transition-all duration-300 cursor-pointer break-inside-avoid"
                 >
                   <Image
-                    src={img}
+                    src={img.src}
                     alt={`${project.name} screenshot ${i + 1}`}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover/img:scale-105"
+                    width={img.width}
+                    height={img.height}
+                    className="w-full h-auto object-cover transition-transform duration-500 group-hover/img:scale-105"
                     sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 25vw"
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover/img:bg-black/20 transition-colors duration-300" />

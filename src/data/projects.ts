@@ -8,6 +8,12 @@ export interface ProjectVideo {
   url: string;
 }
 
+export interface ProjectImage {
+  src: string;
+  width: number;
+  height: number;
+}
+
 export interface Project {
   id: string;
   name: string;
@@ -18,15 +24,34 @@ export interface Project {
   timeframe?: string;
   link?: { type: "visit" | "download"; value: string };
   description: DescriptionBlock[];
-  images: string[];
+  images: ProjectImage[];
   videos?: ProjectVideo[];
 }
 
 const projectImageDir = "/assets/images/projectImages";
 
-function imageRange(folder: string, count: number, extra?: string[]): string[] {
-  const imgs = Array.from({ length: count }, (_, i) => `${projectImageDir}/${folder}/${i + 1}.png`);
-  if (extra) imgs.push(...extra.map((e) => `${projectImageDir}/${folder}/${e}.png`));
+type ImgSize = { width: number; height: number };
+
+function imageRange(
+  folder: string,
+  count: number,
+  defaultSize: ImgSize,
+  overrides?: Record<number, ImgSize>,
+  extra?: { name: string; width: number; height: number }[],
+): ProjectImage[] {
+  const imgs = Array.from({ length: count }, (_, i) => ({
+    src: `${projectImageDir}/${folder}/${i + 1}.png`,
+    ...(overrides?.[i + 1] ?? defaultSize),
+  }));
+  if (extra) {
+    imgs.push(
+      ...extra.map((e) => ({
+        src: `${projectImageDir}/${folder}/${e.name}.png`,
+        width: e.width,
+        height: e.height,
+      })),
+    );
+  }
   return imgs;
 }
 
@@ -137,7 +162,11 @@ export const projects: Record<string, Project> = {
         ],
       },
     ],
-    images: imageRange("thriveworks", 9),
+    images: imageRange("thriveworks", 9, { width: 1024, height: 640 }, {
+      2: { width: 475, height: 1024 },
+      4: { width: 476, height: 1024 },
+      5: { width: 474, height: 1024 },
+    }),
     videos: [
       {
         title: "AI-Powered Provider Search & ChatBot",
@@ -207,7 +236,11 @@ export const projects: Record<string, Project> = {
         ],
       },
     ],
-    images: imageRange("snapteam", 8),
+    images: imageRange("snapteam", 8, { width: 1960, height: 1704 }, {
+      1: { width: 968, height: 840 },
+      7: { width: 2940, height: 2556 },
+      8: { width: 2940, height: 2556 },
+    }),
   },
 
   wakency: {
@@ -245,7 +278,13 @@ export const projects: Record<string, Project> = {
         ],
       },
     ],
-    images: imageRange("wakency", 6),
+    images: imageRange("wakency", 6, { width: 1441, height: 1363 }, {
+      1: { width: 2732, height: 7862 },
+      2: { width: 2732, height: 1734 },
+      4: { width: 1441, height: 1106 },
+      5: { width: 1441, height: 1039 },
+      6: { width: 1440, height: 1029 },
+    }),
   },
 
   nykaa: {
@@ -281,7 +320,12 @@ export const projects: Record<string, Project> = {
         ],
       },
     ],
-    images: imageRange("nykaa", 5),
+    images: imageRange("nykaa", 5, { width: 438, height: 772 }, {
+      1: { width: 1920, height: 900 },
+      3: { width: 436, height: 775 },
+      4: { width: 441, height: 772 },
+      5: { width: 1920, height: 901 },
+    }),
   },
 
   pulse: {
@@ -326,7 +370,15 @@ export const projects: Record<string, Project> = {
         ],
       },
     ],
-    images: imageRange("pulse", 9),
+    images: imageRange("pulse", 9, { width: 1500, height: 2668 }, {
+      2: { width: 1500, height: 2976 },
+      3: { width: 1500, height: 3996 },
+      5: { width: 1500, height: 3220 },
+      6: { width: 1500, height: 4308 },
+      7: { width: 1500, height: 4726 },
+      8: { width: 1500, height: 4674 },
+      9: { width: 1500, height: 3302 },
+    }),
   },
 
   lighthouse: {
@@ -369,7 +421,9 @@ export const projects: Record<string, Project> = {
         ],
       },
     ],
-    images: imageRange("lighthouse", 7),
+    images: imageRange("lighthouse", 7, { width: 750, height: 1334 }, {
+      2: { width: 750, height: 1626 },
+    }),
   },
 
   benefactory: {
@@ -407,7 +461,14 @@ export const projects: Record<string, Project> = {
         ],
       },
     ],
-    images: imageRange("benefactory", 7),
+    images: imageRange("benefactory", 7, { width: 1440, height: 4162 }, {
+      2: { width: 1440, height: 2739 },
+      3: { width: 1440, height: 3919 },
+      4: { width: 2880, height: 3728 },
+      5: { width: 2880, height: 6780 },
+      6: { width: 2880, height: 4028 },
+      7: { width: 2880, height: 3562 },
+    }),
   },
 
   measure: {
@@ -454,7 +515,7 @@ export const projects: Record<string, Project> = {
         ],
       },
     ],
-    images: imageRange("measure", 8),
+    images: imageRange("measure", 8, { width: 720, height: 1280 }),
   },
 
   vc_music_player: {
@@ -494,7 +555,15 @@ export const projects: Record<string, Project> = {
         ],
       },
     ],
-    images: [...imageRange("vc_music_player", 8), `${projectImageDir}/vc_music_player/9-1.png`, `${projectImageDir}/vc_music_player/9-2.png`],
+    images: imageRange("vc_music_player", 8, { width: 770, height: 1200 }, {
+      1: { width: 1024, height: 500 },
+      2: { width: 894, height: 803 },
+      3: { width: 894, height: 793 },
+      4: { width: 1200, height: 770 },
+    }, [
+      { name: "9-1", width: 770, height: 1200 },
+      { name: "9-2", width: 770, height: 1200 },
+    ]),
   },
 
   tt_interview: {
@@ -528,7 +597,11 @@ export const projects: Record<string, Project> = {
         ],
       },
     ],
-    images: imageRange("tt_interview", 8),
+    images: imageRange("tt_interview", 8, { width: 1440, height: 2560 }, {
+      3: { width: 1440, height: 2880 },
+      7: { width: 1440, height: 3584 },
+      8: { width: 1440, height: 4216 },
+    }),
   },
 };
 
