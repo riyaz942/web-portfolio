@@ -103,147 +103,149 @@ export default function CreativeSection() {
           />
         </div>
 
-        {/* Lottie Background Animation */}
-        <div
-          data-id="creative-lottie"
-          className="hidden md:block absolute w-[53%] origin-top-left z-[1]"
-          style={{ aspectRatio: "851 / 721" }}
-        >
-          <DotLottieReact
-            src="/images/creative-section/background-animation.lottie"
-            autoplay={false}
-            loop={false}
-            dotLottieRefCallback={setDotLottie}
-            renderConfig={
-              {
-                autoResize: true,
-                fit: "contain",
-                align: ["0", "0"],
-              } as unknown as typeof undefined
-            }
-          />
-        </div>
-
-        {/* Bottom fade overlay - matches landing section */}
-        <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-background to-transparent pointer-events-none z-[5]" />
-
-        {/* Content Layer - positioned to avoid animation overlap */}
-        <div className="relative z-10 h-full flex items-center justify-center md:justify-end">
-          {/* Content container - centered on mobile, right side on desktop */}
+        <div className="relative mx-auto h-full max-w-[2560px]">
+          {/* Lottie Background Animation */}
           <div
-            className="relative w-full max-w-lg mx-6 md:mx-0 md:w-auto md:absolute md:right-16 lg:right-24 md:max-w-[min(50%,600px)] flex flex-col justify-center gap-10 md:gap-14 p-6 md:p-8 rounded-2xl"
-            style={{
-              background: `color-mix(in srgb, var(--color-background) ${50 * containerProgress}%, transparent)`,
-              border: `1px solid rgba(255, 255, 255, ${0.08 * containerProgress})`,
-              backdropFilter: `blur(${12 * containerProgress}px)`,
-              WebkitBackdropFilter: `blur(${12 * containerProgress}px)`,
-            }}
+            data-id="creative-lottie"
+            className="hidden md:block absolute w-[53%] origin-top-left z-[1]"
+            style={{ aspectRatio: "851 / 721" }}
           >
-            {/* Main Headline */}
+            <DotLottieReact
+              src="/images/creative-section/background-animation.lottie"
+              autoplay={false}
+              loop={false}
+              dotLottieRefCallback={setDotLottie}
+              renderConfig={
+                {
+                  autoResize: true,
+                  fit: "contain",
+                  align: ["0", "0"],
+                } as unknown as typeof undefined
+              }
+            />
+          </div>
+
+          {/* Bottom fade overlay - matches landing section */}
+          <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-background to-transparent pointer-events-none z-[5]" />
+
+          {/* Content Layer - positioned to avoid animation overlap */}
+          <div className="relative z-10 h-full flex items-center justify-center md:justify-end">
+            {/* Content container - centered on mobile, right side on desktop */}
             <div
-              className="relative"
+              className="relative w-full max-w-lg mx-6 md:mx-0 md:w-auto md:absolute md:right-16 lg:right-24 md:max-w-[min(50%,600px)] flex flex-col justify-center gap-10 md:gap-14 p-6 md:p-8 rounded-2xl"
               style={{
-                transform: `translateY(${(1 - headlineProgress) * 40}px)`,
-                opacity: headlineProgress,
-                filter: `blur(${(1 - headlineProgress) * 8}px)`,
-                transition: "filter 0.1s ease-out",
+                background: `color-mix(in srgb, var(--color-background) ${50 * containerProgress}%, transparent)`,
+                border: `1px solid rgba(255, 255, 255, ${0.08 * containerProgress})`,
+                backdropFilter: `blur(${12 * containerProgress}px)`,
+                WebkitBackdropFilter: `blur(${12 * containerProgress}px)`,
               }}
             >
-              <h2 className="text-[clamp(1.75rem,4vw,3rem)] font-bold leading-[1.1] tracking-tight text-center md:text-right">
-                <span className="text-foreground">I turn complex problems</span>
-                <br />
-                <span className="bg-gradient-to-r from-accent to-accent-secondary bg-clip-text text-transparent">
-                  into elegant solutions
-                </span>
-              </h2>
-              <p
-                className="mt-4 text-[clamp(0.9rem,1.5vw,1.15rem)] text-muted text-center md:text-right leading-relaxed"
+              {/* Main Headline */}
+              <div
+                className="relative"
                 style={{
-                  opacity: Math.max(0, (headlineProgress - 0.3) / 0.7),
-                  transform: `translateY(${Math.max(0, (1 - headlineProgress) * 20)}px)`,
+                  transform: `translateY(${(1 - headlineProgress) * 40}px)`,
+                  opacity: headlineProgress,
+                  filter: `blur(${(1 - headlineProgress) * 8}px)`,
+                  transition: "filter 0.1s ease-out",
                 }}
               >
-                Crafting interfaces that feel intuitive,
-                <br />
-                look stunning, and tell a story.
-              </p>
-            </div>
-
-            {/* Micro-Highlights Grid */}
-            <div className="relative">
-              <div className="grid grid-cols-2 gap-4 md:gap-5">
-                {creativeHighlights.map((highlight, index) => {
-                  const progress = getHighlightProgress(index);
-                  return (
-                    <div
-                      key={highlight.title}
-                      className="group relative"
-                      style={{
-                        transform: `translateY(${(1 - progress) * 30}px)`,
-                        opacity: progress,
-                        filter: `blur(${(1 - progress) * 4}px)`,
-                        transition: "filter 0.1s ease-out",
-                      }}
-                    >
-                      {/* Subtle glow on hover */}
-                      <div className="absolute -inset-2 bg-gradient-to-br from-accent/10 to-accent-secondary/10 rounded-xl opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500" />
-
-                      <div className="relative p-4 md:p-5 rounded-xl bg-white/[0.03] backdrop-blur-sm border border-white/[0.06] hover:border-white/[0.12] transition-colors duration-300">
-                        {/* Animated line accent */}
-                        <div
-                          className="absolute top-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-accent/50 to-transparent"
-                          style={{
-                            transform: `scaleX(${progress})`,
-                            transformOrigin: "left",
-                          }}
-                        />
-
-                        <h3 className="text-[clamp(0.8rem,1.2vw,0.95rem)] font-semibold text-foreground mb-1.5 tracking-wide">
-                          {highlight.title}
-                        </h3>
-                        <p className="text-[clamp(0.7rem,1vw,0.85rem)] text-muted leading-relaxed">
-                          {highlight.description}
-                        </p>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Check out my projects link */}
-            <div
-              className="flex justify-center md:justify-end -mt-2 md:-mt-4"
-              style={{
-                transform: `translateY(${(1 - buttonProgress) * 20}px)`,
-                opacity: buttonProgress,
-                filter: `blur(${(1 - buttonProgress) * 4}px)`,
-                transition: "filter 0.1s ease-out",
-              }}
-            >
-              <button
-                onClick={() => push("/projects")}
-                className="group flex items-center gap-1.5 cursor-pointer bg-transparent text-[clamp(0.8rem,1.1vw,0.95rem)] font-medium transition-opacity duration-300 hover:opacity-80 active:opacity-60"
-              >
-                <span className="bg-gradient-to-r from-accent to-accent-secondary bg-clip-text text-transparent">
-                  Check out my projects
-                </span>
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  className="text-accent transition-transform duration-200 group-hover:translate-x-0.5"
+                <h2 className="text-[clamp(1.75rem,4vw,3rem)] font-bold leading-[1.1] tracking-tight text-center md:text-right">
+                  <span className="text-foreground">I turn complex problems</span>
+                  <br />
+                  <span className="bg-gradient-to-r from-accent to-accent-secondary bg-clip-text text-transparent">
+                    into elegant solutions
+                  </span>
+                </h2>
+                <p
+                  className="mt-4 text-[clamp(0.9rem,1.5vw,1.15rem)] text-muted text-center md:text-right leading-relaxed"
+                  style={{
+                    opacity: Math.max(0, (headlineProgress - 0.3) / 0.7),
+                    transform: `translateY(${Math.max(0, (1 - headlineProgress) * 20)}px)`,
+                  }}
                 >
-                  <path
-                    d="M6 3.5L10.5 8L6 12.5"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </button>
+                  Crafting interfaces that feel intuitive,
+                  <br />
+                  look stunning, and tell a story.
+                </p>
+              </div>
+
+              {/* Micro-Highlights Grid */}
+              <div className="relative">
+                <div className="grid grid-cols-2 gap-4 md:gap-5">
+                  {creativeHighlights.map((highlight, index) => {
+                    const progress = getHighlightProgress(index);
+                    return (
+                      <div
+                        key={highlight.title}
+                        className="group relative"
+                        style={{
+                          transform: `translateY(${(1 - progress) * 30}px)`,
+                          opacity: progress,
+                          filter: `blur(${(1 - progress) * 4}px)`,
+                          transition: "filter 0.1s ease-out",
+                        }}
+                      >
+                        {/* Subtle glow on hover */}
+                        <div className="absolute -inset-2 bg-gradient-to-br from-accent/10 to-accent-secondary/10 rounded-xl opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500" />
+
+                        <div className="relative p-4 md:p-5 rounded-xl bg-white/[0.03] backdrop-blur-sm border border-white/[0.06] hover:border-white/[0.12] transition-colors duration-300">
+                          {/* Animated line accent */}
+                          <div
+                            className="absolute top-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-accent/50 to-transparent"
+                            style={{
+                              transform: `scaleX(${progress})`,
+                              transformOrigin: "left",
+                            }}
+                          />
+
+                          <h3 className="text-[clamp(0.8rem,1.2vw,0.95rem)] font-semibold text-foreground mb-1.5 tracking-wide">
+                            {highlight.title}
+                          </h3>
+                          <p className="text-[clamp(0.7rem,1vw,0.85rem)] text-muted leading-relaxed">
+                            {highlight.description}
+                          </p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Check out my projects link */}
+              <div
+                className="flex justify-center md:justify-end -mt-2 md:-mt-4"
+                style={{
+                  transform: `translateY(${(1 - buttonProgress) * 20}px)`,
+                  opacity: buttonProgress,
+                  filter: `blur(${(1 - buttonProgress) * 4}px)`,
+                  transition: "filter 0.1s ease-out",
+                }}
+              >
+                <button
+                  onClick={() => push("/projects")}
+                  className="group flex items-center gap-1.5 cursor-pointer bg-transparent text-[clamp(0.8rem,1.1vw,0.95rem)] font-medium transition-opacity duration-300 hover:opacity-80 active:opacity-60"
+                >
+                  <span className="bg-gradient-to-r from-accent to-accent-secondary bg-clip-text text-transparent">
+                    Check out my projects
+                  </span>
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    className="text-accent transition-transform duration-200 group-hover:translate-x-0.5"
+                  >
+                    <path
+                      d="M6 3.5L10.5 8L6 12.5"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </button>
+              </div>
             </div>
           </div>
         </div>

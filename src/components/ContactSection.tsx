@@ -69,88 +69,90 @@ export default function ContactSection() {
     >
       <div className="absolute inset-0 bg-gradient-to-b from-[#141414] to-background -z-10" />
 
-      {/* Decorative ambient glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-accent/[0.03] rounded-full blur-[120px] pointer-events-none" />
-
-      <motion.div
-        ref={contentRef}
-        className="max-w-3xl w-full flex flex-col items-center"
-        variants={containerVariants}
-        initial="hidden"
-        animate={isInView ? "visible" : "hidden"}
-      >
-        <motion.h2
-          className="text-[clamp(2.5rem,8vw,5rem)] font-bold mb-4 tracking-tight text-center"
-          variants={itemVariants}
-        >
-          <span className="bg-gradient-to-r from-accent to-accent-secondary bg-clip-text text-transparent">
-            Let&apos;s Connect
-          </span>
-        </motion.h2>
-
-        <motion.p
-          className="text-[clamp(1rem,2vw,1.25rem)] text-muted max-w-xl mx-auto leading-relaxed text-center mb-14"
-          variants={itemVariants}
-        >
-          Have something in mind? I&apos;m always open to discussing new
-          projects, creative ideas, or opportunities.
-        </motion.p>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
-          {contactItems.map((item) => (
-            <motion.a
-              key={item.label}
-              href={item.href}
-              target={item.label !== "Email" ? "_blank" : undefined}
-              rel={item.label !== "Email" ? "noopener noreferrer" : undefined}
-              className="group relative flex items-center gap-4 p-5 md:p-6 rounded-xl hover:border-accent/30 transition-all duration-300"
-              style={{
-                background: "color-mix(in srgb, var(--color-background) 50%, transparent)",
-                border: "1px solid rgba(255, 255, 255, 0.08)",
-                backdropFilter: "blur(12px)",
-                WebkitBackdropFilter: "blur(12px)",
-              }}
-              variants={itemVariants}
-              whileHover={{ y: -2 }}
-            >
-              <div className="absolute -inset-px bg-gradient-to-br from-accent/10 to-accent-secondary/10 rounded-xl opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500 -z-10" />
-
-              <div className="absolute top-0 left-5 right-5 h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
-
-              <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-white/[0.05] flex items-center justify-center text-muted group-hover:text-accent transition-colors duration-300">
-                <ContactIcon label={item.label} />
-              </div>
-
-              <div className="flex-1 min-w-0">
-                <div className="text-sm font-semibold text-foreground tracking-wide">
-                  {item.label}
-                </div>
-                <div className="text-sm text-muted truncate group-hover:text-foreground/70 transition-colors duration-300">
-                  {item.handle}
-                </div>
-              </div>
-
-              <div className="flex-shrink-0 text-muted/50 group-hover:text-accent transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="w-4 h-4">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
-                </svg>
-              </div>
-            </motion.a>
-          ))}
-        </div>
+      <div className="relative mx-auto w-full max-w-[2560px] flex flex-col items-center justify-center">
+        {/* Decorative ambient glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-accent/[0.03] rounded-full blur-[120px] pointer-events-none" />
 
         <motion.div
-          className="w-32 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mt-20 mb-8"
-          variants={itemVariants}
-        />
-
-        <motion.p
-          className="text-xs text-muted/60 tracking-wide"
-          variants={itemVariants}
+          ref={contentRef}
+          className="max-w-3xl w-full flex flex-col items-center"
+          variants={containerVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
         >
-          &copy; {new Date().getFullYear()} Riyaz Ahmed
-        </motion.p>
-      </motion.div>
+          <motion.h2
+            className="text-[clamp(2.5rem,8vw,5rem)] font-bold mb-4 tracking-tight text-center"
+            variants={itemVariants}
+          >
+            <span className="bg-gradient-to-r from-accent to-accent-secondary bg-clip-text text-transparent">
+              Let&apos;s Connect
+            </span>
+          </motion.h2>
+
+          <motion.p
+            className="text-[clamp(1rem,2vw,1.25rem)] text-muted max-w-xl mx-auto leading-relaxed text-center mb-14"
+            variants={itemVariants}
+          >
+            Have something in mind? I&apos;m always open to discussing new
+            projects, creative ideas, or opportunities.
+          </motion.p>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+            {contactItems.map((item) => (
+              <motion.a
+                key={item.label}
+                href={item.href}
+                target={item.label !== "Email" ? "_blank" : undefined}
+                rel={item.label !== "Email" ? "noopener noreferrer" : undefined}
+                className="group relative flex items-center gap-4 p-5 md:p-6 rounded-xl hover:border-accent/30 transition-all duration-300"
+                style={{
+                  background: "color-mix(in srgb, var(--color-background) 50%, transparent)",
+                  border: "1px solid rgba(255, 255, 255, 0.08)",
+                  backdropFilter: "blur(12px)",
+                  WebkitBackdropFilter: "blur(12px)",
+                }}
+                variants={itemVariants}
+                whileHover={{ y: -2 }}
+              >
+                <div className="absolute -inset-px bg-gradient-to-br from-accent/10 to-accent-secondary/10 rounded-xl opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500 -z-10" />
+
+                <div className="absolute top-0 left-5 right-5 h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
+
+                <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-white/[0.05] flex items-center justify-center text-muted group-hover:text-accent transition-colors duration-300">
+                  <ContactIcon label={item.label} />
+                </div>
+
+                <div className="flex-1 min-w-0">
+                  <div className="text-sm font-semibold text-foreground tracking-wide">
+                    {item.label}
+                  </div>
+                  <div className="text-sm text-muted truncate group-hover:text-foreground/70 transition-colors duration-300">
+                    {item.handle}
+                  </div>
+                </div>
+
+                <div className="flex-shrink-0 text-muted/50 group-hover:text-accent transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="w-4 h-4">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+                  </svg>
+                </div>
+              </motion.a>
+            ))}
+          </div>
+
+          <motion.div
+            className="w-32 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mt-20 mb-8"
+            variants={itemVariants}
+          />
+
+          <motion.p
+            className="text-xs text-muted/60 tracking-wide"
+            variants={itemVariants}
+          >
+            &copy; {new Date().getFullYear()} Riyaz Ahmed
+          </motion.p>
+        </motion.div>
+      </div>
     </section>
   );
 }

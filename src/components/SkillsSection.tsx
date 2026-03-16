@@ -240,60 +240,61 @@ export default function SkillsSection() {
             />
           </div>
 
-          {/* Center-line-to-right Lottie — positioned on the right, mirroring CreativeSection */}
-          <div
-            data-id="skills-lottie"
-            className="hidden md:block absolute right-0 top-0 w-[52.74%] origin-top-right z-[1]"
-            style={{
-              aspectRatio: "851 / 721",
-              opacity: scrollProgress >= 1 ? 0 : 1,
-            }}
-          >
-            <DotLottieReact
-              src="/images/skills-section/center-line-animation.lottie"
-              autoplay={false}
-              loop={false}
-              dotLottieRefCallback={setDotLottie}
-              renderConfig={
-                {
-                  autoResize: true,
-                  fit: "contain",
-                  align: ["1", "0"],
-                } as unknown as typeof undefined
-              }
-            />
-          </div>
-
-          {/* Tree Lottie — same position, plays after center-line-to-right finishes */}
-          <div
-            className="hidden md:block absolute right-0 top-0 w-[52.7%] origin-top-right z-[2]"
-            style={{
-              aspectRatio: "851 / 721",
-              opacity: treeProgress > 0 ? 1 : 0,
-            }}
-          >
-            <DotLottieReact
-              src="/images/skills-section/tree-animation.lottie"
-              autoplay={false}
-              loop={false}
-              dotLottieRefCallback={setTreeDotLottie}
-              renderConfig={
-                {
-                  autoResize: true,
-                  fit: "contain",
-                  align: ["1", "0"],
-                } as unknown as typeof undefined
-              }
-            />
-          </div>
-
-          {/* Bottom fade overlay */}
-          <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-background to-transparent pointer-events-none z-[5]" />
-
-          {/* Content Layer — left side, opposite of CreativeSection */}
-          <div className="relative z-10 h-full flex items-center justify-center md:justify-start">
+          <div className="relative mx-auto h-full max-w-[2560px]">
+            {/* Center-line-to-right Lottie — positioned on the right, mirroring CreativeSection */}
             <div
-              className="relative w-full max-w-lg mx-6 md:mx-0 md:w-auto md:absolute md:left-16 lg:left-24 md:max-w-[min(55%,700px)] flex flex-col justify-center gap-10 md:gap-14 p-6 md:p-8 rounded-2xl"
+              data-id="skills-lottie"
+              className="hidden md:block absolute right-0 top-0 w-[52.74%] origin-top-right z-[1]"
+              style={{
+                aspectRatio: "851 / 721",
+                opacity: scrollProgress >= 1 ? 0 : 1,
+              }}
+            >
+              <DotLottieReact
+                src="/images/skills-section/center-line-animation.lottie"
+                autoplay={false}
+                loop={false}
+                dotLottieRefCallback={setDotLottie}
+                renderConfig={
+                  {
+                    autoResize: true,
+                    fit: "contain",
+                    align: ["1", "0"],
+                  } as unknown as typeof undefined
+                }
+              />
+            </div>
+
+            {/* Tree Lottie — same position, plays after center-line-to-right finishes */}
+            <div
+              className="hidden md:block absolute right-0 top-0 w-[52.7%] origin-top-right z-[2]"
+              style={{
+                aspectRatio: "851 / 721",
+                opacity: treeProgress > 0 ? 1 : 0,
+              }}
+            >
+              <DotLottieReact
+                src="/images/skills-section/tree-animation.lottie"
+                autoplay={false}
+                loop={false}
+                dotLottieRefCallback={setTreeDotLottie}
+                renderConfig={
+                  {
+                    autoResize: true,
+                    fit: "contain",
+                    align: ["1", "0"],
+                  } as unknown as typeof undefined
+                }
+              />
+            </div>
+
+            {/* Bottom fade overlay */}
+            <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-background to-transparent pointer-events-none z-[5]" />
+
+            {/* Content Layer — left side, opposite of CreativeSection */}
+            <div className="relative z-10 h-full flex items-center justify-center md:justify-start">
+              <div
+                className="relative w-full max-w-lg mx-6 md:mx-0 md:w-auto md:absolute md:left-16 lg:left-24 md:max-w-[min(55%,700px)] flex flex-col justify-center gap-10 md:gap-14 p-6 md:p-8 rounded-2xl"
               style={{
                 background: `color-mix(in srgb, var(--color-background) ${50 * containerProgress}%, transparent)`,
                 border: `1px solid rgba(255, 255, 255, ${0.08 * containerProgress})`,
@@ -368,6 +369,7 @@ export default function SkillsSection() {
                 })}
               </div>
             </div>
+          </div>
           </div>
         </div>
       </div>

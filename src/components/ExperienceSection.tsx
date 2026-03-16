@@ -132,61 +132,6 @@ export default function ExperienceSection() {
       className="relative min-h-screen py-12 md:py-24 bg-background"
       style={{ clipPath: "inset(-9999px -9999px 0 -9999px)" }}
     >
-      {/* Background Lottie Animation - aligned with Creative section for seamless line connection.
-             Width and horizontal transform match CreativeSection exactly (w-[90%], translateX(-20%)).
-             This Lottie's intrinsic size is 851×2163; height is derived automatically from width (90vw).
-             Top offset positions this canvas so it starts where the Creative animation canvas ends:
-             Creative canvas height = 90vw * (721/851), minus 100vh for the section boundary. */}
-      <div
-        className="hidden md:block absolute w-[53%] origin-top-left"
-        style={{
-          transform: `translateY(-${lottieGap}px)`,
-          aspectRatio: "851 / 2163",
-        }}
-      >
-        <DotLottieReact
-          src="/images/experience-section/background-animation.lottie"
-          autoplay={false}
-          loop={false}
-          dotLottieRefCallback={setDotLottie}
-          renderConfig={
-            {
-              autoResize: true,
-              fit: "contain",
-              align: ["0", "0"],
-            } as unknown as typeof undefined
-          }
-        />
-      </div>
-
-      {/* Content */}
-      <div className="relative z-10">
-        {/* Section Header */}
-        <div className="max-w-5xl mx-auto mb-20">
-          <div
-            className="text-center"
-            style={{
-              opacity: headerProgress,
-              transform: `translateY(${(1 - headerProgress) * 30}px)`,
-              filter: `blur(${(1 - headerProgress) * 8}px)`,
-              transition: "filter 0.1s ease-out",
-            }}
-          >
-            <h2
-              ref={titleRef}
-              className="text-[clamp(2.5rem,8vw,5rem)] font-bold tracking-tight mb-4"
-            >
-              <span className="bg-gradient-to-r from-foreground via-accent to-accent-secondary bg-clip-text text-transparent">
-                Experience
-              </span>
-            </h2>
-            <p className="text-[clamp(1rem,2vw,1.25rem)] text-muted max-w-xl mx-auto leading-relaxed">
-              A journey through building products that scale
-            </p>
-          </div>
-        </div>
-      </div>
-
       {/* Background image below title with top/bottom fade, covering the rest of the section */}
       <div
         className="absolute left-0 right-0 bottom-0 z-0 overflow-hidden"
@@ -210,19 +155,76 @@ export default function ExperienceSection() {
         />
       </div>
 
-      {/* Timeline Container */}
-      <div className="relative z-10 max-w-4xl mx-auto px-4 md:px-0">
-        {/* Experience Cards */}
-        <div className="relative flex flex-col gap-6 md:gap-0 md:-space-y-15">
-          {experiences.map((exp, index) => (
-            <ExperienceCard
-              key={exp.id}
-              experience={exp}
-              index={index}
-              revealProgress={getCardRevealProgress(index)}
-              isMobile={isMobile}
-            />
-          ))}
+      <div className="relative mx-auto max-w-[2560px]">
+        {/* Background Lottie Animation - aligned with Creative section for seamless line connection.
+               Width and horizontal transform match CreativeSection exactly (w-[90%], translateX(-20%)).
+               This Lottie's intrinsic size is 851×2163; height is derived automatically from width (90vw).
+               Top offset positions this canvas so it starts where the Creative animation canvas ends:
+               Creative canvas height = 90vw * (721/851), minus 100vh for the section boundary. */}
+        <div
+          className="hidden md:block absolute w-[53%] origin-top-left"
+          style={{
+            transform: `translateY(-${lottieGap}px)`,
+            aspectRatio: "851 / 2163",
+          }}
+        >
+          <DotLottieReact
+            src="/images/experience-section/background-animation.lottie"
+            autoplay={false}
+            loop={false}
+            dotLottieRefCallback={setDotLottie}
+            renderConfig={
+              {
+                autoResize: true,
+                fit: "contain",
+                align: ["0", "0"],
+              } as unknown as typeof undefined
+            }
+          />
+        </div>
+
+        {/* Content */}
+        <div className="relative z-10">
+          {/* Section Header */}
+          <div className="max-w-5xl mx-auto mb-20">
+            <div
+              className="text-center"
+              style={{
+                opacity: headerProgress,
+                transform: `translateY(${(1 - headerProgress) * 30}px)`,
+                filter: `blur(${(1 - headerProgress) * 8}px)`,
+                transition: "filter 0.1s ease-out",
+              }}
+            >
+              <h2
+                ref={titleRef}
+                className="text-[clamp(2.5rem,8vw,5rem)] font-bold tracking-tight mb-4"
+              >
+                <span className="bg-gradient-to-r from-foreground via-accent to-accent-secondary bg-clip-text text-transparent">
+                  Experience
+                </span>
+              </h2>
+              <p className="text-[clamp(1rem,2vw,1.25rem)] text-muted max-w-xl mx-auto leading-relaxed">
+                A journey through building products that scale
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Timeline Container */}
+        <div className="relative z-10 max-w-4xl mx-auto px-4 md:px-0">
+          {/* Experience Cards */}
+          <div className="relative flex flex-col gap-6 md:gap-0 md:-space-y-15">
+            {experiences.map((exp, index) => (
+              <ExperienceCard
+                key={exp.id}
+                experience={exp}
+                index={index}
+                revealProgress={getCardRevealProgress(index)}
+                isMobile={isMobile}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>
