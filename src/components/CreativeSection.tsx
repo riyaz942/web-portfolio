@@ -11,6 +11,7 @@ import { creativeHighlights } from "@/data/creativeHighlights";
 
 const AUTOPLAY_THRESHOLD = 0.5;
 const AUTOPLAY_DURATION_MS = 1000;
+const CATCHUP_DURATION_MS = 500;
 
 export default function CreativeSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -30,8 +31,22 @@ export default function CreativeSection() {
   const lastProgressRef = useRef(0);
 
   const autoplayRafRef = useRef<number | null>(null);
-  const autoplayPhaseRef = useRef<"idle" | "forward" | "reverse">("idle");
+  const autoplayPhaseRef = useRef<
+    "idle" | "forward" | "reverse" | "catchup"
+  >("idle");
   const autoplayFrameRef = useRef(0);
+
+  const getScrollProgress = useCallback(() => {
+    const section = sectionRef.current;
+    if (!section) return 0;
+    const rect = section.getBoundingClientRect();
+    const vh = window.innerHeight;
+    const delayThreshold = vh * 0.5;
+    const animationScrollDistance = vh * 2;
+    return clamp01(
+      (delayThreshold - rect.top) / animationScrollDistance,
+    );
+  }, []);
 
   const cancelAutoplay = useCallback(() => {
     if (autoplayRafRef.current !== null) {
@@ -70,14 +85,50 @@ export default function CreativeSection() {
           if (direction === "forward") {
             setLottieComplete(true);
           } else {
-            autoplayPhaseRef.current = "idle";
+            const progress = getScrollProgress();
+            if (progress < AUTOPLAY_THRESHOLD) {
+              autoplayPhaseRef.current = "catchup";
+              const thresholdFrame = Math.floor(
+                AUTOPLAY_THRESHOLD * (totalFrames - 1),
+              );
+              const targetFrame = Math.floor(
+                progress * (totalFrames - 1),
+              );
+              const startFrame = thresholdFrame;
+              const frameDelta = targetFrame - startFrame;
+              const startTime = performance.now();
+
+              const catchupStep = (now: number) => {
+                if (autoplayPhaseRef.current !== "catchup") return;
+                const elapsed = now - startTime;
+                const t = clamp01(elapsed / CATCHUP_DURATION_MS);
+                const frame = Math.round(
+                  startFrame + frameDelta * t,
+                );
+                dotLottie.setFrame(frame);
+                autoplayFrameRef.current = frame;
+
+                if (t < 1) {
+                  autoplayRafRef.current =
+                    requestAnimationFrame(catchupStep);
+                } else {
+                  autoplayRafRef.current = null;
+                  autoplayPhaseRef.current = "idle";
+                }
+              };
+
+              autoplayRafRef.current =
+                requestAnimationFrame(catchupStep);
+            } else {
+              autoplayPhaseRef.current = "idle";
+            }
           }
         }
       };
 
       autoplayRafRef.current = requestAnimationFrame(step);
     },
-    [dotLottie, totalFrames, cancelAutoplay],
+    [dotLottie, totalFrames, cancelAutoplay, getScrollProgress],
   );
 
   useEffect(() => {
