@@ -31,9 +31,9 @@ export default function CreativeSection() {
   const lastProgressRef = useRef(0);
 
   const autoplayRafRef = useRef<number | null>(null);
-  const autoplayPhaseRef = useRef<
-    "idle" | "forward" | "reverse" | "catchup"
-  >("idle");
+  const autoplayPhaseRef = useRef<"idle" | "forward" | "reverse" | "catchup">(
+    "idle",
+  );
   const autoplayFrameRef = useRef(0);
 
   const getScrollProgress = useCallback(() => {
@@ -43,9 +43,7 @@ export default function CreativeSection() {
     const vh = window.innerHeight;
     const delayThreshold = vh * 0.5;
     const animationScrollDistance = vh * 2;
-    return clamp01(
-      (delayThreshold - rect.top) / animationScrollDistance,
-    );
+    return clamp01((delayThreshold - rect.top) / animationScrollDistance);
   }, []);
 
   const cancelAutoplay = useCallback(() => {
@@ -91,9 +89,7 @@ export default function CreativeSection() {
               const thresholdFrame = Math.floor(
                 AUTOPLAY_THRESHOLD * (totalFrames - 1),
               );
-              const targetFrame = Math.floor(
-                progress * (totalFrames - 1),
-              );
+              const targetFrame = Math.floor(progress * (totalFrames - 1));
               const startFrame = thresholdFrame;
               const frameDelta = targetFrame - startFrame;
               const startTime = performance.now();
@@ -102,23 +98,19 @@ export default function CreativeSection() {
                 if (autoplayPhaseRef.current !== "catchup") return;
                 const elapsed = now - startTime;
                 const t = clamp01(elapsed / CATCHUP_DURATION_MS);
-                const frame = Math.round(
-                  startFrame + frameDelta * t,
-                );
+                const frame = Math.round(startFrame + frameDelta * t);
                 dotLottie.setFrame(frame);
                 autoplayFrameRef.current = frame;
 
                 if (t < 1) {
-                  autoplayRafRef.current =
-                    requestAnimationFrame(catchupStep);
+                  autoplayRafRef.current = requestAnimationFrame(catchupStep);
                 } else {
                   autoplayRafRef.current = null;
                   autoplayPhaseRef.current = "idle";
                 }
               };
 
-              autoplayRafRef.current =
-                requestAnimationFrame(catchupStep);
+              autoplayRafRef.current = requestAnimationFrame(catchupStep);
             } else {
               autoplayPhaseRef.current = "idle";
             }
@@ -215,7 +207,7 @@ export default function CreativeSection() {
     <section
       ref={sectionRef}
       className="relative w-full"
-      style={{ height: isMobile ? "180vh" : "260vh" }}
+      style={{ height: isMobile ? "150vh" : "190vh" }}
     >
       {/* Sticky container for the animation and content */}
       <div className="sticky top-0 w-full h-screen overflow-hidden">
