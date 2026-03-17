@@ -135,7 +135,7 @@ export default function CreativeSection() {
       const sectionTop = rect.top;
       const vh = window.innerHeight;
 
-      const delayThreshold = vh * (isMobile ? 0.3 : 0.5);
+      const delayThreshold = vh * 0.5; // 50% of the viewport height. before: (isMobile ? 0.5 : 0.5)
       const animationScrollDistance = vh * (isMobile ? 1.2 : 2);
 
       const progress = clamp01(
@@ -200,14 +200,14 @@ export default function CreativeSection() {
 
   const buttonProgress = clamp01((scrollProgress - 0.5) / 0.08);
   const backgroundRevealTriggered = isMobile
-    ? scrollProgress >= 0.92
+    ? scrollProgress >= 0.5
     : lottieComplete;
 
   return (
     <section
       ref={sectionRef}
       className="relative w-full"
-      style={{ height: isMobile ? "150vh" : "190vh" }}
+      style={{ height: isMobile ? "140vh" : "180vh" }}
     >
       {/* Sticky container for the animation and content */}
       <div className="sticky top-0 w-full h-screen overflow-hidden">
