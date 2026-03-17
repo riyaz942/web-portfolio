@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useCallback } from "react";
 import { DotLottieReact, DotLottie } from "@lottiefiles/dotlottie-react";
 import Image from "next/image";
 import { useIsMobile } from "@/hooks/useIsMobile";
@@ -9,18 +9,76 @@ import { clamp01 } from "@/utils/clamp";
 import { initLottie } from "@/utils/lottie";
 import { creativeHighlights } from "@/data/creativeHighlights";
 
+const AUTOPLAY_THRESHOLD = 0.5;
+const AUTOPLAY_DURATION_MS = 1000;
+
 export default function CreativeSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [dotLottie, setDotLottie] = useState<DotLottie | null>(null);
   const [totalFrames, setTotalFrames] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [lottieComplete, setLottieComplete] = useState(false);
   const isMobile = useIsMobile();
   const { push } = useViewTransitionRouter();
 
-  useEffect(() => (dotLottie ? initLottie(dotLottie, setTotalFrames) : undefined), [dotLottie]);
+  useEffect(
+    () => (dotLottie ? initLottie(dotLottie, setTotalFrames) : undefined),
+    [dotLottie],
+  );
 
   const scrollRafRef = useRef<number | null>(null);
   const lastProgressRef = useRef(0);
+
+  const autoplayRafRef = useRef<number | null>(null);
+  const autoplayPhaseRef = useRef<"idle" | "forward" | "reverse">("idle");
+  const autoplayFrameRef = useRef(0);
+
+  const cancelAutoplay = useCallback(() => {
+    if (autoplayRafRef.current !== null) {
+      cancelAnimationFrame(autoplayRafRef.current);
+      autoplayRafRef.current = null;
+    }
+    autoplayPhaseRef.current = "idle";
+  }, []);
+
+  const startAutoplay = useCallback(
+    (direction: "forward" | "reverse") => {
+      if (!dotLottie || totalFrames === 0) return;
+      cancelAutoplay();
+      autoplayPhaseRef.current = direction;
+
+      const thresholdFrame = Math.floor(AUTOPLAY_THRESHOLD * (totalFrames - 1));
+      const endFrame =
+        direction === "forward" ? totalFrames - 1 : thresholdFrame;
+      const startFrame =
+        direction === "forward" ? thresholdFrame : totalFrames - 1;
+      const frameDelta = endFrame - startFrame;
+      const startTime = performance.now();
+
+      const step = (now: number) => {
+        if (autoplayPhaseRef.current !== direction) return;
+        const elapsed = now - startTime;
+        const t = clamp01(elapsed / AUTOPLAY_DURATION_MS);
+        const frame = Math.round(startFrame + frameDelta * t);
+        dotLottie.setFrame(frame);
+        autoplayFrameRef.current = frame;
+
+        if (t < 1) {
+          autoplayRafRef.current = requestAnimationFrame(step);
+        } else {
+          autoplayRafRef.current = null;
+          if (direction === "forward") {
+            setLottieComplete(true);
+          } else {
+            autoplayPhaseRef.current = "idle";
+          }
+        }
+      };
+
+      autoplayRafRef.current = requestAnimationFrame(step);
+    },
+    [dotLottie, totalFrames, cancelAutoplay],
+  );
 
   useEffect(() => {
     if (!sectionRef.current) return;
@@ -37,10 +95,32 @@ export default function CreativeSection() {
       const delayThreshold = vh * (isMobile ? 0.3 : 0.5);
       const animationScrollDistance = vh * (isMobile ? 1.2 : 2);
 
-      const progress = clamp01((delayThreshold - sectionTop) / animationScrollDistance);
+      const progress = clamp01(
+        (delayThreshold - sectionTop) / animationScrollDistance,
+      );
+      const prevProgress = lastProgressRef.current;
+      const scrollingDown = progress > prevProgress;
+      const scrollingUp = progress < prevProgress;
 
       if (!isMobile && dotLottie && totalFrames > 0) {
-        dotLottie.setFrame(Math.floor(progress * (totalFrames - 1)));
+        const phase = autoplayPhaseRef.current;
+
+        if (
+          progress >= AUTOPLAY_THRESHOLD &&
+          prevProgress < AUTOPLAY_THRESHOLD &&
+          scrollingDown
+        ) {
+          startAutoplay("forward");
+        } else if (
+          progress < AUTOPLAY_THRESHOLD &&
+          prevProgress >= AUTOPLAY_THRESHOLD &&
+          scrollingUp
+        ) {
+          setLottieComplete(false);
+          startAutoplay("reverse");
+        } else if (phase === "idle" && progress < AUTOPLAY_THRESHOLD) {
+          dotLottie.setFrame(Math.floor(progress * (totalFrames - 1)));
+        }
       }
 
       if (Math.abs(progress - lastProgressRef.current) > 0.001) {
@@ -62,9 +142,11 @@ export default function CreativeSection() {
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      if (scrollRafRef.current !== null) cancelAnimationFrame(scrollRafRef.current);
+      if (scrollRafRef.current !== null)
+        cancelAnimationFrame(scrollRafRef.current);
+      cancelAutoplay();
     };
-  }, [dotLottie, totalFrames, isMobile]);
+  }, [dotLottie, totalFrames, isMobile, startAutoplay, cancelAutoplay]);
 
   const containerProgress = clamp01((scrollProgress - 0.4) / 0.12);
   const headlineProgress = clamp01((scrollProgress - 0.44) / 0.12);
@@ -74,7 +156,9 @@ export default function CreativeSection() {
   };
 
   const buttonProgress = clamp01((scrollProgress - 0.82) / 0.08);
-  const backgroundRevealTriggered = scrollProgress >= 0.92;
+  const backgroundRevealTriggered = isMobile
+    ? scrollProgress >= 0.92
+    : lottieComplete;
 
   return (
     <section
@@ -90,7 +174,8 @@ export default function CreativeSection() {
           style={{
             clipPath: `circle(${backgroundRevealTriggered ? 150 : 0}% at ${isMobile ? "50% 50%" : "15% 60%"})`,
             opacity: backgroundRevealTriggered ? 1 : 0,
-            transition: "clip-path 1.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease-out",
+            transition:
+              "clip-path 1.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease-out",
           }}
         >
           <Image
@@ -151,7 +236,9 @@ export default function CreativeSection() {
                 }}
               >
                 <h2 className="text-[clamp(1.75rem,4vw,3rem)] font-bold leading-[1.1] tracking-tight text-center md:text-right">
-                  <span className="text-foreground">I turn complex problems</span>
+                  <span className="text-foreground">
+                    I turn complex problems
+                  </span>
                   <br />
                   <span className="bg-gradient-to-r from-accent to-accent-secondary bg-clip-text text-transparent">
                     into elegant solutions
