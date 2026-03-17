@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useCallback } from "react";
 import { DotLottieReact, DotLottie } from "@lottiefiles/dotlottie-react";
 import Image from "next/image";
 import { useIsMobile } from "@/hooks/useIsMobile";
@@ -9,18 +9,119 @@ import { clamp01 } from "@/utils/clamp";
 import { initLottie } from "@/utils/lottie";
 import { creativeHighlights } from "@/data/creativeHighlights";
 
+const AUTOPLAY_THRESHOLD = 0.5;
+const AUTOPLAY_DURATION_MS = 1000;
+const CATCHUP_DURATION_MS = 500;
+
 export default function CreativeSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [dotLottie, setDotLottie] = useState<DotLottie | null>(null);
   const [totalFrames, setTotalFrames] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [lottieComplete, setLottieComplete] = useState(false);
   const isMobile = useIsMobile();
   const { push } = useViewTransitionRouter();
 
-  useEffect(() => (dotLottie ? initLottie(dotLottie, setTotalFrames) : undefined), [dotLottie]);
+  useEffect(
+    () => (dotLottie ? initLottie(dotLottie, setTotalFrames) : undefined),
+    [dotLottie],
+  );
 
   const scrollRafRef = useRef<number | null>(null);
   const lastProgressRef = useRef(0);
+
+  const autoplayRafRef = useRef<number | null>(null);
+  const autoplayPhaseRef = useRef<"idle" | "forward" | "reverse" | "catchup">(
+    "idle",
+  );
+  const autoplayFrameRef = useRef(0);
+
+  const getScrollProgress = useCallback(() => {
+    const section = sectionRef.current;
+    if (!section) return 0;
+    const rect = section.getBoundingClientRect();
+    const vh = window.innerHeight;
+    const delayThreshold = vh * 0.5;
+    const animationScrollDistance = vh * 2;
+    return clamp01((delayThreshold - rect.top) / animationScrollDistance);
+  }, []);
+
+  const cancelAutoplay = useCallback(() => {
+    if (autoplayRafRef.current !== null) {
+      cancelAnimationFrame(autoplayRafRef.current);
+      autoplayRafRef.current = null;
+    }
+    autoplayPhaseRef.current = "idle";
+  }, []);
+
+  const startAutoplay = useCallback(
+    (direction: "forward" | "reverse") => {
+      if (!dotLottie || totalFrames === 0) return;
+      cancelAutoplay();
+      autoplayPhaseRef.current = direction;
+
+      const thresholdFrame = Math.floor(AUTOPLAY_THRESHOLD * (totalFrames - 1));
+      const endFrame =
+        direction === "forward" ? totalFrames - 1 : thresholdFrame;
+      const startFrame =
+        direction === "forward" ? thresholdFrame : totalFrames - 1;
+      const frameDelta = endFrame - startFrame;
+      const startTime = performance.now();
+
+      const step = (now: number) => {
+        if (autoplayPhaseRef.current !== direction) return;
+        const elapsed = now - startTime;
+        const t = clamp01(elapsed / AUTOPLAY_DURATION_MS);
+        const frame = Math.round(startFrame + frameDelta * t);
+        dotLottie.setFrame(frame);
+        autoplayFrameRef.current = frame;
+
+        if (t < 1) {
+          autoplayRafRef.current = requestAnimationFrame(step);
+        } else {
+          autoplayRafRef.current = null;
+          if (direction === "forward") {
+            setLottieComplete(true);
+          } else {
+            const progress = getScrollProgress();
+            if (progress < AUTOPLAY_THRESHOLD) {
+              autoplayPhaseRef.current = "catchup";
+              const thresholdFrame = Math.floor(
+                AUTOPLAY_THRESHOLD * (totalFrames - 1),
+              );
+              const targetFrame = Math.floor(progress * (totalFrames - 1));
+              const startFrame = thresholdFrame;
+              const frameDelta = targetFrame - startFrame;
+              const startTime = performance.now();
+
+              const catchupStep = (now: number) => {
+                if (autoplayPhaseRef.current !== "catchup") return;
+                const elapsed = now - startTime;
+                const t = clamp01(elapsed / CATCHUP_DURATION_MS);
+                const frame = Math.round(startFrame + frameDelta * t);
+                dotLottie.setFrame(frame);
+                autoplayFrameRef.current = frame;
+
+                if (t < 1) {
+                  autoplayRafRef.current = requestAnimationFrame(catchupStep);
+                } else {
+                  autoplayRafRef.current = null;
+                  autoplayPhaseRef.current = "idle";
+                }
+              };
+
+              autoplayRafRef.current = requestAnimationFrame(catchupStep);
+            } else {
+              autoplayPhaseRef.current = "idle";
+            }
+          }
+        }
+      };
+
+      autoplayRafRef.current = requestAnimationFrame(step);
+    },
+    [dotLottie, totalFrames, cancelAutoplay, getScrollProgress],
+  );
 
   useEffect(() => {
     if (!sectionRef.current) return;
@@ -34,13 +135,35 @@ export default function CreativeSection() {
       const sectionTop = rect.top;
       const vh = window.innerHeight;
 
-      const delayThreshold = vh * (isMobile ? 0.3 : 0.5);
+      const delayThreshold = vh * 0.5; // 50% of the viewport height. before: (isMobile ? 0.5 : 0.5)
       const animationScrollDistance = vh * (isMobile ? 1.2 : 2);
 
-      const progress = clamp01((delayThreshold - sectionTop) / animationScrollDistance);
+      const progress = clamp01(
+        (delayThreshold - sectionTop) / animationScrollDistance,
+      );
+      const prevProgress = lastProgressRef.current;
+      const scrollingDown = progress > prevProgress;
+      const scrollingUp = progress < prevProgress;
 
       if (!isMobile && dotLottie && totalFrames > 0) {
-        dotLottie.setFrame(Math.floor(progress * (totalFrames - 1)));
+        const phase = autoplayPhaseRef.current;
+
+        if (
+          progress >= AUTOPLAY_THRESHOLD &&
+          prevProgress < AUTOPLAY_THRESHOLD &&
+          scrollingDown
+        ) {
+          startAutoplay("forward");
+        } else if (
+          progress < AUTOPLAY_THRESHOLD &&
+          prevProgress >= AUTOPLAY_THRESHOLD &&
+          scrollingUp
+        ) {
+          setLottieComplete(false);
+          startAutoplay("reverse");
+        } else if (phase === "idle" && progress < AUTOPLAY_THRESHOLD) {
+          dotLottie.setFrame(Math.floor(progress * (totalFrames - 1)));
+        }
       }
 
       if (Math.abs(progress - lastProgressRef.current) > 0.001) {
@@ -62,25 +185,29 @@ export default function CreativeSection() {
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      if (scrollRafRef.current !== null) cancelAnimationFrame(scrollRafRef.current);
+      if (scrollRafRef.current !== null)
+        cancelAnimationFrame(scrollRafRef.current);
+      cancelAutoplay();
     };
-  }, [dotLottie, totalFrames, isMobile]);
+  }, [dotLottie, totalFrames, isMobile, startAutoplay, cancelAutoplay]);
 
-  const containerProgress = clamp01((scrollProgress - 0.4) / 0.12);
-  const headlineProgress = clamp01((scrollProgress - 0.44) / 0.12);
+  const containerProgress = clamp01((scrollProgress - 0.25) / 0.1);
+  const headlineProgress = clamp01((scrollProgress - 0.27) / 0.1);
   const getHighlightProgress = (index: number) => {
-    const startOffset = 0.55 + index * 0.06;
-    return clamp01((scrollProgress - startOffset) / 0.08);
+    const startOffset = 0.35 + index * 0.04;
+    return clamp01((scrollProgress - startOffset) / 0.04);
   };
 
-  const buttonProgress = clamp01((scrollProgress - 0.82) / 0.08);
-  const backgroundRevealTriggered = scrollProgress >= 0.92;
+  const buttonProgress = clamp01((scrollProgress - 0.5) / 0.08);
+  const backgroundRevealTriggered = isMobile
+    ? scrollProgress >= 0.5
+    : lottieComplete;
 
   return (
     <section
       ref={sectionRef}
       className="relative w-full"
-      style={{ height: isMobile ? "180vh" : "260vh" }}
+      style={{ height: isMobile ? "140vh" : "180vh" }}
     >
       {/* Sticky container for the animation and content */}
       <div className="sticky top-0 w-full h-screen overflow-hidden">
@@ -90,7 +217,8 @@ export default function CreativeSection() {
           style={{
             clipPath: `circle(${backgroundRevealTriggered ? 150 : 0}% at ${isMobile ? "50% 50%" : "15% 60%"})`,
             opacity: backgroundRevealTriggered ? 1 : 0,
-            transition: "clip-path 1.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease-out",
+            transition:
+              "clip-path 1.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease-out",
           }}
         >
           <Image
@@ -151,7 +279,9 @@ export default function CreativeSection() {
                 }}
               >
                 <h2 className="text-[clamp(1.75rem,4vw,3rem)] font-bold leading-[1.1] tracking-tight text-center md:text-right">
-                  <span className="text-foreground">I turn complex problems</span>
+                  <span className="text-foreground">
+                    I turn complex problems
+                  </span>
                   <br />
                   <span className="bg-gradient-to-r from-accent to-accent-secondary bg-clip-text text-transparent">
                     into elegant solutions
