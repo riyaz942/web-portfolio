@@ -2,7 +2,11 @@
 
 import Image from "next/image";
 import { useCallback } from "react";
-import { projectList, type Project } from "@/data/projects";
+import {
+  getProjectListingTechDisplay,
+  projectList,
+  type Project,
+} from "@/data/projects";
 import { technologies } from "@/data/technologies";
 import {
   useViewTransitionRouter,
@@ -111,7 +115,9 @@ export default function ProjectsPage() {
 
         {/* Project cards grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
-          {displayProjects.map((project, index) => (
+          {displayProjects.map((project, index) => {
+            const { shown, moreCount } = getProjectListingTechDisplay(project);
+            return (
             <article
               key={project.id}
               onClick={() => navigateToProject(project.id)}
@@ -166,10 +172,10 @@ export default function ProjectsPage() {
                   {getShortDescription(project)}
                 </p>
 
-                {/* Tech tags */}
-                {project.tech.length > 0 && (
-                  <div className="flex flex-wrap gap-1.5 mt-auto pt-1">
-                    {project.tech.map((techId) => (
+                {/* Tech tags (subset on listing; full stack on detail) */}
+                {shown.length > 0 && (
+                  <div className="flex flex-wrap items-center gap-1.5 mt-auto pt-1">
+                    {shown.map((techId) => (
                       <span
                         key={techId}
                         className="inline-block px-2.5 py-1 text-[0.7rem] font-medium rounded-md bg-white/[0.05] text-accent/90 border border-white/[0.06]"
@@ -177,6 +183,11 @@ export default function ProjectsPage() {
                         {techNameMap[techId] || techId}
                       </span>
                     ))}
+                    {moreCount > 0 && (
+                      <span className="text-[0.7rem] font-medium text-muted/60">
+                        +{moreCount} more
+                      </span>
+                    )}
                   </div>
                 )}
 
@@ -184,7 +195,8 @@ export default function ProjectsPage() {
                 <div className="absolute top-0 left-5 right-5 h-px bg-gradient-to-r from-transparent via-accent/40 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
               </div>
             </article>
-          ))}
+            );
+          })}
         </div>
       </main>
     </div>

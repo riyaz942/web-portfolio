@@ -18,6 +18,8 @@ export interface Project {
   id: string;
   name: string;
   tech: string[];
+  /** Subset of `tech` shown on the grid; falls back to the start of `tech` when omitted. */
+  listingTech?: string[];
   involvement: "Major" | "Intermittent" | "Owned";
   icon: string;
   iconShape?: "square" | "wide";
@@ -26,6 +28,21 @@ export interface Project {
   description: DescriptionBlock[];
   images: ProjectImage[];
   videos?: ProjectVideo[];
+}
+
+export const MAX_PROJECT_LISTING_TECH = 6;
+
+export function getProjectListingTechDisplay(project: Project): {
+  shown: string[];
+  moreCount: number;
+} {
+  const filteredListing =
+    project.listingTech?.filter((id) => project.tech.includes(id)) ?? [];
+  const source =
+    filteredListing.length > 0 ? filteredListing : project.tech;
+  const shown = source.slice(0, MAX_PROJECT_LISTING_TECH);
+  const moreCount = project.tech.length - shown.length;
+  return { shown, moreCount };
 }
 
 const projectImageDir = "/assets/images/projectImages";
@@ -59,7 +76,36 @@ export const projects: Record<string, Project> = {
   thriveworks: {
     id: "thriveworks",
     name: "Thriveworks",
-    tech: ["nextjs", "nestjs", "typescript", "react", "scss"],
+    tech: [
+      "nextjs",
+      "react",
+      "typescript",
+      "scss",
+      "redux",
+      "nestjs",
+      "radix-ui",
+      "react-hook-form",
+      "zod",
+      "framer-motion",
+      "storybook",
+      "jest",
+      "testing-library",
+      "rudderstack",
+      "datadog",
+      "split-io",
+      "vercel",
+      "edgio",
+      "typeorm",
+      "postgresql",
+      "bull",
+      "redis",
+      "openai",
+      "vercel-ai-sdk",
+      "socket-io",
+      "pverify",
+      "advancedmd",
+      "docker",
+    ],
     involvement: "Major",
     icon: "/assets/icons/project-icon-thriveworks.svg",
     iconShape: "wide",
@@ -76,7 +122,7 @@ export const projects: Record<string, Project> = {
       {
         type: "text",
         value:
-          "One of the earliest engineers on this project, contributing for ~5 years as a full-stack engineer. Built core patient-facing features on the Next.js frontend (provider search, booking flows, insurance handling) and grew into backend work on the NestJS API — architecting the AI module, real-time voice processing, and provider data services. Also set up CI/CD pipelines and test infrastructure.",
+          "One of the earliest engineers on this project, contributing for ~5 years as a full-stack engineer from day one (not a frontend role that later expanded into backend). Built core patient-facing features on the Next.js frontend (provider search, booking flows, and early-phase insurance-related work only — not end-to-end insurance handling) and on the NestJS API, including architecting the AI module and real-time voice pipeline (voice is not live in production yet). Contributed to test infrastructure.",
       },
       { type: "header", value: "Provider Search & Discovery" },
       {
@@ -88,15 +134,16 @@ export const projects: Record<string, Project> = {
         type: "points",
         value: [
           "Advanced filtering: location, insurance, specialty, counseling type, availability",
+          "Timezone handling for provider availability and discovery",
           "Sort/filter UI with mobile-responsive filter modals",
           "Provider profile pages with SEO-friendly structured data (JSON-LD)",
         ],
       },
-      { type: "header", value: "Booking & Appointment System (Project Lead)" },
+      { type: "header", value: "Booking & Appointment System" },
       {
         type: "text",
         value:
-          "Led the booking flow project end-to-end (excluding insurance verification). Built the multi-step booking flow — one of the most complex user journeys in the app — with slot grid components, date pagination, and timezone handling.",
+          "Contributed to the multi-step booking flow end-to-end for the patient journey — one of the most complex user journeys in the app. Full insurance verification and downstream insurance handling were out of scope; work on insurance stayed in an initial phase only.",
       },
       {
         type: "points",
@@ -107,20 +154,19 @@ export const projects: Record<string, Project> = {
           "Cancellation policy reminders and session-within-48-hours hooks",
         ],
       },
-      { type: "header", value: "AI & Voice Integration" },
+      { type: "header", value: "AI & Voice Integration (in development)" },
       {
         type: "text",
         value:
-          "Implemented AI-powered natural language search using OpenAI, enabling patients to describe their needs conversationally. Built an AI ChatBot connected to the backend agent via Socket.io — dynamically updating the UI (filters, search results, URLs) in real time based on chat context. Architected the AI module on the NestJS backend with real-time voice processing.",
+          "Implemented AI-powered natural language search using OpenAI so patients can describe their needs conversationally. This is a full search experience wired as a system: an AI search agent on the frontend is connected to the NestJS backend via Socket.IO, which drives filters, search results, and URLs in real time from the conversation — not a separate built-in chatbot widget. Real-time voice and the full AI/voice rollout are not released yet; the backend AI module is architected to support that path.",
       },
       {
         type: "points",
         value: [
           "MCP (Model Context Protocol) tools for location and provider search",
-          "Real-time voice processing with WebSocket (Socket.io) gateway",
+          "Socket.IO between the AI search agent and NestJS backend for live UI and search updates, with gateway work for the real-time layer (voice path still in development)",
           "Dual-agent architecture with asynchronous tool execution",
-          "SSE streaming for real-time transcription and text generation",
-          "Vercel AI SDK integration for streaming and text-to-speech with progressive audio playback",
+          "Vercel AI SDK for model streaming and text-to-speech with progressive audio playback",
         ],
       },
       { type: "header", value: "Internal Testimonials Tool" },
@@ -138,38 +184,20 @@ export const projects: Record<string, Project> = {
           "Coordinated and individually built a feature for the company hackathon",
         ],
       },
-      { type: "header", value: "Technologies & Infrastructure" },
-      {
-        type: "points",
-        title: "Frontend:",
-        value: [
-          "Next.js 13+ (App Router, SSR/SSG), TypeScript, React (hooks, context, Redux)",
-          "Radix UI, React Hook Form + Zod, SCSS/Sass, Framer Motion",
-          "Storybook, Jest + React Testing Library",
-          "RudderStack analytics, Datadog RUM, Split.io feature flags",
-          "Vercel deployment with Edgio/Layer0 CDN",
-        ],
-      },
-      {
-        type: "points",
-        title: "Backend:",
-        value: [
-          "NestJS with TypeORM and PostgreSQL, Bull queues with Redis",
-          "OpenAI API (GPT, TTS, transcription), Vercel AI SDK",
-          "WebSocket (Socket.io), Server-Sent Events (SSE)",
-          "PVerify API, AdvancedMD EHR integration",
-          "Docker + Docker Compose, GitHub Actions CI/CD",
-        ],
-      },
     ],
-    images: imageRange("thriveworks", 9, { width: 1024, height: 640 }, {
-      2: { width: 475, height: 1024 },
-      4: { width: 476, height: 1024 },
-      5: { width: 474, height: 1024 },
-    }),
+    images: imageRange(
+      "thriveworks",
+      9,
+      { width: 1024, height: 640 },
+      {
+        2: { width: 475, height: 1024 },
+        4: { width: 476, height: 1024 },
+        5: { width: 474, height: 1024 },
+      },
+    ),
     videos: [
       {
-        title: "AI-Powered Provider Search & ChatBot",
+        title: "AI-Powered Provider Search",
         url: "https://www.loom.com/share/a1898de2e2084bfe90b149209e9295e1",
       },
     ],
@@ -236,11 +264,16 @@ export const projects: Record<string, Project> = {
         ],
       },
     ],
-    images: imageRange("snapteam", 8, { width: 1960, height: 1704 }, {
-      1: { width: 968, height: 840 },
-      7: { width: 2940, height: 2556 },
-      8: { width: 2940, height: 2556 },
-    }),
+    images: imageRange(
+      "snapteam",
+      8,
+      { width: 1960, height: 1704 },
+      {
+        1: { width: 968, height: 840 },
+        7: { width: 2940, height: 2556 },
+        8: { width: 2940, height: 2556 },
+      },
+    ),
   },
 
   wakency: {
@@ -278,13 +311,18 @@ export const projects: Record<string, Project> = {
         ],
       },
     ],
-    images: imageRange("wakency", 6, { width: 1441, height: 1363 }, {
-      1: { width: 2732, height: 7862 },
-      2: { width: 2732, height: 1734 },
-      4: { width: 1441, height: 1106 },
-      5: { width: 1441, height: 1039 },
-      6: { width: 1440, height: 1029 },
-    }),
+    images: imageRange(
+      "wakency",
+      6,
+      { width: 1441, height: 1363 },
+      {
+        1: { width: 2732, height: 7862 },
+        2: { width: 2732, height: 1734 },
+        4: { width: 1441, height: 1106 },
+        5: { width: 1441, height: 1039 },
+        6: { width: 1440, height: 1029 },
+      },
+    ),
   },
 
   nykaa: {
@@ -320,12 +358,17 @@ export const projects: Record<string, Project> = {
         ],
       },
     ],
-    images: imageRange("nykaa", 5, { width: 438, height: 772 }, {
-      1: { width: 1920, height: 900 },
-      3: { width: 436, height: 775 },
-      4: { width: 441, height: 772 },
-      5: { width: 1920, height: 901 },
-    }),
+    images: imageRange(
+      "nykaa",
+      5,
+      { width: 438, height: 772 },
+      {
+        1: { width: 1920, height: 900 },
+        3: { width: 436, height: 775 },
+        4: { width: 441, height: 772 },
+        5: { width: 1920, height: 901 },
+      },
+    ),
   },
 
   pulse: {
@@ -335,7 +378,10 @@ export const projects: Record<string, Project> = {
     involvement: "Major",
     icon: "/assets/icons/project-icon-pulse.png",
     timeframe: "2018",
-    link: { type: "visit", value: "https://www.youtube.com/watch?v=wOsy7b2Q-J4" },
+    link: {
+      type: "visit",
+      value: "https://www.youtube.com/watch?v=wOsy7b2Q-J4",
+    },
     description: [
       {
         type: "text",
@@ -370,15 +416,20 @@ export const projects: Record<string, Project> = {
         ],
       },
     ],
-    images: imageRange("pulse", 9, { width: 1500, height: 2668 }, {
-      2: { width: 1500, height: 2976 },
-      3: { width: 1500, height: 3996 },
-      5: { width: 1500, height: 3220 },
-      6: { width: 1500, height: 4308 },
-      7: { width: 1500, height: 4726 },
-      8: { width: 1500, height: 4674 },
-      9: { width: 1500, height: 3302 },
-    }),
+    images: imageRange(
+      "pulse",
+      9,
+      { width: 1500, height: 2668 },
+      {
+        2: { width: 1500, height: 2976 },
+        3: { width: 1500, height: 3996 },
+        5: { width: 1500, height: 3220 },
+        6: { width: 1500, height: 4308 },
+        7: { width: 1500, height: 4726 },
+        8: { width: 1500, height: 4674 },
+        9: { width: 1500, height: 3302 },
+      },
+    ),
   },
 
   lighthouse: {
@@ -390,7 +441,8 @@ export const projects: Record<string, Project> = {
     timeframe: "2018",
     link: {
       type: "download",
-      value: "https://play.google.com/store/apps/details?id=com.tailoredtech.lighthouse",
+      value:
+        "https://play.google.com/store/apps/details?id=com.tailoredtech.lighthouse",
     },
     description: [
       {
@@ -421,9 +473,14 @@ export const projects: Record<string, Project> = {
         ],
       },
     ],
-    images: imageRange("lighthouse", 7, { width: 750, height: 1334 }, {
-      2: { width: 750, height: 1626 },
-    }),
+    images: imageRange(
+      "lighthouse",
+      7,
+      { width: 750, height: 1334 },
+      {
+        2: { width: 750, height: 1626 },
+      },
+    ),
   },
 
   benefactory: {
@@ -461,14 +518,19 @@ export const projects: Record<string, Project> = {
         ],
       },
     ],
-    images: imageRange("benefactory", 7, { width: 1440, height: 4162 }, {
-      2: { width: 1440, height: 2739 },
-      3: { width: 1440, height: 3919 },
-      4: { width: 2880, height: 3728 },
-      5: { width: 2880, height: 6780 },
-      6: { width: 2880, height: 4028 },
-      7: { width: 2880, height: 3562 },
-    }),
+    images: imageRange(
+      "benefactory",
+      7,
+      { width: 1440, height: 4162 },
+      {
+        2: { width: 1440, height: 2739 },
+        3: { width: 1440, height: 3919 },
+        4: { width: 2880, height: 3728 },
+        5: { width: 2880, height: 6780 },
+        6: { width: 2880, height: 4028 },
+        7: { width: 2880, height: 3562 },
+      },
+    ),
   },
 
   measure: {
@@ -480,7 +542,8 @@ export const projects: Record<string, Project> = {
     timeframe: "2017",
     link: {
       type: "download",
-      value: "https://play.google.com/store/apps/details?id=com.informedtech.measure.app",
+      value:
+        "https://play.google.com/store/apps/details?id=com.informedtech.measure.app",
     },
     description: [
       {
@@ -527,7 +590,8 @@ export const projects: Record<string, Project> = {
     timeframe: "2015 – 2016",
     link: {
       type: "download",
-      value: "https://drive.google.com/open?id=1Fo3FSfu7NHTJ60Y0uQcWYpv6mX1Tetqe",
+      value:
+        "https://drive.google.com/open?id=1Fo3FSfu7NHTJ60Y0uQcWYpv6mX1Tetqe",
     },
     description: [
       {
@@ -555,15 +619,21 @@ export const projects: Record<string, Project> = {
         ],
       },
     ],
-    images: imageRange("vc_music_player", 8, { width: 770, height: 1200 }, {
-      1: { width: 1024, height: 500 },
-      2: { width: 894, height: 803 },
-      3: { width: 894, height: 793 },
-      4: { width: 1200, height: 770 },
-    }, [
-      { name: "9-1", width: 770, height: 1200 },
-      { name: "9-2", width: 770, height: 1200 },
-    ]),
+    images: imageRange(
+      "vc_music_player",
+      8,
+      { width: 770, height: 1200 },
+      {
+        1: { width: 1024, height: 500 },
+        2: { width: 894, height: 803 },
+        3: { width: 894, height: 793 },
+        4: { width: 1200, height: 770 },
+      },
+      [
+        { name: "9-1", width: 770, height: 1200 },
+        { name: "9-2", width: 770, height: 1200 },
+      ],
+    ),
   },
 
   tt_interview: {
@@ -597,11 +667,16 @@ export const projects: Record<string, Project> = {
         ],
       },
     ],
-    images: imageRange("tt_interview", 8, { width: 1440, height: 2560 }, {
-      3: { width: 1440, height: 2880 },
-      7: { width: 1440, height: 3584 },
-      8: { width: 1440, height: 4216 },
-    }),
+    images: imageRange(
+      "tt_interview",
+      8,
+      { width: 1440, height: 2560 },
+      {
+        3: { width: 1440, height: 2880 },
+        7: { width: 1440, height: 3584 },
+        8: { width: 1440, height: 4216 },
+      },
+    ),
   },
 };
 
