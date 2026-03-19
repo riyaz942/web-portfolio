@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { projects, type DescriptionBlock } from "@/data/projects";
+import { groupProjectTechByCategory } from "@/data/techCategories";
 import { technologies } from "@/data/technologies";
 import {
   useViewTransitionRouter,
@@ -148,6 +149,11 @@ export default function ProjectDetail({ id }: { id: string }) {
     });
   }, [push, id]);
 
+  const techStackGroups = useMemo(
+    () => groupProjectTechByCategory(project?.tech ?? []),
+    [project?.tech],
+  );
+
   if (!project || !project.icon || project.description.length === 0) {
     return (
       <div className="min-h-screen bg-background text-foreground flex items-center justify-center">
@@ -202,8 +208,9 @@ export default function ProjectDetail({ id }: { id: string }) {
       </header>
 
       <main className="mx-auto max-w-4xl px-6 py-12 md:py-16">
-        {/* Hero section */}
-        <div className="flex flex-col sm:flex-row items-start gap-5 mb-10 md:mb-14">
+        {/* Hero + technologies (stack below title) */}
+        <div className="mb-10 md:mb-14 space-y-8">
+          <div className="flex flex-col sm:flex-row items-start gap-5">
           {project.iconShape === "wide" ? (
             <div
               data-project-detail-icon
@@ -251,21 +258,8 @@ export default function ProjectDetail({ id }: { id: string }) {
               )}
             </div>
 
-            <div className="flex flex-wrap items-center gap-2">
-              {project.tech.length > 0 && (
-                <div className="flex flex-wrap gap-1.5">
-                  {project.tech.map((techId) => (
-                    <span
-                      key={techId}
-                      className="inline-block px-2.5 py-1 text-[0.7rem] font-medium rounded-md bg-white/[0.05] text-accent/90 border border-white/[0.06]"
-                    >
-                      {techNameMap[techId] || techId}
-                    </span>
-                  ))}
-                </div>
-              )}
-
-              {project.link && (
+            {project.link && (
+              <div className="flex flex-wrap items-center gap-2">
                 <a
                   href={project.link.value}
                   target="_blank"
@@ -310,9 +304,41 @@ export default function ProjectDetail({ id }: { id: string }) {
                     </>
                   )}
                 </a>
-              )}
-            </div>
+              </div>
+            )}
           </div>
+          </div>
+
+          {/* Technologies (categorized) — full width, directly below hero / title */}
+          {project.tech.length > 0 && (
+            <section>
+              <h3 className="text-lg font-semibold text-foreground mb-6">
+                Technologies
+              </h3>
+              <div className="columns-1 sm:columns-2 md:columns-3 gap-6">
+                {techStackGroups.map((group) => (
+                  <div
+                    key={group.categoryId}
+                    className="mb-6 break-inside-avoid rounded-xl bg-white/[0.03] border border-white/[0.06] p-4"
+                  >
+                    <h4 className="text-xs font-semibold uppercase tracking-wider text-muted mb-3">
+                      {group.label}
+                    </h4>
+                    <div className="flex flex-wrap gap-1.5">
+                      {group.techIds.map((techId) => (
+                        <span
+                          key={techId}
+                          className="inline-block px-2.5 py-1 text-[0.7rem] font-medium rounded-md bg-white/[0.05] text-accent/90 border border-white/[0.06]"
+                        >
+                          {techNameMap[techId] || techId}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
         </div>
 
         {/* Description */}
