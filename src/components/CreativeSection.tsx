@@ -194,11 +194,11 @@ export default function CreativeSection() {
   const containerProgress = clamp01((scrollProgress - 0.25) / 0.1);
   const headlineProgress = clamp01((scrollProgress - 0.27) / 0.1);
   const getHighlightProgress = (index: number) => {
-    const startOffset = 0.35 + index * 0.04;
+    const startOffset = 0.35 + index * 0.03;
     return clamp01((scrollProgress - startOffset) / 0.04);
   };
 
-  const buttonProgress = clamp01((scrollProgress - 0.5) / 0.08);
+  const buttonProgress = clamp01((scrollProgress - 0.45) / 0.08);
   const backgroundRevealTriggered = isMobile
     ? scrollProgress >= 0.5
     : lottieComplete;
