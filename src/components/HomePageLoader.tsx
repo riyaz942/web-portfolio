@@ -250,24 +250,27 @@ export default function HomePageLoader({ children }: { children: ReactNode }) {
             <div className="absolute inset-0 overflow-hidden bg-[#0a0a0a] opacity-30">
               <BackgroundAnimator clientX={centerX} clientY={centerY} />
             </div>
-            <div className="absolute inset-0 flex flex-row items-stretch">
-              <div className="min-h-0 min-w-0 flex-1" aria-hidden />
+            {/* Black curtain: right-aligned, shrinks left-to-right as progress grows */}
+            <animated.div
+              className="absolute right-0 top-0 z-[201] flex h-full items-center justify-end overflow-hidden bg-black"
+              style={{ width: spring.width }}
+            >
               {pageState === loaderPageStates.IS_LOADING ? (
-                <>
-                  <div className="z-[201] mr-[30px] flex items-center self-center text-[50px] leading-none">
-                    {Math.min(100, Math.round(displayPercent))}
-                  </div>
-                  <animated.div
-                    className="z-[201] flex h-full shrink-0 items-center justify-end overflow-hidden bg-black"
-                    style={{
-                      width: spring.width,
-                    }}
-                  >
-                    <div className="pr-[18px] text-[40px]">Loading...</div>
-                  </animated.div>
-                </>
+                <div className="pr-[18px] text-[40px]">Loading...</div>
               ) : null}
-            </div>
+            </animated.div>
+            {/* Percent — positioned just left of the curtain's leading edge */}
+            {pageState === loaderPageStates.IS_LOADING ? (
+              <animated.div
+                className="pointer-events-none absolute top-0 z-[202] flex h-full items-center text-[50px] leading-none"
+                style={{
+                  right: spring.width,
+                  paddingRight: 30,
+                }}
+              >
+                {Math.min(100, Math.round(displayPercent))}
+              </animated.div>
+            ) : null}
           </div>
         ) : null}
       </div>
