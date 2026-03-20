@@ -67,13 +67,17 @@ export default function HomePageLoader({ children }: { children: ReactNode }) {
 
   const itemsLoadedRef = useRef(0);
   const totalItemsRef = useRef(0);
-  /** Smoothed progress toward real load progress (avoids 80→100 jumps when many assets finish together). */
-  const displayShownRef = useRef(0);
   const valuateTimerCancelRef = useRef<(() => void) | null>(null);
   const completionTimeoutsRef = useRef<number[]>([]);
 
+  const isLoading = pageState === loaderPageStates.IS_LOADING;
+  const showLoaderText =
+    isLoading || pageState === loaderPageStates.COMPLETED_LOADING;
+
   const spring = useSpring({
     width: `calc(100vw - ${displayPercent}vw)`,
+    progress: displayPercent,
+    textOpacity: isLoading ? 1 : 0,
     config: { mass: 1, tension: 120, friction: 26 },
   });
 
@@ -96,14 +100,12 @@ export default function HomePageLoader({ children }: { children: ReactNode }) {
       clearCompletionTimeouts();
 
       if (showImmediately) {
-        displayShownRef.current = 100;
         setPageState(loaderPageStates.SHOW_PAGE);
         setDisplayPercent(100);
         beginOverlayFade();
         return;
       }
 
-      displayShownRef.current = 100;
       setDisplayPercent(100);
       setPageState(loaderPageStates.COMPLETED_LOADING);
 
@@ -130,7 +132,6 @@ export default function HomePageLoader({ children }: { children: ReactNode }) {
       LANDING_PRELOAD_IMAGES.length + LANDING_PRELOAD_LOTTIES.length;
     totalItemsRef.current = total;
     itemsLoadedRef.current = 0;
-    displayShownRef.current = 0;
 
     const increment = () => {
       itemsLoadedRef.current += 1;
@@ -148,47 +149,28 @@ export default function HomePageLoader({ children }: { children: ReactNode }) {
     const valuateProgress = () => {
       if (cancelled) return;
 
-      const tot = totalItemsRef.current;
-      const loaded = itemsLoadedRef.current;
-      const loadsComplete = loaded >= tot;
-      const shownNow = displayShownRef.current;
-      const displayCatchingUp = loadsComplete && shownNow < 99.95;
-      const lastAssetPending = tot - loaded <= 1 && !loadsComplete;
-      const updateAfter = displayCatchingUp ? 90 : lastAssetPending ? 550 : 400;
+      const isLastItem =
+        totalItemsRef.current - itemsLoadedRef.current <= 1;
+      const updateAfter = isLastItem ? 600 : 400;
 
       valuateTimerCancelRef.current = animationFrameTimeout(() => {
         if (cancelled) return;
 
-        const tot2 = totalItemsRef.current;
-        const loaded2 = itemsLoadedRef.current;
-        const loadsDone = loaded2 >= tot2;
-        const targetPct = loadsDone
-          ? 100
-          : Math.min(100, (loaded2 / tot2) * 100);
-
-        let shown = displayShownRef.current;
-        if (shown < targetPct) {
-          const gap = targetPct - shown;
-          let step: number;
-          if (shown >= 80) {
-            step = Math.max(0.35, Math.min(4, gap / 2.5));
-          } else if (shown >= 60) {
-            step = Math.max(0.5, Math.min(6, gap / 6));
-          } else {
-            step = Math.max(1, Math.min(12, Math.ceil(gap / 4)));
-          }
-          shown = Math.min(targetPct, shown + step);
+        if (isLastItem) {
+          itemsLoadedRef.current += 1;
         }
-        displayShownRef.current = shown;
-        setDisplayPercent(shown);
 
-        if (loadsDone && shown >= 99.95) {
-          displayShownRef.current = 100;
-          setDisplayPercent(100);
+        setDisplayPercent(
+          Math.trunc(
+            (itemsLoadedRef.current / totalItemsRef.current) * 100,
+          ),
+        );
+
+        if (itemsLoadedRef.current >= totalItemsRef.current) {
           completeLoading(false);
-          return;
+        } else {
+          valuateProgress();
         }
-        valuateProgress();
       }, updateAfter);
     };
 
@@ -255,20 +237,28 @@ export default function HomePageLoader({ children }: { children: ReactNode }) {
               className="absolute right-0 top-0 z-[201] flex h-full items-center justify-end overflow-hidden bg-black"
               style={{ width: spring.width }}
             >
-              {pageState === loaderPageStates.IS_LOADING ? (
-                <div className="pr-[18px] text-[40px]">Loading...</div>
+              {showLoaderText ? (
+                <animated.div
+                  className="pr-[18px] text-[40px]"
+                  style={{ opacity: spring.textOpacity }}
+                >
+                  Loading...
+                </animated.div>
               ) : null}
             </animated.div>
             {/* Percent — positioned just left of the curtain's leading edge */}
-            {pageState === loaderPageStates.IS_LOADING ? (
+            {showLoaderText ? (
               <animated.div
                 className="pointer-events-none absolute top-0 z-[202] flex h-full items-center text-[50px] leading-none"
                 style={{
                   right: spring.width,
                   paddingRight: 30,
+                  opacity: spring.textOpacity,
                 }}
               >
-                {Math.min(100, Math.round(displayPercent))}
+                {spring.progress.to((v: number) =>
+                  Math.min(100, Math.floor(v)),
+                )}
               </animated.div>
             ) : null}
           </div>
