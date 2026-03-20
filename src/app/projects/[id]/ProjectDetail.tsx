@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import { useCallback, useMemo, useState } from "react";
-import { projects, type DescriptionBlock } from "@/data/projects";
+import { projects } from "@/data/projects";
+import { ProjectDescriptionHtml } from "./ProjectDescriptionHtml";
 import { groupProjectTechByCategory } from "@/data/techCategories";
 import { technologies } from "@/data/technologies";
 import {
@@ -12,67 +13,6 @@ import {
 import { AnimatePresence, motion } from "framer-motion";
 
 const techNameMap = Object.fromEntries(technologies.map((t) => [t.id, t.name]));
-
-function DescriptionRenderer({ blocks }: { blocks: DescriptionBlock[] }) {
-  return (
-    <div className="space-y-5">
-      {blocks.map((block, i) => {
-        if (block.type === "header") {
-          return (
-            <h3
-              key={i}
-              className="text-lg font-semibold text-foreground mt-8 first:mt-0"
-            >
-              {block.value}
-            </h3>
-          );
-        }
-
-        if (block.type === "text") {
-          return (
-            <p
-              key={i}
-              className={`text-[0.95rem] leading-relaxed ${
-                block.highlight ? "text-foreground/90" : "text-muted"
-              }`}
-            >
-              {block.value}
-            </p>
-          );
-        }
-
-        if (block.type === "points") {
-          return (
-            <div key={i} className="space-y-2.5">
-              {block.title && (
-                <p
-                  className={`text-[0.95rem] leading-relaxed ${
-                    block.highlight ? "text-foreground/90" : "text-muted"
-                  }`}
-                >
-                  {block.title}
-                </p>
-              )}
-              <ul className="space-y-1.5 pl-1">
-                {block.value.map((point, j) => (
-                  <li
-                    key={j}
-                    className="flex items-start gap-2.5 text-[0.9rem] text-muted leading-relaxed"
-                  >
-                    <span className="mt-2 h-1.5 w-1.5 rounded-full bg-accent/60 flex-shrink-0" />
-                    {point}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          );
-        }
-
-        return null;
-      })}
-    </div>
-  );
-}
 
 function ImageLightbox({
   src,
@@ -154,7 +94,7 @@ export default function ProjectDetail({ id }: { id: string }) {
     [project?.tech],
   );
 
-  if (!project || !project.icon || project.description.length === 0) {
+  if (!project || !project.icon || project.description.trim().length === 0) {
     return (
       <div className="min-h-screen bg-background text-foreground flex items-center justify-center">
         <div className="text-center space-y-4">
@@ -343,7 +283,7 @@ export default function ProjectDetail({ id }: { id: string }) {
 
         {/* Description */}
         <section className="mb-14 md:mb-18">
-          <DescriptionRenderer blocks={project.description} />
+          <ProjectDescriptionHtml content={project.description} />
         </section>
 
         {/* Videos */}

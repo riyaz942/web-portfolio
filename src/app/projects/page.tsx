@@ -4,8 +4,8 @@ import Image from "next/image";
 import { useCallback } from "react";
 import {
   getProjectListingTechDisplay,
+  getProjectShortDescription,
   projectList,
-  type Project,
 } from "@/data/projects";
 import { technologies } from "@/data/technologies";
 import {
@@ -16,15 +16,9 @@ import ScrollRestore from "@/components/ScrollRestore";
 
 const techNameMap = Object.fromEntries(technologies.map((t) => [t.id, t.name]));
 
-function getShortDescription(project: Project): string {
-  const block = project.description.find((b) => b.type === "text");
-  if (!block || block.type !== "text") return "";
-  const text = block.value;
-  if (text.length <= 140) return text;
-  return text.slice(0, 137).replace(/\s+\S*$/, "") + "...";
-}
-
-const displayProjects = projectList.filter((p) => p.icon && p.description.length > 0);
+const displayProjects = projectList.filter(
+  (p) => p.icon && p.description.trim().length > 0,
+);
 
 function clearAllIconVTNames() {
   document
@@ -169,7 +163,7 @@ export default function ProjectsPage() {
 
                 {/* Description */}
                 <p className="text-[clamp(0.8rem,1vw,0.875rem)] text-muted leading-relaxed line-clamp-3">
-                  {getShortDescription(project)}
+                  {getProjectShortDescription(project)}
                 </p>
 
                 {/* Tech tags (subset on listing; full stack on detail) */}
