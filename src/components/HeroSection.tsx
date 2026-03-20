@@ -3,14 +3,25 @@
 import { useState, useCallback, useEffect } from "react";
 import Image from "next/image";
 import BackgroundAnimator from "@/components/BackgroundAnimator";
+import { useLandingLoader } from "@/components/HomePageLoader";
 
 export default function HeroSection() {
+  const { isLoaderComplete } = useLandingLoader();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => setMounted(true), 100);
     return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    const update = () =>
+      setWindowSize({ width: window.innerWidth, height: window.innerHeight });
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
   }, []);
 
   const handleMouseMove = useCallback(
@@ -20,15 +31,19 @@ export default function HeroSection() {
     [],
   );
 
+  const parallaxX = isLoaderComplete
+    ? mousePosition.x
+    : windowSize.width / 2;
+  const parallaxY = isLoaderComplete
+    ? mousePosition.y
+    : windowSize.height / 2;
+
   return (
     <section
       className="relative w-full h-screen flex items-center justify-center overflow-hidden"
-      onMouseMove={handleMouseMove}
+      onMouseMove={isLoaderComplete ? handleMouseMove : undefined}
     >
-      <BackgroundAnimator
-        clientX={mousePosition.x}
-        clientY={mousePosition.y}
-      />
+      <BackgroundAnimator clientX={parallaxX} clientY={parallaxY} />
       <div className="absolute inset-0 z-[1] bg-black/20 pointer-events-none" />
       <div className="relative z-10 flex flex-col items-center text-center px-8">
         {/* Profile Picture */}
