@@ -154,11 +154,7 @@ export default function HomePageLoader({ children }: { children: ReactNode }) {
       const shownNow = displayShownRef.current;
       const displayCatchingUp = loadsComplete && shownNow < 99.95;
       const lastAssetPending = tot - loaded <= 1 && !loadsComplete;
-      const updateAfter = displayCatchingUp
-        ? 90
-        : lastAssetPending
-          ? 550
-          : 400;
+      const updateAfter = displayCatchingUp ? 90 : lastAssetPending ? 550 : 400;
 
       valuateTimerCancelRef.current = animationFrameTimeout(() => {
         if (cancelled) return;
@@ -175,7 +171,7 @@ export default function HomePageLoader({ children }: { children: ReactNode }) {
           const gap = targetPct - shown;
           let step: number;
           if (shown >= 80) {
-            step = Math.max(0.35, Math.min(4, gap / 8));
+            step = Math.max(0.35, Math.min(4, gap / 2.5));
           } else if (shown >= 60) {
             step = Math.max(0.5, Math.min(6, gap / 6));
           } else {
@@ -227,10 +223,8 @@ export default function HomePageLoader({ children }: { children: ReactNode }) {
     [pageState, showBackground],
   );
 
-  const centerX =
-    typeof window !== "undefined" ? window.innerWidth / 2 : 0;
-  const centerY =
-    typeof window !== "undefined" ? window.innerHeight / 2 : 0;
+  const centerX = typeof window !== "undefined" ? window.innerWidth / 2 : 0;
+  const centerY = typeof window !== "undefined" ? window.innerHeight / 2 : 0;
 
   return (
     <LandingLoaderContext.Provider value={contextValue}>
@@ -239,12 +233,12 @@ export default function HomePageLoader({ children }: { children: ReactNode }) {
         {showBackground ? (
           <div
             className={`pointer-events-auto fixed inset-0 z-[200] overflow-hidden text-white transition-opacity ease-out ${
-              fadeOverlay
-                ? "pointer-events-none opacity-0"
-                : "opacity-100"
+              fadeOverlay ? "pointer-events-none opacity-0" : "opacity-100"
             }`}
             style={{
-              transitionDuration: fadeOverlay ? `${OVERLAY_FADE_MS}ms` : "200ms",
+              transitionDuration: fadeOverlay
+                ? `${OVERLAY_FADE_MS}ms`
+                : "200ms",
             }}
             onTransitionEnd={handleOverlayTransitionEnd}
             aria-busy={pageState !== loaderPageStates.SHOW_PAGE}
