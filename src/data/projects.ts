@@ -105,6 +105,7 @@ export const projects: Record<string, Project> = {
       "pverify",
       "advancedmd",
       "docker",
+      "auth0",
     ],
     involvement: "Major",
     icon: "/assets/icons/project-icon-thriveworks.svg",
@@ -206,7 +207,16 @@ export const projects: Record<string, Project> = {
   snapteam: {
     id: "snapteam",
     name: "Snapteam/Bijli",
-    tech: ["react", "electron", "laravel"],
+    tech: [
+      "react",
+      "electron",
+      "laravel",
+      "redux",
+      "webpack",
+      "pusher",
+      "firebase",
+      "material-ui",
+    ],
     involvement: "Major",
     icon: "/assets/icons/project-icon-bijli.png",
     timeframe: "2018 – 2019",
@@ -279,7 +289,7 @@ export const projects: Record<string, Project> = {
   wakency: {
     id: "wakency",
     name: "Wakency",
-    tech: ["react"],
+    tech: ["react", "redux", "firebase", "css-modules"],
     involvement: "Intermittent",
     icon: "/assets/icons/project-icon-wakency.png",
     iconShape: "wide",
@@ -328,7 +338,7 @@ export const projects: Record<string, Project> = {
   nykaa: {
     id: "nykaa",
     name: "Nykaa",
-    tech: ["react"],
+    tech: ["react", "jest"],
     involvement: "Intermittent",
     icon: "/assets/icons/project-icon-nykaa.png",
     iconShape: "wide",
@@ -374,7 +384,7 @@ export const projects: Record<string, Project> = {
   pulse: {
     id: "pulse",
     name: "Pulse/Sprout",
-    tech: ["react-native"],
+    tech: ["react-native", "redux", "axios", "firebase"],
     involvement: "Major",
     icon: "/assets/icons/project-icon-pulse.png",
     timeframe: "2018",
@@ -435,7 +445,7 @@ export const projects: Record<string, Project> = {
   lighthouse: {
     id: "lighthouse",
     name: "LightHouse Project",
-    tech: ["react-native"],
+    tech: ["react-native", "react-navigation", "firebase"],
     involvement: "Major",
     icon: "/assets/icons/project-icon-lighthouse.png",
     timeframe: "2018",
@@ -486,7 +496,7 @@ export const projects: Record<string, Project> = {
   benefactory: {
     id: "benefactory",
     name: "Benefactory",
-    tech: ["laravel", "vanilla-js", "scss"],
+    tech: ["laravel", "vanilla-js", "scss", "webpack", "jquery"],
     involvement: "Major",
     icon: "/assets/icons/project-icon-benefactory.png",
     iconShape: "wide",
@@ -536,7 +546,7 @@ export const projects: Record<string, Project> = {
   measure: {
     id: "measure",
     name: "Measure",
-    tech: ["android"],
+    tech: ["android", "retrofit", "firebase"],
     involvement: "Major",
     icon: "/assets/icons/project-icon-measure.png",
     timeframe: "2017",
@@ -639,7 +649,7 @@ export const projects: Record<string, Project> = {
   tt_interview: {
     id: "tt_interview",
     name: "TT Interview",
-    tech: ["android", "laravel"],
+    tech: ["android", "laravel", "sqlite"],
     involvement: "Major",
     icon: "/assets/icons/project-icon-tt-interview.png",
     iconShape: "wide",

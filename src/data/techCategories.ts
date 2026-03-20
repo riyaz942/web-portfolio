@@ -49,6 +49,10 @@ const TECH_ID_TO_CATEGORY: Record<string, TechStackCategoryId> = {
   storybook: "frontend",
   redux: "frontend",
   "vanilla-js": "frontend",
+  "material-ui": "frontend",
+  "css-modules": "frontend",
+  axios: "frontend",
+  jquery: "frontend",
 
   nestjs: "backend",
   postgresql: "backend",
@@ -56,6 +60,9 @@ const TECH_ID_TO_CATEGORY: Record<string, TechStackCategoryId> = {
   bull: "backend",
   typeorm: "backend",
   laravel: "backend",
+  firebase: "backend",
+  pusher: "backend",
+  sqlite: "backend",
 
   openai: "ai",
   "vercel-ai-sdk": "ai",
@@ -72,10 +79,14 @@ const TECH_ID_TO_CATEGORY: Record<string, TechStackCategoryId> = {
   vercel: "infra",
   docker: "infra",
   edgio: "infra",
+  webpack: "infra",
+  auth0: "infra",
 
   "react-native": "mobile",
   android: "mobile",
   electron: "mobile",
+  "react-navigation": "mobile",
+  retrofit: "mobile",
 };
 
 export interface TechStackCategoryGroup {

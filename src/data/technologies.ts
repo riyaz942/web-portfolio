@@ -45,8 +45,8 @@ export const technologies: Technology[] = [
     id: "redux",
     name: "Redux",
     description:
-      "State management with React (hooks, context, Redux) on a large-scale Next.js healthcare platform.",
-    projects: ["thriveworks"],
+      "State management with React on a large-scale Next.js healthcare platform and on earlier React web and React Native products.",
+    projects: ["thriveworks", "snapteam", "wakency", "pulse"],
   },
   {
     id: "radix-ui",
@@ -87,8 +87,8 @@ export const technologies: Technology[] = [
     id: "jest",
     name: "Jest",
     description:
-      "Unit and integration tests for React components and utilities.",
-    projects: ["thriveworks"],
+      "Unit tests for React components on a large e-commerce codebase and on a healthcare platform.",
+    projects: ["thriveworks", "nykaa"],
   },
   {
     id: "testing-library",
@@ -203,11 +203,95 @@ export const technologies: Technology[] = [
     projects: ["thriveworks"],
   },
   {
+    id: "auth0",
+    name: "Auth0",
+    description:
+      "Authentication and protected API access patterns on a Next.js healthcare platform.",
+    projects: ["thriveworks"],
+  },
+  {
+    id: "axios",
+    name: "Axios",
+    description:
+      "HTTP client for a React Native app with Redux middleware for shared response handling across screens.",
+    projects: ["pulse"],
+  },
+  {
+    id: "css-modules",
+    name: "CSS Modules",
+    description:
+      "Scoped styling for marketing and app surfaces on a React web product.",
+    projects: ["wakency"],
+  },
+  {
+    id: "firebase",
+    name: "Firebase",
+    description:
+      "Push notifications, client SDKs, and real-time or auth-adjacent features across web and native projects.",
+    projects: ["snapteam", "wakency", "pulse", "lighthouse", "measure"],
+  },
+  {
+    id: "jquery",
+    name: "jQuery",
+    description:
+      "Progressive enhancement and DOM utilities on a Laravel Blade–driven frontend.",
+    projects: ["benefactory"],
+  },
+  {
+    id: "material-ui",
+    name: "Material UI",
+    description:
+      "Component library for a cross-platform React and Electron team product.",
+    projects: ["snapteam"],
+  },
+  {
+    id: "pusher",
+    name: "Pusher",
+    description:
+      "Channels for live updates between desktop, web, and backend in a team collaboration app.",
+    projects: ["snapteam"],
+  },
+  {
+    id: "react-navigation",
+    name: "React Navigation",
+    description:
+      "Stack and screen navigation in a React Native mentoring and scheduling app.",
+    projects: ["lighthouse"],
+  },
+  {
+    id: "retrofit",
+    name: "Retrofit",
+    description:
+      "REST client for an Android fitness app integrating device BLE data and backend APIs.",
+    projects: ["measure"],
+  },
+  {
+    id: "sqlite",
+    name: "SQLite",
+    description:
+      "Local persistence and sync for interview templates in a native Android client.",
+    projects: ["tt_interview"],
+  },
+  {
+    id: "vanilla-js",
+    name: "JavaScript",
+    description:
+      "Plain JavaScript alongside Blade-rendered markup for interactive UI on a Laravel site.",
+    projects: ["benefactory"],
+  },
+  {
+    id: "webpack",
+    name: "Webpack",
+    description:
+      "Bundling for Electron and web targets, and Laravel Mix asset pipelines.",
+    projects: ["snapteam", "benefactory"],
+  },
+  {
     id: "android",
     name: "Android",
     description:
       "I started my development journey with Android and it remains one of my strongest skills alongside React. I have end-to-end experience with Android app development \u2014 from building to publishing and maintaining \u2014 and have worked with essential libraries including Retrofit, Dagger, Picasso, ActiveAndroid, etc.",
-    projects: ["vc_music_player", "measure"],
+    projects: ["vc_music_player", "measure", "tt_interview"],
   },
   {
     id: "react-native",
@@ -221,7 +305,7 @@ export const technologies: Technology[] = [
     name: "Laravel",
     description:
       "I have some experience with Laravel and backend development. While I haven't built a project from scratch in it, I have worked on individual modules and features. I am familiar with the framework's core features like MVC architecture, Blade templating, Eloquent ORM, Artisan, and Seeders.",
-    projects: ["benefactory", "snapteam"],
+    projects: ["benefactory", "snapteam", "tt_interview"],
   },
   {
     id: "electron",
