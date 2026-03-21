@@ -64,6 +64,7 @@ export default function HomePageLoader({ children }: { children: ReactNode }) {
   const [displayPercent, setDisplayPercent] = useState(0);
   const [fadeOverlay, setFadeOverlay] = useState(false);
   const fadeOutRef = useRef(false);
+  const [viewportCenter, setViewportCenter] = useState({ x: 0, y: 0 });
 
   const itemsLoadedRef = useRef(0);
   const totalItemsRef = useRef(0);
@@ -125,6 +126,18 @@ export default function HomePageLoader({ children }: { children: ReactNode }) {
     fadeOutRef.current = false;
     setFadeOverlay(false);
     setShowBackground(false);
+  }, []);
+
+  useEffect(() => {
+    const updateViewportCenter = () => {
+      setViewportCenter({
+        x: window.innerWidth / 2,
+        y: window.innerHeight / 2,
+      });
+    };
+    updateViewportCenter();
+    window.addEventListener("resize", updateViewportCenter);
+    return () => window.removeEventListener("resize", updateViewportCenter);
   }, []);
 
   useEffect(() => {
@@ -205,9 +218,6 @@ export default function HomePageLoader({ children }: { children: ReactNode }) {
     [pageState, showBackground],
   );
 
-  const centerX = typeof window !== "undefined" ? window.innerWidth / 2 : 0;
-  const centerY = typeof window !== "undefined" ? window.innerHeight / 2 : 0;
-
   return (
     <LandingLoaderContext.Provider value={contextValue}>
       <div className="relative h-full min-h-0 w-full">
@@ -230,7 +240,10 @@ export default function HomePageLoader({ children }: { children: ReactNode }) {
           >
             {/* Full-bleed background (same framing as hero); black strip sits above it */}
             <div className="absolute inset-0 overflow-hidden bg-[#0a0a0a] opacity-30">
-              <BackgroundAnimator clientX={centerX} clientY={centerY} />
+              <BackgroundAnimator
+                clientX={viewportCenter.x}
+                clientY={viewportCenter.y}
+              />
             </div>
             {/* Black curtain: right-aligned, shrinks left-to-right as progress grows */}
             <animated.div
