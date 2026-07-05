@@ -81,11 +81,14 @@ export function useViewTransitionRouter() {
 
       callbacks?.beforeSnapshot?.();
 
-      document.startViewTransition(async () => {
+      const transition = document.startViewTransition(async () => {
         router.push(url);
         await waitForDomSettle();
         await callbacks?.afterDomUpdate?.();
       });
+      // An aborted transition (hidden tab, rapid navigation) rejects
+      // `finished`; navigation itself has already happened by then.
+      transition.finished.catch(() => {});
     },
     [router, pathname],
   );

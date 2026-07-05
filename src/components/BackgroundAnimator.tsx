@@ -1,11 +1,11 @@
 "use client";
 
 import { useSpring, animated, to } from "@react-spring/web";
-import { memo, useState, useEffect } from "react";
+import { memo, useEffect } from "react";
 
 interface BackgroundAnimatorProps {
-  clientX: number;
-  clientY: number;
+  /** When false, layers rest at center and mouse tracking is off. */
+  enabled: boolean;
 }
 
 const layers = [
@@ -14,26 +14,28 @@ const layers = [
   { d: 10, img: "doodle-first-layer.png" },
 ] as const;
 
-const BackgroundAnimator = ({ clientX, clientY }: BackgroundAnimatorProps) => {
-  const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
+const BackgroundAnimator = ({ enabled }: BackgroundAnimatorProps) => {
+  const [animationProps, api] = useSpring(() => ({
+    xy: [0, 0] as [number, number],
+    config: { mass: 10, tension: 550, friction: 240 },
+  }));
 
   useEffect(() => {
-    const updateSize = () =>
-      setWindowSize({ width: window.innerWidth, height: window.innerHeight });
-    updateSize();
-    window.addEventListener("resize", updateSize);
-    return () => window.removeEventListener("resize", updateSize);
-  }, []);
-
-  const xy: [number, number] = [
-    clientX - windowSize.width / 2,
-    clientY - windowSize.height / 2,
-  ];
-
-  const animationProps = useSpring({
-    xy,
-    config: { mass: 10, tension: 550, friction: 240 },
-  });
+    if (!enabled) {
+      api.start({ xy: [0, 0] });
+      return;
+    }
+    const onMouseMove = (e: MouseEvent) => {
+      api.start({
+        xy: [
+          e.clientX - window.innerWidth / 2,
+          e.clientY - window.innerHeight / 2,
+        ],
+      });
+    };
+    window.addEventListener("mousemove", onMouseMove);
+    return () => window.removeEventListener("mousemove", onMouseMove);
+  }, [enabled, api]);
 
   return (
     <>

@@ -205,9 +205,6 @@ export default function HomePageLoader({ children }: { children: ReactNode }) {
     [pageState, showBackground],
   );
 
-  const centerX = typeof window !== "undefined" ? window.innerWidth / 2 : 0;
-  const centerY = typeof window !== "undefined" ? window.innerHeight / 2 : 0;
-
   return (
     <LandingLoaderContext.Provider value={contextValue}>
       <div className="relative h-full min-h-0 w-full">
@@ -230,7 +227,7 @@ export default function HomePageLoader({ children }: { children: ReactNode }) {
           >
             {/* Full-bleed background (same framing as hero); black strip sits above it */}
             <div className="absolute inset-0 overflow-hidden bg-[#0a0a0a] opacity-30">
-              <BackgroundAnimator clientX={centerX} clientY={centerY} />
+              <BackgroundAnimator enabled={false} />
             </div>
             {/* Black curtain: right-aligned, shrinks left-to-right as progress grows */}
             <animated.div

@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useCallback } from "react";
+import { motion } from "framer-motion";
 import {
   getProjectListingTechDisplay,
   getProjectShortDescription,
@@ -110,11 +111,27 @@ export default function ProjectsPage() {
           {displayProjects.map((project, index) => {
             const { shown, moreCount } = getProjectListingTechDisplay(project);
             return (
-            <article
+            <motion.article
               key={project.id}
+              role="link"
+              tabIndex={0}
+              aria-label={`View ${project.name} project details`}
               onClick={() => navigateToProject(project.id)}
-              className="group relative rounded-2xl bg-white/[0.03] backdrop-blur-sm border border-white/[0.06] hover:border-white/[0.14] transition-all duration-300 overflow-hidden cursor-pointer"
-              style={{ animationDelay: `${index * 60}ms` }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  navigateToProject(project.id);
+                }
+              }}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{
+                duration: 0.6,
+                delay: (index % 3) * 0.06,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+              className="group relative rounded-2xl bg-white/[0.03] backdrop-blur-sm border border-white/[0.06] hover:border-white/[0.14] transition-colors duration-300 overflow-hidden cursor-pointer"
             >
               {/* Hover glow */}
               <div className="absolute -inset-2 bg-gradient-to-br from-accent/8 to-accent-secondary/8 rounded-2xl opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500 pointer-events-none" />
@@ -186,7 +203,7 @@ export default function ProjectsPage() {
                 {/* Top accent line */}
                 <div className="absolute top-0 left-5 right-5 h-px bg-gradient-to-r from-transparent via-accent/40 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
               </div>
-            </article>
+            </motion.article>
             );
           })}
         </div>
