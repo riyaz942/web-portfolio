@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@lottiefiles/dotlottie-react": "^0.17.13",
+    "@lottiefiles/dotlottie-react": "^0.17.15",
     "@react-spring/web": "^10.0.3",
     "framer-motion": "^12.29.2",
     "html-react-parser": "^5.2.17",

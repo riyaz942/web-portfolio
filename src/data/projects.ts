@@ -74,13 +74,13 @@ function imageRange(
   extra?: { name: string; width: number; height: number }[],
 ): ProjectImage[] {
   const imgs = Array.from({ length: count }, (_, i) => ({
-    src: `${projectImageDir}/${folder}/${i + 1}.png`,
+    src: `${projectImageDir}/${folder}/${i + 1}.webp`,
     ...(overrides?.[i + 1] ?? defaultSize),
   }));
   if (extra) {
     imgs.push(
       ...extra.map((e) => ({
-        src: `${projectImageDir}/${folder}/${e.name}.png`,
+        src: `${projectImageDir}/${folder}/${e.name}.webp`,
         width: e.width,
         height: e.height,
       })),
@@ -561,3 +561,8 @@ const projectOrder = [
 ];
 
 export const projectList = projectOrder.map((id) => projects[id]);
+
+/** Projects with a detail page (icon + non-empty description). */
+export const publishedProjects = projectList.filter(
+  (p) => p.icon && p.description.trim().length > 0,
+);

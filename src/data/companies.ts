@@ -53,7 +53,7 @@ export const companies: Company[] = [
       "At Nykaa I worked as a React frontend developer, handling production bugs and building features including the Mobile Signup flow, Nykaa Pro, Recent Search and Search History, and an AR makeup try-on with Modiface.",
     companyDetail:
       "Nykaa is an e-commerce website offering beauty and wellness products from more than 500 leading brands. Nykaa follows an inventory-based model with warehouses in Mumbai, New Delhi, and Chennai, along with an offline presence across 60+ stores and expanding. It offers over 1,000 curated brands and 85,000 products.",
-    backgroundImage: `${imgBase}/background/background-image-nykaa.jpg`,
+    backgroundImage: `${imgBase}/background/background-image-nykaa.webp`,
     projects: ["nykaa"],
   },
   {
@@ -67,7 +67,7 @@ export const companies: Company[] = [
       "At TailoredTech I took on multiple roles. I started as an Android developer for a year before transitioning to Laravel, React Native, and React.",
     companyDetail:
       "Tailored Tech was a service-based startup specializing in web and mobile development, with clients including Nykaa, Ezone, Sportobuddy, Healthcode, Hippily, Wok Express, and more. TailoredTech was later acqui-hired by Nykaa.",
-    backgroundImage: `${imgBase}/background/background-image-tailoredtech.jpg`,
+    backgroundImage: `${imgBase}/background/background-image-tailoredtech.webp`,
     projects: ["snapteam", "pulse", "measure", "wakency", "benefactory", "lighthouse"],
   },
   {
@@ -78,7 +78,7 @@ export const companies: Company[] = [
     location: "Pune",
     roleDetail: "",
     companyDetail: "",
-    backgroundImage: `${imgBase}/background/background-image-college.jpg`,
+    backgroundImage: `${imgBase}/background/background-image-college.webp`,
     projects: ["vc_music_player"],
   },
 ];

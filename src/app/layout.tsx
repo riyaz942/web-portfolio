@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { SITE_URL, SITE_NAME, SITE_DESCRIPTION } from "@/constants/site";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,9 +19,25 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Riyaz Ahmed | Portfolio",
-  description:
-    "Hi, I'm Riyaz Ahmed — a Lead/Senior Software Developer who loves turning complex problems into elegant, performant solutions. Take a look around.",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: SITE_NAME,
+    template: "%s | Riyaz Ahmed",
+  },
+  description: SITE_DESCRIPTION,
+  openGraph: {
+    type: "website",
+    siteName: SITE_NAME,
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+    images: ["/og-image.png"],
+  },
   icons: {
     icon: [
       { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },

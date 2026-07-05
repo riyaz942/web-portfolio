@@ -81,6 +81,22 @@ html {
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root),
+  ::view-transition-group(project-icon) {
+    animation: none !important;
+  }
+
+  .animate-scroll-pulse {
+    animation: none;
+  }
+}
+
 body {
   background: var(--color-background);
   color: var(--color-foreground);

@@ -5,7 +5,7 @@ import { useCallback } from "react";
 import {
   getProjectListingTechDisplay,
   getProjectShortDescription,
-  projectList,
+  publishedProjects,
 } from "@/data/projects";
 import { technologies } from "@/data/technologies";
 import {
@@ -16,9 +16,7 @@ import ScrollRestore from "@/components/ScrollRestore";
 
 const techNameMap = Object.fromEntries(technologies.map((t) => [t.id, t.name]));
 
-const displayProjects = projectList.filter(
-  (p) => p.icon && p.description.trim().length > 0,
-);
+const displayProjects = publishedProjects;
 
 function clearAllIconVTNames() {
   document

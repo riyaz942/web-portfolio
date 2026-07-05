@@ -64,7 +64,7 @@ src/
 ### Installation
 
 ```bash
-git clone https://github.com/your-username/web-portfolio.git
+git clone https://github.com/riyaz942/web-portfolio.git
 cd web-portfolio
 npm install
 ```
