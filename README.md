@@ -2,10 +2,7 @@
 
 A modern, animated personal portfolio built with Next.js 15 and React 19. Features parallax backgrounds, scroll-driven Lottie animations, and a fully static export for easy deployment anywhere.
 
-<!-- Add a live preview URL or screenshot:
-![Portfolio Preview](https://your-screenshot-url.png)
-[Live Demo](https://your-portfolio-url.com)
--->
+![Portfolio Preview](docs/portfolio-demo.gif)
 
 ## Tech Stack
 
