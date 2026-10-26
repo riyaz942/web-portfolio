@@ -70,7 +70,7 @@ export function useViewTransitionRouter() {
 
   const push = useCallback(
     (url: string, callbacks?: ViewTransitionCallbacks) => {
-      if (pathname === "/" || pathname === "/projects") {
+      if (pathname === "/" || pathname === "/projects" || pathname === "/blogs") {
         saveScrollPosition(pathname);
       }
 
