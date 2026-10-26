@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
+import { toMeta } from "./format";
 import type { BlogPost, BlogPostMeta } from "./types";
 
 export class BlogValidationError extends Error {
@@ -131,10 +132,6 @@ export function getPostBySlug(slug: string, opts?: LoadOptions): BlogPost | unde
   return getAllPosts(opts).find((p) => p.slug === slug);
 }
 
-function withoutBody({ body: _body, ...meta }: BlogPost): BlogPostMeta {
-  return meta;
-}
-
 export function getAdjacentPosts(
   slug: string,
   opts?: LoadOptions,
@@ -143,7 +140,7 @@ export function getAdjacentPosts(
   const i = posts.findIndex((p) => p.slug === slug);
   if (i === -1) return {};
   return {
-    older: posts[i + 1] && withoutBody(posts[i + 1]),
-    newer: posts[i - 1] && withoutBody(posts[i - 1]),
+    older: posts[i + 1] && toMeta(posts[i + 1]),
+    newer: posts[i - 1] && toMeta(posts[i - 1]),
   };
 }
