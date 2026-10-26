@@ -6,12 +6,14 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "vitest run"
   },
   "dependencies": {
     "@lottiefiles/dotlottie-react": "^0.17.15",
     "@react-spring/web": "^10.0.3",
     "framer-motion": "^12.29.2",
+    "gray-matter": "^4.0.3",
     "html-react-parser": "^5.2.17",
     "next": "15.4.6",
     "react": "19.1.0",
@@ -26,6 +28,7 @@
     "eslint": "^9",
     "eslint-config-next": "15.4.6",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^3.2.7"
   }
 }
