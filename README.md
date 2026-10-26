@@ -88,6 +88,16 @@ Generates a static export in the `out/` directory.
 npm run lint
 ```
 
+## Writing a blog post
+
+Posts are Markdown files in `content/blogs/` and need no code changes.
+
+1. Copy [`content/blogs/_TEMPLATE.md`](content/blogs/_TEMPLATE.md) to `content/blogs/<slug>.md` and fill in the frontmatter. The template also holds an authoring guide that an AI assistant can follow.
+2. Put the raw photos in `content/blogs/raw/<slug>/` (git-ignored).
+3. Run `npm run blog:images -- <slug>` to produce compressed `.webp` files in `public/images/blogs/<slug>/`.
+4. Write the post, using `npm run dev` to preview it at `/blogs/<slug>` (drafts are visible in dev only).
+5. Set `draft: false` and run `npm run build`. The post then appears on `/blogs`, in the sitemap and in the RSS feed at `/blogs/rss.xml`.
+
 ## Customization
 
 All personal content lives in `src/data/` -- swap these files to make the portfolio your own:
