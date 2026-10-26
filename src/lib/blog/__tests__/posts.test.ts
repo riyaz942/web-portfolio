@@ -33,6 +33,9 @@ describe("post loader", () => {
     ["slug-mismatch", /wrong\.md.*slug/],
     ["cover-no-alt", /cover-no-alt\.md.*coverAlt/],
     ["no-tags", /no-tags\.md.*tags/],
+    ["cover-missing", /cover-missing\.md.*coverImage.*not found/],
+    ["cover-relative", /cover-relative\.md.*coverImage.*start with "\//],
+    ["bad-yaml", /bad-yaml\.md.*frontmatter.*YAML/],
   ])("rejects %s with an error naming the file and field", (dir, msg) => {
     expect(() => getAllPosts({ dir: fx(`invalid/${dir}`) })).toThrow(BlogValidationError);
     expect(() => getAllPosts({ dir: fx(`invalid/${dir}`) })).toThrow(msg);

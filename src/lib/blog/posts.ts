@@ -64,7 +64,15 @@ function parseDate(file: string, field: string, value: unknown): string {
 }
 
 function parsePost(dir: string, file: string): BlogPost {
-  const { data, content } = matter(fs.readFileSync(path.join(dir, file), "utf8"));
+  let parsed: matter.GrayMatterFile<string>;
+  try {
+    // An options object bypasses gray-matter's content cache, which is filled before parsing and so
+    // returns empty data for broken frontmatter on every call after the first.
+    parsed = matter(fs.readFileSync(path.join(dir, file), "utf8"), {});
+  } catch (err) {
+    throw new BlogValidationError(`${file}: frontmatter is not valid YAML (${(err as Error).message})`);
+  }
+  const { data, content } = parsed;
   const fileSlug = file.replace(/\.md$/, "");
 
   const title = requireString(file, "title", data.title);
@@ -94,6 +102,16 @@ function parsePost(dir: string, file: string): BlogPost {
   const coverAlt = isBlank(data.coverAlt) ? undefined : requireString(file, "coverAlt", data.coverAlt);
   if (coverImage && !coverAlt) {
     throw new BlogValidationError(`${file}: coverAlt is required when coverImage is set`);
+  }
+  if (coverImage) {
+    if (!coverImage.startsWith("/")) {
+      throw new BlogValidationError(`${file}: coverImage must start with "/" (e.g. /images/blogs/${fileSlug}/cover.webp)`);
+    }
+    if (!fs.existsSync(path.join(process.cwd(), "public", coverImage))) {
+      throw new BlogValidationError(
+        `${file}: coverImage ${coverImage} not found in public/ (run \`npm run blog:images -- ${fileSlug}\`)`,
+      );
+    }
   }
 
   if (data.draft !== undefined && typeof data.draft !== "boolean") {

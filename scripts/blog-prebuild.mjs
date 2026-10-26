@@ -20,7 +20,13 @@ export async function ensureOgImages({ contentDir, publicDir }) {
   const files = fs.readdirSync(contentDir).filter((f) => f.endsWith(".md") && !f.startsWith("_"));
 
   for (const file of files) {
-    const { data } = matter(fs.readFileSync(path.join(contentDir, file), "utf8"));
+    /** @type {Record<string, unknown>} */
+    let data;
+    try {
+      ({ data } = matter(fs.readFileSync(path.join(contentDir, file), "utf8"), {}));
+    } catch (err) {
+      throw new Error(`${file}: frontmatter is not valid YAML (${/** @type {Error} */ (err).message})`);
+    }
     if (typeof data.coverImage !== "string" || data.coverImage === "") continue;
 
     const slug = file.replace(/\.md$/, "");

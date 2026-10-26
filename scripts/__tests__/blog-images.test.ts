@@ -67,6 +67,14 @@ describe("blog-prebuild", () => {
     expect(await ensureOgImages({ contentDir, publicDir })).toHaveLength(1);
     expect(await ensureOgImages({ contentDir, publicDir })).toEqual([]);
   });
+  it("ensureOgImages names the file when frontmatter is not valid YAML", async () => {
+    const contentDir = path.join(tmp, "content");
+    fs.mkdirSync(contentDir);
+    fs.writeFileSync(path.join(contentDir, "broken.md"), "---\ntitle: Hello, world: a tour\n---\n\nBody\n");
+    await expect(ensureOgImages({ contentDir, publicDir: path.join(tmp, "public") })).rejects.toThrow(
+      /broken\.md.*frontmatter.*YAML/,
+    );
+  });
   it("warns on non-webp and oversized images", async () => {
     const dir = path.join(tmp, "images");
     fs.mkdirSync(dir);
