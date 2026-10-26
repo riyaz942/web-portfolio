@@ -1,5 +1,10 @@
 export const contactItems = [
   {
+    label: "Blog",
+    href: "/blogs",
+    handle: "Read my writing",
+  },
+  {
     label: "GitHub",
     href: "https://github.com/riyaz942",
     handle: "@riyaz942",

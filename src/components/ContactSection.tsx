@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { contactItems } from "@/data/contactItems";
+import { useViewTransitionRouter } from "@/hooks/useViewTransition";
 
 function ContactIcon({ label, className }: { label: string; className?: string }) {
   const cls = className ?? "w-5 h-5";
@@ -30,6 +31,12 @@ function ContactIcon({ label, className }: { label: string; className?: string }
       return (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className={cls}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+        </svg>
+      );
+    case "Blog":
+      return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className={cls}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
         </svg>
       );
     default:
@@ -61,6 +68,7 @@ const itemVariants = {
 export default function ContactSection() {
   const contentRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(contentRef, { once: true, margin: "-100px" });
+  const { push } = useViewTransitionRouter();
 
   return (
     <section
@@ -98,46 +106,70 @@ export default function ContactSection() {
           </motion.p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
-            {contactItems.map((item) => (
-              <motion.a
-                key={item.label}
-                href={item.href}
-                target={item.label !== "Email" ? "_blank" : undefined}
-                rel={item.label !== "Email" ? "noopener noreferrer" : undefined}
-                className="group relative flex items-center gap-4 p-5 md:p-6 rounded-xl hover:border-accent/30 transition-all duration-300"
-                style={{
-                  background: "color-mix(in srgb, var(--color-background) 50%, transparent)",
-                  border: "1px solid rgba(255, 255, 255, 0.08)",
-                  backdropFilter: "blur(12px)",
-                  WebkitBackdropFilter: "blur(12px)",
-                }}
-                variants={itemVariants}
-                whileHover={{ y: -2 }}
-              >
-                <div className="absolute -inset-px bg-gradient-to-br from-accent/10 to-accent-secondary/10 rounded-xl opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500 -z-10" />
+            {contactItems.map((item) => {
+              const external = item.href.startsWith("http");
+              const internal = item.href.startsWith("/");
+              return (
+                <motion.a
+                  key={item.label}
+                  href={item.href}
+                  target={external ? "_blank" : undefined}
+                  rel={external ? "noopener noreferrer" : undefined}
+                  onClick={
+                    internal
+                      ? (e: React.MouseEvent<HTMLAnchorElement>) => {
+                          // Keep modified clicks (new tab, etc.) native.
+                          if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+                          e.preventDefault();
+                          push(item.href);
+                        }
+                      : undefined
+                  }
+                  className={`group relative flex items-center gap-4 p-5 md:p-6 rounded-xl hover:border-accent/30 transition-all duration-300${
+                    internal ? " sm:col-span-2" : ""
+                  }`}
+                  style={{
+                    background: "color-mix(in srgb, var(--color-background) 50%, transparent)",
+                    border: "1px solid rgba(255, 255, 255, 0.08)",
+                    backdropFilter: "blur(12px)",
+                    WebkitBackdropFilter: "blur(12px)",
+                  }}
+                  variants={itemVariants}
+                  whileHover={{ y: -2 }}
+                >
+                  <div className="absolute -inset-px bg-gradient-to-br from-accent/10 to-accent-secondary/10 rounded-xl opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500 -z-10" />
 
-                <div className="absolute top-0 left-5 right-5 h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
+                  <div className="absolute top-0 left-5 right-5 h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
 
-                <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-white/[0.05] flex items-center justify-center text-muted group-hover:text-accent transition-colors duration-300">
-                  <ContactIcon label={item.label} />
-                </div>
-
-                <div className="flex-1 min-w-0">
-                  <div className="text-sm font-semibold text-foreground tracking-wide">
-                    {item.label}
+                  <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-white/[0.05] flex items-center justify-center text-muted group-hover:text-accent transition-colors duration-300">
+                    <ContactIcon label={item.label} />
                   </div>
-                  <div className="text-sm text-muted truncate group-hover:text-foreground/70 transition-colors duration-300">
-                    {item.handle}
-                  </div>
-                </div>
 
-                <div className="flex-shrink-0 text-muted/50 group-hover:text-accent transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="w-4 h-4">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
-                  </svg>
-                </div>
-              </motion.a>
-            ))}
+                  <div className="flex-1 min-w-0">
+                    <div className="text-sm font-semibold text-foreground tracking-wide">
+                      {item.label}
+                    </div>
+                    <div className="text-sm text-muted truncate group-hover:text-foreground/70 transition-colors duration-300">
+                      {item.handle}
+                    </div>
+                  </div>
+
+                  <div
+                    className={`flex-shrink-0 text-muted/50 group-hover:text-accent transition-all duration-300 group-hover:translate-x-0.5${
+                      internal ? "" : " group-hover:-translate-y-0.5"
+                    }`}
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="w-4 h-4">
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d={internal ? "M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" : "M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"}
+                      />
+                    </svg>
+                  </div>
+                </motion.a>
+              );
+            })}
           </div>
 
           <motion.div
