@@ -9,6 +9,7 @@ import remarkRehype from "remark-rehype";
 import { unified } from "unified";
 import rehypeCollectHeadings from "./plugins/rehype-collect-headings";
 import rehypeFigures from "./plugins/rehype-figures";
+import rehypeImageDimensions from "./plugins/rehype-image-dimensions";
 import rehypeTakeaways from "./plugins/rehype-takeaways";
 import remarkCallouts from "./plugins/remark-callouts";
 import type { RenderedPost, TocHeading } from "./types";
@@ -28,6 +29,7 @@ export async function renderMarkdown(markdown: string): Promise<RenderedPost> {
     .use(rehypeCollectHeadings)
     .use(rehypeTakeaways)
     .use(rehypeFigures)
+    .use(rehypeImageDimensions)
     .use(rehypeExternalLinks, { target: "_blank", rel: ["noopener", "noreferrer"] })
     .use(rehypePrettyCode, {
       theme: "github-dark-dimmed",

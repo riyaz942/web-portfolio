@@ -29,6 +29,14 @@ describe("renderMarkdown", () => {
     expect(html).toContain("<figcaption>Plate mounted, ready</figcaption>");
     expect(html).not.toContain("<p><figure");
   });
+  it("sets intrinsic width/height on local images so lazy loading can't shift layout", async () => {
+    const { html } = await renderMarkdown("![Case](/images/blogs/building-my-first-keyboard/image-01.webp)");
+    expect(html).toMatch(/<img[^>]*width="\d+"[^>]*height="\d+"/);
+  });
+  it("leaves remote and missing images without dimensions", async () => {
+    const { html } = await renderMarkdown("![a](https://example.com/a.png)\n\n![b](/images/blogs/x/missing.webp)");
+    expect(html).not.toContain("width=");
+  });
   it("wraps the Key takeaways section only", async () => {
     const { html } = await renderMarkdown("## Key Takeaways\n\n- a\n- b\n\n## Wrap-up\n\nbye");
     expect(html).toMatch(/<section class="takeaways"><h2[^>]*>.*Key Takeaways.*<\/h2>\s*<ul>[\s\S]*<\/ul>\s*<\/section>/);
