@@ -10,9 +10,9 @@ coverAlt: "The finished split keyboard, painted green with Lord of the Rings art
 draft: false
 ---
 
-I'd been typing on the same Anne Pro 2 for about five years, with the same keycaps and switches (the mechanical part under each key) the whole time. I wasn't deep into the keyboard hobby. But building one from scratch was on my checklist.
+I'd been typing on the same Anne Pro 2 for about five years, with the same keycaps and switches the whole time. I wasn't deep into the keyboard hobby. But building one from scratch was on my checklist.
 
-I was hesitant at first. I watched a lot of videos, read some blogs and references, and then got a little ambitious and went for a wireless split keyboard (two separate halves, one for each hand). I'd done a bit of soldering before, when I modded my Anne Pro 2 to make it hot-swappable, meaning you can pull the switches out and swap them without desoldering anything. That was fun. I also burned my hand. With that much experience behind me, I pulled the trigger.
+I was hesitant at first. I watched a lot of videos, read some blogs and references, and then got a little ambitious and went for a wireless split keyboard. I'd done a bit of soldering before, when I modded my Anne Pro 2 to make it hot-swappable, meaning you can pull the switches out and swap them without desoldering anything. That was fun. I also burned my hand. With that much experience behind me, I pulled the trigger.
 
 This isn't a full build guide. It's the important stuff and how it went. The full parts list is at the end.
 
@@ -24,13 +24,15 @@ For the case, Ryan has a site, [ryanis.cool/dactyl](https://ryanis.cool/dactyl/)
 
 ## How it works
 
-The microcontroller is the brain of the keyboard. It's a small board that the USB cable plugs into, with contact points (pins) along its edges. Connect two of those pins with a wire and the microcontroller treats it as a keypress. Using the pin layout below, connecting P0.24 to P1.15 could register as A, and P0.24 to P1.13 as B, if that's how you've configured it. You could make them Z and X instead. The configuration part comes later.
+The microcontroller is the brain of the keyboard. It's a small board that the USB cable plugs into, with contact points (pins) along its edges. None of this happens automatically, though. You decide what the board does, and you do that by writing the logic yourself: what should happen when two points touch, what should happen when they're released, and what counts as a keypress. A microcontroller doesn't know it's inside a keyboard. With the right wiring and code, you could build almost anything with one, like a drone, a home appliance or a small robot. A keyboard is just one of the simplest things to start with.
 
-You can use any of the programmable pins in the P0.\* or P1.\* groups. Check the pin layout for the exact board you buy. Mine was a nice!nano v2 clone, and its layout was the same as the original.
+For a keyboard, the idea is this: connect two of those pins with a wire and the microcontroller treats it as a keypress. Using the pin layout below, connecting P0.24 to P1.15 could register as A, and P0.24 to P1.13 as B, if that's how you've configured it. You could make them Z and X instead. The configuration part comes later.
+
+You can use any of the programmable pins in the P0.\* or P1.\* groups. Check the pin layout for the exact board you buy. Mine was a nice!nano v2 clone, and its layout was close to the original but not identical.
 
 ![nice!nano v2 pin layout](/images/blogs/building-my-first-keyboard/image-01.webp "The nice!nano v2 pin layout. Check the one for your exact board.")
 
-The keys are wired in a matrix, which is a grid of rows and columns. Each switch sits where a row and a column cross, and pressing it connects that row to that column. The nice!nano scans the grid to work out which key was pressed, and the firmware maps that position to a key. A 5 × 5 grid gives you up to 25 keys per half and only needs 10 pins. Mine is a 4x5 Dactyl Manuform. In its standard layout that's 23 keys per half: three full rows of 5, 2 keys on the bottom row and 6 thumb keys. For the wiring I treated each half as a 5 × 5 grid, so it uses 23 of those 25 positions.
+The keys are wired in a matrix, which is a grid of rows and columns. Each switch sits where a row and a column cross. A switch is a small part under each keycap that works like a gap in a wire: when you press the key, it closes the gap and connects its two contacts, and when you let go, it opens again. Here, pressing a switch connects its row to its column. The nice!nano scans the grid to work out which key was pressed, and the firmware maps that position to a key. A 5 × 5 grid has 25 crossings, so it can hold up to 25 keys per half, and it only needs 10 pins. Giving every key its own pin would take 23 or more. Mine is a 4x5 Dactyl Manuform. In its standard layout that's 23 keys per half: three full rows of 5, 2 keys on the bottom row and 6 thumb keys. I wired each half as a 5 × 5 grid, which leaves 2 of the 25 crossings with no key on them.
 
 ![Wiring for one half, showing the row and column wires running into the microcontroller](/images/blogs/building-my-first-keyboard/image-02.webp "One half: 5 rows and 5 columns into the microcontroller")
 
@@ -42,12 +44,9 @@ Since I was using hot-swap sockets, I wired the rows and columns to the sockets 
 
 ![Hot-swap sockets glued into the 3D-printed case, with switches plugged into them](/images/blogs/building-my-first-keyboard/image-03.webp "Hot-swap sockets glued into the case. Plan before you glue.")
 
-Then came the soldering. I used enameled copper wire for the connections, and I didn't know it has a thin insulating coating. I found out after I'd finished, when I tested the connections with a multimeter (a meter that, among other things, tells you whether two points are connected) and some of the circuits weren't complete. That one was on me. You have to burn or scrape the coating off where you make a connection. Solder onto a coated part and the connection just doesn't work. I redid some of them, connecting the wire at the cut ends where the copper was exposed.
+Then came the soldering. I used enameled copper wire for the connections, and I didn't know it has a thin insulating coating. I found out after I'd finished, when I tested the connections with a multimeter (a meter that, among other things, tells you whether two points are connected) and some of the circuits weren't complete. That one was on me. You have to burn or scrape the coating off where you make a connection. Solder onto a coated part and the connection just doesn't work. Some coatings, like the polyester one on mine, don't burn off at normal soldering temperatures, so scraping or sanding is more reliable. I redid some of them, connecting the wire at the cut ends where the copper was exposed.
 
 The enameled wire was harder to work with, so I only used it for the columns, which don't have diodes. For the rows, which connect through the diodes, I used normal wire. Once everything was connected I checked every circuit with the multimeter again. Even with all that, it was one of the fun bits.
-
-> [!WARNING]
-> Enameled copper wire has a thin insulating coating. Burn or scrape it off wherever you solder, or the connection won't conduct. Some coatings, like polyester, don't burn off at normal soldering temperatures, so scraping or sanding is more reliable.
 
 ![The row and column grid wired across the sockets inside the case](/images/blogs/building-my-first-keyboard/image-04.webp "Rows run through the diodes in normal wire; columns are enameled wire")
 
@@ -65,9 +64,9 @@ Then the battery. One pin is for positive and one is for ground. Use jumper cabl
 
 To mount everything in the case, I hot-glued around the USB sockets, the reset switch and the power switch. The battery and microcontroller are stuck down with double-sided tape, since hot glue isn't secure enough for them. The Fevikwik was only for the hot-swap sockets.
 
-The wiring looks something like this. I used AI to draw the diagram from an existing one, so the ground, reset and power pins on your board will be in different places. Check your microcontroller's manual for those and wire the reset button and battery to match.
+The wiring looks something like this. Treat the diagram as an explanation, not something to copy exactly. My own board has a different pin layout, mostly close to the nice!nano v2. The diagram I started from was for a different board layout, so I had it redrawn (with AI) to match mine, and it didn't come out well. The positive wire from the battery should point to pin 21, and the black wire from the battery should go to a ground pin, but the diagram doesn't show that properly. The ground, reset and power pins on your board will also be in different places. Check your microcontroller's manual for those and wire the reset button and battery to match.
 
-![Full wiring diagram showing the reset button, the battery connection and the row and column wiring](/images/blogs/building-my-first-keyboard/image-05.webp "The ground, reset and power pins on your board will differ. Check its manual.")
+![Full wiring diagram showing the reset button, the battery connection and the row and column wiring](/images/blogs/building-my-first-keyboard/image-05.webp "For explanation only. The battery pins aren't drawn accurately, and your board's pins will differ. Check its manual.")
 
 Here's one half done on the hardware side.
 
@@ -149,7 +148,7 @@ The one nuisance is layers. With fewer keys, some of them live on a second layer
 
 Using it with one hand is harder. To reach everything with one hand I'd need layer keys on each half, and with this few keys that's tricky. But I don't usually type with one hand, so I've just gotten used to it.
 
-When I built this, AI coding tools were just taking off, and I was typing on it a lot. These days most of what I write is prompts and messages, and I mostly dictate those with voice-to-text. I still use the keyboard when I'm in a meeting and doing something on the side, or when I'm not in the mood to talk and just want to listen and work things out. Then I type.
+When I built this, AI coding tools were just taking off, and I was typing on it a lot. These days most of what I write is prompts and messages, and I mostly dictate those with voice-to-text. I still use the keyboard when I'm in a meeting and doing something on the side, or when I just want to listen to music and work. Then I type.
 
 Even so, building it was a lot of fun. There's the cool factor, and it's an awesome feeling to use something I built myself.
 
@@ -185,3 +184,8 @@ Most of the parts came from [robu.in](http://robu.in/), which seemed to have eve
 | [Multimeter](https://robu.in/product/digital-multimeter-small-yellow-color-lcd-ac-dc-measuring-voltage-current/) | For debugging |
 | MB102 830-point solderless breadboard | For debugging |
 | [LEDs](https://robu.in/product/3mm-single-hole-led-light-holder-with-red-led-light-pack-of-10/) | Bought for "debugging" and never used |
+
+## References
+
+- [abstracthat/dactyl-manuform](https://github.com/abstracthat/dactyl-manuform)
+- [Ay1tsMe/zmk-config](https://github.com/Ay1tsMe/zmk-config)
