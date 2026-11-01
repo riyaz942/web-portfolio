@@ -38,16 +38,16 @@ Every switch also needs a diode. A diode only lets current flow in one direction
 
 ## Putting it together
 
-Since I was using hot-swap sockets, I wired the rows and columns to the sockets instead of the switches. First I glued the sockets into the 3D print with Feviquick (superglue). I slotted some of them in wrong. Some I glued in backwards and had to pry back out. It was a mess. Plan everything before you glue anything down.
+Since I was using hot-swap sockets, I wired the rows and columns to the sockets instead of the switches. First I glued the sockets into the 3D print with Fevikwik (superglue). I slotted some of them in wrong. Some I glued in backwards and had to pry back out. It was a mess. Plan everything before you glue anything down.
 
 ![Hot-swap sockets glued into the 3D-printed case, with switches plugged into them](/images/blogs/building-my-first-keyboard/image-03.webp "Hot-swap sockets glued into the case. Plan before you glue.")
 
-Then came the soldering. I used enameled copper wire for the connections, and I didn't know it has a thin insulating coating. I found out after I'd finished, when I tested the connections with a multimeter (a meter that, among other things, tells you whether two points are connected) and some of the circuits weren't complete. That one was on me. You have to burn the coating off where you make a connection. Solder onto a coated part and the connection just doesn't work. I redid some of them, connecting the wire at the cut ends where the copper was exposed.
+Then came the soldering. I used enameled copper wire for the connections, and I didn't know it has a thin insulating coating. I found out after I'd finished, when I tested the connections with a multimeter (a meter that, among other things, tells you whether two points are connected) and some of the circuits weren't complete. That one was on me. You have to burn or scrape the coating off where you make a connection. Solder onto a coated part and the connection just doesn't work. I redid some of them, connecting the wire at the cut ends where the copper was exposed.
 
 The enameled wire was harder to work with, so I only used it for the columns, which don't have diodes. For the rows, which connect through the diodes, I used normal wire. Once everything was connected I checked every circuit with the multimeter again. Even with all that, it was one of the fun bits.
 
 > [!WARNING]
-> Enameled copper wire has a thin insulating coating. Burn it off wherever you solder, or the connection won't conduct.
+> Enameled copper wire has a thin insulating coating. Burn or scrape it off wherever you solder, or the connection won't conduct. Some coatings, like polyester, don't burn off at normal soldering temperatures, so scraping or sanding is more reliable.
 
 ![The row and column grid wired across the sockets inside the case](/images/blogs/building-my-first-keyboard/image-04.webp "Rows run through the diodes in normal wire; columns are enameled wire")
 
@@ -63,7 +63,7 @@ Boards like this have a reset pin. Shorting it to ground twice puts the board in
 
 Then the battery. One pin is for positive and one is for ground. Use jumper cables here too, in case you want to swap the battery later. I put a switch on the positive wire so I can turn the keyboard on and off.
 
-To mount everything in the case, I hot-glued around the USB sockets, the reset switch and the power switch. The battery and microcontroller are stuck down with double-sided tape, since hot glue isn't secure enough for them. The Feviquick was only for the hot-swap sockets.
+To mount everything in the case, I hot-glued around the USB sockets, the reset switch and the power switch. The battery and microcontroller are stuck down with double-sided tape, since hot glue isn't secure enough for them. The Fevikwik was only for the hot-swap sockets.
 
 The wiring looks something like this. I used AI to draw the diagram from an existing one, so the ground, reset and power pins on your board will be in different places. Check your microcontroller's manual for those and wire the reset button and battery to match.
 
@@ -79,7 +79,7 @@ Do the same for the other half. The last hardware step is the screw inserts. The
 
 ## Firmware
 
-Firmware is the software that runs on the microcontroller and decides what each key does. I used ZMK, because QMK (the other big option) can't officially run on the nice!nano due to licensing issues with Nordic's nRF52 SDK. The [ZMK user setup guide](https://zmk.dev/docs/user-setup) has a CLI that clones the repo so you can start on your keymap.
+Firmware is the software that runs on the microcontroller and decides what each key does. I used ZMK, because QMK (the other big option) can't officially run on the nice!nano due to licensing issues with Nordic's Bluetooth stack. The [ZMK user setup guide](https://zmk.dev/docs/user-setup) has a CLI that clones the repo so you can start on your keymap.
 
 There are two parts of that repo you need to understand yourself, because they depend on your hardware and how you want to customize it. A coding AI can easily handle the rest of the setup.
 
@@ -148,6 +148,10 @@ Typing on it was slow for the first week or so. After a week or two I was back t
 The one nuisance is layers. With fewer keys, some of them live on a second layer. Letters are on the base layer and numbers are on another one, so typing a number means holding the layer key and pressing the number. That's two keys instead of one, which isn't really a problem.
 
 Using it with one hand is harder. To reach everything with one hand I'd need layer keys on each half, and with this few keys that's tricky. But I don't usually type with one hand, so I've just gotten used to it.
+
+When I built this, AI coding tools were just taking off, and I was typing on it a lot. These days most of what I write is prompts and messages, and I mostly dictate those with voice-to-text. I still use the keyboard when I'm in a meeting and doing something on the side, or when I'm not in the mood to talk and just want to listen and work things out. Then I type.
+
+Even so, building it was a lot of fun. There's the cool factor, and it's an awesome feeling to use something I built myself.
 
 ## Key takeaways
 
