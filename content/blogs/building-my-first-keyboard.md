@@ -1,153 +1,163 @@
 ---
 title: "Building a split keyboard from scratch"
 slug: building-my-first-keyboard
-description: "TODO: write a 1-2 sentence description for cards, meta tags and RSS."
+description: "How I hand-wired a wireless split keyboard in a 3D-printed case, and what I did when one half's Bluetooth turned out to be dead."
 publishedAt: "2026-11-01"
 updatedAt: ""
 tags: [hardware, keyboards]
-coverImage: ""
-coverAlt: ""
+coverImage: "/images/blogs/building-my-first-keyboard/image-11.webp"
+coverAlt: "The finished split keyboard, painted green with Lord of the Rings artwork"
 draft: true
 ---
 
-So I wasn't too deep into the keyboard hobby, I had my trusty old anne pro 2 that I been rocking for around 5 years, with the same set of key caps and switches.   
-So building a keyboard from scratch was one of my checklist.   
-Building from scratch was interesting, though initially hesitant. I had watched a lot of videos read some blogs and references. And i was a little ambitious and targeted to build the wireless split keyboard.   
-I had some experience with soldering (this was fun\! I did burn my hand though),i modded my existing keyboard annepro 2 make it hot swappable. So with that i pulled the trigger to get it started. I don't want it to be a full, in-depth blog, so I'm just trying to really cover the important stuff. And also share my experience with it. So here goes
+I'd been typing on the same Anne Pro 2 for about five years, with the same keycaps and switches (the mechanical part under each key) the whole time. I wasn't deep into the keyboard hobby. But building one from scratch was on my checklist.
 
-## Chapter 1, to get the ball rolling:
+I was hesitant at first. I watched a lot of videos, read some blogs and references, and then got a little ambitious and went for a wireless split keyboard (two separate halves, one for each hand). I'd done a bit of soldering before, when I modded my Anne Pro 2 to make it hot-swappable, meaning you can pull the switches out and swap them without desoldering anything. That was fun. I also burned my hand. With that much experience behind me, I pulled the trigger.
 
-I written down the list and links of components that i ordered at the end of the page. So to get things started i first ordered the 3d print, the hotswappable sockets, Enameled Copper Wire, and the micro-controller. 
+This isn't a full build guide. It's the important stuff and how it went. The full parts list is at the end.
 
-Also for the stl file for the 3d model, this awesome person Ryan has a website where you can design the keyboard with variables for each of the areas, like curve, height, number of keys and then download the STL file [https\://ryanis.cool/dactyl/](https://ryanis.cool/dactyl/) you can then share the stl file for 3dprinting   
-   
-Ok so before starting anything, how does the whole thing work ? So just to keep it simple, the micro controller is the brains of the keyboard you plug in the usb in it and then You complete a circuit (Connect the 2 points using a wire) from one of the bottom left contact points to the bottom right of the contact right of the contact point, and when you do connect a point, the micro controller considers that as a keypress, so from the below example, with the pin layout, so for example if you connect P0.24 to P1.15 it registers as A and connecting P0.24 \-\> P1.13 would register as B, if you have configured your board like that, you can switch it to Z, X but the configuration part would be explained later.
+## Getting started
 
-So if you are making a split keyboard with 25 keys on one side so it would be 5 rows and 5 columns, you would just need 10 pinouts. And you can pick any of the programmable pins from the P0.\* or from P1.\* but do refer the pin layout for the board that you buy, since i bought a nice nano v2 clone the pin layout was the same   
+My first order was the 3D-printed case, the hot-swap sockets, enameled copper wire and the microcontroller.
 
-![](/images/blogs/building-my-first-keyboard/image-01.webp)
+For the case, Ryan has a site, [ryanis.cool/dactyl](https://ryanis.cool/dactyl/), where you design the keyboard by adjusting things like the curve, the height and the number of keys, then download the STL file (the 3D model). You can send that STL file off to be 3D printed.
 
-Ok now moving on the next bit of hard technicality,you would need to create a matrix, and its size depends on the keyboard we're building. A traditional keyboard might have more rows and columns, but for our split keyboard, we're going with a 5 × 5 grid, giving us up to 25 key positions on each half. My keyboard is a 4x5 Dactyl Manuform (4 rows and 5 columns of finger keys, plus the thumb keys), so it uses 23 of those positions per half.
+## How it works
 
-As shown in the image, each switch is wired to sit at the intersection of a row and a column. When you press a key, it completes a circuit between that row and column. The nice\!nano scans the matrix to figure out which key was pressed, and the firmware takes care of mapping that position to the correct key. We'll cover the software side of things later.
+The microcontroller is the brain of the keyboard. It's a small board that the USB cable plugs into, with contact points (pins) along its edges. Connect two of those pins with a wire and the microcontroller treats it as a keypress. Using the pin layout below, connecting P0.24 to P1.15 could register as A, and P0.24 to P1.13 as B, if that's how you've configured it. You could make them Z and X instead. The configuration part comes later.
 
-There's one more important component we need: a **diode for every switch**. A diode allows current to flow in only one direction. Without diodes, pressing certain combinations of keys can create unintended electrical paths, causing the keyboard to register keys you didn't actually press. This is called *ghosting*. Adding a diode to each switch prevents these unwanted paths and allows multiple keys to be detected reliably.
+You can use any of the programmable pins in the P0.\* or P1.\* groups. Check the pin layout for the exact board you buy. Mine was a nice!nano v2 clone, and its layout was the same as the original.
 
-**In short:** The matrix helps the microcontroller identify each key using shared row and column wires, while diodes prevent ghosting when multiple keys are pressed together.
+![nice!nano v2 pin layout](/images/blogs/building-my-first-keyboard/image-01.webp)
 
-![](/images/blogs/building-my-first-keyboard/image-02.webp)
+The keys are wired in a matrix, which is a grid of rows and columns. Each switch sits where a row and a column cross, and pressing it connects that row to that column. The nice!nano scans the grid to work out which key was pressed, and the firmware maps that position to a key. A 5 × 5 grid gives you up to 25 keys per half and only needs 10 pins. Mine is a 4x5 Dactyl Manuform. In its standard layout that's 23 keys per half: three full rows of 5, 2 keys on the bottom row and 6 thumb keys. For the wiring I treated each half as a 5 × 5 grid, so it uses 23 of those 25 positions.
 
-## Chapter two: putting it together the fun part
+![Wiring for one half, showing the row and column wires running into the microcontroller](/images/blogs/building-my-first-keyboard/image-02.webp)
 
-For my specific scenario, I'm using a hot-swappable socket, so I'm basically connecting the rows with the hot-swappable sockets rather than the switches. So then I started gluing the hot-swappable sockets onto the 3D-printed model with feviquick. And the thing is, for some of the parts I slotted incorrectly but on some of the sockets I reversed or glued it in an opposite direction so I had to pry it open. Basically it was a mess. So just learning from this is to plan everything in advance before applying anything permanent. 
+Every switch also needs a diode. A diode only lets current flow in one direction. Without them, pressing certain key combinations can create extra electrical paths through the grid, and the keyboard registers keys you never pressed. That's called ghosting. A diode on each switch blocks those paths, so several keys pressed together all read correctly.
 
-![](/images/blogs/building-my-first-keyboard/image-03.webp)
+## Putting it together
 
-Now for the fun part: soldering the wire onto the grid I used an enameled copper wire for the connection I didn't initially know that it has a layer of covering over it. It was mostly in the end, after I completed my soldering, that I understood, "Okay this copper wire is something different." But when I tested my connections with the multimeter, some of the circuit wasn't completed. I think that was mostly on me because I didn't understand how the enameled copper wire works. I needed to burn off the coating at the connection ends. If you do it improperly and solder on the parts where it has that covering, the whole connection doesn't work. I had to redo some of it and connect the wire at the end where I cut off the copper wire so the copper is kind of exposed. But all in all this was one of the fun bits. The enameled copper wire was a little harder to work with I just did the columns that didn't have the diode with the copper wire and then for the rows which needed to be connected with the diode, I used a normal wire for that. I connected everything with the diode and tested my connection with the multimeter to ensure that each of the ends was working and completing the circuit properly.   
+Since I was using hot-swap sockets, I wired the rows and columns to the sockets instead of the switches. First I glued the sockets into the 3D print with Feviquick (superglue). I slotted some of them in wrong. Some I glued in backwards and had to pry back out. It was a mess. Plan everything before you glue anything down.
 
-![](/images/blogs/building-my-first-keyboard/image-04.webp)
+![Hot-swap sockets glued into the 3D-printed case, with switches plugged into them](/images/blogs/building-my-first-keyboard/image-03.webp)
 
-Just be careful with the soldering iron. I burned myself with it a couple of times.  
-Now we need to connect the 5 rows and 5 columns to our microcontroller, but before that, we need to attach the pin header to the microcontroller. That's one of the fun parts as well. Also, ideally, you would want to use an easy plug-and-play type of scenario for this whole setup, so I highly advise using jumper wires, male to male, female to female and male to female  So you can cut them up and attach it with your setup. For example, if one of the pins in your microcontroller is not working, you can just remove the jumper wire and attach it to someplace else where the header pin is working for the microcontroller.  
-Also, with microcontrollers like this, There should be a reset pin, so you need to short the reset pin with the ground pin twice in order to install something there. Ideally, you can connect those two pin headers and connect it to a switch, basically a tactile switch, so you can press twice to short it out. This would be helpful in order to install the zmk firmware. And then you need to connect the battery. One pin would be for the positive, and one pin should be for the ground. Make sure to use a jumper cable for this as well, just in case I want to switch the batteries or do anything with it. Connect those up with the battery, and between the ground or even the power wires, connect a switch in between them so you can turn on or off your keyboard. To mount the parts on the 3D-printed frame, I used the glue gun to stick the components in place: around the USB sockets, the reset switch and the battery on/off switch. The battery and the microcontroller are attached to the frame with two-way tape instead, since hot glue isn't secure enough for them. The Feviquick was only used for the hot-swap sockets.
+Then came the soldering. I used enameled copper wire for the connections, and I didn't know it has a thin insulating coating. I found out after I'd finished, when I tested the connections with a multimeter (a meter that, among other things, tells you whether two points are connected) and some of the circuits weren't complete. That one was on me. You have to burn the coating off where you make a connection. Solder onto a coated part and the connection just doesn't work. I redid some of them, connecting the wire at the cut ends where the copper was exposed.
 
-A diagram of this would look something like this. I used AI to draw the wiring diagram, but refer to your microcontroller manual for where the power and ground pins are, and connect the reset and battery wiring accordingly. This is just a representation from one of the existing diagrams, so the ground, reset pin, as well as the power pins would be in a different place than what's shown in the diagram.
+The enameled wire was harder to work with, so I only used it for the columns, which don't have diodes. For the rows, which connect through the diodes, I used normal wire. Once everything was connected I checked every circuit with the multimeter again. Even with all that, it was one of the fun bits.
 
-![](/images/blogs/building-my-first-keyboard/image-05.webp)
+![The row and column grid wired across the sockets inside the case](/images/blogs/building-my-first-keyboard/image-04.webp)
 
-Here is one part of the keyboard completed on the hardware side. 
+Be careful with the soldering iron. I burned myself with it a couple of times.
 
-![](/images/blogs/building-my-first-keyboard/image-06.webp)
+Next, the 5 rows and 5 columns go to the microcontroller. Before that you solder pin headers onto it (rows of metal pins that wires can plug onto), which is another fun part. I'd strongly recommend keeping the whole setup plug-and-play with jumper wires (wires with plug ends). Get male-to-male, female-to-female and male-to-female, then cut them up and attach them to your wiring. If one of the pins on your microcontroller isn't working, you just pull the wire off and move it to a pin that is.
 
-And do the same thing on the other end, and you have a keyboard setup done for the hardware side.  
-And the last step is adding the screw inserts in the gap that is provided for it in the 3D-printed hardware. It is heat set, so you just have to heat up your soldering iron and push it so it will melt the plastic on your 3D print and set the inserts there for the screws to go into later.  
+Boards like this have a reset pin. Shorting it to ground twice puts the board into a mode where you can install firmware. I wired those two pins to a tactile switch (a small push button), so I can just press it twice. You'll need this to install the ZMK firmware.
 
-![](/images/blogs/building-my-first-keyboard/image-07.webp)
+Then the battery. One pin is for positive and one is for ground. Use jumper cables here too, in case you want to swap the battery later. I put a switch on the positive wire so I can turn the keyboard on and off.
 
-## Chapter 3 firmware setup
+To mount everything in the case, I hot-glued around the USB sockets, the reset switch and the power switch. The battery and microcontroller are stuck down with double-sided tape, since hot glue isn't secure enough for them. The Feviquick was only for the hot-swap sockets.
 
-Now we set up the software for this so you can customise the keyboard as you wish. I'm using ZMK for this setup because QMK can’t officially run on the nice\!nano because of licensing issues with Nordic’s nRF52 SDK. You can get started here [https\://zmk.dev/docs/user-setup](https://zmk.dev/docs/user-setup) there is a cli to clone the repo and get started with the keymapping changes.  
-In the repo, you just have to focus on two things Mostly because it kind of relies on you for customization and connecting the pins with the hardware, you just have to be a little bit aware of these two parts. The other parts, the AI, like one of the coding AIs, can handle it easily to set you up. 
+The wiring looks something like this. I used AI to draw the diagram from an existing one, so the ground, reset and power pins on your board will be in different places. Check your microcontroller's manual for those and wire the reset button and battery to match.
 
-\- .dtsi file for mapping out your rows and columns if they are the same for both keyboards, else if you have different column or row pin mapping then you can use .overlay file to specify there  
-\- .keymap file to customize your key mapping
+![Full wiring diagram showing the reset button, the battery connection and the row and column wiring](/images/blogs/building-my-first-keyboard/image-05.webp)
 
-You can check out my config in the following GitHub repo.  [https\://github.com/riyaz942/zmk-dactyl](https://github.com/riyaz942/zmk-dactyl) I'm using a home row setup. So far, it's going well for me.
+Here's one half done on the hardware side.
 
-And also Enabling/Disabling logging from here config/dactyl\_manuform.conf (For debugging)
+![The finished wiring inside one half of the keyboard](/images/blogs/building-my-first-keyboard/image-06.webp)
 
-After configuring ZMK, ZMK has this cool trick where You don’t *have* to build locally. You just have to push, and the CI/CD pipeline basically generates the build for you. So you'll get two uf2 files for you to download from the ci/cd, each for one side of your keyboard, plus a settings\_reset file that you only need if the two halves stop pairing. 
+Do the same for the other half. The last hardware step is the screw inserts. They're heat-set, so you heat up the soldering iron and push each insert into its slot in the print. It melts the plastic around itself and sets there, ready for the screws later.
 
-Okay, now to put your UF2 files onto the microcontroller, First, connect your microcontroller with USB to your laptop/desktop and Assuming you connected the reset switch correctly In the microcontroller, when you double-press on the reset button, it will go into The bootloader mode, You would be able to see Drive showing up for you. What you just need to do now is drag and drop the UF2 file onto the drive that you're seeing connected. This will basically install the UF2 file on the microcontroller, and it will exit out. Now it's good to go to test it out, so disconnect the usb And then connect back again and try to press any keys. Check if it is working. Note: this only works for the central left keyboard, for the peripheral right keyboard you need to connect your central left keyboard and turn on the battery for the right keyboard the right keyboard would work via BLE. This step is basically just to check if things are working correctly or not.
+![Both halves open, showing their wiring and internal components](/images/blogs/building-my-first-keyboard/image-07.webp)
 
-## Chapter 4 despair and debugging
+## Firmware
 
-Okay, after installing the two separate files for their respective keyboards, you should be able to use the keyboard now. Try turning on the keyboard using the battery. Then try connecting on your laptop/desktop via bluetooth, you’ll get passcode to connect to your keyboard if you have enabled passcode in your config.
+Firmware is the software that runs on the microcontroller and decides what each key does. I used ZMK, because QMK (the other big option) can't officially run on the nice!nano due to licensing issues with Nordic's nRF52 SDK. The [ZMK user setup guide](https://zmk.dev/docs/user-setup) has a CLI that clones the repo so you can start on your keymap.
 
-Now, for me, what was happening was the left side was working. The right side was only registering keypresses (in the logs) when I connected directly via USB to my laptop but it wasn’t communicating with the left keyboard. Now, how this works is that one of the keyboards is the central, and the other one is the peripheral. What's happening is the peripheral communicates or sends the keystrokes and information to the central, and then the central sends the information to the computer. And for quite some time, I was thinking my configuration was incorrect or something like that, so I tried multiple variations and multiple settings Like setting my right side as central and the left side as peripheral, enabling multiple experimental modes, etc just to see if it would make things work. But no luck. The two separate devices weren't communicating for some reason.
+There are two parts of that repo you need to understand yourself, because they depend on your hardware and how you want to customize it. A coding AI can easily handle the rest of the setup.
 
-Then I started looking into debugging it. I enabled the debug mode, and then I checked the logs on the central keyboard: I noticed that it seems to be working correctly. The keystrokes are basically trying to listen to the peripheral keyboard as well. All of that was working correctly. Then I connected my right-side keyboard, and I noticed that the keystrokes and everything were working correctly, but it's basically erroring out when it's trying to connect to the central keyboard. From this, I came to the conclusion that the microcontroller on the right keyboard doesn't have a functioning Bluetooth. And usually that happens with clone nRF52 board, I didn't know that, but looking at it, it seems like that was the conclusion. Now, the thing is, I couldn't return this or exchange this because I soldered the pin headers onto the microcontroller. Looking at the terms and conditions, it seems that they don't accept any soldered microcontrollers. I had to order a new one, and with that, I also ordered some debugging tools, like a breadboard. I was researching it, and it seems like it would be a new experience for me in this. Also, a few buttons And wires for testing things.  
+- The `.dtsi` file maps out your rows and columns, if they're the same on both halves. If the two halves use different pins, you specify those in an `.overlay` file.
+- The `.keymap` file is where you set what each key does.
 
-![](/images/blogs/building-my-first-keyboard/image-08.webp)
+Logging for debugging is turned on and off in `config/dactyl_manuform.conf`.
 
-Okay, now after getting the new microcontroller, I directly just installed the UF2 file, the right-side UF2 file controller, and checked: is it connecting to the left controller now? The logs were showing it correctly, It seemed fine Bluetooth was working now for the new one., then I started checking each pin. I configured the pin, so I was just checking the keystrokes: is it registering the keystrokes or not? I was just shorting the two pins and checking each of the pins one by one, With the Multimeter, Now I noticed that some of the pins on the right side of this microcontroller weren't working. As mentioned before, since this is a clone nRF52 board , One thing or the other might not work, but now, since I learned my lesson and didn't solder it, I had a chance to replace it. I still didn't want to go through the hassle of waiting, and I just saw which of the key pins were not working. I basically just reconfigured the pins on the ZMK, and then I checked out if everything was working or not. Thankfully, it's working now. Although I got the breadboard, ideally, I could have done it without it, but it was still a little harder to connect the two-pin sockets. I think for future projects, it would be worth it, but I think for this one, it might not have been required. But I was still playing around with it.
+My config is at [github.com/riyaz942/zmk-dactyl](https://github.com/riyaz942/zmk-dactyl). I'm using home row mods, where the home row keys act as modifiers like Shift or Ctrl when you hold them down. So far it's going well.
 
-Then I started soldering the pin headers on the microcontroller. And my whole setup was attached with a jumper cable, so it was easy to plug things in and get it moving. 
+One nice thing about ZMK is that you don't have to build anything locally. You push your changes and the CI/CD pipeline builds the firmware for you. You download two UF2 files (the firmware files), one for each half, plus a `settings_reset` file you only need if the halves stop pairing.
 
-## Chapter 5 finishing touches
+To install one, connect the microcontroller to your computer over USB and double-press the reset button. The board goes into bootloader mode and shows up as a drive. Drag the UF2 file onto that drive. It installs and exits on its own. Unplug it, plug it back in and press some keys to check it works.
 
-Now that my keyboard is functioning, I just experimented with a few things with timings and configuration to check it out, and I was quite happy with it. There was a matter of looks. I intentionally ordered a white 3D-printed model so I can paint on it.  
+That only works for testing the left half. In ZMK one half is the central, which talks to the computer, and the other is the peripheral, which sends its keypresses to the central over Bluetooth (BLE). My left half is the central. To test the right half, you connect the left half and turn on the right half's battery.
 
-![](/images/blogs/building-my-first-keyboard/image-09.webp)
+## The right half wouldn't talk
 
-And since I already had a theme going with Lord of the Rings with the Elvish keycaps. I asked my wife to paint the keyboard green and basically draw Lord of the Rings references onto it.
+With both halves flashed, you turn the keyboard on with the battery switch and connect it to your computer over Bluetooth. If you've enabled a passkey in your config, you'll be asked for one.
 
-And here is how it looks.
+For me, the left half worked. The right half only registered keypresses (in the logs) when I plugged it straight into my laptop over USB. It wasn't talking to the left half at all.
 
-![](/images/blogs/building-my-first-keyboard/image-10.webp)
+For quite a while I was sure my config was wrong. I tried a lot of variations: making the right half the central and the left the peripheral, turning on several experimental modes, and so on. No luck. The two halves just wouldn't talk to each other.
 
-![](/images/blogs/building-my-first-keyboard/image-11.webp)
+So I turned on debug logging. On the central, everything looked fine, including it listening for the peripheral. On the right half, keypresses were fine too, but it errored out every time it tried to connect to the central. My conclusion was that the right microcontroller's Bluetooth didn't work. Apparently that happens with clone nRF52 boards. I didn't know that going in.
 
-## Finishing notes, conclusion:
+I couldn't return or exchange it, because I'd soldered the pin headers on, and the seller's terms say they don't accept soldered microcontrollers. So I ordered a new one, and with it some debugging gear: a breadboard (a board you plug parts and wires into without soldering), a few buttons and some wires for testing. I'd never used a breadboard, so that was new.
 
-I usually love tinkering with things using software, but this was the first time that I was doing something with hardware and going with this. I might take on a few other projects building with hardware. I loved enjoying soldering, debugging, and building things that are coming to life in reality, like a physical thing rather than software. It was a really fun and exciting experience.   
-And I'm actually writing this blog, sharing my experience after about one year, so I might have missed some of the details and resources that I took for inspiration or for reference. Initially, for a week or so, it was really a tad bit slow for me to catch on to typing on this. After that initial 1 or 2 weeks, I was caught up with my initial typing speed on a normal keyboard. Now, with the added cool factor to the split keyboard, I have a little ergonomics with it. Since it's around 30 degree tenting I didn't have to twist my arms now to type. And each of my arms is resting on one of the chair handrests comfortably, and I can adjust how and where I'm using it.   
-I guess the only nuisance with this is because of the smaller number of keys There are layers for Accessing a certain key. For example, the number keys are basically laid out in one layer, and normal alphabets are in one layer. That is on the top layer. If I want to access the second layer where the number key resides, I have to press the layer key (and whichever layer I have configured it to), and press the number. I have to press two keys, but that's not really a problem.
+![The new microcontroller on a breadboard during testing](/images/blogs/building-my-first-keyboard/image-08.webp)
 
-If I wanted to access it with just one hand, ideally I would need to configure the layers on both keys. Since, again, the problem is with the smaller number of keys, it's a little bit problematic. Using it with one hand is an issue. But I usually don't use my keyboard with one hand, so I'm basically getting accustomed to it.
+When the new board arrived, I installed the right-half UF2 file straight onto it and checked the logs. It connected to the left half. Bluetooth worked.
 
-## Acquiring parts:
+Then I tested the pins one by one, shorting two at a time and checking whether the keystroke registered. Without pin headers in place, it's awkward to touch a wire or the multimeter to two of the board's pin holes at once. So I put the pin headers into the breadboard, connected the board to them, and used wires to connect its pins. I could have managed without the breadboard, but it made this easier. I think it'll be worth it for future projects too.
 
-So majorly, for acquiring building materials [robu.in](http://robu.in/) was the default for anything it seemed to have everything I needed, the board, buttons, wires, soldering materials, etc. 
+I also went over the wiring with the multimeter, touching both ends of each row and column to make sure the connection went all the way through.
 
-Here is the full list of items that i bought for this project. I already have a few other items before this, like the soldering iron, soldering wire, desoldering sucker, wirecutter, etc. it all came with a kit. The switches and keycaps aren't listed because I reused them from my existing keyboard.
+Some of the pins I'd wired the right half to didn't work. Clone board, again. Since I'd learned my lesson and hadn't soldered it this time, I could have replaced it. But I didn't want to wait again, so I worked out which pins were dead, moved those jumper wires to working pins, and updated the pin config in ZMK to match. Then I checked everything again. Thankfully, it all works now.
 
-Hot-swappable socket: [https\://www\.amazon.in/Hot-swap-CPG151101S11-Mechanical-Keyboard-Accessories/dp/B0BVH6M5FP](https://www.amazon.in/Hot-swap-CPG151101S11-Mechanical-Keyboard-Accessories/dp/B0BVH6M5FP)
+Then I soldered the pin headers onto the new board. Since everything was wired with jumper cables, it was easy to plug it all in and get going.
 
-[https\://3ding.in/](https://3ding.in/) \- one side printing 1700 inr
+## Painting it
 
-\- nice\!nano v2 clone [https\://robu.in/product/promicro-nrf52840-development-board/](https://robu.in/product/promicro-nrf52840-development-board/)  
- \- jumper wires [https\://robu.in/product/male-to-male-jumper-wires-40pcs-20cm/](https://robu.in/product/male-to-male-jumper-wires-40pcs-20cm/)  
-\- de soldering wick to remove any mess ? [https\://robu.in/product/best-quality-solder-desoldering-wire-de-soldering-wick/](https://robu.in/product/best-quality-solder-desoldering-wire-de-soldering-wick/)  
-\- for debugging MB102 830 Points Solderless Prototype PCB Breadboard High Quality  
-\- lights for "debugging" it wasnt used [https\://robu.in/product/3mm-single-hole-led-light-holder-with-red-led-light-pack-of-10/](https://robu.in/product/3mm-single-hole-led-light-holder-with-red-led-light-pack-of-10/)  
-\- batteries [https\://robu.in/product/wly394058-1000mah-3-7v-single-cell-rechargeable-lipo-battery/](https://robu.in/product/wly394058-1000mah-3-7v-single-cell-rechargeable-lipo-battery/)  
-\- Glue gun [https\://robu.in/product/40-watt-hot-melt-glue-gun-with-on-off-switch-5-glue-sticks/](https://robu.in/product/40-watt-hot-melt-glue-gun-with-on-off-switch-5-glue-sticks/)  
-\- Diode [https\://robu.in/product/1n4148-1w-zener-diode-pack-of-50](https://robu.in/product/1n4148-1w-zener-diode-pack-of-50)  
-\- Tactile button [https\://robu.in/product/6x6x8mm-tactile-push-button-switch-pack-of-20/](https://robu.in/product/6x6x8mm-tactile-push-button-switch-pack-of-20/)  
-\- Female to female jumper cable [https\://robu.in/product/20cm-dupont-wire-color-jumper-cable-2-54mm-1p-1p-female-female-40pcs/](https://robu.in/product/20cm-dupont-wire-color-jumper-cable-2-54mm-1p-1p-female-female-40pcs/)  
-\- multimeter For debugging [https\://robu.in/product/digital-multimeter-small-yellow-color-lcd-ac-dc-measuring-voltage-current/](https://robu.in/product/digital-multimeter-small-yellow-color-lcd-ac-dc-measuring-voltage-current/)
+Once it worked, I experimented with some timings and config and was quite happy with it. That left the looks. I'd ordered the case in white on purpose so I could paint it.
 
-Screw inserts \-   
-[https\://roboticsdna.in/product/insert-nut-m3-x-4mm-brass-heat-set-threaded-round-25-pcs/](https://roboticsdna.in/product/insert-nut-m3-x-4mm-brass-heat-set-threaded-round-25-pcs/)
+![The finished keyboard, still unpainted white](/images/blogs/building-my-first-keyboard/image-09.webp)
 
-Screws \-  
-[https\://roboticsdna.in/product/m3-x-8mm-bolt-ss-304-csk-countersunk-philips-head-25-pcs/](https://roboticsdna.in/product/m3-x-8mm-bolt-ss-304-csk-countersunk-philips-head-25-pcs/)  
-Slide switches \-   
-[https\://roboticsdna.in/product/4mm-spdt-1p2t-slide-switch-pack-of-10/](https://roboticsdna.in/product/4mm-spdt-1p2t-slide-switch-pack-of-10/)
+I already had a Lord of the Rings theme going with Elvish keycaps, so I asked my wife to paint the case green and draw Lord of the Rings references on it.
 
-Enameled copper wire \-   
-[https\://roboticsdna.in/product/30-swg-polyester-enameled-copper-winding-wire-2-meters/](https://roboticsdna.in/product/30-swg-polyester-enameled-copper-winding-wire-2-meters/)
+Here's how it turned out.
 
-Male to female jumper cable \-   
-[https\://roboticsdna.in/product/male-to-female-jumper-wire/](https://roboticsdna.in/product/male-to-female-jumper-wire/)  
+![The finished keyboard painted green with Lord of the Rings artwork](/images/blogs/building-my-first-keyboard/image-10.webp)
+
+![Another side of the painted keyboard](/images/blogs/building-my-first-keyboard/image-11.webp)
+
+## A year later
+
+I'm writing this about a year after the build, so I may have missed some details and some of the resources I used for inspiration or reference.
+
+I usually tinker with software. This was my first hardware project, and I loved it: the soldering, the debugging, and building something physical instead of software. I might take on a few more.
+
+Typing on it was slow for the first week or so. After a week or two I was back to the speed I had on a normal keyboard. The halves are tented at around 30 degrees (tilted up toward the middle), so I don't have to twist my arms to type. Each arm rests comfortably on a chair armrest, and I can put the halves wherever I want.
+
+The one nuisance is layers. With fewer keys, some of them live on a second layer. Letters are on the base layer and numbers are on another one, so typing a number means holding the layer key and pressing the number. That's two keys instead of one, which isn't really a problem.
+
+Using it with one hand is harder. To reach everything with one hand I'd need layer keys on each half, and with this few keys that's tricky. But I don't usually type with one hand, so I've just gotten used to it.
+
+## Parts list
+
+Most of the parts came from [robu.in](http://robu.in/), which seemed to have everything I needed. I already had a soldering kit with the iron, solder, a desoldering pump and wire cutters. The switches and keycaps came from my old keyboard, so they're not listed.
+
+- 3D print: [3ding.in](https://3ding.in/), 1700 INR to print one side
+- [Hot-swap sockets (CPG151101S11)](https://www.amazon.in/Hot-swap-CPG151101S11-Mechanical-Keyboard-Accessories/dp/B0BVH6M5FP)
+- [nice!nano v2 clone](https://robu.in/product/promicro-nrf52840-development-board/)
+- [Diodes](https://robu.in/product/1n4148-1w-zener-diode-pack-of-50)
+- [Enameled copper wire](https://roboticsdna.in/product/30-swg-polyester-enameled-copper-winding-wire-2-meters/)
+- [Male-to-male jumper wires](https://robu.in/product/male-to-male-jumper-wires-40pcs-20cm/)
+- [Female-to-female jumper wires](https://robu.in/product/20cm-dupont-wire-color-jumper-cable-2-54mm-1p-1p-female-female-40pcs/)
+- [Male-to-female jumper wires](https://roboticsdna.in/product/male-to-female-jumper-wire/)
+- [Tactile buttons](https://robu.in/product/6x6x8mm-tactile-push-button-switch-pack-of-20/)
+- [Slide switches](https://roboticsdna.in/product/4mm-spdt-1p2t-slide-switch-pack-of-10/)
+- [Batteries](https://robu.in/product/wly394058-1000mah-3-7v-single-cell-rechargeable-lipo-battery/)
+- [Heat-set screw inserts](https://roboticsdna.in/product/insert-nut-m3-x-4mm-brass-heat-set-threaded-round-25-pcs/)
+- [Screws](https://roboticsdna.in/product/m3-x-8mm-bolt-ss-304-csk-countersunk-philips-head-25-pcs/)
+- [Glue gun](https://robu.in/product/40-watt-hot-melt-glue-gun-with-on-off-switch-5-glue-sticks/)
+- [Desoldering wick](https://robu.in/product/best-quality-solder-desoldering-wire-de-soldering-wick/), for cleaning up mistakes
+- [Multimeter](https://robu.in/product/digital-multimeter-small-yellow-color-lcd-ac-dc-measuring-voltage-current/), for debugging
+- MB102 830-point solderless breadboard, for debugging
+- [LEDs](https://robu.in/product/3mm-single-hole-led-light-holder-with-red-led-light-pack-of-10/), bought for "debugging" and never used
