@@ -20,7 +20,7 @@ This isn't a full build guide. It's the important stuff and how it went. The ful
 
 My first order was the 3D-printed case, the hot-swap sockets, enameled copper wire and the microcontroller.
 
-For the case, Ryan has a site, [ryanis.cool/dactyl](https://ryanis.cool/dactyl/), where you design the keyboard by adjusting things like the curve, the height and the number of keys, then download the STL file (the 3D model). You can send that STL file off to be 3D printed.
+For the case, Ryan has a site, [ryanis.cool/dactyl](https://ryanis.cool/dactyl/), where you design the keyboard by adjusting things like the curve, the height and the number of keys, then download the STL file (the 3D model). You can send that STL file off to be 3D printed. I went with an aggressive 30-degree tent, which means each half tilts up toward the middle, like a roof.
 
 ## How it works
 
@@ -67,10 +67,6 @@ To mount everything in the case, I hot-glued around the USB sockets, the reset s
 The wiring looks something like this. Treat the diagram as an explanation, not something to copy exactly. My own board has a different pin layout, mostly close to the nice!nano v2. The diagram I started from was for a different board layout, so I had it redrawn (with AI) to match mine, and it didn't come out well. The positive wire from the battery should point to pin 21, and the black wire from the battery should go to a ground pin, but the diagram doesn't show that properly. The ground, reset and power pins on your board will also be in different places. Check your microcontroller's manual for those and wire the reset button and battery to match.
 
 ![Full wiring diagram showing the reset button, the battery connection and the row and column wiring](/images/blogs/building-my-first-keyboard/image-05.webp "For explanation only. The battery pins aren't drawn accurately, and your board's pins will differ. Check its manual.")
-
-Here's one half done on the hardware side.
-
-![The finished wiring inside one half of the keyboard](/images/blogs/building-my-first-keyboard/image-06.webp "One half, hardware done")
 
 Do the same for the other half. The last hardware step is the screw inserts. They're heat-set, so you heat up the soldering iron and push each insert into its slot in the print. It melts the plastic around itself and sets there, ready for the screws later.
 
@@ -142,9 +138,9 @@ I'm writing this about a year after the build, so I may have missed some details
 
 I usually tinker with software. This was my first hardware project, and I loved it: the soldering, the debugging, and building something physical instead of software. I might take on a few more.
 
-Typing on it was slow for the first week or so. After a week or two I was back to the speed I had on a normal keyboard. The halves are tented at around 30 degrees (tilted up toward the middle), so I don't have to twist my arms to type. Each arm rests comfortably on a chair armrest, and I can put the halves wherever I want.
+Typing on it was slow for the first week or so. After a week or two I was back to the speed I had on a normal keyboard. The 30-degree tent means I don't have to twist my arms to type. Each arm rests comfortably on a chair armrest, and I can put the halves wherever I want.
 
-The one nuisance is layers. With fewer keys, some of them live on a second layer. Letters are on the base layer and numbers are on another one, so typing a number means holding the layer key and pressing the number. That's two keys instead of one, which isn't really a problem.
+The one nuisance is layers. One extra layer would be fine, but this board has three on top of the letters: one for navigation, one for numbers and symbols, and one for Bluetooth and other settings. The numbers I know well by now. The symbols are harder. Commas, colons, quotes and the like are something I just have to memorize, and if I haven't used one in a while, I forget where it lives. If I build another one, I'll add a few more keys so those symbols and the arrows get their own spots.
 
 Using it with one hand is harder. To reach everything with one hand I'd need layer keys on each half, and with this few keys that's tricky. But I don't usually type with one hand, so I've just gotten used to it.
 

@@ -76,7 +76,7 @@ export default function TableOfContents({ headings, variant }: TableOfContentsPr
 
   if (variant === "collapsible") {
     return (
-      <details className="lg:hidden mb-8 rounded-xl bg-white/[0.03] border border-white/[0.06] px-4 py-3">
+      <details className="min-[1400px]:hidden mb-8 rounded-xl bg-white/[0.03] border border-white/[0.06] px-4 py-3">
         <summary className="cursor-pointer text-sm font-semibold text-foreground">
           On this page
         </summary>

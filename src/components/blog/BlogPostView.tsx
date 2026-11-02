@@ -33,7 +33,7 @@ export default function BlogPostView({ post, rendered, adjacent }: BlogPostViewP
     <div className="min-h-screen bg-background text-foreground">
       {/* Header */}
       <header className="sticky top-0 z-50 backdrop-blur-xl bg-background/70 border-b border-white/[0.06]">
-        <div className="mx-auto max-w-5xl px-6 py-4 flex items-center gap-4">
+        <div className="mx-auto max-w-[66rem] px-6 py-4 flex items-center gap-4">
           <button
             onClick={navigateBack}
             className="group flex items-center gap-2 text-muted hover:text-foreground transition-colors duration-200 cursor-pointer"
@@ -58,7 +58,7 @@ export default function BlogPostView({ post, rendered, adjacent }: BlogPostViewP
         </div>
       </header>
 
-      <main className="mx-auto max-w-5xl px-6 py-12 md:py-16">
+      <main className="mx-auto max-w-[66rem] px-6 py-12 md:py-16">
         {/* Title block */}
         <div className="mb-10 md:mb-12">
           <div className="flex flex-wrap items-center gap-1.5 mb-4">
@@ -95,18 +95,14 @@ export default function BlogPostView({ post, rendered, adjacent }: BlogPostViewP
           </div>
         </div>
 
-        {/* Body + TOC */}
-        <div
-          className={
-            hasToc ? "grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_14rem] gap-12" : ""
-          }
-        >
+        {/* Body + TOC. The TOC hangs outside the content column, to its right. */}
+        <div className="relative">
           <article className="min-w-0">
             {hasToc && <TableOfContents headings={rendered.headings} variant="collapsible" />}
             <PostBody html={rendered.html} />
           </article>
           {hasToc && (
-            <aside className="hidden lg:block">
+            <aside className="hidden min-[1400px]:block absolute top-0 left-full h-full ml-5 w-40">
               <div className="sticky top-24">
                 <TableOfContents headings={rendered.headings} variant="sidebar" />
               </div>
