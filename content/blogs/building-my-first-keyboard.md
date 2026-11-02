@@ -24,15 +24,19 @@ For the case, Ryan has a site, [ryanis.cool/dactyl](https://ryanis.cool/dactyl/)
 
 ## How it works
 
-The microcontroller is the brain of the keyboard. It's a small board that the USB cable plugs into, with contact points (pins) along its edges. None of this happens automatically, though. You decide what the board does, and you do that by writing the logic yourself: what should happen when two points touch, what should happen when they're released, and what counts as a keypress. A microcontroller doesn't know it's inside a keyboard. With the right wiring and code, you could build almost anything with one, like a drone, a home appliance or a small robot. A keyboard is just one of the simplest things to start with.
+The microcontroller is the brain of the keyboard. It's a small board that the USB cable plugs into, with contact points (pins) along its edges. None of this happens automatically, though. You decide what the board does, and you do that by writing the logic yourself: what should happen when two points touch, what should happen when they're released, and what counts as a keypress. A microcontroller doesn't know it's inside a keyboard. With the right wiring, code and a few extra parts like sensors and motors, you could build almost anything with one, like a drone, a home appliance or a small robot. A keyboard is one of the simplest things to start with, because it doesn't need any of those extras, just switches and wires.
 
 For a keyboard, the idea is this: connect two of those pins with a wire and the microcontroller treats it as a keypress. Using the pin layout below, connecting P0.24 to P1.15 could register as A, and P0.24 to P1.13 as B, if that's how you've configured it. You could make them Z and X instead. The configuration part comes later.
 
-You can use any of the programmable pins in the P0.\* or P1.\* groups. Check the pin layout for the exact board you buy. Mine was a nice!nano v2 clone, and its layout was close to the original but not identical.
+You can use any of the programmable pins in the P0.\* or P1.\* groups. Check the pin layout for the exact board you buy. Mine was a nice!nano v2 clone, and its layout was close to the original but not identical. "Close enough" is not a pin-mapping strategy.
 
 ![nice!nano v2 pin layout](/images/blogs/building-my-first-keyboard/image-01.webp "The nice!nano v2 pin layout. Check the one for your exact board.")
 
-The keys are wired in a matrix, which is a grid of rows and columns. Each switch sits where a row and a column cross. A switch is a small part under each keycap that works like a gap in a wire: when you press the key, it closes the gap and connects its two contacts, and when you let go, it opens again. Here, pressing a switch connects its row to its column. The nice!nano scans the grid to work out which key was pressed, and the firmware maps that position to a key. A 5 × 5 grid has 25 crossings, so it can hold up to 25 keys per half, and it only needs 10 pins. Giving every key its own pin would take 23 or more. Mine is a 4x5 Dactyl Manuform. In its standard layout that's 23 keys per half: three full rows of 5, 2 keys on the bottom row and 6 thumb keys. I wired each half as a 5 × 5 grid, which leaves 2 of the 25 crossings with no key on them.
+The keys are wired in a matrix, which is a grid of rows and columns. Each switch sits where a row and a column cross. A switch is a small part under each keycap that works like a gap in a wire: when you press the key, it closes the gap and connects its two contacts, and when you let go, it opens again. Here, pressing a switch connects its row to its column. The nice!nano scans the grid to work out which key was pressed, and the firmware maps that position to a key.
+
+A 5 × 5 grid has 25 crossings, so it can hold up to 25 keys per half, and it only needs 10 pins. Giving every key its own pin would take 23 or more.
+
+Mine is a 4x5 Dactyl Manuform. In its standard layout that's 23 keys per half: three full rows of 5, 2 keys on the bottom row and 6 thumb keys. I wired each half as a 5 × 5 grid, which leaves 2 of the 25 crossings with no key on them.
 
 ![Wiring for one half, showing the row and column wires running into the microcontroller](/images/blogs/building-my-first-keyboard/image-02.webp "One half: 5 rows and 5 columns into the microcontroller")
 
@@ -40,18 +44,18 @@ Every switch also needs a diode. A diode only lets current flow in one direction
 
 ## Putting it together
 
-Since I was using hot-swap sockets, I wired the rows and columns to the sockets instead of the switches. First I glued the sockets into the 3D print with Fevikwik (superglue). I slotted some of them in wrong. Some I glued in backwards and had to pry back out. It was a mess. Plan everything before you glue anything down.
+Since I was using hot-swap sockets, I wired the rows and columns to the sockets instead of the switches. First I glued the sockets into the 3D print with Fevikwik (superglue). I slotted some of them in wrong. Some I glued in backwards and had to pry back out. It was a mess. Plan everything before you glue anything down. Superglue is much more confident about your decisions than you should be.
 
 ![Hot-swap sockets glued into the 3D-printed case, with switches plugged into them](/images/blogs/building-my-first-keyboard/image-03.webp "Hot-swap sockets glued into the case. Plan before you glue.")
 
-Then came the soldering. I used enameled copper wire for the connections, and I didn't know it has a thin insulating coating. I found out after I'd finished, when I tested the connections with a multimeter (a meter that, among other things, tells you whether two points are connected) and some of the circuits weren't complete. That one was on me. You have to burn or scrape the coating off where you make a connection. Solder onto a coated part and the connection just doesn't work. Some coatings, like the polyester one on mine, don't burn off at normal soldering temperatures, so scraping or sanding is more reliable. I redid some of them, connecting the wire at the cut ends where the copper was exposed.
+Then came the soldering. I used enameled copper wire for the connections, and I didn't know it has a thin insulating coating. I found out after I'd finished, when I tested the connections with a multimeter (a meter that, among other things, tells you whether two points are connected) and some of the circuits weren't complete. The wire looked connected, but electrically it was still wearing a tiny invisible raincoat. That one was on me. You have to burn or scrape the coating off where you make a connection. Solder onto a coated part and the connection just doesn't work. Some coatings, like the polyester one on mine, don't burn off at normal soldering temperatures, so scraping or sanding is more reliable. I redid some of them, connecting the wire at the cut ends where the copper was exposed.
 
 The enameled wire was harder to work with, so I only used it for the columns, which don't have diodes. For the rows, which connect through the diodes, I used normal wire. Once everything was connected I checked every circuit with the multimeter again. Even with all that, it was one of the fun bits.
 
 ![The row and column grid wired across the sockets inside the case](/images/blogs/building-my-first-keyboard/image-04.webp "Rows run through the diodes in normal wire; columns are enameled wire")
 
 > [!WARNING]
-> Be careful with the soldering iron. I burned myself with it a couple of times.
+> Be careful with the soldering iron. I burned myself with it a couple of times. Apparently, the iron was also getting hands-on experience.
 
 Next, the 5 rows and 5 columns go to the microcontroller. Before that you solder pin headers onto it (rows of metal pins that wires can plug onto), which is another fun part.
 
@@ -64,11 +68,13 @@ Then the battery. One pin is for positive and one is for ground. Use jumper cabl
 
 To mount everything in the case, I hot-glued around the USB sockets, the reset switch and the power switch. The battery and microcontroller are stuck down with double-sided tape, since hot glue isn't secure enough for them. The Fevikwik was only for the hot-swap sockets.
 
-The wiring looks something like this. Treat the diagram as an explanation, not something to copy exactly. My own board has a different pin layout, mostly close to the nice!nano v2. The diagram I started from was for a different board layout, so I had it redrawn (with AI) to match mine, and it didn't come out well. The positive wire from the battery should point to pin 21, and the black wire from the battery should go to a ground pin, but the diagram doesn't show that properly. The ground, reset and power pins on your board will also be in different places. Check your microcontroller's manual for those and wire the reset button and battery to match.
+The diagram below shows how I wired the battery and the reset button. I had it drawn with AI, and the board in it is a Pro Micro, not a nice!nano, so its pin layout is completely different from mine. Use it to see how things connect, not which pins to use. The battery's positive wire runs through the power switch to the board's battery pin, its negative wire goes to ground, and the reset button sits between the reset pin and ground. Check your own board's pinout to find those pins.
 
-![Full wiring diagram showing the reset button, the battery connection and the row and column wiring](/images/blogs/building-my-first-keyboard/image-05.webp "For explanation only. The battery pins aren't drawn accurately, and your board's pins will differ. Check its manual.")
+![Wiring diagram showing the reset button, the battery connection and the row and column wiring](/images/blogs/building-my-first-keyboard/image-05.webp "How the battery and reset button connect. The board shown is a Pro Micro, so its pins won't match a nice!nano.")
 
-Do the same for the other half. The last hardware step is the screw inserts. They're heat-set, so you heat up the soldering iron and push each insert into its slot in the print. It melts the plastic around itself and sets there, ready for the screws later.
+Once the left half is done, do the right half the same way, but keep in mind that it's a mirror image of the left. The sockets, the wiring and where everything sits in the case are all flipped. Don't copy the left half's layout exactly. Mirror it, and keep track of which column is which, because you'll need that later when you map the pins in the firmware.
+
+The last hardware step is the screw inserts. They're heat-set, so you heat up the soldering iron and push each insert into its slot in the print. It melts the plastic around itself and sets there, ready for the screws later.
 
 ![Both halves open, showing their wiring and internal components](/images/blogs/building-my-first-keyboard/image-07.webp "Both halves wired up")
 
@@ -76,7 +82,7 @@ Do the same for the other half. The last hardware step is the screw inserts. The
 
 Firmware is the software that runs on the microcontroller and decides what each key does. I used ZMK, because QMK (the other big option) can't officially run on the nice!nano due to licensing issues with Nordic's Bluetooth stack. The [ZMK user setup guide](https://zmk.dev/docs/user-setup) has a CLI that clones the repo so you can start on your keymap.
 
-There are two parts of that repo you need to understand yourself, because they depend on your hardware and how you want to customize it. A coding AI can easily handle the rest of the setup.
+There are two parts of that repo you need to understand yourself, because they depend on your hardware and how you want to customize it. A coding AI (like Claude or Cursor) can easily handle the rest of the setup.
 
 - The `.dtsi` file maps out your rows and columns, if they're the same on both halves. If the two halves use different pins, you specify those in an `.overlay` file.
 - The `.keymap` file is where you set what each key does.
@@ -116,7 +122,7 @@ I also went over the wiring with the multimeter, touching both ends of each row 
 
 Some of the pins I'd wired the right half to didn't work. Clone board, again. Since I'd learned my lesson and hadn't soldered it this time, I could have replaced it. But I didn't want to wait again, so I worked out which pins were dead, moved those jumper wires to working pins, and updated the pin config in ZMK to match. Then I checked everything again. Thankfully, it all works now.
 
-Then I soldered the pin headers onto the new board. Since everything was wired with jumper cables, it was easy to plug it all in and get going.
+Only after all that testing did I solder the pin headers onto the new board. Since everything was wired with jumper cables, it was easy to plug it all in and get going.
 
 ## Painting it
 
@@ -138,23 +144,23 @@ I'm writing this about a year after the build, so I may have missed some details
 
 I usually tinker with software. This was my first hardware project, and I loved it: the soldering, the debugging, and building something physical instead of software. I might take on a few more.
 
-Typing on it was slow for the first week or so. After a week or two I was back to the speed I had on a normal keyboard. The 30-degree tent means I don't have to twist my arms to type. Each arm rests comfortably on a chair armrest, and I can put the halves wherever I want.
+Typing on it was slow for the first week or so. My fingers had to learn a new geography. After a week or two I was back to the speed I had on a normal keyboard. The 30-degree tent means I don't have to twist my arms to type. Each arm rests comfortably on a chair armrest, and I can put the halves wherever I want.
 
 The one nuisance is layers. One extra layer would be fine, but this board has three on top of the letters: one for navigation, one for numbers and symbols, and one for Bluetooth and other settings. The numbers I know well by now. The symbols are harder. Commas, colons, quotes and the like are something I just have to memorize, and if I haven't used one in a while, I forget where it lives. If I build another one, I'll add a few more keys so those symbols and the arrows get their own spots.
 
 Using it with one hand is harder. To reach everything with one hand I'd need layer keys on each half, and with this few keys that's tricky. But I don't usually type with one hand, so I've just gotten used to it.
 
-When I built this, AI coding tools were just taking off, and I was typing on it a lot. These days most of what I write is prompts and messages, and I mostly dictate those with voice-to-text. I still use the keyboard when I'm in a meeting and doing something on the side, or when I just want to listen to music and work. Then I type.
+When I built this, AI coding tools were just taking off, and I was typing on it a lot. These days most of what I write is prompts and messages, and I mostly dictate those with voice-to-text. I still use the keyboard when I'm in a meeting and doing something on the side, or when I just want to listen to music and work. Then I type. It may not get the hours it once did, but at least it isn't sitting in a drawer wondering what it did wrong.
 
 Even so, building it was a lot of fun. There's the cool factor, and it's an awesome feeling to use something I built myself.
 
 ## Key takeaways
 
 - Wire the matrix to the microcontroller with jumper cables. When a pin or a whole board turns out dead, you move a wire instead of desoldering.
-- Enameled wire is coated. Burn the coating off where you solder, and check every circuit with a multimeter.
+- Enameled wire is coated. Burn or scrape the coating off where you solder, and check every circuit with a multimeter.
 - Clone nRF52840 boards can have dead Bluetooth or dead pins. Test a new board before you solder pin headers onto it.
 - Plan the socket layout before you glue anything down.
-- With ZMK, CI builds the firmware for you. The parts you need to understand yourself are the `.dtsi`/`.overlay` pin mapping and the `.keymap`.
+- With ZMK, CI builds the firmware for you. The parts you need to understand yourself are the `.dtsi`/`.overlay` pin mapping and the `.keymap`. The rest is a good job for a coding AI.
 
 ## Parts list
 
