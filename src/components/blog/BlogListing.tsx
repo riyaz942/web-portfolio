@@ -4,24 +4,48 @@ import Link from "next/link";
 import { useCallback } from "react";
 import { motion } from "framer-motion";
 import ScrollRestore from "@/components/ScrollRestore";
-import { useViewTransitionRouter } from "@/hooks/useViewTransition";
+import { useViewTransitionRouter, waitForElement } from "@/hooks/useViewTransition";
 import { formatDate } from "@/lib/blog/format";
 import type { BlogPostMeta } from "@/lib/blog/types";
 import BlogCover from "./BlogCover";
+import {
+  cardCoverSelector,
+  clearBlogCoverNames,
+  decodeCoverImage,
+  heroCoverSelector,
+  nameBlogCover,
+} from "./coverTransition";
 
 export default function BlogListing({ posts }: { posts: BlogPostMeta[] }) {
   const { push } = useViewTransitionRouter();
 
-  const navigateHome = useCallback(() => push("/"), [push]);
+  const navigateHome = useCallback(
+    () => push("/", { beforeSnapshot: clearBlogCoverNames }),
+    [push],
+  );
 
   // Plain left clicks get the view transition; modified clicks keep native link behavior.
   const openPost = useCallback(
-    (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    (e: React.MouseEvent<HTMLAnchorElement>, slug: string) => {
       if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) {
         return;
       }
       e.preventDefault();
-      push(href);
+      // The card cover morphs into the post's hero cover.
+      let morph = false;
+      push(`/blogs/${slug}`, {
+        beforeSnapshot: () => {
+          morph = nameBlogCover(cardCoverSelector(slug));
+        },
+        afterDomUpdate: async () => {
+          if (!morph) return;
+          const hero = heroCoverSelector(slug);
+          await waitForElement(hero);
+          await decodeCoverImage(hero);
+          nameBlogCover(hero);
+        },
+        afterTransition: clearBlogCoverNames,
+      });
     },
     [push],
   );
@@ -114,7 +138,7 @@ export default function BlogListing({ posts }: { posts: BlogPostMeta[] }) {
 
                   <Link
                     href={href}
-                    onClick={(e) => openPost(e, href)}
+                    onClick={(e) => openPost(e, post.slug)}
                     className="relative flex h-full flex-col"
                   >
                     <BlogCover post={post} variant="card" />

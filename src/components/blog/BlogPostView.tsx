@@ -2,10 +2,16 @@
 
 import Link from "next/link";
 import { useCallback } from "react";
-import { useViewTransitionRouter } from "@/hooks/useViewTransition";
+import { useViewTransitionRouter, waitForElement } from "@/hooks/useViewTransition";
 import { formatDate } from "@/lib/blog/format";
 import type { BlogPostMeta, RenderedPost } from "@/lib/blog/types";
 import BlogCover from "./BlogCover";
+import {
+  cardCoverSelector,
+  clearBlogCoverNames,
+  heroCoverSelector,
+  nameBlogCover,
+} from "./coverTransition";
 import PostBody from "./PostBody";
 import TableOfContents from "./TableOfContents";
 
@@ -17,7 +23,23 @@ interface BlogPostViewProps {
 
 export default function BlogPostView({ post, rendered, adjacent }: BlogPostViewProps) {
   const { push } = useViewTransitionRouter();
-  const navigateBack = useCallback(() => push("/blogs"), [push]);
+
+  // The hero cover morphs back into its listing card, when the hero is on screen.
+  const navigateBack = useCallback(() => {
+    let morph = false;
+    push("/blogs", {
+      beforeSnapshot: () => {
+        morph = nameBlogCover(heroCoverSelector(post.slug));
+      },
+      afterDomUpdate: async () => {
+        if (!morph) return;
+        const card = cardCoverSelector(post.slug);
+        await waitForElement(card);
+        nameBlogCover(card);
+      },
+      afterTransition: clearBlogCoverNames,
+    });
+  }, [push, post.slug]);
   const hasToc = rendered.headings.length > 0;
 
   // Plain left clicks get the view transition; modified clicks keep native link behavior.
@@ -26,7 +48,7 @@ export default function BlogPostView({ post, rendered, adjacent }: BlogPostViewP
       return;
     }
     e.preventDefault();
-    push(href);
+    push(href, { beforeSnapshot: clearBlogCoverNames });
   };
 
   return (

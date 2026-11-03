@@ -62,6 +62,8 @@ export function waitForElement(
 export interface ViewTransitionCallbacks {
   beforeSnapshot?: () => void;
   afterDomUpdate?: () => void | Promise<void>;
+  /** Runs once the transition animation ends (or is skipped/aborted). */
+  afterTransition?: () => void;
 }
 
 export function useViewTransitionRouter() {
@@ -88,7 +90,9 @@ export function useViewTransitionRouter() {
       });
       // An aborted transition (hidden tab, rapid navigation) rejects
       // `finished`; navigation itself has already happened by then.
-      transition.finished.catch(() => {});
+      transition.finished
+        .catch(() => {})
+        .finally(() => callbacks?.afterTransition?.());
     },
     [router, pathname],
   );

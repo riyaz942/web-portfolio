@@ -57,6 +57,19 @@ html {
   mix-blend-mode: normal;
 }
 
+/* Blog card cover <-> post hero cover. Both are 1200:630, so the snapshots
+   scale without distortion; the default crossfade blends the corner shapes. */
+::view-transition-group(blog-cover) {
+  animation-duration: 0.45s;
+  animation-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+
+::view-transition-old(blog-cover),
+::view-transition-new(blog-cover) {
+  animation-duration: 0.45s;
+  height: 100%;
+}
+
 @keyframes vt-fade-out {
   to {
     opacity: 0;
@@ -98,7 +111,10 @@ html {
 
   ::view-transition-old(root),
   ::view-transition-new(root),
-  ::view-transition-group(project-icon) {
+  ::view-transition-group(project-icon),
+  ::view-transition-group(blog-cover),
+  ::view-transition-old(blog-cover),
+  ::view-transition-new(blog-cover) {
     animation: none !important;
   }
 
