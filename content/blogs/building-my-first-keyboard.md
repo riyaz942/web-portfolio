@@ -1,18 +1,18 @@
 ---
-title: "Building a split keyboard from scratch"
+title: "Building a split wireless keyboard from scratch"
 slug: building-my-first-keyboard
-description: "How I hand-wired a wireless split keyboard in a 3D-printed case, and what I did when one half's Bluetooth turned out to be dead."
+description: "How I hand-wired a split wireless keyboard in a 3D-printed case, and what I did when one half's Bluetooth turned out to be dead."
 publishedAt: "2026-11-01"
 updatedAt: ""
 tags: [hardware, keyboards]
 coverImage: "/images/blogs/building-my-first-keyboard/image-11.webp"
-coverAlt: "The finished split keyboard, painted green with Lord of the Rings artwork"
+coverAlt: "The finished split wireless keyboard, painted green with Lord of the Rings artwork"
 draft: false
 ---
 
 I'd been typing on the same Anne Pro 2 for about five years, with the same keycaps and switches the whole time. I wasn't deep into the keyboard hobby. But building one from scratch was on my checklist.
 
-I was hesitant at first. I watched a lot of videos, read some blogs and references, and then got a little ambitious and went for a wireless split keyboard. I'd done a bit of soldering before, when I modded my Anne Pro 2 to make it hot-swappable, meaning you can pull the switches out and swap them without desoldering anything. That was fun. I also burned my hand. With that much experience behind me, I pulled the trigger.
+I was hesitant at first. I watched a lot of videos, read some blogs and references, and then got a little ambitious and went for a split wireless keyboard. I'd done a bit of soldering before, when I modded my Anne Pro 2 to make it hot-swappable, meaning you can pull the switches out and swap them without desoldering anything. That was fun. I also burned my hand. With that much experience behind me, I pulled the trigger.
 
 This isn't a full build guide. It's the important stuff and how it went. The full parts list is at the end.
 
